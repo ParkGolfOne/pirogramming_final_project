@@ -1,0 +1,7 @@
+{% block content %}
+    <form action = "{% url 'locations:create' %}" method = "post">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type="submit">추가완료</button>
+    </form>
+{% endblock %}
