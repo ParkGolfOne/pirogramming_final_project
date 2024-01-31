@@ -1,0 +1,12 @@
+{% block content %}
+    <h2>골프장 이름: {{location.golf_name}}</h2>
+    <h4>골프장 주소: {{location.golf_address}}</h4>
+    <h4>골프장 상세내용: {{location.golf_detail}}</h4>
+    <h4>홀: {{location.golf_holes}}</h4>
+    <br>
+    <a href="{% url 'locations:update' location.pk %}">수정하기</a>
+    <form action="{% url 'locations:delete' location.pk %}" method = "post">
+    {% csrf_token %}
+        <button type='submit'>삭제하기</button>
+    </form>
+{% endblock %}

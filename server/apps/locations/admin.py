@@ -1,3 +1,5 @@
 from django.contrib import admin
+from .models import *
 
-# Register your models here.
+# admin으로 모델 레지스터하기
+admin.site.register(GolfLocation)

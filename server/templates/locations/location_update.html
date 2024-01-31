@@ -1,0 +1,8 @@
+{% block content %}
+    <form action = "{% url 'locations:update' pk %}" method = 'post'>
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type="submit">수정완료</button>
+    </form>
+
+{% endblock %}
