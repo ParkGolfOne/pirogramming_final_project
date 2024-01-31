@@ -1,0 +1,26 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/users.css' %}">
+    <title>Document</title>
+</head>
+<body>
+    <h2>마이페이지</h2>
+    {% if user.is_authenticated %}
+        <div>{{user.username}}님 환영합니다</div>
+        <div><a href="{% url 'users:logout' %}">로그아웃</a></div>
+        <div><a href="">회원정보 수정</a></div>
+        <div><a href="">회원 탈퇴</a></div>
+
+    {% else %}
+        <div><a href="{% url 'users:login' %}">로그인</a></div>
+        <div ><a href="{% url 'users:signup' %}">회원가입</a></div>
+    {% endif %}
+
+    {% block content %}
+    {% endblock content %}
+</body>
+</html>
