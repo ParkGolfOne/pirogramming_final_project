@@ -1,0 +1,34 @@
+.postLikeBtn,
+.postScrapBtn {
+  width: 26px;
+  height: 26px;
+  margin: 7px;
+  background-color: transparent;
+  border: none;
+}
+
+.postLikeBtn:hover,
+.postScrapBtn:hover {
+  opacity: 0.5;
+}
+
+.postLikeBtn {
+  background-image: url("/static/posts/images/nolike.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  transition: 0.2s;
+}
+
+.postScrapBtn {
+  background-image: url("/static/posts/images/star-line.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.liked {
+  background-image: url("/static/posts/images/thumb.png") !important;
+}
+
+.scraped {
+  background-image: url("/static/posts/images/star-fill.png") !important;
+}

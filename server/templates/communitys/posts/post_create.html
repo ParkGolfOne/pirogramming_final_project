@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <a href="{% url 'communitys:board_list' %}">커뮤니티 홈</a>
+    <a href="{% url 'communitys:post_list' bid %}">게시판 홈</a>
+    <form method="POST" action="" enctype="multipart/form-data">
+      <h1>NEW POST</h1>
+      {% csrf_token %} {{ form }}
+      <input type="submit" value="게시판 등록" />
+    </form>
+  </body>
+</html>

@@ -1,0 +1,22 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>파골원 커뮤니티</title>
+  </head>
+  <body>
+    {% for board in boards%}
+    <a href="{% url  'communitys:post_list' board.pk%}">
+      {% if board.thumbnail.url != '' %}
+      <img src="{{board.thumbnail.url}}" alt="게시판 썸네일" /><br />
+      {% else %}
+      <img src="{% static 'posts/image/no_imges.png' %}" alt="이미지 없음" />
+      {% endif %}
+      <div>{{board.name}}</div>
+    </a>
+    {% endfor%}
+    <a href="{% url 'communitys:board_create' %}">게시판 추가</a>
+  </body>
+</html>

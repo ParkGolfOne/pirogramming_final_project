@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>파골원 커뮤 수정페이지</title>
+  </head>
+  <body>
+    <a href="{% url 'communitys:board_list' %}">커뮤니티 홈</a>
+    <a href="{% url 'communitys:post_list' bid %}">게시판 홈</a>
+    <div>
+      <h1>글 수정하기</h1>
+      <form
+        action="{% url 'communitys:post_update' bid pk  %}"
+        method="post"
+        enctype="multipart/form-data"
+      >
+        {%csrf_token%} {{form.as_p}}
+
+        <button>수정하기</button>
+      </form>
+    </div>
+  </body>
+</html>
