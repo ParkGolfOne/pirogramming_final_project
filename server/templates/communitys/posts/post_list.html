@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>파골원 커뮤니티</title>
+  </head>
+  <body>
+    <a href="{% url 'communitys:board_list' %}">커뮤니티 홈</a>
+    <h1>{{board.name}}</h1>
+    {% for post in posts%}
+    <a href="{% url  'communitys:post_detail' bid post.pk%}">
+      <div>{{post.title}}</div>
+    </a>
+    {% endfor%}
+    <a href="{% url 'communitys:post_create' bid %}">글 작성하기</a>
+  </body>
+</html>
