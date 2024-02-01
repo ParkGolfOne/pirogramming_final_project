@@ -1,0 +1,25 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>점수 메인</title>
+    <link rel="stylesheet" href="{% static 'score/css/score_list.css'%}" />
+</head>
+<body>
+    Main Score Page
+    {% if user.is_authenticated %}
+    <div class="scoreMainBtn"> <a href="{% url 'users:logout'%}">로그아웃</a></div>
+    {% endif %}
+    <div class="scoreBanner"></div>
+    {% if user.is_authenticated %}
+    <div class="scoreMainBtn"><a href="{% url 'score:score_history' user.id %}">나의 기록</a></div>
+    <div class="scoreMainBtn"><a href="{% url 'score:score_input' user.id %}">점수 입력하기</a></div>
+    {% else %}
+    <h2>로그인하여 당신의 스코어를 기록해보세요!</h2>
+    <div class="scoreMainBtn"><a href="{% url 'users:login'%}"> 로그인</a
+        ></div>
+    {% endif %}
+</body>
+</html>
