@@ -51,6 +51,7 @@ INSTALLED_APPS = [
 ]
 
 AUTHENTICATION_BACKENDS = [
+    'apps.users.backends.CustomModelBackend', # 커스텀 모델 백엔드 추가
     'social_core.backends.kakao.KakaoOAuth2', # 카카오
     'django.contrib.auth.backends.ModelBackend', # 소셜로그인 정보를 User 모델 클래스에 저장
 ]
