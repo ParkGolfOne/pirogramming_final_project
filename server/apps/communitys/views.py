@@ -23,7 +23,7 @@ def board_list(request):
     print(boards)
      # HTML 에 전달할 정보
     context = {
-        'boards' : boards
+        'boards' : boards,
     }
     return render(request, "communitys/board/board_list.html", context)
 
@@ -48,7 +48,9 @@ def board_create(request):
     if request.method == "POST":
         form = BoardForm(request.POST, request.FILES)
         if form.is_valid:
-            form.save()
+            board_instance = form.save(commit=False)
+            board_instance.admin = request.user
+            board_instance.save()
         return redirect("communitys:board_list")
 
 
@@ -102,12 +104,14 @@ def board_update(request, bid):
 def post_list(request, bid):
     posts = Post.objects.filter(board = bid)
     board = Board.objects.get(id = bid)
+    now_user  = request.user
 
     # HTML 에 전달할 정보
     context = {
         'posts' : posts,
         'bid' : bid,
         'board' : board,
+        'now_user' : now_user,
     }
     return render(request, "communitys/posts/post_list.html", context)
 
@@ -130,6 +134,7 @@ def post_create(request, bid):
             post_instance = form.save(commit=False)
             board = Board.objects.get(id = bid)
             post_instance.board = board
+            post_instance.writer = request.user
             post_instance.save()
         return redirect("communitys:post_list", bid)
 
@@ -174,32 +179,30 @@ def post_detail(request, pk, bid):
     # 게시글 관련 정보, 현재 접속 유저 가져오기
     post = Post.objects.get(id=pk)
 
-    # 유저 모델 추가시 아래 두줄 삭제
-    liked = False
-    scraped = False
 
-    ## 유저 모델 추가시 활성화 ##
-    # now_user = request.user
-    # try:
-    #     like = Like.objects.get(user = now_user)
-    # except Like.DoesNotExist:
-    #     liked = False
-    # else:
-    #     liked = True
-    # try:
-    #     scrape = Scrap.objects.get(user = now_user)
-    # except Scrap.DoesNotExist:
-    #     scraped = False
-    # else:
-    #     scraped = True
+    now_user = request.user
+    try:
+        like = Like.objects.get(user = now_user)
+    except Like.DoesNotExist:
+        liked = False
+    except:
+        liked = False
+    else:
+        liked = True
+
+    try:
+        scrap = Scrap.objects.get(user = now_user)
+    except Scrap.DoesNotExist:
+        scraped = False
+    except:
+        scraped = False
+    else:
+        scraped = True
 
     try:
         comments = Comment.objects.filter(post = post, parent_comment = None)
     except Comment.DoesNotExist:
         comments = []
-
-
-    # now_user = request.user
 
 
     # 추후에 작성자가 쓴 다른 글 참조시 사용
@@ -211,9 +214,9 @@ def post_detail(request, pk, bid):
         "post" : post,
         "bid" : bid,
         "comments" : comments,
-        # "liked" : liked,
-        # "scraped" : scraped,
-        # "now_user" : now_user,
+        "liked" : liked,
+        "scraped" : scraped,
+        "now_user" : now_user,
         # "related_posts" : all_post,
     }
     return render(request, "communitys/posts/post_detail.html",context)
@@ -234,24 +237,48 @@ def comment_create(request):
     req = json.loads(request.body)
     post_id = req["post_id"]
     content = req["content"]
-    parent_comment_id = req["parent_comment_id"]
-    # commenter = request.user
+    commenter = request.user
     post = get_object_or_404(Post, id=post_id)
 
-    # 대댓글
-    if parent_comment_id != None :
-        parent_comment = get_object_or_404(Comment, id=parent_comment_id)
-        # newcomment = Comment.objects.create(post = post, commenter = writer, content = content, parent_comment = parent_comment )
-        newcomment = Comment.objects.create(post = post, content = content, parent_comment = parent_comment )        
-        parent_comment.child_comments.append(newcomment)
+    newcomment = Comment.objects.create(post = post, commenter = commenter, content = content )      
     
-    # 원댓글
-    else:
-        # newcomment = Comment.objects.create(post = post, commenter = writer, content = content)
-        newcomment = Comment.objects.create(post = post, content = content )
+    return JsonResponse({'commenter' : newcomment.commenter.username, 'content' : newcomment.content, 'commentId' : newcomment.id})
 
-    return JsonResponse({ 'content' : newcomment.content, 'commentId' : newcomment.id , 'post_id' : post_id, })
-    #return JsonResponse({'commenter' : newcomment.commenter.username, 'content' : newcomment.content, 'commentId' : newcomment.id, post_id : post_id})
+
+
+# 함수 이름 : reply_create
+# 전달인자 : request
+# 기능 : --
+@csrf_exempt
+@transaction.atomic
+def reply_create(request):
+    req = json.loads(request.body)
+    post_id = req["post_id"]
+    content = req["content"]
+    parent_comment_id = req["parent_comment_id"]
+    commenter = request.user
+    post = get_object_or_404(Post, id=post_id)
+
+    parent_comment = get_object_or_404(Comment, id=parent_comment_id)
+    print(parent_comment)
+
+    newcomment = Comment.objects.create(post = post, commenter = commenter, content = content, parent_comment = parent_comment )
+    parent_comment.child_comments_num += 1
+    parent_comment.save()
+
+    return JsonResponse({'commenter' : newcomment.commenter.username, 'content' : newcomment.content, 'commentId' : newcomment.id, 'post_id' : post_id})
+
+
+
+
+# 함수 이름 : reply_list
+# 전달인자 : request
+# 기능 : --
+@csrf_exempt
+@transaction.atomic
+def reply_list(request):
+    pass
+
 
 
 # 함수 이름 : comment_delete
@@ -277,9 +304,19 @@ def comment_delete(request, pk):
 @csrf_exempt
 @transaction.atomic
 def comment_update(request, pk):
-    pass
+    req = json.loads(request.body)
+    cid = req["comment_id"]
+    content = req["content"]
 
+    try:
+        target_comment = get_object_or_404(Comment, id = cid)
+    except 404:
+        print("존재하지 않는 댓글 update 시도!")
+    else:
+        target_comment.content = content
+        target_comment.save()
 
+    return JsonResponse({'commenter' : target_comment.commenter.username, 'content' : content,'commentId' : cid, 'post_id' : target_comment.post.id})
 
 
 
@@ -298,11 +335,10 @@ def pushPostLike(request):
     req = json.loads(request.body)
     post_id = req["post_id"]
     post = get_object_or_404(Post, pk=post_id)
-    # now_user = request.user
+    now_user = request.user
 
     try:
-        # likePointer = Like.objects.get(post=post, user=now_user)
-        likePointer = Like.objects.get(post=post)
+        likePointer = Like.objects.get(post=post, user=now_user)
         likePointer.delete()
         post.like_num -= 1  
 
@@ -310,8 +346,7 @@ def pushPostLike(request):
         post.save()
         return JsonResponse({'post_id' : post_id, 'likeNum' : post.like_num, 'likeTag' : likeTag})
     except Like.DoesNotExist:
-        # Like.objects.create(post=post, user=now_user)
-        Like.objects.create(post=post)
+        Like.objects.create(post=post, user=now_user)
         post.like_num += 1
 
         likeTag = 'liked'

@@ -1,0 +1,14 @@
+.postList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: flex-start;
+  align-items: flex-start;
+  border: 4px solid green;
+  padding: 10px;
+}
+
+.postDetailLink {
+  width: 300px;
+  background-color: lightgreen;
+}
