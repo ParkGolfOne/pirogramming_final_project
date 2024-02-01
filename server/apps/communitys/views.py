@@ -90,7 +90,7 @@ def board_update(request, bid):
             "board" : board,
         }
 
-        return render(request, "communitys/posts/post_update.html",context)
+        return render(request, "communitys/board/board_update.html",context)
 
 
 ###########################################################
@@ -182,7 +182,7 @@ def post_detail(request, pk, bid):
 
     now_user = request.user
     try:
-        like = Like.objects.get(user = now_user)
+        like = Like.objects.get(user = now_user, post = post)
     except Like.DoesNotExist:
         liked = False
     except:
@@ -191,7 +191,7 @@ def post_detail(request, pk, bid):
         liked = True
 
     try:
-        scrap = Scrap.objects.get(user = now_user)
+        scrap = Scrap.objects.get(user = now_user, post = post)
     except Scrap.DoesNotExist:
         scraped = False
     except:
