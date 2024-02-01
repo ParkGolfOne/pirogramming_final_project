@@ -50,7 +50,7 @@ def signup(request):
         form = SignupForm(request.POST)
         if form.is_valid():
             user = form.save()
-            auth.login(request, user)      
+            auth.login(request, user, backend='apps.users.backends.CustomModelBackend')
             return redirect('users:main', user.id )
         else:
             return redirect('users:signup')
@@ -66,7 +66,7 @@ def login(request):
         form = AuthenticationForm(request, request.POST)
         if form.is_valid():
             user = form.get_user()
-            auth.login(request, user)
+            auth.login(request, user, backend='apps.users.backends.CustomModelBackend')
             return redirect('users:main', user.id)
         else:
             context = {
