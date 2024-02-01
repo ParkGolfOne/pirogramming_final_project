@@ -18,7 +18,9 @@
     </div>
     <div>
       <h1 style="color: green; font-size: 40px">{{post.title}}</h1>
-      <h3>{{post.writer}}</h3>
+      <a href="{% url 'users:main' post.writer.id %}"
+        ><h3>{{post.writer}}</h3></a
+      >
       {% if post.photo.url != '' %}
       <img src="{{post.photo.url}}" alt="게시글 이미지" />
       {% else %}

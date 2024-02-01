@@ -1,9 +1,11 @@
+{%load static%}
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>파골원 커뮤니티</title>
+    <link rel="stylesheet" href="{% static 'posts/css/post_list.css'%}" />
   </head>
   <body>
     <a href="{% url 'communitys:board_list' %}">커뮤니티 홈</a>
@@ -22,12 +24,18 @@
       >
       <button type="submit">게시판 삭제</button>
     </form>
-    {% endif %} {% for post in posts%}
-    <a href="{% url  'communitys:post_detail' bid post.pk%}">
-      <div>{{post.title}}</div>
-      <div>{{post.writer}}</div>
-    </a>
-    {% endfor%}
+    {% endif %}
+    <div class="postList">
+      {% for post in posts%}
+      <a
+        href="{% url  'communitys:post_detail' bid post.pk%}"
+        class="postDetailLink"
+      >
+        <div>{{post.title}}</div>
+        <div>{{post.writer}}</div>
+      </a>
+      {% endfor%}
+    </div>
     <hr />
     <hr />
     <a href="{% url 'communitys:post_create' bid %}">글 작성하기</a>

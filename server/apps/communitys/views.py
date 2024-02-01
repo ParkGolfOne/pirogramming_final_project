@@ -179,8 +179,6 @@ def post_detail(request, pk, bid):
     # 게시글 관련 정보, 현재 접속 유저 가져오기
     post = Post.objects.get(id=pk)
 
-    liked = False
-    scraped = False
 
     now_user = request.user
     try:
@@ -188,16 +186,16 @@ def post_detail(request, pk, bid):
     except Like.DoesNotExist:
         liked = False
     except:
-        pass
+        liked = False
     else:
         liked = True
 
     try:
-        scrape = Scrap.objects.get(user = now_user)
+        scrap = Scrap.objects.get(user = now_user)
     except Scrap.DoesNotExist:
         scraped = False
     except:
-        pass
+        scraped = False
     else:
         scraped = True
 
