@@ -46,4 +46,6 @@ def logout(request):
     auth.logout(request)
     return redirect('users:main')
 
-# def users_delete(request ,pk):
+#메인 페이지
+def home(request):
+    return render(request, 'base.html')
