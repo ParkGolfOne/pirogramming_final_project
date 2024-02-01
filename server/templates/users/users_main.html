@@ -1,26 +1,60 @@
 {%load static%}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/users.css' %}">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'css/users.css' %}" />
     <title>Document</title>
-</head>
-<body>
+  </head>
+  <body>
     <h2>마이페이지</h2>
-    {% if user.is_authenticated %}
-        <div>{{user.username}}님 환영합니다</div>
-        <div><a href="{% url 'users:logout' %}">로그아웃</a></div>
-        <div><a href="">회원정보 수정</a></div>
-        <div><a href="">회원 탈퇴</a></div>
-
-    {% else %}
-        <div><a href="{% url 'users:login' %}">로그인</a></div>
-        <div ><a href="{% url 'users:signup' %}">회원가입</a></div>
-    {% endif %}
-
-    {% block content %}
-    {% endblock content %}
-</body>
+    <a href="{% url 'communitys:board_list' %}">커뮤니티 홈</a>
+    {% if user.is_authenticated %} {% if now_user.id == pk %}
+    <h1>{{user.username}}님 페이지</h1>
+    <div><a href="{% url 'users:logout' %}">로그아웃</a></div>
+    <div><a href="">회원정보 수정</a></div>
+    <div><a href="">회원 탈퇴</a></div>
+    <div>
+      <h3>스크랩한 글</h3>
+      {% for scrap in my_scraps%}
+      <div>
+        <a
+          href="{% url 'communitys:post_detail' scrap.post.board.id scrap.post.id%}"
+          ><span>{{scrap.post.title}}</span
+          ><span>{{scrap.post.writer.username}}</span></a
+        >
+      </div>
+      {% endfor %}
+    </div>
+    <div>
+      <h3>좋아요 누른 글</h3>
+      {% for like in my_likes%}
+      <div>
+        <a
+          href="{% url 'communitys:post_detail' like.post.board.id like.post.id%}"
+          ><span>{{like.post.title}}</span
+          ><span>{{like.post.writer.username}}</span></a
+        >
+      </div>
+      {% endfor %}
+    </div>
+    <div>
+      <h3>내가 작성한 글</h3>
+      {% for post in my_posts%}
+      <div>
+        <a href="{% url 'communitys:post_detail' post.board.id post.id%}"
+          ><span>{{post.title}}</span><span>{{post.writer.username}}</span></a
+        >
+      </div>
+      {% endfor %}
+    </div>
+    {%else%}
+    <h1>{{user.username}}님 페이지</h1>
+    <div>자기소개?</div>
+    {% endif %} {% else %}
+    <div><a href="{% url 'users:login' %}">로그인</a></div>
+    <div><a href="{% url 'users:signup' %}">회원가입</a></div>
+    {% endif %} {% block content %} {% endblock content %}
+  </body>
 </html>

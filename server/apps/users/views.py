@@ -2,10 +2,48 @@ from django.shortcuts import render, redirect
 from apps.users.forms import SignupForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import auth
+from apps.communitys.models import *
+from .models import *
 
 # Create your views here.
-def main(request):
-    return render(request, "users/users_main.html")
+def main(request, pk):
+    user = User.objects.get(id = pk)
+    now_user = request.user
+    # 내가 작성한 글 가져오기
+    try:
+        my_posts = Post.objects.filter(writer = user)
+    except Post.DoesNotExist:
+        my_posts = []
+
+    # 내가 작성한 댓글 가져오기
+    try:
+        my_comments = Comment.objects.filter(commenter = user)
+    except Comment.DoesNotExist:
+        my_comments = []
+
+    # 내가  스크랩한 게시글 가져오기
+    try:
+        my_scraps = Scrap.objects.filter(user = user)
+    except Scrap.DoesNotExist:
+        my_scraps = []
+
+    # 내가  좋아요를 누른 게시글 가져오기
+    try:
+        my_likes = Like.objects.filter(user = user)
+    except Like.DoesNotExist:
+        my_likes = []
+
+    context = {
+        "pk" : pk,
+        "user" : user,
+        "now_user" : now_user,
+        "my_posts" : my_posts,
+        "my_comments" : my_comments,
+        "my_scraps" : my_scraps,
+        "my_likes" : my_likes,
+    }
+
+    return render(request, "users/users_main.html", context)
 
 def signup(request):
     if request.method == 'POST':
@@ -13,7 +51,7 @@ def signup(request):
         if form.is_valid():
             user = form.save()
             auth.login(request, user)      
-            return redirect('users:main')
+            return redirect('users:main', user.id )
         else:
             return redirect('users:signup')
     else:
@@ -29,7 +67,7 @@ def login(request):
         if form.is_valid():
             user = form.get_user()
             auth.login(request, user)
-            return redirect('users:main')
+            return redirect('users:main', user.id)
         else:
             context = {
                 'form': form,
@@ -44,6 +82,6 @@ def login(request):
 
 def logout(request):
     auth.logout(request)
-    return redirect('users:main')
+    return redirect('users:login')
 
 # def users_delete(request ,pk):
