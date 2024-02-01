@@ -58,7 +58,7 @@ AUTHENTICATION_BACKENDS = [
 # 소셜 로그인을 위한 설정
 SITE_ID = 1
 SOCIALACCOUNT_LOGIN_ON_GET = True
-LOGIN_REDIRECT_URL = 'users:main'  # 로그인 후 이동할 페이지
+LOGIN_REDIRECT_URL = 'communitys'  # 로그인 후 이동할 페이지
 # ACCOUNT_LOGOUT_REDIRECT_URL = 'index' # 로그아웃 후 이동할 페이지
 ACCOUNT_LOGOUT_ON_GET = True # 로그 아웃 요청 시 바로 로그아웃 되도록
 
