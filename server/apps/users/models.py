@@ -11,3 +11,8 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.username
+    
+
+# class SocialUser(models.Model):
+#     user = models.ForeignKey(
+#         allauth.app_settings.USER_MODEL, on_delete=models.CASCADE)

@@ -12,6 +12,10 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 import os
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -41,7 +45,26 @@ INSTALLED_APPS = [
     'apps.users',
     'apps.communitys',
     'apps.locations',
+
+    # 소셜 로그인에 관련된 처리를 하는 어플리케이션
+    'social_django',
 ]
+
+AUTHENTICATION_BACKENDS = [
+    'social_core.backends.kakao.KakaoOAuth2', # 카카오
+    'django.contrib.auth.backends.ModelBackend', # 소셜로그인 정보를 User 모델 클래스에 저장
+]
+
+# 소셜 로그인을 위한 설정
+SITE_ID = 1
+SOCIALACCOUNT_LOGIN_ON_GET = True
+LOGIN_REDIRECT_URL = 'users:main'  # 로그인 후 이동할 페이지
+# ACCOUNT_LOGOUT_REDIRECT_URL = 'index' # 로그아웃 후 이동할 페이지
+ACCOUNT_LOGOUT_ON_GET = True # 로그 아웃 요청 시 바로 로그아웃 되도록
+
+#############################
+SOCIAL_AUTH_KAKAO_KEY = os.environ.get('SOCIAL_AUTH_KAKAO_KEY')
+SOCIAL_AUTH_KAKAO_SECRET = os.environ.get('SOCIAL_AUTH_KAKAO_SECRET')
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

@@ -54,6 +54,7 @@
     <div>자기소개?</div>
     {% endif %} {% else %}
     <div><a href="{% url 'users:login' %}">로그인</a></div>
+    <div><a href="{% url 'social:begin' 'kakao' %}">카카오 로그인</a></div>
     <div><a href="{% url 'users:signup' %}">회원가입</a></div>
     {% endif %} {% block content %} {% endblock content %}
   </body>
