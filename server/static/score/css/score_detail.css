@@ -1,0 +1,11 @@
+.scoreGrid{
+    display:grid;
+    grid-template-columns: repeat(11, 1fr);
+
+}
+
+.scoreGrid > div{
+    background-color: lightgreen;
+    margin: 10px;
+    text-align: center;
+}
