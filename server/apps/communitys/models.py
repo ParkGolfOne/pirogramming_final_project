@@ -1,6 +1,7 @@
 from django.db import models
 from apps.users.models import *
 from apps.locations.models import *
+from django.utils import timezone
 
 # 게시판 모델
 class Board (models.Model):
@@ -27,6 +28,18 @@ class Post (models.Model):
 
     def __str__(self):
         return self.title
+    
+    def save(self, *args, **kwargs):
+        # like_num, scrap_num이 변경되지 않았을 때만 갱신
+        if self.like_num == self._original_like_num or self.scrap_num == self._original_scrap_num:
+            self.updated_date = timezone.now()
+        
+        super().save(*args, **kwargs)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._original_like_num = self.like_num
+        self._original_scrap_num = self.scrap_num
 
 
 # 댓글 모델  

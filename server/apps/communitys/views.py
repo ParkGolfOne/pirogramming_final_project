@@ -181,7 +181,7 @@ def post_detail(request, pk, bid):
 
     liked = False
     scraped = False
-    
+
     now_user = request.user
     try:
         like = Like.objects.get(user = now_user)
@@ -266,6 +266,7 @@ def reply_create(request):
 
     newcomment = Comment.objects.create(post = post, commenter = commenter, content = content, parent_comment = parent_comment )
     parent_comment.child_comments_num += 1
+    parent_comment.save()
 
     return JsonResponse({'commenter' : newcomment.commenter.username, 'content' : newcomment.content, 'commentId' : newcomment.id, 'post_id' : post_id})
 
@@ -305,9 +306,19 @@ def comment_delete(request, pk):
 @csrf_exempt
 @transaction.atomic
 def comment_update(request, pk):
-    pass
+    req = json.loads(request.body)
+    cid = req["comment_id"]
+    content = req["content"]
 
+    try:
+        target_comment = get_object_or_404(Comment, id = cid)
+    except 404:
+        print("존재하지 않는 댓글 update 시도!")
+    else:
+        target_comment.content = content
+        target_comment.save()
 
+    return JsonResponse({'commenter' : target_comment.commenter.username, 'content' : content,'commentId' : cid, 'post_id' : target_comment.post.id})
 
 
 

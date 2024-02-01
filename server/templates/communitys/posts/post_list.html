@@ -25,8 +25,11 @@
     {% endif %} {% for post in posts%}
     <a href="{% url  'communitys:post_detail' bid post.pk%}">
       <div>{{post.title}}</div>
+      <div>{{post.writer}}</div>
     </a>
     {% endfor%}
+    <hr />
+    <hr />
     <a href="{% url 'communitys:post_create' bid %}">글 작성하기</a>
   </body>
 </html>
