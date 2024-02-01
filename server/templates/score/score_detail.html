@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>세부 점수</title>
+</head>
+<body>
+    {% if user.is_authenticated %}
+    <div class="scoreMainBtn"> <a href="{% url 'users:logout'%}">로그아웃</a></div>
+    {% endif %}
+    <a href="{% url 'score:score_main'%}">스코어 메인페이지 링크</a>
+    점수 디테일 페이지
+    <div>표 영역</div>
+    <div> 총점 : {{score.total_score}}</div>
+    {% if score.player == now_user %}
+      <form
+        action="{% url 'score:score_delete' score.id %}"
+        method="POST"
+      >
+        {%csrf_token%}
+        <a
+          href="{% url 'score:score_update' score.id %}"
+          class="btn btn-primary"
+          >수정하기</a
+        >
+        <button type="submit">삭제하기</button>
+      </form>
+      {% endif %}
+</body>
+</html>
