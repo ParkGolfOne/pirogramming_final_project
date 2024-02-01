@@ -29,7 +29,7 @@
 
       <div>[공유하기 넣을 곳]</div>
 
-      <h2 class="my-3">{{post.content}}</h2>
+      <h2 class="my-3">{{ post.content|safe }}</h2>
       <p>작성일: {{post.created_date}}</p>
       <p>수정일: {{post.updated_date}}</p>
 
