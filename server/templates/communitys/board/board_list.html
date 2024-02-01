@@ -26,5 +26,8 @@
     {% endfor%} {% if user.is_authenticated %}
     <a href="{% url 'communitys:board_create' %}">게시판 추가</a>
     {% endif %}
+
+    <!-- 페이지 네이션 -->
+    <script src="{% static 'posts/js/comments.js'%}"></script>
   </body>
 </html>
