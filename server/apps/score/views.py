@@ -107,13 +107,15 @@ def score_history(request, uid):
     user = User.objects.get(id = uid)
 
     try:
-        scores = Score.objects.filter(player = user)
+        # 추후에 날짜 데이터 삽입시 변경.
+        scores = Score.objects.filter(player = user).order_by('-id') 
     except Score.DoesNotExist:
         scores=[]
 
     context={
         'scores' : scores,
         'user' : user,
+        'uid' : uid,
     }
     return render(request, 'score/score_history.html', context)
 
@@ -125,6 +127,7 @@ def score_history(request, uid):
 # 함수 이름 : score_scan
 # 전달인자 : request
 # 기능 : --
+
 def score_scan(request):
     pass
 
@@ -133,8 +136,28 @@ def score_scan(request):
 #                   스코어 그래프 관련 함수                 #
 ###########################################################
 
-# 함수 이름 : draw_score_graph
+# 함수 이름 : take_score_info
 # 전달인자 : request
 # 기능 : --
-def draw_score_graph (request):
-    pass
+@csrf_exempt
+@transaction.atomic
+def take_score_info (request):
+    # 아래 오류 수정
+    req = json.loads(request.body)
+    user_id = req["user_id"]
+    user = get_object_or_404(User, id=user_id)
+
+    # 해당 유저의 모든 Score 모델 가져오기
+    try:
+        score_list = Score.objects.filter(player = user)
+    except Score.DoesNotExist:
+        score_list = []
+
+    # 전달할 total_score들의 리스트 :  scores
+    scores = []
+    for score in score_list:
+        scores.append(score.total_score)
+
+    print(scores)
+    return JsonResponse({'scores' : scores})
+

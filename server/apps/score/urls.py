@@ -12,5 +12,5 @@ urlpatterns = [
     path('score_delete/<int:sid>/', score_delete, name='score_delete'),
     path('userScoreHistory/<int:uid>/', score_history, name='score_history'),
     path('scan_scorePaper/', score_scan, name='score_scan'),
-    path('draw_scoreGraph/', draw_score_graph, name='score_graph'),
+    path('take_score_info/', take_score_info, name='take_score_info'),
 ]
