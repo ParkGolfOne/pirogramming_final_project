@@ -1,4 +1,3 @@
-from social_core.pipeline.user import create_user
 from django.shortcuts import redirect
 
 def set_username(strategy, details, response, user=None, *args, **kwargs):
