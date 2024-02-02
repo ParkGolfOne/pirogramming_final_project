@@ -25,7 +25,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('communitys/', include('apps.communitys.urls')),
     path('users/', include('apps.users.urls')),
+    path('score/', include('apps.score.urls',)),
     path('locations/', include('apps.locations.urls')),
+    path('auth/', include('social_django.urls', namespace='social')),
+
 ]
 
 if settings.DEBUG:

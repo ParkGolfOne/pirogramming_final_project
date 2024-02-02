@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <!-- 폼  html형식 글 작성(tiny사용) 지원을 위해 스크립트 파일 추가-->
+    {{ form.media }}
   </head>
   <body>
     <a href="{% url 'communitys:board_list' %}">커뮤니티 홈</a>
@@ -11,7 +13,7 @@
     <form method="POST" action="" enctype="multipart/form-data">
       <h1>NEW POST</h1>
       {% csrf_token %} {{ form }}
-      <input type="submit" value="게시판 등록" />
+      <input type="submit" value="글 등록" />
     </form>
   </body>
 </html>

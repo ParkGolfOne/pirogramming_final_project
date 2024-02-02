@@ -1,0 +1,22 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>점수 수정</title>
+</head>
+<body>
+    <a href="{% url 'score:score_main'%}">스코어 메인페이지 링크</a>
+    점수 수정 페이지
+    <form
+        action="{% url 'score:score_update' sid  %}"
+        method="post"
+        enctype="multipart/form-data"
+      >
+        {%csrf_token%} {{form.as_p}}
+
+        <button>수정하기</button>
+      </form>
+</body>
+</html>
