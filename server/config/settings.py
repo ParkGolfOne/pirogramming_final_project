@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # 사이트 기능 앱
     'apps.users',
     'apps.communitys',
     'apps.locations',
@@ -49,6 +50,9 @@ INSTALLED_APPS = [
 
     # 소셜 로그인에 관련된 처리를 하는 어플리케이션
     'social_django',
+
+    # 게시물에 html형식의 글을 쓰게 해주는 앱
+    'tinymce',
 ]
 
 AUTHENTICATION_BACKENDS = [
@@ -160,3 +164,36 @@ STATICFILES_DIRS = [
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')    
+
+# 게시물에 html형식의 글을 쓰게 해주는 앱
+# 커스텀 가능
+# TINYMCE_DEFAULT_CONFIG = {
+#     'cleanup_on_startup': True,
+#     'custom_undo_redo_levels': 20,
+#     'selector': 'textarea',
+#     'theme': 'silver',
+#     'plugins': '''
+#             textcolor save link image media preview codesample contextmenu
+#             table code lists fullscreen  insertdatetime  nonbreaking
+#             contextmenu directionality searchreplace wordcount visualblocks
+#             visualchars code fullscreen autolink lists  charmap print  hr
+#             anchor pagebreak
+#             ''',
+#     'toolbar1': '''
+#             fullscreen preview bold italic underline | fontselect,
+#             fontsizeselect  | forecolor backcolor | alignleft alignright |
+#             aligncenter alignjustify | indent outdent | bullist numlist table |
+#             | link image media | codesample |
+#             ''',
+#     'toolbar2': '''
+#             visualblocks visualchars |
+#             charmap hr pagebreak nonbreaking anchor |  code |
+#             ''',
+#     'contextmenu': 'formats | link image',
+#     'menubar': True,
+#     'statusbar': True,
+#     'theme_advanced_resizing': True,
+#     "images_upload_url": "upload_image",
+#     'width': '100%',
+#     'height': 600
+# }
