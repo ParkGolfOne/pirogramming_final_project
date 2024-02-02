@@ -7,6 +7,7 @@ cryptography==41.0.7
 defusedxml==0.7.1
 Django==5.0.1
 django-allauth==0.60.1
+django-tinymce==3.6.1
 exceptiongroup==1.2.0
 h11==0.14.0
 idna==3.6
