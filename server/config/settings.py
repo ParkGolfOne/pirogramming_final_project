@@ -90,8 +90,6 @@ SOCIAL_AUTH_PIPELINE = (
     'social.pipeline.debug.debug',
     'apps.users.pipeline.set_username',
     'social.pipeline.debug.debug',
-    # 'apps.users.pipeline.get_additional_info',
-    # 'social.pipeline.debug.debug',
 )
 
 MIDDLEWARE = [
