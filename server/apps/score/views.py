@@ -168,6 +168,5 @@ def take_score_info (request):
     for score in score_list:
         scores.append(score.total_score)
 
-    print(scores)
     return JsonResponse({'scores' : scores})
 
