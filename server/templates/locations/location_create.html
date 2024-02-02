@@ -1,5 +1,5 @@
 {% block content %}
-    <form action = "{% url 'locations:create' %}" method = "post">
+    <form action = "{% url 'locations:create' %}" method = "post" enctype="multipart/form-data">
         {% csrf_token %}
         {{form.as_p}}
         <button type="submit">추가완료</button>

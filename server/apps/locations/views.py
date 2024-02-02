@@ -22,7 +22,7 @@ def location_detail (request, pk):
 #새로운 골프장 추가
 def location_create (request):
     if request.method == 'POST':
-        form = NewField(request.POST)
+        form = NewField(request.POST, request.FILES)
         if form.is_valid():
             form.save()
         return redirect('locations:list')
@@ -38,7 +38,7 @@ def location_create (request):
 def location_update(request, pk):
     location = GolfLocation.objects.get(id=pk)
     if request.method == "POST":
-        form = NewField(request.POST, instance=location)
+        form = NewField(request.POST, request.FILES, instance=location)
         if form.is_valid():
             form.save()
         return redirect('locations:detail', pk=pk)
