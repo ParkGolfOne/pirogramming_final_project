@@ -14,6 +14,7 @@ class User(AbstractUser):
     def __str__(self):
         return self.username
 
+
 # 시도/ 군구 모델
 class Region(models.Model):
     city = models.CharField("시/도", max_length=31)
