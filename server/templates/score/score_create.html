@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>점수 입력</title>
+    <link rel="stylesheet" href="{% static 'score/css/score_detail.css'%}" />
+    <link rel="stylesheet" href="{% static 'score/css/score_create.css'%}" />
 </head>
 <body>
     <a href="{% url 'score:score_main'%}">스코어 메인페이지 링크</a>
@@ -12,6 +14,44 @@
     <form method="POST" action="" enctype="multipart/form-data">
         <h1>NEW SCORE</h1>
         {% csrf_token %} {{ form }}
+        <div class="scoreGrid">
+            <div>홀</div>
+            <div>파</div>
+            <div>점수</div>
+            <div>1</div>
+            <div><input type="text" maxlength="1" name="par1"/></div>
+            <div><input type="text" maxlength="1" name="score1"/></div>
+            <div>2</div>
+            <div><input type="text" maxlength="1" name="par2"/></div>
+            <div><input type="text" maxlength="1" name="score2"/></div>
+            <div>3</div>
+            <div><input type="text" maxlength="1" name="par3"/></div>
+            <div><input type="text" maxlength="1" name="score3"/></div>
+            <div>4</div>
+            <div><input type="text" maxlength="1" name="par4"/></div>
+            <div><input type="text" maxlength="1" name="score4"/></div>
+            <div>5</div>
+            <div><input type="text" maxlength="1" name="par5"/></div>
+            <div><input type="text" maxlength="1" name="score5"/></div>
+            <div>6</div>
+            <div><input type="text" maxlength="1" name="par6"/></div>
+            <div><input type="text" maxlength="1" name="score6"/></div>
+            <div>7</div>
+            <div><input type="text" maxlength="1" name="par7"/></div>
+            <div><input type="text" maxlength="1" name="score7"/></div>
+            <div>8</div>
+            <div><input type="text" maxlength="1" name="par8"/></div>
+            <div><input type="text" maxlength="1" name="score8"/></div>
+            <div>9</div>
+            <div><input type="text" maxlength="1" name="par9"/></div>
+            <div><input type="text" maxlength="1" name="score9"/></div>
+            <div>합계</div>
+            <div>/</div>
+            <div>/</div>
+          
+    
+            
+          </div>
         <input type="submit" value="점수 등록" />
       </form>
 </body>
