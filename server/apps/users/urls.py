@@ -10,6 +10,5 @@ urlpatterns = [
     path("signup/", views.signup, name="signup"),
     path("update/<int:pk>/", views.update, name="update"),
     path("social_login/", views.social_login, name="social_login"),
-    # path("naver_logout/", views.naver_logout, name="naver_logout"),
-    # path("check_naver_auth/", views.check_naver_auth, name="check_naver_auth"),
+    path('get_town_list/', views.get_town_list, name='get_town_list'),
 ]
