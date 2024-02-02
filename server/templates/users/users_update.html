@@ -1,0 +1,9 @@
+{% extends 'users/users_main.html' %}
+
+{% block content %}
+<form method="POST" action="{% url 'users:update' pk %}">
+    {% csrf_token %}
+    {{ form }}
+    <button>개인 정보 수정</button>
+</form>
+{% endblock content %}
