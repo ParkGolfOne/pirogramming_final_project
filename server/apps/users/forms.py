@@ -11,6 +11,14 @@ class SignupForm(UserCreationForm):
             }
         )
     )
+    nickname = forms.CharField(
+        label='닉네임',
+        widget=forms.TextInput(
+            attrs={
+                'class': 'signup-input'
+            }
+        )
+    )
     password1 = forms.CharField(
         label='비밀번호',
         widget=forms.PasswordInput(
@@ -53,5 +61,43 @@ class SignupForm(UserCreationForm):
     )
     class Meta:
         model = User
-        fields = ['username', 'password1', 'password2',
-                   'birth', 'phone', 'address']
+        fields = ['username', 'nickname', 'password1', 'password2','birth', 'phone', 'address']
+
+
+class UpdateForm(forms.ModelForm):
+    nickname = forms.CharField(
+        label='닉네임',
+        widget=forms.TextInput(
+            attrs={
+                'class': 'signup-input'
+            }
+        )
+    )
+    birth = forms.CharField(
+        label='생일',
+        widget=forms.TextInput(
+            attrs={
+                'class' : 'signup-input'
+            }
+        )
+    )
+    phone = forms.CharField(
+        label='전화번호',
+        widget=forms.TextInput(
+            attrs={
+                'class': 'signup-input'
+            }
+        )
+    )
+    address = forms.CharField(
+        label='주소',
+        widget=forms.TextInput(
+            attrs={
+                'class': 'signup-input'
+            }
+        )
+    )
+    class Meta:
+        model=User
+        fields = ["nickname", "birth", "phone", "address"]
+    

@@ -58,6 +58,7 @@ INSTALLED_APPS = [
 AUTHENTICATION_BACKENDS = [
     'apps.users.backends.CustomModelBackend', # 커스텀 모델 백엔드 추가
     'social_core.backends.kakao.KakaoOAuth2', # 카카오
+    'social_core.backends.naver.NaverOAuth2', # 네이버
     'django.contrib.auth.backends.ModelBackend', # 소셜로그인 정보를 User 모델 클래스에 저장
 ]
 
@@ -67,10 +68,34 @@ SOCIALACCOUNT_LOGIN_ON_GET = True
 LOGIN_REDIRECT_URL = 'communitys:board_list'  # 로그인 후 이동할 페이지
 # ACCOUNT_LOGOUT_REDIRECT_URL = 'index' # 로그아웃 후 이동할 페이지
 ACCOUNT_LOGOUT_ON_GET = True # 로그 아웃 요청 시 바로 로그아웃 되도록
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = "users:social_login"
 
 #############################
+# 1. 카카오 
 SOCIAL_AUTH_KAKAO_KEY = os.environ.get('SOCIAL_AUTH_KAKAO_KEY')
 SOCIAL_AUTH_KAKAO_SECRET = os.environ.get('SOCIAL_AUTH_KAKAO_SECRET')
+
+# 2. 네이버
+SOCIAL_AUTH_NAVER_KEY = os.environ.get('SOCIAL_AUTH_NAVER_KEY')
+SOCIAL_AUTH_NAVER_SECRET = os.environ.get('SOCIAL_AUTH_NAVER_SECRET')
+##############################
+
+
+#### 소셜로그인 후 필요한 정보 추가용 ####
+SOCIAL_AUTH_PIPELINE = (
+    'social.pipeline.social_auth.social_details',
+    'social.pipeline.social_auth.social_uid',
+    'social.pipeline.social_auth.auth_allowed',
+    'social.pipeline.social_auth.social_user',
+    'social.pipeline.user.get_username',
+    'social.pipeline.user.create_user',
+    'social.pipeline.social_auth.associate_user',
+    'social.pipeline.social_auth.load_extra_data',
+    'social.pipeline.user.user_details',
+    'social.pipeline.debug.debug',
+    'apps.users.pipeline.set_username',
+    'social.pipeline.debug.debug',
+)
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
