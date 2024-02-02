@@ -1,0 +1,7 @@
+.scoreBanner{
+    height: 300px;
+    width: 300px;
+    background-image: url('/static/score/images/golf-outline.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+}

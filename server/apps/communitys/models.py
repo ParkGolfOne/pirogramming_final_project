@@ -2,6 +2,7 @@ from django.db import models
 from apps.users.models import *
 from apps.locations.models import *
 from django.utils import timezone
+from tinymce.models import HTMLField
 
 # 게시판 모델
 class Board (models.Model):
@@ -16,7 +17,7 @@ class Board (models.Model):
 class Post (models.Model):
     board = models.ForeignKey(Board, on_delete=models.CASCADE, verbose_name='소속 게시판')
     title = models.CharField('제목', max_length=255)
-    content = models.TextField('내용')
+    content = HTMLField('내용') # 게시물 내용을 html형식으로 쓸수있게
     writer = models.ForeignKey(User, on_delete=models.CASCADE,  verbose_name='작성자')
     photo = models.ImageField('이미지', blank=True, upload_to='communitys/posts/%Y/%m/%d')
     like_num  = models.IntegerField(default = 0)  # 좋아요 숫자

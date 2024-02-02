@@ -138,7 +138,6 @@ def social_login(request):
     
 # def users_delete(request ,pk):
 
-
 ###################################
 # 소셜 로그인 unlink request      #
 ###################################
@@ -164,4 +163,5 @@ def kakao_unlink(request):
     else:
         print(f"Failed to unlink Kakao user. Status code: {response.status_code}")
         print(response.text)
+
 
