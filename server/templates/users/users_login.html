@@ -1,9 +1,9 @@
 {% extends 'users/users_main.html' %}
 
-{% block content %}
+{% block header %}
 <form method="POST" action="">
     {% csrf_token %}
     {{ form }}
     <button>로그인</button>
 </form>
-{% endblock content %}
+{% endblock %}

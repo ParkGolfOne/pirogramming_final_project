@@ -1,4 +1,6 @@
+{% extends 'base.html' %}
 {%load static%}
+{% block content %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -9,7 +11,7 @@
     <title>Document</title>
   </head>
   <body>
-    <h2>마이페이지</h2>
+    <h2 class="users-maintitle">마이페이지</h2>
     <a href="{% url 'communitys:board_list' %}">커뮤니티 홈</a>
     {% if user.is_authenticated %} {% if now_user.id == pk %}
     <h1>{{user.nickname}}님 페이지</h1>
@@ -58,6 +60,7 @@
     <div><a href="{% url 'social:begin' 'kakao' %}">카카오 로그인</a></div>
     <div><a href="{% url 'social:begin' 'naver' %}">네이버 로그인</a></div>
     <div><a href="{% url 'users:signup' %}">회원가입</a></div>
-    {% endif %} {% block content %} {% endblock content %}
+    {% endif %} {% block header %} {% endblock %}
   </body>
 </html>
+{% endblock %}

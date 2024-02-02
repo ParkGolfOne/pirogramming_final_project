@@ -1,9 +1,9 @@
 {% extends 'users/users_main.html' %}
 
-{% block content %}
+{% block header %}
 <form method="POST" action="">
     {% csrf_token %}
     {{ form }}
     <input type="submit" value="회원가입">
 </form>
-{% endblock content %}
+{% endblock %}

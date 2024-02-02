@@ -5,19 +5,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/reset.css' %}" />
-    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <link rel="stylesheet" href="{% static 'main/css/reset.css' %}" />
+    <link rel="stylesheet" href="{% static 'main/css/style.css' %}" />
     <title>Document</title>
 </head>
 <body>
     <header id="header">
         <div class="title-container">
-            <a class="title" href="/">파골원</a>
+            <a href="/">
+                <img src="{% static 'main/images/parkgolfone_logo1.png' %}" alt="" class="title-logo"/>
+            </a>
         </div>
         <ul class="main-menu">
-            <li><a href="locations/list/">지도</a></li>
-            <li><a href="communitys/">커뮤니티</a></li>
-            <li><a href="users/">마이페이지</a></li>
+            <li><a href="{% url 'locations:list' %}">지도</a></li>
+            <li><a href="{% url 'communitys:board_list' %}">커뮤니티</a></li>
+            <li><a href="{% url 'users:signup' %}">마이페이지</a></li>
         </ul>
         <label class="hamburger-icon">
             <input type="checkbox" />
@@ -26,23 +28,24 @@
             <div></div>
             <aside class="main-sidebar">
                 <ul>
-                    <li><a href="/">홈</a></li>
-                    <li><a href="locations/list/">지도</a></li>
-                    <li><a href="communitys/">커뮤니티</a></li>
-                    <li><a href="users/">마이페이지</a></li>
+                    <li><a href="{% url 'locations:list' %}">지도</a></li>
+                    <li><a href="{% url 'communitys:board_list' %}">커뮤니티</a></li>
+                    <li><a href="{% url 'users:signup' %}">마이페이지</a></li>
                 </ul>
             </aside>
         </label>
     </header>
+    <div class="main-container">
     {% block content %}
     
     {% endblock %}
+    </div>
     <footer id="footer">
         <ul>
             <li><a href="/">홈</a></li>
-            <li><a href="locations/list/">지도</a></li>
-            <li><a href="communitys/">커뮤니티</a></li>
-            <li><a href="users/">마이페이지</a></li>
+            <li><a href="{% url 'locations:list' %}">지도</a></li>
+            <li><a href="{% url 'communitys:board_list' %}">커뮤니티</a></li>
+            <li><a href="{% url 'users:signup' %}">마이페이지</a></li>
         </ul>
     </footer>
 </body>
