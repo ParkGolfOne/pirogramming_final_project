@@ -6,7 +6,11 @@ from .forms import *
 import json
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+#트랜잭션
 from django.db import transaction
+# 이미지 텍스트 인식 관련
+import cv2
+import pytesseract
 
 
 ###########################################################
@@ -137,10 +141,25 @@ def score_history(request, uid):
 # 함수 이름 : score_scan
 # 전달인자 : request
 # 기능 : --
-
+@csrf_exempt
+@transaction.atomic
 def score_scan(request):
-    pass
+    if request.method == "POST":
+        upload_image = request.FILES.get('image')
+        # 이미지 파일 로드
+        image = cv2.imread(upload_image)
+        print(image)
 
+        # # 이미지 전처리를 위해 흑백으로 변환
+        # gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
+        # 이미지에서 텍스트 추출
+        text = pytesseract.image_to_string(image, lang='eng')
+
+        # 추출한 텍스트 출력
+        print(text)
+    
+    return JsonResponse({'text' : text})
 
 ###########################################################
 #                   스코어 그래프 관련 함수                 #
