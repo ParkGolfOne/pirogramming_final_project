@@ -9,14 +9,13 @@
   <script defer src="{% static 'js/region.js' %}"></script>
   <title>마이페이지</title>
 {% block content %}
-    <h2 class="users-maintitle">마이페이지</h2>
-    <a href="{% url 'communitys:board_list' %}">커뮤니티 홈</a>
+    <div></div><h2 class="users-maintitle">마이페이지</h2>
     {% if user.is_authenticated %} {% if now_user.id == pk %}
     <h1>{{user.nickname}}님 페이지</h1>
-    <div><a href="{% url 'users:logout' %}">로그아웃</a></div>
-    <div><a href="{% url 'users:update' user.pk %}">회원정보 수정</a></div>
-    <div><a href="">회원 탈퇴</a></div>
-    <div>
+    <button class="user-mypage-btn"><a href="{% url 'users:logout' %}">로그아웃</a></button>
+    <button class="user-mypage-btn"><a href="{% url 'users:update' user.pk %}">회원정보 수정</a></button>
+    <button class="user-mypage-btn"><a href="">회원 탈퇴</a></button>
+    <div class="user-mypage">
       <h3>스크랩한 글</h3>
       {% for scrap in my_scraps%}
       <div>
@@ -28,7 +27,7 @@
       </div>
       {% endfor %}
     </div>
-    <div>
+    <div class="user-mypage">
       <h3>좋아요 누른 글</h3>
       {% for like in my_likes%}
       <div>
@@ -40,7 +39,7 @@
       </div>
       {% endfor %}
     </div>
-    <div>
+    <div class="user-mypage">
       <h3>내가 작성한 글</h3>
       {% for post in my_posts%}
       <div>

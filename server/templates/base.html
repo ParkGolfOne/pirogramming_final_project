@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'main/css/reset.css' %}" />
     <link rel="stylesheet" href="{% static 'main/css/style.css' %}" />
+    <link rel="stylesheet" href="{% static 'users/css/user.css' %}" />
     {% block head %}
 
     {% endblock %}
@@ -15,15 +16,15 @@
     <header id="header">
         <div class="title-container">
             <a href="/">
-                <img src="{% static 'main/images/parkgolfone_logo1.png' %}" alt="" class="title-logo"/>
+                <img src="{% static 'main/images/parkgolfone_logo2.png' %}" alt="" class="title-logo"/>
             </a>
         </div>
         <ul class="main-menu">
             <li><a href="{% url 'locations:list' %}">지도</a></li>
             <li><a href="{% url 'communitys:board_list' %}">커뮤니티</a></li>
             {% if user.is_authenticated%}
-            <li><a href="{% url 'users:main' %}">마이페이지</a></li>
             <li><a href="{% url 'score:score_main' %}">스코어</a></li>
+            <li><a href="{% url 'users:main' pk=user.pk %}">마이페이지</a></li>
             {% else %}
             <li><a href="{% url 'users:login' %}">로그인</a></li>
             <li><a href="{% url 'users:signup' %}"> 회원가입 </a></li>
@@ -41,8 +42,9 @@
                     <li><a href="{% url 'locations:list' %}">지도</a></li>
                     <li><a href="{% url 'communitys:board_list' %}">커뮤니티</a></li>
                     {% if user.is_authenticated%}
-                    <li><a href="{% url 'users:main' %}">마이페이지</a></li>
+                    
                     <li><a href="{% url 'score:score_main' %}">스코어</a></li>
+                    <li><a href="{% url 'users:main' user.pk %}">마이페이지</a></li>
                     {% else %}
                     <li><a href="{% url 'users:login' %}">로그인</a></li>
                     <li><a href="{% url 'users:signup' %}"> 회원가입 </a></li>
@@ -65,7 +67,7 @@
             <li><a href="{% url 'locations:list' %}">지도</a></li>
             <li><a href="{% url 'communitys:board_list' %}">커뮤니티</a></li>
             {% if user.is_authenticated%}
-            <li><a href="{% url 'users:main' %}">마이페이지</a></li>
+            
             <li><a href="{% url 'score:score_main' %}">스코어</a></li>
             {% else %}
             <li><a href="{% url 'users:login' %}">로그인</a></li>

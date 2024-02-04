@@ -176,7 +176,6 @@ def logout(request):
         kakao_unlink(request)
     auth.logout(request)
     return redirect('users:login')
-    return redirect('users:login')
 
 
 # 메인 페이지

@@ -1,28 +1,38 @@
 {% extends 'base.html' %}
 
 {% load static %}
+{% block head %}
+  <title>파골원 커뮤니티</title>
+  <link rel="stylesheet" href="{% static 'locations/css/location_list.css'%}" />
+{% endblock %}
 {% block content %}
 <div>
-  <div>
-    <h1>전국 골프장 목록</h1>
-  </div>
-  <div>
-    {% for location in locations %}
+    <h1 class="location-title">전국 골프장 목록</h1>
+
+      {% for location in locations %}
+    <div class="location-container">
       {% if location.golf_image %}
         <a href="{% url 'locations:detail' location.pk %}">
-          <img src="{{ location.golf_image.url }}">
+          <div>
+            <img src="{{ location.golf_image.url }}" class="location-img">
+          </div>
         </a>
       {% else %}
       <a href="{% url 'locations:detail' location.pk %}">
-        <img src="{% static 'locations/images/no_img.png/' %}">
+        <div>
+          <img src="{% static 'locations/images/no_img.png/' %}" class="location-img">
+        </div>
       </a>
       {% endif %}
       {% comment %} 골프장 이름 클릭 시 세부내용 페이지로 이동 {% endcomment %}
       <h4><a href="{% url 'locations:detail' location.pk %}">골프장 이름: {{location.golf_name}}</a></h4>
       <h4>골프장 주소: {{location.golf_address}}</h4>
       <br>
+    </div>      
     {% endfor %}
+
+    
   </div>
-  <a href="{% url 'locations:create' %}">골프장 추가</a>
+  <a href="{% url 'locations:create' %}" class="location-btn">골프장 추가</a>
 </div>
 {% endblock %}
