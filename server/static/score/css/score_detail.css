@@ -1,11 +1,21 @@
 .scoreGrid{
+    width: 350px;
     display:grid;
-    grid-template-columns: repeat(11, 1fr);
-
+    grid-template-columns: repeat(3, 1fr);
 }
 
 .scoreGrid > div{
-    background-color: lightgreen;
+    width: 100px;
+    border :1px solid lightgreen;
     margin: 10px;
     text-align: center;
+
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.scoreGrid > div >  input {
+    width: 90px;
+    border:none;
 }

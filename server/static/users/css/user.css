@@ -1,0 +1,42 @@
+.login-form input[type="text"],
+.login-form input[type="password"],
+.signup-form input[type="text"],
+.signup-form input[type="password"],
+.users-update-form input[type="text"],
+.users-update-form input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-sizing: border-box;
+    background-color: #ffffff;
+}
+.signup-form > .form-group > label {
+    margin-bottom: 5px;
+}
+.user-btn, .user-mypage-btn {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid var(--green--medium--color);
+    background-color: #ffffff;
+    cursor: pointer;
+}
+.user-btn {
+    width: 100%;
+}
+.user-mypage-btn {
+    margin: 5px;
+}
+.user-btn:hover, .user-mypage-btn:hover {
+    background-color: var(--green--medium--color);
+    border: 1px solid var(--green--medium--color);
+    transition: 0.1s;
+}
+.user-mypage {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid var(--white--border--color);
+    background-color: var(--green--pale--color);
+    margin: 5px;
+}

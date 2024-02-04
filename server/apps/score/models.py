@@ -10,6 +10,7 @@ class Score(models.Model):
     par = models.CharField('파', max_length = 9, default = '555555555')
     score = models.CharField('점수', max_length = 9, default = '000000000')
     total_score = models.IntegerField(default = 0)
+    date = models.DateTimeField('작성일', auto_created=True, auto_now_add=True)
 
     def save(self, *args, **kwargs):
         self.total_score = sum(int(score_digit) for score_digit in self.score)

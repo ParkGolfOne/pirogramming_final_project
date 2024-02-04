@@ -42,8 +42,18 @@ def score_input(request, uid):
     if request.method == "POST":
         form = ScoreForm(request.POST, request.FILES)
         if form.is_valid:
+            par = ''
+            for i in range(1, 10):
+                par += request.POST.get(f'par{i}', '')
+
+            score = ''
+            for i in range(1, 10):
+                score += request.POST.get(f'score{i}', '')
+
             score_instance = form.save(commit=False)
             score_instance.player = request.user
+            score_instance.par = par
+            score_instance.score = score
             score_instance.save()
         return redirect("score:score_detail", score_instance.id)
 
@@ -158,6 +168,5 @@ def take_score_info (request):
     for score in score_list:
         scores.append(score.total_score)
 
-    print(scores)
     return JsonResponse({'scores' : scores})
 

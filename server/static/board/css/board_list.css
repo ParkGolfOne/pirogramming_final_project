@@ -1,0 +1,32 @@
+.board-container {
+    display: flex; 
+    width: 70%;
+    border: 1px solid var(--white--border--color);
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px;
+    background-color: var(--green--pale--color);
+}
+.board-container a {
+    display: flex;
+    color: inherit;
+}
+
+.board-container img {
+    margin-left: auto;
+    width: 100px;
+    height: auto;
+}
+.communitys-btn {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: px solid var(--green--medium--color);
+    background-color: #ffffff;
+    cursor: pointer;
+}
+.communitys-btn-btn:hover {
+    background-color: var(--green--medium--color);
+    border: 1px solid var(--green--medium--color);
+    transition: 0.1s;
+}
