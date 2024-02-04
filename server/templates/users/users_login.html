@@ -1,6 +1,6 @@
-{% extends 'users/users_main.html' %}
+{% extends 'base.html' %}
 
-{% block user_main %}
+{% block content %}
 <form method="POST" action="">
     {% csrf_token %}
     {{ form }}

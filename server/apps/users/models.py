@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from apps.region.models import Region
 
 # 유저 모델
 class User(AbstractUser):
@@ -9,7 +10,7 @@ class User(AbstractUser):
     phone = models.CharField(max_length=15, null=False)
     address = models.CharField(max_length=255, null=False)
     first_login = models.BooleanField(default=True)
-    region = models.ForeignKey("Region", on_delete=models.SET_NULL, null=True)
+    region = models.ForeignKey(Region, on_delete=models.PROTECT, null=True, blank=True)
 
     def __str__(self):
         return self.username

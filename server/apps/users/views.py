@@ -51,12 +51,88 @@ def main(request, pk):
 
 
 def signup(request):
+    # if request.method == 'POST':
+    #     form = SignupForm(request.POST)
+    #     if form.is_valid():
+    #         user = form.save()
+    #         auth.login(request, user,
+    #                    backend='apps.users.backends.CustomModelBackend')
+
+    #         # 도시와 동네 정보를 가져옴
+    #         selected_city = request.POST.get('city')
+    #         print(selected_city)
+    #         selected_town = request.POST.get('town')
+
+    #         # 도시와 동네 정보를 저장
+    #         region = Region.objects.filter(city=selected_city, town=selected_town).first()
+    #         user.region = region
+    #         user.save()
+
+    #         return redirect('users:main', user.id)
+    #     else:
+    #         print("폼 유효성 검사 실패")
+    #         print(form.errors)
+    #         return redirect('users:signup')
+    # else:
+    #     form = SignupForm()
+    #     context = {
+    #         'form': form,
+    #     }
+    #     return render(request, template_name='users/users_signup.html', context=context)
+
+    # if request.method == 'POST':
+    #     username = request.POST.get('username')
+    #     nickname = request.POST.get('nickname')
+    #     password1 = request.POST.get('password1')
+    #     password2 = request.POST.get('password2')
+    #     birth = request.POST.get('birth')
+    #     phone = request.POST.get('phone')
+    #     address = request.POST.get('address')
+    #     city = request.POST.get('city')
+    #     town = request.POST.get('town')
+
+    #     # 필요한 유효성 검사 및 예외 처리를 수행합니다.
+    #     if not username or not nickname or not password1 or not password2 or not birth or not phone or not address:
+    #         return JsonResponse({'success': False, 'message': '모든 필드를 입력하세요.'})
+
+    #     if password1 != password2:
+    #         return JsonResponse({'success': False, 'message': '비밀번호가 일치하지 않습니다.'})
+
+    #     # 사용자 생성
+    #     region = Region.objects.filter(city=city, town=town).first()
+    #     print(region)
+    #     print(city)
+    #     print(town)
+    #     user = User.objects.create_user(username=username, password=password1, nickname=nickname, birth=birth, phone=phone, address=address, region=region)
+
+    #     user.save()
+
+    #     # 로그인
+    #     auth.login(request, user,
+    #                backend='apps.users.backends.CustomModelBackend')
+
+    #     return JsonResponse({'success': True, 'message': '회원 가입이 완료되었습니다.', 'url': f"/users/{user.id}"})
+
+    # return render(request, template_name='users/users_signup.html')
+
+    # 현이 ver
     if request.method == 'POST':
         form = SignupForm(request.POST)
         if form.is_valid():
-            user = form.save()
+            user = form.save(commit=False)
+
+            # 맞는 region 정보를 가지고 옴
+            city = request.POST.get('city')
+            town = request.POST.get('town')
+            region = Region.objects.filter(city=city, town=town).first()
+
+            # user에 region 정보를 저장
+            user.region = region
+            user.save()
+
             auth.login(request, user,
                        backend='apps.users.backends.CustomModelBackend')
+
             return redirect('users:main', user.id)
         else:
             print("폼 유효성 검사 실패")
@@ -100,9 +176,10 @@ def logout(request):
         kakao_unlink(request)
     auth.logout(request)
     return redirect('users:login')
+    return redirect('users:login')
 
 
-#메인 페이지
+# 메인 페이지
 def home(request):
     return render(request, 'base.html')
 
@@ -176,16 +253,3 @@ def kakao_unlink(request):
         print(
             f"Failed to unlink Kakao user. Status code: {response.status_code}")
         print(response.text)
-
-
-############################################
-#  시/도 군/구
-############################################
-def get_town_list(request):
-    city = request.GET.get('city', None)
-
-    # city에 해당하는 town 목록을 가져오는 로직을 작성
-    town_list = Region.objects.filter(
-        city=city).values_list('town', flat=True).distinct()
-
-    return JsonResponse(list(town_list), safe=False)

@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # 사이트 기능 앱
+    'apps.region',
     'apps.users',
     'apps.communitys',
     'apps.locations',
