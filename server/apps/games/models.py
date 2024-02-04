@@ -21,8 +21,8 @@ class Round(models.Model):
     par = models.JSONField(default=default_scores)
     round_number = models.IntegerField()
 
-# 플레이어 --> 라운드 마다 플레이어 수 만큼의 스코어 보드 필요 --> 둘과 일대일 관계인 플레이어란 모델
+# 플레이어 --> 라운드 마다 플레이어 수 만큼의 스코어 보드 필요 --> 둘과 일대일 관계인 플레이어 모델 생성
 class Player(models.Model):
-    round = models.ForeignKey(Round, on_delete=models.SET_NULL, related_name='round_player')
+    round = models.ForeignKey(Round, on_delete=models.CASCADE, related_name='round_player')
     name = models.CharField(max_length=100)
-    score = models.ForeignKey(Score, on_delete=models.SET_NULL, related_name='score_player')
+    score = models.ForeignKey(Score, on_delete=models.CASCADE, related_name='score_player')
