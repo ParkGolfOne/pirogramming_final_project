@@ -10,6 +10,12 @@ class GolfLocation (models.Model):
     golf_longitude = models.DecimalField(max_digits=12, decimal_places=8, blank = False, null = False)
     golf_detail = models.TextField(max_length = 200, blank = False, null = False)
     golf_holes = models.IntegerField(blank = False, null = False)
+    golf_fee = models.TextField(blank = True, null = True)
+    golf_runningtime = models.TextField(blank = True, null = True)
+    golf_reservation = models.TextField(blank = True, null = True)
+    golf_runningdate = models.TextField(blank = True, null = True)
+    golf_homepage = models.TextField(blank = True, null = True)
+    golf_reservepage = models.TextField(blank = True, null = True)
     # golf_review = models.ForeignKey()
     # golf_이용가능대상 = models.ForeignKey()
     # 요금 

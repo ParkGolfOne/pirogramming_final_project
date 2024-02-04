@@ -42,7 +42,7 @@
                     <li><a href="{% url 'locations:list' %}">지도</a></li>
                     <li><a href="{% url 'communitys:board_list' %}">커뮤니티</a></li>
                     {% if user.is_authenticated%}
-                    
+                    <li><a href="{% url 'users:main' request.user.pk %}">마이페이지</a></li>
                     <li><a href="{% url 'score:score_main' %}">스코어</a></li>
                     <li><a href="{% url 'users:main' user.pk %}">마이페이지</a></li>
                     {% else %}
@@ -67,7 +67,7 @@
             <li><a href="{% url 'locations:list' %}">지도</a></li>
             <li><a href="{% url 'communitys:board_list' %}">커뮤니티</a></li>
             {% if user.is_authenticated%}
-            
+            <li><a href="{% url 'users:main' request.user.pk %}">마이페이지</a></li>
             <li><a href="{% url 'score:score_main' %}">스코어</a></li>
             {% else %}
             <li><a href="{% url 'users:login' %}">로그인</a></li>

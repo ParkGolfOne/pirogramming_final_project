@@ -10,12 +10,16 @@ import json
 ############################################
 
 # city 목록을 가져오는 함수
+
+
 def get_city_list(request):
     cities = Region.objects.values_list('city', flat=True).distinct()
     output = JsonResponse(list(cities), safe=False)
     return output
 
 # 선택된 city에 해당하는 town 목록을 가져오는 함수
+
+
 def get_town_list(request):
     city = request.GET.get('city', None)
     town_list = Region.objects.filter(
