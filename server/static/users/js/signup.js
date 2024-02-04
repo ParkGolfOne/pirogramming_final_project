@@ -11,7 +11,6 @@ document.addEventListener("DOMContentLoaded", function () {
       if (xhr.readyState == 4 && xhr.status == 200) {
         var cityData = JSON.parse(xhr.responseText);
         populateCityOptions(cityData);
-        console.log("cityData", cityData);
       }
     };
     xhr.send();
@@ -62,13 +61,13 @@ document.addEventListener("DOMContentLoaded", function () {
       townField.appendChild(option);
     });
   }
-  
+
   // 입력 받은 시와 동네를 백엔드로 넘기기
   // 폼 제출 시 사용할 이벤트 헨들러 추가
   var form = document.getElementById("signup-form");
   form.addEventListener("submit", function (event) {
     event.preventDefault(); // 폼 기본 동작 방지
-    
+
     const formData = new FormData(form);
     formData.append("city", cityField.value);
     formData.append("town", townField.value);
@@ -77,7 +76,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const xhr = new XMLHttpRequest();
     xhr.open("POST", url, true);
     xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
-    
+
     xhr.send(formData);
   });
 });
