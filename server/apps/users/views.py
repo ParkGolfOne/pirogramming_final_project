@@ -9,6 +9,8 @@ from .models import *
 import requests
 
 # Create your views here.
+
+
 def main(request, pk):
     user = User.objects.get(id=pk)
     now_user = request.user
@@ -49,6 +51,8 @@ def main(request, pk):
     return render(request, "users/users_main.html", context)
 
 # 회원가입
+
+
 @csrf_exempt
 def signup(request):
     if request.method == 'POST':
@@ -114,12 +118,17 @@ def home(request):
     return render(request, 'base.html')
 
 # 회원 정보 수정
+
+
 @csrf_exempt
 def update(request, pk):
     user = User.objects.get(id=pk)
+    selected_city = request.POST.get('city')
+    selected_town = request.POST.get('town')
+    print(user)
+    print(selected_city, selected_town)
     if request.method == 'POST':
-        selected_city = request.POST.get('city')
-        selected_town = request.POST.get('town')
+        print(user)
         form = UpdateForm(request.POST, instance=user)
         if form.is_valid():
             user = form.save(commit=False)
@@ -127,11 +136,11 @@ def update(request, pk):
                 city=selected_city, town=selected_town).first()
             user.region = region
             user.save()
-            return redirect('users:main', user.id)
+            return redirect('users:main', user.pk)
         else:
             print("폼 유효성 검사 실패")
             print(form.errors)
-            return redirect('users:update', user.id)
+            return redirect('users:update', user.pk)
     else:
         form = UpdateForm(instance=user)
         context = {
@@ -144,6 +153,8 @@ def update(request, pk):
         return render(request, template_name='users/users_update.html', context=context)
 
 # 소셜 로그인 시 처음 로그인 하는 경우, 추가 정보 입력 받기
+
+
 def social_login(request):
     user = request.user
     if user.first_login == False:
@@ -169,7 +180,7 @@ def social_login(request):
 # 소셜 로그인 unlink request      #
 ###################################
 
-## 카카오
+# 카카오
 def kakao_unlink(request):
     user = request.user
     social_auth = user.social_auth.get(provider='kakao')

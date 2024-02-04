@@ -62,11 +62,26 @@ document.addEventListener("DOMContentLoaded", function () {
   var form = document.getElementById("update-form");
   form.addEventListener("submit", function (event) {
     event.preventDefault(); // 폼 기본 동작 방지
-
+    
+    // form 데이터 가져옴
     const formData = new FormData(form);
-    formData.append("city", cityField.value);
-    formData.append("town", townField.value);
 
+    // city 수정이 없는경우 - 기존의 값으로 설정
+    if (cityField.value === "") {
+      var selectedOption1 = cityField.options[0];
+      var selectedValue1 = selectedOption1.innerHTML;
+      cityField.value = selectedValue1;
+    } else {
+      formData.append("city", cityField.value);
+    }
+    // town 수정이 없는경우 - 기존의 값으로 설정
+    if (townField.value === "") {
+      const selectedOption2 = townField.options[0];
+      const selectedValue2 = selectedOption2.text;
+      formData.append("town", selectedValue2);
+    } else {
+      formData.append("town", townField.value);
+    }
     const url = `/users/update/${userId}/`;
     const xhr = new XMLHttpRequest();
     xhr.open("POST", url, true);
