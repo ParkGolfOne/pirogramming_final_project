@@ -14,6 +14,8 @@
     <button class="user-mypage-btn"><a href="{% url 'users:logout' %}">로그아웃</a></button>
     <button class="user-mypage-btn"><a href="{% url 'users:update' user.pk %}">회원정보 수정</a></button>
     <button class="user-mypage-btn"><a href="">회원 탈퇴</a></button>
+    <button class="user-mypage-btn"><a href="{% url 'users:add_friend' user.pk %}">친구신청 보내기</a></button>
+    <button class="user-mypage-btn"><a href="{% url 'users:friend_list' user.pk %}">내 친구 보기</a></button>
     <div class="user-mypage">
       <h3>스크랩한 글</h3>
       {% for scrap in my_scraps%}

@@ -1,26 +1,22 @@
-{% extends 'base.html' %} {%load static%}
-
-{% block content %}
-<form method="POST" action="" class="signup-form">
-    {% csrf_token %}
-    {{ form }}
-    <div class="form-group">
-      <label for="city">시/도:</label>
-      <select id="city" class="signup-input">
-        <option value="">선택해주세요</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label for="town">군/구:</label>
-      <select id="town" class="signup-input">
-        <option value="">------</option>
-      </select>
-    </div>
-    <input type="submit" value="회원가입" class="user-btn">
-
+{% extends 'base.html' %} {%load static%} {% block content %}
+<form method="POST" action="" id="signup-form" class="signup-form">
+  {% csrf_token %} {{ form }}
+  <div class="form-group">
+    <label for="city">시/도:</label>
+    <select id="city" class="signup-input">
+      <option value="">선택해주세요</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="town">군/구:</label>
+    <select id="town" class="signup-input">
+      <option value="">------</option>
+    </select>
+  </div>
+  <input type="submit" value="회원가입" class="user-btn" />
 </form>
-{% endblock content %}
+{% endblock content %} 
 
 {% block script %}
-  <script defer src="{% static 'users/js/signup.js' %}"></script>
-{% endblock %}
+<script defer src="{% static 'users/js/signup.js' %}"></script>
+{% endblock script %}
