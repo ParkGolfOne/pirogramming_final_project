@@ -57,10 +57,10 @@ INSTALLED_APPS = [
 ]
 
 AUTHENTICATION_BACKENDS = [
-    'apps.users.backends.CustomModelBackend', # 커스텀 모델 백엔드 추가
-    'social_core.backends.kakao.KakaoOAuth2', # 카카오
-    'social_core.backends.naver.NaverOAuth2', # 네이버
-    'django.contrib.auth.backends.ModelBackend', # 소셜로그인 정보를 User 모델 클래스에 저장
+    'apps.users.backends.CustomModelBackend',  # 커스텀 모델 백엔드 추가
+    'social_core.backends.kakao.KakaoOAuth2',  # 카카오
+    'social_core.backends.naver.NaverOAuth2',  # 네이버
+    'django.contrib.auth.backends.ModelBackend',  # 소셜로그인 정보를 User 모델 클래스에 저장
 ]
 
 # 소셜 로그인을 위한 설정
@@ -68,11 +68,12 @@ SITE_ID = 1
 SOCIALACCOUNT_LOGIN_ON_GET = True
 LOGIN_REDIRECT_URL = 'communitys:board_list'  # 로그인 후 이동할 페이지
 # ACCOUNT_LOGOUT_REDIRECT_URL = 'index' # 로그아웃 후 이동할 페이지
-ACCOUNT_LOGOUT_ON_GET = True # 로그 아웃 요청 시 바로 로그아웃 되도록
+ACCOUNT_LOGOUT_ON_GET = True  # 로그 아웃 요청 시 바로 로그아웃 되도록
+# 소셜 로그인 후 추가정보 입력을 위한 페이지로 이동
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = "users:social_login"
 
 #############################
-# 1. 카카오 
+# 1. 카카오
 SOCIAL_AUTH_KAKAO_KEY = os.environ.get('SOCIAL_AUTH_KAKAO_KEY')
 SOCIAL_AUTH_KAKAO_SECRET = os.environ.get('SOCIAL_AUTH_KAKAO_SECRET')
 
@@ -134,6 +135,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# 1. local db.sqlite3 사용할 경우
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -141,6 +143,17 @@ DATABASES = {
     }
 }
 
+# 2. db 서버와 연결
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': os.environ.get('MYSQL_DBNAME'),
+#         'USER': os.environ.get('MYSQL_USERNAME'),
+#         'PASSWORD': os.environ.get('MYSQL_PASSWD'),
+#         'HOST': os.environ.get('MYSQL_HOST'),
+#         'PORT': int(os.environ.get('MYSQL_PORT')),
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
