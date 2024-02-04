@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'apps.communitys',
     'apps.locations',
     'apps.score',
+    'apps.games',
 
     # 소셜 로그인에 관련된 처리를 하는 어플리케이션
     'social_django',
