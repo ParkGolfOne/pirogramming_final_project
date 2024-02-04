@@ -68,9 +68,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // city 수정이 없는경우 - 기존의 값으로 설정
     if (cityField.value === "") {
-      var selectedOption1 = cityField.options[0];
-      var selectedValue1 = selectedOption1.innerHTML;
-      cityField.value = selectedValue1;
+      const selectedOption1 = cityField.options[0];
+      const selectedValue1 = selectedOption1.innerHTML;
+      formData.append("city", selectedValue1);
     } else {
       formData.append("city", cityField.value);
     }
