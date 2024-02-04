@@ -99,4 +99,5 @@ def game_detail(request, game_id, round_count, player_count):
 # 추가 구현 --> 저장페이지에서 유저를 고르면 유저의 스코어 보드에 일괄적으로 저장 즉, 스코어의 player를 유저로 바꾸는 것
 # 친구 기능이 되거나 나중에 ㄱㄱ
 # 최종 저장 기능도 만들어야 해욥
+# 이름 바꿀 수 있게 해야돼요
         
