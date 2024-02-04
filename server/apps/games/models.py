@@ -15,11 +15,13 @@ class Game(models.Model):
     created_at = models.DateTimeField(default=timezone.now)
     # ROUND카운터를 따로 두지 않아도 될 듯? 역 참조로 다 불러오면 될듯
 
+# 라운드, 게임 진행 수, 파크 골프에선 코스
 class Round(models.Model):
     game = models.ForeignKey(Game, on_delete=models.CASCADE, related_name='rounds')
     par = models.JSONField(default=default_scores)
     round_number = models.IntegerField()
 
+# 플레이어 --> 라운드 마다 플레이어 수 만큼의 스코어 보드 필요 --> 둘과 일대일 관계인 플레이어 모델 생성
 class Player(models.Model):
     round = models.ForeignKey(Round, on_delete=models.CASCADE, related_name='round_player')
     name = models.CharField(max_length=100)
