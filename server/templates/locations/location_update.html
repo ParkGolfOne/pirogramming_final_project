@@ -1,3 +1,4 @@
+{% extends 'base.html' %}
 {% block content %}
     <form action = "{% url 'locations:update' pk %}" method = 'post' enctype="multipart/form-data">
         {% csrf_token %}

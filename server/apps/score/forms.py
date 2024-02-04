@@ -7,4 +7,4 @@ from .models import Score
 class ScoreForm(forms.ModelForm):
     class Meta():
         model = Score
-        fields = ['ground', 'par', 'score']
+        fields = ['ground']

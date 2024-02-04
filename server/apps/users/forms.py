@@ -7,7 +7,7 @@ class SignupForm(UserCreationForm):
         label='아이디',
         widget=forms.TextInput(
             attrs={
-                'class' : 'signup-input'
+                'class': 'signup-input'
             }
         )
     )
@@ -23,7 +23,7 @@ class SignupForm(UserCreationForm):
         label='비밀번호',
         widget=forms.PasswordInput(
             attrs={
-                'class' : 'signup-input'
+                'class': 'signup-input'
             }
         )
     )
@@ -31,7 +31,7 @@ class SignupForm(UserCreationForm):
         label='비밀번호 확인',
         widget=forms.PasswordInput(
             attrs={
-                'class' : 'signup-input'
+                'class': 'signup-input'
             }
         )
     )
@@ -39,7 +39,7 @@ class SignupForm(UserCreationForm):
         label='생일',
         widget=forms.TextInput(
             attrs={
-                'class' : 'signup-input'
+                'class': 'signup-input'
             }
         )
     )
@@ -51,17 +51,20 @@ class SignupForm(UserCreationForm):
             }
         )
     )
+
     address = forms.CharField(
-        label='주소',
+        label='상세 주소',
         widget=forms.TextInput(
             attrs={
                 'class': 'signup-input'
             }
         )
     )
+
     class Meta:
         model = User
-        fields = ['username', 'nickname', 'password1', 'password2','birth', 'phone', 'address']
+        fields = ['username', 'nickname', 'password1',
+                  'password2', 'birth', 'phone', 'address']
 
 
 class UpdateForm(forms.ModelForm):
@@ -77,7 +80,7 @@ class UpdateForm(forms.ModelForm):
         label='생일',
         widget=forms.TextInput(
             attrs={
-                'class' : 'signup-input'
+                'class': 'signup-input'
             }
         )
     )
@@ -89,15 +92,16 @@ class UpdateForm(forms.ModelForm):
             }
         )
     )
+
     address = forms.CharField(
-        label='주소',
+        label='상세 주소',
         widget=forms.TextInput(
             attrs={
                 'class': 'signup-input'
             }
         )
     )
+
     class Meta:
-        model=User
+        model = User
         fields = ["nickname", "birth", "phone", "address"]
-    
