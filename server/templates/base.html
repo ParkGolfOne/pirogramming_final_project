@@ -14,7 +14,9 @@
 <body>
     <header id="header">
         <div class="title-container">
-            <a class="title" href="/">파골원</a>
+            <a href="/">
+                <img src="{% static 'main/images/parkgolfone_logo1.png' %}" alt="" class="title-logo"/>
+            </a>
         </div>
         <ul class="main-menu">
             <li><a href="{% url 'locations:list' %}">지도</a></li>
