@@ -99,8 +99,6 @@ def logout(request):
 #메인 페이지
 def home(request):
     return render(request, 'base.html')
-=======
-    return redirect('users:login')
 
 def update(request, pk):
     user = User.objects.get(id=pk)
