@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div>
+    <h2>친구 추가 페이지</h2>
+    <ul>
+    {% for candidate in candidates %}
+      <li>사용자 id: {{ candidate.username }} 사용자 닉네임: {{ candidate.nickname }}
+        <form action="{% url 'users:add_friend' pk %}" method="post"
+        id="add_friend-form">
+          {% csrf_token %}
+          <input type="hidden" name="friend_id" value="{{ candidate.id }}">
+          <button type="button" onclick="addFriend({{ candidate.id }}, {{ pk }})">친구 추가</button>
+        </form>
+      </li>
+    {% endfor %}
+  </ul>
+</div>
+
+{% endblock content %}
+
+{% block script %}
+<script src="{% static 'users/js/add_friend.js' %}"></script>
+{% endblock script %}
