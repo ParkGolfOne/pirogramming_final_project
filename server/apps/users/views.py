@@ -101,6 +101,7 @@ def logout(request):
     auth.logout(request)
     return redirect('users:login')
 
+
 #메인 페이지
 def home(request):
     return render(request, 'base.html')

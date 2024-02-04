@@ -1,11 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+{% extends 'base.html' %}
+{%load static%}
+
+  {% block head %}
     <title>Document</title>
-  </head>
-  <body>
+  {% endblock %}
+    
+  {% block content %}
     <form
       method="POST"
       action=""
@@ -16,5 +16,5 @@
       {% csrf_token %} {{ form }}
       <input type="submit" value="게시판 등록" />
     </form>
-  </body>
-</html>
+    {% endblock %}
+

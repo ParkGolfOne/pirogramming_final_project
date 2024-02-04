@@ -1,13 +1,14 @@
+body{
+    height: 100vh;
+}
 #header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: green;
     padding: 25px;
-    height: 9rem;
+    height: 90px;
     width: 100%;
-    top: 0;
-    position: fixed;
 }
 .title-container {
     display: flex;
@@ -65,12 +66,29 @@
     gap: 10px;
     margin: 20px;
 }
+#main{
+    position: relative;
+    height: calc(100vh - 160px);
+}
+.main-container{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+/* pc일떄 */
 @media screen and (min-width: 700px) {
-    .hamburger-icon, .main-sidebar, #footer {
+    .hamburger-icon, .main-sidebar, #mobileFooter {
       display: none;
     }
     .main-menu {
         display: flex;
+    }
+    #main{
+        height: calc(100vh - 90px);
     }
     
 }
@@ -80,16 +98,14 @@
 .main-sidebar > ul {
     display: flex;
     flex-direction: column;
-
 }
-#footer {
-    position: fixed;
+#mobileFooter {
+    height: 70px;
     width: 100%;
     background-color: green;
     bottom: 0;
-
 }
-#footer > ul {
+#mobileFooter > ul {
     display: flex;
     justify-content: space-around;
     padding: 25px 25px;

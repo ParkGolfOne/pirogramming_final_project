@@ -140,6 +140,7 @@ class UpdateForm(forms.ModelForm):
     #                                 for town in Region.objects.values_list('town', flat=True).distinct()],
     #     widget=forms.Select(attrs={'class': 'signup-input'})
     # )
+    
     # 폼에서 모델의 초기화 모델을 가져오면 마이그레이션 시 초기 데이터 유무를 확인 --> 마이그레이션 오류 발생
     city = forms.ChoiceField(label='시/도', widget=forms.Select(attrs={'class': 'signup-input'}))
     town = forms.ChoiceField(label='군/구', widget=forms.Select(attrs={'class': 'signup-input'}))

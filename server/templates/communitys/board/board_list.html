@@ -1,12 +1,11 @@
+{% extends 'base.html' %}
 {% load static%}
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>파골원 커뮤니티</title>
-  </head>
-  <body>
+  
+{% block head %}
+  <title>파골원 커뮤니티</title>
+{% endblock %}
+
+{% block content %}
     <h1>파골원 커뮤니티 리스트</h1>
     <div>
       {% if user.is_authenticated %}
@@ -28,6 +27,9 @@
     {% endif %}
 
     <!-- 페이지 네이션 -->
-    <script src="{% static 'posts/js/boards.js'%}"></script>
-  </body>
-</html>
+  {% endblock %}
+
+  
+{% block script %}
+<script src="{% static 'posts/js/boards.js'%}"></script>
+{% endblock %}
