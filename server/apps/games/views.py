@@ -4,6 +4,7 @@ from .models import Game, Round, Player
 from django.utils import timezone
 from django.urls import reverse
 from apps.score.models import Score
+from django.views.decorators.csrf import csrf_exempt
 
 # 게임 설정및 게임 생성 페이지
 def game_set(request):
@@ -25,13 +26,13 @@ def game_set(request):
             for i in range(form.cleaned_data['round_count']):
                 Round.objects.create(game=game, round_number = (i + 1) )
 
-            return redirect(reverse('score_input_page', args=(game.id, round_count, player_count)))
+            return redirect(reverse('games:game_detail', args=(game.id, round_count, player_count)))
     else:
         form = GameSetupForm()
         content = {
             'form': form
         }
-        return render(request, 'game_setup.html', content)
+        return render(request, 'games/game_set.html', content)
 
 @csrf_exempt  
 def game_detail(request, game_id, round_count, player_count):
@@ -41,17 +42,17 @@ def game_detail(request, game_id, round_count, player_count):
         rounds = Round.objects.filter(game_id=game_id)
 
         for round in rounds:
-            for i in range(player_count):
-                # default가 자동으로 생성된다고 가정 시
-                score = Score.objects.create(player = None, ground = game.ground)
-                Player.objects.create (round = round.id, name = f"플레이어{i+1}", score = score)
-        
+            players = Player.objects.filter(round=round)
+            if players.count() < player_count:
+                for i in range(players.count(), player_count):
+                    score = Score.objects.create(player=None, ground=game.ground)
+                    Player.objects.create(round=round, name=f"플레이어{i+1}", score=score)
         content = {
             'game': game, 
             'round_count': round_count, 
             "player_count" : player_count,
         }
-        return render(request, 'game_detail.html', content)
+        return render(request, 'games/game_detail.html', content)
     # 저장 
     elif request.method == 'POST':
         score_data = request.POST.get('score')

@@ -84,6 +84,7 @@ body{
     background-color: aqua;
     border-radius: 30px;
     padding: 5%;
+    overflow: scroll;
 }
 /* pc일떄 */
 @media screen and (min-width: 700px) {

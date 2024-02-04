@@ -9,7 +9,7 @@ from apps.score.models import Score
 class Game(models.Model):
     create_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,  verbose_name='create_user')
     game_name = models.CharField('게임이름', max_length = 9, default = '게임')
-    ground = models.ForeignKey(GolfLocation, null = True, blank = True ,on_delete=models.SET_NULL, null=True,  verbose_name='골프장')
+    ground = models.ForeignKey(GolfLocation, null = True, blank = True ,on_delete=models.SET_NULL, verbose_name='골프장')
     par = models.CharField('파', max_length = 9, default = '555555555')
     created_at = models.DateTimeField(default=timezone.now)
     # ROUND카운터를 따로 두지 않아도 될 듯? 역 참조로 다 불러오면 될듯

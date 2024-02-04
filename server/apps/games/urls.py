@@ -5,5 +5,6 @@ app_name = "games"
 
 # games url 추가
 urlpatterns = [
-    path('score-input/<int:game_id>/<int:round_count>/<int:player_count>/', score_input_page, name='score_input_page'),
+    path('game_set', game_set, name='game_set'),
+     path('game_detail/<int:game_id>/<int:round_count>/<int:player_count>/', game_detail, name='game_detail'),
 ]
