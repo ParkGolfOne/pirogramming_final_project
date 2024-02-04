@@ -176,12 +176,12 @@ def logout(request):
         kakao_unlink(request)
     auth.logout(request)
     return redirect('users:login')
+    return redirect('users:login')
 
 
 # 메인 페이지
 def home(request):
     return render(request, 'base.html')
-
 
 def update(request, pk):
     user = User.objects.get(id=pk)
