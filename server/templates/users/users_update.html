@@ -1,9 +1,28 @@
-{% extends 'base.html' %}
-
+{% extends 'base.html' %} {%load static%}
 {% block content %}
-<form method="POST" action="{% url 'users:update' pk %}" class="users-update-form">
+
+<form method="POST" action="{% url 'users:update' pk %}" id="update-form" class="users-update-form">
     {% csrf_token %}
     {{ form }}
-    <button class="user-btn">개인 정보 수정</button>
+    <div class="form-group">
+    <label for="city">시/도:</label>
+    <select id="city" class="update-input">
+      <option value="">{{city}}</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="town">군/구:</label>
+    <select id="town" class="update-input">
+      <option value="">{{town}}</option>
+    </select>
+  </div>
+  <button class="user-btn">개인 정보 수정</button>
+
 </form>
+
 {% endblock content %}
+
+  {% block script %}
+  <script defer> var userId = {{ request.user.pk }};</script>
+  <script defer src="{% static 'users/js/update.js' %}"></script>
+{% endblock %}

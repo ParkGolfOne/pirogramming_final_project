@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {%load static%}
 
 {% block content %}
 <form method="POST" action="" class="signup-form">
@@ -17,5 +17,10 @@
       </select>
     </div>
     <input type="submit" value="회원가입" class="user-btn">
+
 </form>
 {% endblock content %}
+
+{% block script %}
+  <script defer src="{% static 'users/js/signup.js' %}"></script>
+{% endblock %}

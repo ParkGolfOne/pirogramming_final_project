@@ -1,15 +1,14 @@
-from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, redirect
 from apps.users.forms import SignupForm, UpdateForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import auth
 from apps.communitys.models import *
+from apps.region.models import *
 from .models import *
 import requests
 
 # Create your views here.
-
-
 def main(request, pk):
     user = User.objects.get(id=pk)
     now_user = request.user
@@ -49,90 +48,22 @@ def main(request, pk):
 
     return render(request, "users/users_main.html", context)
 
-
+# 회원가입
+@csrf_exempt
 def signup(request):
-    # if request.method == 'POST':
-    #     form = SignupForm(request.POST)
-    #     if form.is_valid():
-    #         user = form.save()
-    #         auth.login(request, user,
-    #                    backend='apps.users.backends.CustomModelBackend')
-
-    #         # 도시와 동네 정보를 가져옴
-    #         selected_city = request.POST.get('city')
-    #         print(selected_city)
-    #         selected_town = request.POST.get('town')
-
-    #         # 도시와 동네 정보를 저장
-    #         region = Region.objects.filter(city=selected_city, town=selected_town).first()
-    #         user.region = region
-    #         user.save()
-
-    #         return redirect('users:main', user.id)
-    #     else:
-    #         print("폼 유효성 검사 실패")
-    #         print(form.errors)
-    #         return redirect('users:signup')
-    # else:
-    #     form = SignupForm()
-    #     context = {
-    #         'form': form,
-    #     }
-    #     return render(request, template_name='users/users_signup.html', context=context)
-
-    # if request.method == 'POST':
-    #     username = request.POST.get('username')
-    #     nickname = request.POST.get('nickname')
-    #     password1 = request.POST.get('password1')
-    #     password2 = request.POST.get('password2')
-    #     birth = request.POST.get('birth')
-    #     phone = request.POST.get('phone')
-    #     address = request.POST.get('address')
-    #     city = request.POST.get('city')
-    #     town = request.POST.get('town')
-
-    #     # 필요한 유효성 검사 및 예외 처리를 수행합니다.
-    #     if not username or not nickname or not password1 or not password2 or not birth or not phone or not address:
-    #         return JsonResponse({'success': False, 'message': '모든 필드를 입력하세요.'})
-
-    #     if password1 != password2:
-    #         return JsonResponse({'success': False, 'message': '비밀번호가 일치하지 않습니다.'})
-
-    #     # 사용자 생성
-    #     region = Region.objects.filter(city=city, town=town).first()
-    #     print(region)
-    #     print(city)
-    #     print(town)
-    #     user = User.objects.create_user(username=username, password=password1, nickname=nickname, birth=birth, phone=phone, address=address, region=region)
-
-    #     user.save()
-
-    #     # 로그인
-    #     auth.login(request, user,
-    #                backend='apps.users.backends.CustomModelBackend')
-
-    #     return JsonResponse({'success': True, 'message': '회원 가입이 완료되었습니다.', 'url': f"/users/{user.id}"})
-
-    # return render(request, template_name='users/users_signup.html')
-
-    # 현이 ver
     if request.method == 'POST':
+        selected_city = request.POST.get('city')
+        selected_town = request.POST.get('town')
         form = SignupForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
-
-            # 맞는 region 정보를 가지고 옴
-            city = request.POST.get('city')
-            town = request.POST.get('town')
-            region = Region.objects.filter(city=city, town=town).first()
-
+            region = Region.objects.filter(
+                city=selected_city, town=selected_town).first()
             # user에 region 정보를 저장
             user.region = region
             user.save()
-
             auth.login(request, user,
                        backend='apps.users.backends.CustomModelBackend')
-
             return redirect('users:main', user.id)
         else:
             print("폼 유효성 검사 실패")
@@ -182,12 +113,20 @@ def logout(request):
 def home(request):
     return render(request, 'base.html')
 
+# 회원 정보 수정
+@csrf_exempt
 def update(request, pk):
     user = User.objects.get(id=pk)
     if request.method == 'POST':
+        selected_city = request.POST.get('city')
+        selected_town = request.POST.get('town')
         form = UpdateForm(request.POST, instance=user)
         if form.is_valid():
-            form.save()
+            user = form.save(commit=False)
+            region = Region.objects.filter(
+                city=selected_city, town=selected_town).first()
+            user.region = region
+            user.save()
             return redirect('users:main', user.id)
         else:
             print("폼 유효성 검사 실패")
@@ -198,10 +137,13 @@ def update(request, pk):
         context = {
             'form': form,
             'pk': pk,
+            'city': user.region.city,
+            'town': user.region.town,
         }
+        print(context)
         return render(request, template_name='users/users_update.html', context=context)
 
-
+# 소셜 로그인 시 처음 로그인 하는 경우, 추가 정보 입력 받기
 def social_login(request):
     user = request.user
     if user.first_login == False:
@@ -222,15 +164,12 @@ def social_login(request):
             }
             return render(request, template_name='users/users_update.html', context=context)
 
-# def users_delete(request ,pk):
 
 ###################################
 # 소셜 로그인 unlink request      #
 ###################################
 
-# 1. 카카오
-
-
+## 카카오
 def kakao_unlink(request):
     user = request.user
     social_auth = user.social_auth.get(provider='kakao')

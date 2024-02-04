@@ -234,6 +234,7 @@ def post_detail(request, pk, bid):
 @csrf_exempt
 @transaction.atomic
 def comment_create(request):
+    print(request.body)
     req = json.loads(request.body)
     post_id = req["post_id"]
     content = req["content"]
