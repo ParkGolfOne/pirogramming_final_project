@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block content %}
+    <form action = "{% url 'games:game_set' %}" method = "post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form }}
+        <button type="submit">게임 생성</button>
+    </form>
+{% endblock %}

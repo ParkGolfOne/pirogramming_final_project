@@ -5,7 +5,7 @@ from django.utils import timezone
 # Create your models here.
 
 class Score(models.Model):
-    player = models.ForeignKey(User, on_delete=models.CASCADE,  verbose_name='플레이어')
+    player = models.ForeignKey(User, null = True, on_delete=models.CASCADE,  verbose_name='플레이어')
     ground = models.ForeignKey(GolfLocation, on_delete=models.SET_NULL, null=True,  verbose_name='골프장')
     par = models.CharField('파', max_length = 9, default = '555555555')
     score = models.CharField('점수', max_length = 9, default = '000000000')

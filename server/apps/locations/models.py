@@ -12,3 +12,9 @@ class GolfLocation (models.Model):
     golf_holes = models.IntegerField(blank = False, null = False)
     # golf_review = models.ForeignKey()
     # golf_이용가능대상 = models.ForeignKey()
+    # 요금 
+    # 예약 방법 
+    # 운영 시간
+    # 운영일
+    # 홈페이지
+    # 예약페이지
