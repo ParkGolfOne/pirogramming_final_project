@@ -1,4 +1,6 @@
+{% extends 'base.html' %}
 {% load static %}
+{% block content %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,32 +21,32 @@
       <div>파</div>
       <div>점수</div>
       <div>1</div>
-      <div>{{score.par.0}}</div>
-      <div>{{score.score.0}}</div>
+      <div>{{score.par.hole1}}</div>
+      <div>{{score.scores.hole1}}</div>
       <div>2</div>
-      <div>{{score.par.1}}</div>
-      <div>{{score.score.1}}</div>
+      <div>{{score.par.hole2}}</div>
+      <div>{{score.scores.hole2}}</div>
       <div>3</div>
-      <div>{{score.par.2}}</div>
-      <div>{{score.score.2}}</div>
+      <div>{{score.par.hole3}}</div>
+      <div>{{score.scores.hole3}}</div>
       <div>4</div>
-      <div>{{score.par.3}}</div>
-      <div>{{score.score.3}}</div>
+      <div>{{score.par.hole4}}</div>
+      <div>{{score.scores.hole4}}</div>
       <div>5</div>
-      <div>{{score.par.4}}</div>
-      <div>{{score.score.4}}</div>
+      <div>{{score.par.hole5}}</div>
+      <div>{{score.scores.hole5}}</div>
       <div>6</div>
-      <div>{{score.par.5}}</div>
-      <div>{{score.score.5}}</div>
+      <div>{{score.par.hole6}}</div>
+      <div>{{score.scores.hole6}}</div>
       <div>7</div>
-      <div>{{score.par.6}}</div>
-      <div>{{score.score.6}}</div>
+      <div>{{score.par.hole7}}</div>
+      <div>{{score.scores.hole7}}</div>
       <div>8</div>
-      <div>{{score.par.7}}</div>
-      <div>{{score.score.7}}</div>
+      <div>{{score.par.hole8}}</div>
+      <div>{{score.scores.hole8}}</div>
       <div>9</div>
-      <div>{{score.par.8}}</div>
-      <div>{{score.score.8}}</div>
+      <div>{{score.par.hole9}}</div>
+      <div>{{score.scores.hole9}}</div>
       <div>합계</div>
       <div>/</div>
       <div>{{score.total_score}}</div>
@@ -66,3 +68,4 @@
       {% endif %}
 </body>
 </html>
+{% endblock %}

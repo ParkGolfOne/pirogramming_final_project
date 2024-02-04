@@ -1,0 +1,22 @@
+.location-title {
+    text-align: center;
+}
+.location-container {
+    display: flex; 
+    width: 100%;
+    border: 1px solid var(--white--border--color);
+    border-radius: 5px;
+    padding: 10px;
+    margin: 5px;
+    background-color: var(--green--pale--color);
+}
+.location-container > a > div {
+    height: 200px;
+}
+.location-img {
+    height: 100%;
+    padding: auto;
+}
+.location-btn {
+    
+}
