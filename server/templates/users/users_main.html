@@ -1,16 +1,14 @@
 {% extends 'base.html' %}
 {%load static%}
+{% block head %}
+
+{% endblock %}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="{% static 'users/css/user.css' %}" />
+  <script defer src="{% static 'js/region.js' %}"></script>
+  <title>마이페이지</title>
 {% block content %}
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="{% static 'css/users.css' %}" />
-    <script defer src="{% static 'js/region.js' %}"></script>
-    <title>Document</title>
-  </head>
-  <body>
     <h2 class="users-maintitle">마이페이지</h2>
     <a href="{% url 'communitys:board_list' %}">커뮤니티 홈</a>
     {% if user.is_authenticated %} {% if now_user.id == pk %}
@@ -61,9 +59,7 @@
     <div><a href="{% url 'social:begin' 'naver' %}">네이버 로그인</a></div>
     <div><a href="{% url 'users:signup' %}">회원가입</a></div>
     {% endif %} 
-    {% block content %}
+    {% block user_main %}
      
-    {% endblock content %}
-  </body>
-</html>
+    {% endblock user_main %}
 {% endblock %}
