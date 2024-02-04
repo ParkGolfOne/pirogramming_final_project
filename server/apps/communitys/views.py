@@ -78,7 +78,7 @@ def board_update(request, bid):
         form = BoardForm(request.POST, request.FILES, instance = board)
         if form.is_valid():
             form.save()
-        return redirect("communitys:board_list") #bid 지웠음
+        return redirect("communitys:board_list")
     
     if request.method == "GET":
         form = BoardForm(instance=board) 
