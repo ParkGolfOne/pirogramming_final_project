@@ -1,3 +1,10 @@
+:root {
+    --green--dark--color: #1A5D1A;
+    --green--medium--color: #789461;
+    --green--light--color: #c4d7b2a3;
+    --green--pale--color: rgba(255, 255, 255, 0.5);
+    --white--border--color: #ddd;
+}
 body{
     height: 100vh;
     font-size: 30px;
@@ -6,14 +13,16 @@ body{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: green;
+    background-color: var(--green--dark--color);
     padding: 25px;
     height: 90px;
     width: 100%;
+    color: #ffffff;
 }
 .title-container {
     display: flex;
     align-items: center;
+    z-index: 1;
 }
 .title-logo {
     height: 7rem;
@@ -60,6 +69,7 @@ body{
     height: calc(100vh - 9rem);
     top: 9rem;
     right: -300px;
+    z-index: 2;
 }
 .main-sidebar > ul {
     display: flex;
@@ -80,10 +90,11 @@ body{
     flex-direction: column;
     align-items: center;
     height: 90%;
-    width: 80%;
-    background-color: aqua;
+    width: 90%;
+    background-color: var(--green--light--color);
     border-radius: 30px;
     padding: 5%;
+    overflow: scroll;
 }
 /* pc일떄 */
 @media screen and (min-width: 700px) {
@@ -108,8 +119,9 @@ body{
 #mobileFooter {
     height: 70px;
     width: 100%;
-    background-color: green;
+    background-color: var(--green--dark--color);
     bottom: 0;
+    color: #ffffff;
 }
 #mobileFooter > ul {
     display: flex;

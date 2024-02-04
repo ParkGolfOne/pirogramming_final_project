@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<form method="POST" action="">
+<form method="POST" action="" class="login-form">
     {% csrf_token %}
     {{ form }}
-    <button>로그인</button>
+    <button class="user-btn">로그인</button>
 </form>
 {% endblock %}
