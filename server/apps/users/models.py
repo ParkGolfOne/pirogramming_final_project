@@ -12,7 +12,7 @@ class User(AbstractUser):
     first_login = models.BooleanField(default=True)
     region = models.ForeignKey(Region, on_delete=models.PROTECT, null=True, blank=True)
     # 친구 속성 추가
-    friends = models.ManyToManyField('self', symmetrical=True, blank=True, related_name='user_friends')
+    friends = models.ManyToManyField('self', symmetrical=True, blank=True)
     
     def __str__(self):
         return self.username
