@@ -27,6 +27,7 @@ urlpatterns = [
     path('users/', include('apps.users.urls')),
     path('score/', include('apps.score.urls',)),
     path('locations/', include('apps.locations.urls')),
+    path('region/', include('apps.region.urls')),
     path('auth/', include('social_django.urls', namespace='social')),
 
 ]
