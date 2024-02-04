@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // 1. city 선택 목록 보여주는 기능
   // city 데이터 DB에서 요청
+  // signup 과 다른 점은 default로 보여주는 값이 유저의 기존 데이터로 설정 됨
   function fetchCityData() {
     var xhr = new XMLHttpRequest();
     xhr.open("GET", "/region/get_city_list/", true);
@@ -11,7 +12,6 @@ document.addEventListener("DOMContentLoaded", function () {
       if (xhr.readyState == 4 && xhr.status == 200) {
         var cityData = JSON.parse(xhr.responseText);
         populateCityOptions(cityData);
-        console.log("cityData", cityData);
       }
     };
     xhr.send();
@@ -19,12 +19,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // 받은 city 데이터를 option 태그로 만들어서 추가함
   function populateCityOptions(cityData) {
-    cityField.innerHTML = "";
-    var defaultOption = document.createElement("option");
-    defaultOption.value = "";
-    defaultOption.text = "선택해주세요";
-    cityField.appendChild(defaultOption);
-
     cityData.forEach(function (city) {
       var option = document.createElement("option");
       option.value = city;
@@ -62,22 +56,22 @@ document.addEventListener("DOMContentLoaded", function () {
       townField.appendChild(option);
     });
   }
-  
+
   // 입력 받은 시와 동네를 백엔드로 넘기기
   // 폼 제출 시 사용할 이벤트 헨들러 추가
-  var form = document.getElementById("signup-form");
+  var form = document.getElementById("update-form");
   form.addEventListener("submit", function (event) {
     event.preventDefault(); // 폼 기본 동작 방지
-    
+
     const formData = new FormData(form);
     formData.append("city", cityField.value);
     formData.append("town", townField.value);
 
-    const url = "/users/signup/";
+    const url = `/users/update/${userId}/`;
     const xhr = new XMLHttpRequest();
     xhr.open("POST", url, true);
     xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
-    
+
     xhr.send(formData);
   });
 });
