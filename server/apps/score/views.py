@@ -9,8 +9,14 @@ from django.views.decorators.csrf import csrf_exempt
 #트랜잭션
 from django.db import transaction
 # 이미지 텍스트 인식 관련
-import cv2
-import pytesseract
+import requests
+import uuid
+import time
+import json
+import os
+from django.core.files.storage import default_storage
+from django.conf import settings
+
 
 
 ###########################################################
@@ -145,21 +151,56 @@ def score_history(request, uid):
 @transaction.atomic
 def score_scan(request):
     if request.method == "POST":
-        upload_image = request.FILES.get('image')
-        # 이미지 파일 로드
-        image = cv2.imread(upload_image)
-        print(image)
+        image = request.FILES.get('image')
+        if image:
+            # 파일 저장 경로 설정
+            save_path = os.path.join(settings.MEDIA_ROOT, 'uploads', image.name)
+            path = default_storage.save(save_path, image)
 
-        # # 이미지 전처리를 위해 흑백으로 변환
-        # gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+            # 네이버 OCR API 호출
+            api_url ='url 입력'
+            secret_key = '시크릿키'
+            image_file_path = default_storage.path(path)  # 저장된 파일의 절대 경로
 
-        # 이미지에서 텍스트 추출
-        text = pytesseract.image_to_string(image, lang='eng')
+            # API 요청 데이터 준비
+            request_json = {
+                'images': [
+                    {
+                        'format': 'jpg',
+                        'name': 'demo'
+                    }
+                ],
+                'requestId': str(uuid.uuid4()),
+                'version': 'V2',
+                'timestamp': int(round(time.time() * 1000))
+            }
+            payload = {'message': json.dumps(request_json).encode('UTF-8')}
+            files = [('file', (image.name, open(image_file_path, 'rb'), 'image/jpeg'))]
+            headers = {'X-OCR-SECRET': secret_key}
 
-        # 추출한 텍스트 출력
-        print(text)
+            # API 요청 및 응답 처리
+            response = requests.post(api_url, headers=headers, data=payload, files=files)
+            result = response.json()
+
+            # 결과 추출 및 반환
+            text = [field['inferText'] for field in result['images'][0]['fields']]
+            result = extractParScore(text)
+            return JsonResponse({'par': result['par'], 'score' : result['score']})
+        return JsonResponse({'error': 'No image file provided'}, status=400)
     
-    return JsonResponse({'text' : text})
+
+def extractParScore(inputText):
+    par = []
+    score = []
+    mode = 0
+
+    for i in range(12,21):
+        par.append(inputText[i])
+    for j in range(23,32):
+        score.append(inputText[j])
+
+    return {'par' : par, 'score': score,}
+        
 
 ###########################################################
 #                   스코어 그래프 관련 함수                 #
