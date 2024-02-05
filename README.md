@@ -11,7 +11,7 @@
 - .env 파일에 우리끼리 공유한 토큰 키 값을 넣어서 사용
 
 ### 초기 데이터 DB에 업로드 (골프장 data, Region data)
-`./db_init.sh`
+`./server/db_init.sh`
 db_init.sh 실행하면 됩니다
 
 ### 기능 명세서
