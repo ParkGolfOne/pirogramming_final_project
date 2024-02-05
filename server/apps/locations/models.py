@@ -24,3 +24,6 @@ class GolfLocation (models.Model):
     # 운영일
     # 홈페이지
     # 예약페이지
+
+    def __str__(self):
+        return self.golf_name

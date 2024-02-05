@@ -1,6 +1,4 @@
-{% extends 'base.html' %}
-{% load static %}
-{% block content %}
+{% extends 'base.html' %} {% load static %} {% block content %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -19,7 +17,13 @@
       <div>아직 아래와 같은 형식을 정확히 지켜주셔야합니다!</div>
 
       {% csrf_token %}
-      <div><img id="preview" src="{% static 'score/images/score_ex.PNG'%}" alt="your image" /></div>
+      <div>
+        <img
+          id="preview"
+          src="{% static 'score/images/score_ex.PNG'%}"
+          alt="your image"
+        />
+      </div>
       <input
         type="file"
         id="uploadedImage"
@@ -27,53 +31,98 @@
         onchange="showImage(this)"
         accept="image/*"
       />
-      
+
       <button class="takePictureInfo" onclick="extractPicture()">
         이미지 분석
       </button>
     </div>
     <form method="POST" action="" enctype="multipart/form-data">
-      {% csrf_token %} {{ form }}
+      {% csrf_token %}
+      <div class="locationInputArea">
+        <span>장소 검색 : </span>
+        <input class="locationInput" type="text" name="location" />
+        <!-- 알맞는 데이터 없을 시   -->
+        <div class="matchLocation"></div>
+      </div>
+      <button class="" onclick=""></button>
       <div class="scoreGrid">
         <div>홀</div>
         <div>파</div>
         <div>점수</div>
         <div>1</div>
-        <div><input class="parInput" type="text" maxlength="1" name="par1"/></div>
-        <div><input class="scoreInput" type="text" maxlength="1" name="score1" /></div>
+        <div>
+          <input class="parInput" type="text" maxlength="1" name="par1" />
+        </div>
+        <div>
+          <input class="scoreInput" type="text" maxlength="1" name="score1" />
+        </div>
         <div>2</div>
-        <div><input class="parInput"type="text" maxlength="1" name="par2" /></div>
-        <div><input class="scoreInput"type="text" maxlength="1" name="score2" /></div>
+        <div>
+          <input class="parInput" type="text" maxlength="1" name="par2" />
+        </div>
+        <div>
+          <input class="scoreInput" type="text" maxlength="1" name="score2" />
+        </div>
         <div>3</div>
-        <div><input class="parInput" type="text" maxlength="1" name="par3" /></div>
-        <div><input class="scoreInput" type="text" maxlength="1" name="score3" /></div>
+        <div>
+          <input class="parInput" type="text" maxlength="1" name="par3" />
+        </div>
+        <div>
+          <input class="scoreInput" type="text" maxlength="1" name="score3" />
+        </div>
         <div>4</div>
-        <div><input class="parInput" type="text" maxlength="1" name="par4" /></div>
-        <div><input class="scoreInput" type="text" maxlength="1" name="score4" /></div>
+        <div>
+          <input class="parInput" type="text" maxlength="1" name="par4" />
+        </div>
+        <div>
+          <input class="scoreInput" type="text" maxlength="1" name="score4" />
+        </div>
         <div>5</div>
-        <div><input class="parInput" type="text" maxlength="1" name="par5" /></div>
-        <div><input class="scoreInput" type="text" maxlength="1" name="score5" /></div>
+        <div>
+          <input class="parInput" type="text" maxlength="1" name="par5" />
+        </div>
+        <div>
+          <input class="scoreInput" type="text" maxlength="1" name="score5" />
+        </div>
         <div>6</div>
-        <div><input class="parInput" type="text" maxlength="1" name="par6" /></div>
-        <div><input class="scoreInput" type="text" maxlength="1" name="score6" /></div>
+        <div>
+          <input class="parInput" type="text" maxlength="1" name="par6" />
+        </div>
+        <div>
+          <input class="scoreInput" type="text" maxlength="1" name="score6" />
+        </div>
         <div>7</div>
-        <div><input class="parInput" type="text" maxlength="1" name="par7" /></div>
-        <div><input class="scoreInput" type="text" maxlength="1" name="score7" /></div>
+        <div>
+          <input class="parInput" type="text" maxlength="1" name="par7" />
+        </div>
+        <div>
+          <input class="scoreInput" type="text" maxlength="1" name="score7" />
+        </div>
         <div>8</div>
-        <div><input class="parInput" type="text" maxlength="1" name="par8" /></div>
-        <div><input class="scoreInput" type="text" maxlength="1" name="score8" /></div>
+        <div>
+          <input class="parInput" type="text" maxlength="1" name="par8" />
+        </div>
+        <div>
+          <input class="scoreInput" type="text" maxlength="1" name="score8" />
+        </div>
         <div>9</div>
-        <div><input class="parInput" type="text" maxlength="1" name="par9" /></div>
-        <div><input class="scoreInput" type="text" maxlength="1" name="score9" /></div>
+        <div>
+          <input class="parInput" type="text" maxlength="1" name="par9" />
+        </div>
+        <div>
+          <input class="scoreInput" type="text" maxlength="1" name="score9" />
+        </div>
         <div>합계</div>
         <div>/</div>
         <div>/</div>
       </div>
-      <input type="submit" value="점수 등록" />
+      <input class="scoreSubmitBtn" type="submit" value="점수 등록" />
     </form>
 
     <!-- 이미지추출 -->
     <script src="{% static 'score/js/picture.js' %}"></script>
+    <!-- 장소 검색 -->
+    <script src="{% static 'search/js/find_location.js' %}"></script>
   </body>
 </html>
 {% endblock%}
