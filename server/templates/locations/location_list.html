@@ -9,13 +9,12 @@
 <div>
   <div class="location-header">
     <h1>전국 골프장 목록</h1>
-    <div class="location-btn">
-      <a href="{% url 'locations:myhome' %}">내 주변 파크골프장</a>
-    </div>
-    <div class="location-btn">
-      <a href="{% url 'locations:create' %}">골프장 추가</a>
-    </div>
-    
+      <a href="{% url 'locations:myhome' %}">
+        <div class="location-btn">내 주변 파크골프장</div>
+      </a>
+      <a href="{% url 'locations:create' %}">
+        <div class="location-btn">골프장 추가</div>
+      </a>
   </div>
   <div class="location-main-container">
       {% for location in locations %}

@@ -1,20 +1,11 @@
-.scoreBanner{
-    height: 300px;
-    width: 300px;
-    background-image: url('/static/score/images/golf-outline.png');
-    background-repeat: no-repeat;
-    background-size: contain;
-}
-.scoreMainBtn {
+.location-detail-btn {
     padding: 10px;
     border-radius: 5px;
     border: 1px solid var(--green--medium--color);
     background-color: #ffffff;
     cursor: pointer;
-    margin: 10px;
-    
 }
-.scoreMainBtn:hover {
+.location-detail-btn:hover {
     background-color: var(--green--medium--color);
     border: 1px solid var(--green--medium--color);
     transition: 0.1s;

@@ -28,11 +28,11 @@
     </div>
     
     {% endfor%} {% if user.is_authenticated %}
-    <div class="communitys-btn">
-      <a href="{% url 'communitys:board_create' %}">게시판 추가</a>
-    {% endif %}
-    </div>
+    
+      <a href="{% url 'communitys:board_create' %}"><div class="board-btn">게시판 추가</div></a>
 
+    {% endif %}
+    
     <!-- 페이지 네이션 -->
   {% endblock %}
 

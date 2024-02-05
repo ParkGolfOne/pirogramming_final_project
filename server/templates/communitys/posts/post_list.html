@@ -19,9 +19,7 @@
     {% if board.admin == now_user%}
     <form action="{% url 'communitys:board_delete' bid  %}" method="POST">
       {%csrf_token%}
-      <a href="{% url 'communitys:board_update' bid %}" class="btn btn-primary"
-        >게시판 수정</a
-      >
+      <a href="{% url 'communitys:board_update' bid %}">게시판 수정</a>
       <button type="submit">게시판 삭제</button>
     </form>
     {% endif %}
@@ -56,7 +54,7 @@
     </div>
     <hr />
     <hr />
-    <a href="{% url 'communitys:post_create' bid %}">글 작성하기</a>
+    <a href="{% url 'communitys:post_create' bid %}" class=" communitys-btn">글 작성하기</a>
 
     <!-- 페이지 네이션 -->
   </body>

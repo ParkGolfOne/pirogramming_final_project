@@ -1,5 +1,5 @@
 {% extends 'base.html' %} {%load static%} {% block content %}
-<form method="POST" action="" id="signup-form" class="signup-form">
+<form method="POST" action="" class="signup-form">
   {% csrf_token %} {{ form }}
   <div class="form-group">
     <label for="city">시/도:</label>
