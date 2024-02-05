@@ -15,8 +15,6 @@ import requests
 # 함수 이름 : home
 # 전달인자 : request
 # 기능 : 기본 메인페이지로 이동
-
-
 def home(request):
     return render(request, 'base.html')
 
@@ -26,8 +24,6 @@ def home(request):
 # 함수 이름 : main
 # 전달인자 : request, pk
 # 기능 : 유저의 개인 페이지. 유저가 작성한 글, 댓글, 스크랩, 좋아요를 가져온다.
-
-
 def main(request, pk):
     user = User.objects.get(id=pk)
     now_user = request.user
@@ -73,8 +69,6 @@ def main(request, pk):
 # 함수 이름 : signup
 # 전달인자 : request, pk
 # 기능 : 유저 회원가입
-
-
 @csrf_exempt
 def signup(request):
     if request.method == 'POST':
@@ -105,8 +99,6 @@ def signup(request):
 # 함수 이름 : login
 # 전달인자 : request
 # 기능 : 유저 로그인
-
-
 def login(request):
     if request.method == 'POST':
         form = AuthenticationForm(request, request.POST)
@@ -130,8 +122,6 @@ def login(request):
 # 함수 이름 : logout
 # 전달인자 : request
 # 기능 : 유저 로그아웃
-
-
 def logout(request):
     user = request.user
     user.first_login = False
@@ -250,8 +240,6 @@ def friend_list(request, pk):
 # 함수 이름 : friend_candidates
 # 전달인자 : request
 # 기능 : 현재 유저의 친구 후보(본인 + 친구가 아닌 사람들)을 db에서 가져옴
-
-
 def friend_candidates(request):
     user = request.user
     friends = user.friends.all()
@@ -264,8 +252,6 @@ def friend_candidates(request):
 # 함수 이름 : add_friend
 # 전달인자 : request. pk
 # 기능 : 유저 friend로 입력 받은 친구 추가 (쌍방으로)
-
-
 @login_required
 def add_friend(request, pk):
     if request.method == 'POST':
@@ -289,8 +275,6 @@ def add_friend(request, pk):
 # 함수 이름 : delete_friend
 # 전달인자 : request. pk
 # 기능 : 입력받은 friend 삭제 (쌍방으로)
-
-
 @login_required
 def delete_friend(request, pk):
     if request.method == 'POST':
