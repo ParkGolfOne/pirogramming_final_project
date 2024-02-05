@@ -76,6 +76,7 @@ def game_detail(request, game_id, round_count, player_count):
         for round in rounds:
             # 파 데이터 받아 넘겨주기
             par_data = round.par
+            # Tony: 9홀이 끝인가요??
             for i in range(1, 10):
                 hole_key = f'hole{i}'
                 par_data[hole_key] = int(request.POST.get(f'par{i}_{round.id}', 0))
