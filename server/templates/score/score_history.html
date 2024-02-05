@@ -38,18 +38,7 @@
         {% endfor%}
       </select>
     </div>
-    <div class="scoreList">
-      {% for score in scores %}
-      <div class="scoreBox">
-        <a href="{% url 'score:score_detail' score.id %}">
-          <div>{{score.ground.golf_name}}</div>
-          <div class="totalScore">기록 : {{score.total_score}}</div>
-        </a>
-      </div>
-      {% endfor%}
-    </div>
-    <!-- 페이지네이션 -->
-    <script src="{% static 'score/js/score.js' %}"></script>
+    <div class="scoreList"></div>
     <!-- 차트 -->
     <script src="{% static 'score/js/filter.js' %}"></script>
   </body>

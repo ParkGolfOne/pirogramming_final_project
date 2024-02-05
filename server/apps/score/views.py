@@ -86,25 +86,25 @@ def score_update(request, sid):
     score = Score.objects.get(id=sid)
     
     if request.method == "POST":
-        form = ScoreForm(request.POST, instance = score)
-        if form.is_valid:
-            score_instance = form.save(commit=False)
-            for i in range(1, 10):
-                hole_key = f'hole{i}'
-                score_instance.par[hole_key] = request.POST.get(f'par{i}', '')
-                score_instance.scores[hole_key] = request.POST.get(f'score{i}', '')
-
-            score_instance.player = request.user
-            score_instance.save()
+        location_name = request.POST.get('location')
+        
+        score_instance = Score.objects.create(player = request.user,ground = GolfLocation.objects.get(golf_name = location_name))
+    
+        for i in range(1, 10):
+            hole_key = f'hole{i}'
+            score_instance.par[hole_key] = request.POST.get(f'par{i}', '')
+            score_instance.scores[hole_key] = request.POST.get(f'score{i}', '')
+        score_instance.save()
+        
         return redirect("score:score_detail", score_instance.id)
     
     if request.method == "GET":
-        form = ScoreForm(instance=score)
         # HTML 에 전달할 정보
         context = {
-            'form' : form,
             'sid' : sid,
             'score' :score,
+            'locations' : GolfLocation.objects.all(),
+            'now_golf_name' : score.ground.golf_name,
         }
 
         return render(request, "score/score_update.html",context)
@@ -256,6 +256,5 @@ def take_score_info (request):
 
     for one_score in score_list:
         score_info.append({'score_id' : one_score.id, 'ground_name' : one_score.ground.golf_name,'total_score' : one_score.total_score})
-        
     return JsonResponse({'scores' : scores, 'score_info' : score_info})
 
