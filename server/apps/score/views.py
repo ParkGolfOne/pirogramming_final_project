@@ -129,12 +129,33 @@ def score_delete(request, sid):
 # 기능 : 유저의 상세 기록들을 볼 수 있는 페이지
 def score_history(request, uid):
     user = User.objects.get(id = uid)
+    sort_type = request.GET.get('sort')
+    if sort_type == '최신순':
+        try:
+            # 추후에 날짜 데이터 삽입시 변경.
+            scores = Score.objects.filter(player = user).order_by('-id')
+        except Score.DoesNotExist:
+            scores=[]
+    elif sort_type == '오래된순':
+        try:
+            # 추후에 날짜 데이터 삽입시 변경.
+            scores = Score.objects.filter(player = user).order_by('id')
+        except Score.DoesNotExist:
+            scores=[]
+    elif sort_type == '점수순':
+        try:
+            # 추후에 날짜 데이터 삽입시 변경.
+            scores = Score.objects.filter(player = user).order_by('-total_score')
+        except Score.DoesNotExist:
+            scores=[]
+    else :
+        try:
+            # 추후에 날짜 데이터 삽입시 변경.
+            scores = Score.objects.filter(player = user).order_by('-id')
+        except Score.DoesNotExist:
+            scores=[] 
 
-    try:
-        # 추후에 날짜 데이터 삽입시 변경.
-        scores = Score.objects.filter(player = user).order_by('-id')
-    except Score.DoesNotExist:
-        scores=[]
+    
 
     locations=[] 
     # 유저가 기록한 점수의 골프장 리스트 
@@ -169,8 +190,8 @@ def score_scan(request):
             path = default_storage.save(save_path, image)
 
             # 네이버 OCR API 호출
-            api_url = 'https://xovlh2grae.apigw.ntruss.com/custom/v1/28163/e66afde9b0424c8943c264dca6a7e9897424f749070abde67f29f7de86516947/general'
-            secret_key = 'TFZ2TllKVU1pbmRjZkJIU1F5SUNXTEVtWXNhUWVrV2E='
+            api_url = 'api url 값'
+            secret_key = '시크릿키값'
             image_file_path = default_storage.path(path)  # 저장된 파일의 절대 경로
 
             # API 요청 데이터 준비

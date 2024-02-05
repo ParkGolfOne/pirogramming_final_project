@@ -38,8 +38,19 @@
         {% endfor%}
       </select>
     </div>
+    <div>
+      <form action="">
+        <input class="scoreSortBtn" type="submit" name="sort" value="최신순" />
+        <input
+          class="scoreSortBtn"
+          type="submit"
+          name="sort"
+          value="오래된순"
+        />
+        <input class="scoreSortBtn" type="submit" name="sort" value="점수순" />
+      </form>
+    </div>
     <div class="scoreList"></div>
-    <!-- 차트 & 필터 -->
     <script src="{% static 'score/js/filter.js' %}"></script>
   </body>
 </html>
