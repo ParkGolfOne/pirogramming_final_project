@@ -20,9 +20,14 @@ const requestExtractImage = new XMLHttpRequest();
 // 전달인자 : --
 // 기능 : 서버에 댓글 작성 요청 및 댓글 내용 전달
 function extractPicture() {
+  var button = document.querySelector(".takePictureInfo");
+  button.disabled = true;
+  button.innerText='분석중....'
+
   const fileInput = document.querySelector("#uploadedImage");
   const formData = new FormData();
   formData.append("image", fileInput.files[0])
+
 
 
   const url = `/score/scan_scorePaper/`;
@@ -51,6 +56,10 @@ requestExtractImage.onreadystatechange = () => {
         element.value = score[i];
         i += 1;
       })
+
+      var button = document.querySelector(".takePictureInfo");
+      button.disabled = false;
+      button.innerText='이미지 분석'
     }
   }
 };
