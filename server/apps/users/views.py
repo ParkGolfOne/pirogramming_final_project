@@ -3,6 +3,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, redirect
 from apps.users.forms import SignupForm, UpdateForm
 from django.contrib.auth.forms import AuthenticationForm
+from django.http import JsonResponse
 from django.contrib import auth
 from apps.communitys.models import *
 from apps.region.models import *
@@ -15,6 +16,8 @@ import requests
 # 함수 이름 : home
 # 전달인자 : request
 # 기능 : 기본 메인페이지로 이동
+
+
 def home(request):
     return render(request, 'base.html')
 
@@ -24,6 +27,8 @@ def home(request):
 # 함수 이름 : main
 # 전달인자 : request, pk
 # 기능 : 유저의 개인 페이지. 유저가 작성한 글, 댓글, 스크랩, 좋아요를 가져온다.
+
+
 def main(request, pk):
     user = User.objects.get(id=pk)
     now_user = request.user
@@ -69,6 +74,8 @@ def main(request, pk):
 # 함수 이름 : signup
 # 전달인자 : request, pk
 # 기능 : 유저 회원가입
+
+
 @csrf_exempt
 def signup(request):
     if request.method == 'POST':
@@ -99,6 +106,8 @@ def signup(request):
 # 함수 이름 : login
 # 전달인자 : request
 # 기능 : 유저 로그인
+
+
 def login(request):
     if request.method == 'POST':
         form = AuthenticationForm(request, request.POST)
@@ -122,6 +131,8 @@ def login(request):
 # 함수 이름 : logout
 # 전달인자 : request
 # 기능 : 유저 로그아웃
+
+
 def logout(request):
     user = request.user
     user.first_login = False
@@ -135,6 +146,8 @@ def logout(request):
 # 함수 이름 : update
 # 전달인자 : request, pk
 # 기능 : 유저 정보 수정
+
+
 @csrf_exempt
 def update(request, pk):
     user = User.objects.get(id=pk)
@@ -250,20 +263,27 @@ def friend_candidates(request):
 # 함수 이름 : add_friend
 # 전달인자 : request. pk
 # 기능 : 유저 friend로 입력 받은 친구 추가 (쌍방으로)
+@csrf_exempt
 @login_required
 def add_friend(request, pk):
     if request.method == 'POST':
         user = request.user
         friend = request.POST.get('friend')
-        # 친구 관계 설정
+        print(friend)
         user.friends.add(friend)
-
-        # 사용자가 현재 보고 있는 페이지로 이동
-        return redirect(request.META['HTTP_REFERER'])
+        friend_candidate = friend_candidates(request)
+        friend_candidate_json = []
+        for friend in friend_candidate:
+            friend_data = {
+                'id': friend.id,
+                'username': friend.username,
+                'nickname': friend.nickname,
+            }
+            friend_candidate_json.append(friend_data)
+        return JsonResponse(friend_candidate_json, safe=False)
 
     else:
         friend_candidate = friend_candidates(request)
-        print(friend_candidate)
         context = {
             'candidates': friend_candidate,
             'pk': pk
@@ -273,14 +293,20 @@ def add_friend(request, pk):
 # 함수 이름 : delete_friend
 # 전달인자 : request. pk
 # 기능 : 입력받은 friend 삭제 (쌍방으로)
+@csrf_exempt
 @login_required
 def delete_friend(request, pk):
     if request.method == 'POST':
         user = User.objects.get(id=pk)
-        friend = request.POST.get('friend')
-        print(friend)
+        remove_friend = request.POST.get('friend')
         # 친구 관계 설정
-        user.friends.remove(friend)
-
-        # 사용자가 현재 보고 있는 페이지로 이동
-        return redirect(request.META['HTTP_REFERER'])
+        user.friends.remove(remove_friend)
+        friend_json = []
+        for friend in user.friends.all():
+            friend_data = {
+                'id': friend.id,
+                'username': friend.username,
+                'nickname': friend.nickname,
+            }
+            friend_json.append(friend_data)
+        return JsonResponse(friend_json, safe=False)

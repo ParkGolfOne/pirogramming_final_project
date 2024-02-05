@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
 <div>
     <h2>{{user.nickname}} 님의 현재 친구 목록</h2>
-    <ul>
+    <ul id="friend_list">
     {% for friend in friends %}
       <li>사용자 id: {{ friend.username }} 사용자 닉네임: {{ friend.nickname }}
       <form action="{% url 'users:delete_friend' pk %}" method="post" id="delete_friend-form">
@@ -16,21 +16,10 @@
   </ul>
   <a href="{% url 'users:add_friend' pk %}">친구 추가하러 가기</a>
 </div>
-{% include 'search/search_friend.html'%}
-
-<script>
-  function deleteFriend(friend_id, pk) {
-    const form = document.getElementById("delete_friend-form");
-    const formData = new FormData(form);
-    formData.append("friend", friend_id);
-
-    const url = `/users/delete_friend/${pk}/`;
-    const xhr = new XMLHttpRequest();
-    xhr.open("POST", url, true);
-    xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
-
-    xhr.send(formData);
-  }
-</script>
 {% endblock content %}
+
+{% block script %}
+<script>var userId={{pk}}</script>
+<script src="{% static 'users/js/delete_friend.js' %}"></script>
+{% endblock script %}
 
