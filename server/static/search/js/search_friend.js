@@ -12,15 +12,15 @@ function displayInputValue() {
     relContainer.classList.add("hide");
   } else {
     relContainer.classList.remove("hide");
-    loadData(searchInput.value, userId);
+    loadData(searchInput.value);
   }
 }
 
 // loadData
-const loadData = (input, userId) => {
+const loadData = (input) => {
   var xhr = new XMLHttpRequest();
 
-  const url = `/search/search_friend/${userId}`;
+  const url = `/search/search_candidate`;
   xhr.open("GET", `${url}/?input=` + input, true);
   xhr.onreadystatechange = function () {
     if (xhr.readyState == 4 && xhr.status == 200) {
@@ -35,13 +35,21 @@ const updateFriendField = (friendData) => {
   ul.innerHTML = "";
 
   friendData.forEach(function (friend) {
-    var listItems = document.createElement("li");
-    listItems.textContent = friend;
+    const li = document.createElement("li");
+    li.innerHTML = `사용자 id: ${friend.username} 사용자 닉네임: ${friend.nickname}`;
+    const form = document.createElement("form");
+    form.setAttribute("method", "post");
+    form.setAttribute("action", `/users/add_friend/${userId}/`);
+    form.setAttribute("id", "add_friend-form");
+    form.innerHTML = `<input type="hidden" name="friend_id" value=${friend.id}>
+      <button type="button" onclick="addFriend(${friend.id}, ${userId})">친구 추가</button>`;
+    li.appendChild(form);
+    
+    // form.addEventListener("mousedown", function () {
+    //   addFriend(friend.id, userId);
+    // });
 
-    listItems.addEventListener("mousedown", function () {
-      searchInput.value = friend;
-      ul.innerHTML = "";
-    });
-    ul.appendChild(listItems);
+    ul.appendChild(li);
   });
 };
+
