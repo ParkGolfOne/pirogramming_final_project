@@ -86,9 +86,16 @@ def score_update(request, sid):
     
     if request.method == "POST":
         form = ScoreForm(request.POST, instance = score)
-        if form.is_valid():
-            form.save()
-        return redirect("score:score_detail", sid)
+        if form.is_valid:
+            score_instance = form.save(commit=False)
+            for i in range(1, 10):
+                hole_key = f'hole{i}'
+                score_instance.par[hole_key] = request.POST.get(f'par{i}', '')
+                score_instance.scores[hole_key] = request.POST.get(f'score{i}', '')
+
+            score_instance.player = request.user
+            score_instance.save()
+        return redirect("score:score_detail", score_instance.id)
     
     if request.method == "GET":
         form = ScoreForm(instance=score)
@@ -96,6 +103,7 @@ def score_update(request, sid):
         context = {
             'form' : form,
             'sid' : sid,
+            'score' :score,
         }
 
         return render(request, "score/score_update.html",context)
