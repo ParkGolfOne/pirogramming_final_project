@@ -24,11 +24,14 @@
         {% endif %}
         <div>{{board.name}}</div>
       </a>
+      
     </div>
     
     {% endfor%} {% if user.is_authenticated %}
-    <a href="{% url 'communitys:board_create' %}" class="communitys-btn">게시판 추가</a>
+    <div class="communitys-btn">
+      <a href="{% url 'communitys:board_create' %}">게시판 추가</a>
     {% endif %}
+    </div>
 
     <!-- 페이지 네이션 -->
   {% endblock %}
