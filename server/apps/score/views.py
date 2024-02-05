@@ -136,15 +136,17 @@ def score_history(request, uid):
     except Score.DoesNotExist:
         scores=[]
 
+    locations=[] 
     # 유저가 기록한 점수의 골프장 리스트 
-
-        
+    for score in scores:
+        if score.ground not in locations:
+            locations.append(score.ground)        
 
     context={
         'scores' : scores,
         'user' : user,
         'uid' : uid,
-        'locations' : GolfLocation.objects.all(),
+        'locations' : locations,
     }
     return render(request, 'score/score_history.html', context)
 

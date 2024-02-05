@@ -32,12 +32,15 @@ requestFindLocation.onreadystatechange = () => {
   if (requestFindLocation.readyState === XMLHttpRequest.DONE) {
     if (requestFindLocation.status < 400) {
       const { location_names } = JSON.parse(requestFindLocation.response);
+      // 일치하는 이름이 없을 때
       if (location_names.length == 0) {
         match_content.innerText = "";
         // 일치하는 이름이 없으므로 제출 불가
         scoreSubmitBtn.disabled = true;
         scoreSubmitBtn.innerText = "올바른 골프장 이름을 입력 바랍니다.";
-      } else if (
+      }
+      //정확히 일치하는 이름이 있을 때
+      else if (
         location_names.length == 1 &&
         location_names[0] == content.value
       ) {
@@ -45,7 +48,9 @@ requestFindLocation.onreadystatechange = () => {
         // 정확히 일치하는 이름 있으므로 선택 가능
         scoreSubmitBtn.disabled = false;
         scoreSubmitBtn.innerText = "점수등록";
-      } else {
+      }
+      // 어느정도 일치하는 이름이 있을 때
+      else {
         match_content.innerHTML = "";
         location_names.forEach((element) => {
           match_content.innerHTML += `<li class="nameOption">${element}</li>`;
