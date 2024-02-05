@@ -1,6 +1,4 @@
-{% extends 'base.html' %}
-{% load static %}
-{% block content %}
+{% extends 'base.html' %} {% load static %} {% block content %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -26,6 +24,20 @@
     <div class="scoreMainBtn">
       <a href="{% url 'score:score_input' user.id %}">점수 입력하기</a>
     </div>
+    <div class="locationInputArea">
+      <span>장소 선택</span>
+      <select
+        class="locationSelect locationInfo"
+        type="select"
+        name="location"
+        onchange="getScoreInfo(true)"
+      >
+        <option value="all">전체</option>
+        {% for location in locations %}
+        <option value="{{location.golf_name}}">{{location.golf_name}}</option>
+        {% endfor%}
+      </select>
+    </div>
     <div class="scoreList">
       {% for score in scores %}
       <div class="scoreBox">
@@ -39,7 +51,7 @@
     <!-- 페이지네이션 -->
     <script src="{% static 'score/js/score.js' %}"></script>
     <!-- 차트 -->
-    <script src="{% static 'score/js/chart.js' %}"></script>
+    <script src="{% static 'score/js/filter.js' %}"></script>
   </body>
 </html>
 {% endblock %}

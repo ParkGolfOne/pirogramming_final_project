@@ -39,12 +39,19 @@
     <form method="POST" action="" enctype="multipart/form-data">
       {% csrf_token %}
       <div class="locationInputArea">
-        <span>장소 검색 : </span>
-        <input class="locationInput" type="text" name="location" />
-        <!-- 알맞는 데이터 없을 시   -->
-        <div class="matchLocation"></div>
+        <span>장소 선택</span>
+        <select
+          class="locationSelect locationInfo"
+          type="select"
+          name="location"
+        >
+          <option value="{{null}}">-------</option>
+          {% for location in locations %}
+          <option value="{{location.golf_name}}">{{location.golf_name}}</option>
+          {% endfor%}
+        </select>
+        <button class="" onclick="changeLocationInput()">검색하기</button>
       </div>
-      <button class="" onclick=""></button>
       <div class="scoreGrid">
         <div>홀</div>
         <div>파</div>
@@ -121,8 +128,8 @@
 
     <!-- 이미지추출 -->
     <script src="{% static 'score/js/picture.js' %}"></script>
-    <!-- 장소 검색 -->
-    <script src="{% static 'search/js/find_location.js' %}"></script>
+    <!-- 장소 입력방식 변경 -->
+    <script src="{% static 'score/js/location_input.js' %}"></script>
   </body>
 </html>
 {% endblock%}

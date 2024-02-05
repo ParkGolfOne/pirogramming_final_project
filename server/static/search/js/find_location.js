@@ -1,6 +1,6 @@
-var content = document.querySelector(".locationInput");
-var match_content = document.querySelector(".matchLocation");
-var scoreSubmitBtn = document.querySelector(".scoreSubmitBtn");
+const content = document.querySelector(".locationInput");
+const match_content = document.querySelector(".matchLocation");
+const scoreSubmitBtn = document.querySelector(".scoreSubmitBtn");
 
 //초기 세팅
 scoreSubmitBtn.disabled = true;
@@ -65,8 +65,8 @@ requestFindLocation.onreadystatechange = () => {
 };
 
 content.addEventListener("change", findLocation);
-content.addEventListener("keyup", findLocation);
-content.addEventListener("keydown", findLocation);
+// content.addEventListener("keyup", findLocation);
+content.addEventListener("input", findLocation);
 
 content.addEventListener("blur", () => {
   content.value = document.querySelector(".nameOption").innerText;

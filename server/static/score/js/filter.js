@@ -1,14 +1,29 @@
 // views.py 에서 점수 데이터 받아오기
 //새 HTTPRequest 생성
 const requestUserScore = new XMLHttpRequest();
+const locationName = document.querySelector(".locationInfo");
+const userId = document.querySelector(".userId");
+const scoreList = document.querySelector(".scoreList");
+
+var myChart = null;
 
 // 함수명 : getScoreInfo
 // 전달인자 : none
 // 기능 : 서버에 유저의 total_score 전달 받음.
-function getScoreInfo() {
-  const content = document.querySelector(".userId");
-  user_id = content.innerHTML;
+function getScoreInfo(flag) {
+  if (myChart !== null) {
+    myChart.destroy();
+  }
+  //유저 아이디 가져오기 (접속자 기준 x)
 
+  user_id = userId.innerHTML;
+
+  //선택한 골프장 가져오기
+  let location_name = locationName.value;
+  //전체 필터면 flag false->objects.all()
+  if (location_name == "all") {
+    flag = false;
+  }
   const url = `/score/take_score_info/`;
   requestUserScore.open("POST", url, true);
   requestUserScore.setRequestHeader(
@@ -19,6 +34,8 @@ function getScoreInfo() {
   requestUserScore.send(
     JSON.stringify({
       user_id: user_id,
+      flag: flag,
+      location_name: location_name,
     })
   );
 }
@@ -29,7 +46,19 @@ let all_scores;
 requestUserScore.onreadystatechange = () => {
   if (requestUserScore.readyState === XMLHttpRequest.DONE) {
     if (requestUserScore.status < 400) {
-      const { scores } = JSON.parse(requestUserScore.response);
+      const { scores, score_info } = JSON.parse(requestUserScore.response);
+      // 스코어
+      scoreList.innerHTML = "";
+      score_info.forEach((element) => {
+        scoreList.innerHTML += `<div class="scoreBox">
+        <a href="{% url 'score:score_detail' ${element.score_id} %}">
+          <div>${element.ground_name}</div>
+          <div class="totalScore">기록 : ${element.total_score}</div>
+        </a>
+      </div>`;
+      });
+
+      //차트 설정 시작
       scores.unshift(0);
 
       let labels = [];
@@ -78,7 +107,7 @@ requestUserScore.onreadystatechange = () => {
 
       // 차트 생성
       const ctx = document.getElementById("myChart").getContext("2d");
-      const myChart = new Chart(ctx, {
+      myChart = new Chart(ctx, {
         type: "line",
         data: chartData,
         options: chartOptions,
@@ -87,4 +116,4 @@ requestUserScore.onreadystatechange = () => {
   }
 };
 
-getScoreInfo();
+getScoreInfo(false);

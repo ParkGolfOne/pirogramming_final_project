@@ -26,7 +26,6 @@ def search_location(request):
 
     if input_text:
         locations = GolfLocation.objects.filter(golf_name__startswith=input_text)
-        print("locations = ", locations)
         location_names = list(locations.values_list("golf_name", flat=True))
 
     return JsonResponse({'location_names': location_names})
