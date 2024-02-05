@@ -1,6 +1,8 @@
-from django.shortcuts import render
 from apps.users.models import User
+from apps.communitys.models import Post
 from django.http import JsonResponse
+from django.core.serializers import serialize
+from django.shortcuts import render
 
 ###########################################################
 #              쿼리에 해당하는 유저의 친구 반환              #

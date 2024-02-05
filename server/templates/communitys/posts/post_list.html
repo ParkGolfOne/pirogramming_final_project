@@ -1,6 +1,4 @@
-{% extends 'base.html' %}
-{%load static%}
-{% block content %}
+{% extends 'base.html' %} {%load static%} {% block content %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -27,6 +25,24 @@
       <button type="submit">게시판 삭제</button>
     </form>
     {% endif %}
+    <div class="post_search">
+      <select id="post_search_select">
+        <option value="title">제목</option>
+        <option value="writer">작성자</option>
+      </select>
+      <input id="post_search_input" />
+      <button id="post_search_btn">검색</button>
+    </div>
+    <button id="post_list_btn">전체 게시글 보기</button>
+    <div class="post_sort">
+      <select id="post_sort_select">
+        <option value="" disabled selected>----------</option>
+        <option value="like">좋아요 많은 순</option>
+        <option value="scrap">스크랩 많은 순</option>
+        <option value="new">최신 순</option>
+        <option value="old">오래된 순</option>
+      </select>
+    </div>
     <div class="postList">
       {% for post in posts%}
       <a
@@ -43,7 +59,13 @@
     <a href="{% url 'communitys:post_create' bid %}">글 작성하기</a>
 
     <!-- 페이지 네이션 -->
-    <script src="{% static 'posts/js/posts.js'%}"></script>
   </body>
 </html>
+{% endblock %} {% block script %}
+<script>
+  var boardId={{bid}};
+</script>
+<script src="{% static 'posts/js/posts.js'%}"></script>
+<script src="{% static 'posts/js/search_post.js'%}"></script>
+<script src="{% static 'posts/js/sort_post.js'%}"></script>
 {% endblock %}
