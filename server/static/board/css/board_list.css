@@ -35,3 +35,8 @@
     border: 1px solid var(--green--medium--color);
     transition: 0.1s;
 }
+
+.post_search {
+    display: flex;
+    align-items: center;
+}
