@@ -16,6 +16,8 @@
   </ul>
   <a href="{% url 'users:add_friend' pk %}">친구 추가하러 가기</a>
 </div>
+{% include 'search/search_friend.html'%}
+
 <script>
   function deleteFriend(friend_id, pk) {
     const form = document.getElementById("delete_friend-form");

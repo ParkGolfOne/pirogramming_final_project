@@ -29,7 +29,8 @@ urlpatterns = [
     path('locations/', include('apps.locations.urls')),
     path('region/', include('apps.region.urls')),
     path('auth/', include('social_django.urls', namespace='social')),
-    path('games/', include('apps.games.urls'))
+    path('games/', include('apps.games.urls')),
+    path('search/', include('apps.search.urls')),
 ]
 
 if settings.DEBUG:

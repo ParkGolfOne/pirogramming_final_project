@@ -135,8 +135,6 @@ def logout(request):
 # 함수 이름 : update
 # 전달인자 : request, pk
 # 기능 : 유저 정보 수정
-
-
 @csrf_exempt
 def update(request, pk):
     user = User.objects.get(id=pk)
