@@ -74,6 +74,7 @@ def score_detail(request, sid):
         context={
             'score'  : score,
             "now_user"  : now_user,
+            "sid" : sid,
         }
         return render(request,'score/score_detail.html',context)
 

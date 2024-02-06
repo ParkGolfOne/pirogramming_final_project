@@ -60,7 +60,7 @@ function changeLocationInput() {
           });
           // 클릭시 해당 정보 가져오기
           listItems = document.querySelectorAll(".nameOption");
-          listItems.addEventListener("mousedown", function (e) {
+          listItems.addEventListener("click", function (e) {
             content.value = e.innerText;
             match_content.innerHTML = "";
           });
@@ -73,10 +73,10 @@ function changeLocationInput() {
   };
 
   content.addEventListener("change", findLocation);
-  // content.addEventListener("keyup", findLocation);
-  content.addEventListener("input", findLocation);
+  content.addEventListener("keyup", findLocation);
+  // content.addEventListener("input", findLocation);
 
   content.addEventListener("blur", () => {
-    content.value = document.querySelector(".nameOption").innerText;
+  content.value = document.querySelector(".nameOption").innerText;
   });
 }
