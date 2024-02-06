@@ -84,7 +84,7 @@
             </li>
             {% for player in round.round_player.all %}
               <li class="coures_li">
-                  <div>{{ player.name }}</div> 
+                  <div><input type="text" maxlength="1" name="name_{{player.id}}" value="{{ player.name}}"/></div>
                   <div>점수</div>
                   <div><input type="text" maxlength="1" name="score1_{{player.id}}" value="{{ player.score.scores.hole1}}"/></div>
                   <div><input type="text" maxlength="1" name="score2_{{player.id}}" value="{{ player.score.scores.hole2}}"/></div>
