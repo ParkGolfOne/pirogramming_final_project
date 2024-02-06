@@ -1,11 +1,7 @@
-{% extends 'base.html' %}
-
-{% load static %}
-{% block head %}
-  <title>파골원 커뮤니티</title>
-  <link rel="stylesheet" href="{% static 'locations/css/location_list.css'%}" />
-{% endblock %}
-{% block content %}
+{% extends 'base.html' %} {% load static %} {% block head %}
+<title>파골원 커뮤니티</title>
+<link rel="stylesheet" href="{% static 'locations/css/location_list.css'%}" />
+{% endblock %} {% block content %}
 <div>
   <div class="location-header">
     <h1>전국 골프장 목록</h1>
@@ -17,12 +13,17 @@
     </div>
     
   </div>
-
+  
   <div class="location-main-container">
       {% for location in locations %}
+
     <div class="location-container">
       {% comment %} 골프장 이름 클릭 시 세부내용 페이지로 이동 {% endcomment %}
-      <h4><a href="{% url 'locations:detail' location.pk %}">{{location.golf_name}}</a></h4>
+      <h4>
+        <a href="{% url 'locations:detail' location.pk %}"
+          >{{location.golf_name}}</a
+        >
+      </h4>
     </div>
     {% endfor %}
   </div>
