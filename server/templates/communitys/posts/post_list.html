@@ -41,6 +41,7 @@
         <option value="scrap">스크랩 많은 순</option>
         <option value="new">최신 순</option>
         <option value="old">오래된 순</option>
+        <option value="popular">조회수순</option>
       </select>
     </div>
     <div class="postList">
@@ -51,6 +52,7 @@
       >
         <div>{{post.title}}</div>
         <div>{{post.writer}}</div>
+        <div>조회수 {{post.view_num}}</div>
       </a>
       {% endfor%}
     </div>

@@ -37,6 +37,7 @@
 
       <hr />
       <div class="post_buttons">
+        <div class="view">조회수 {{post.view_num}}</div>
         <div class="likeNum-{{post.id}}">좋아요 {{post.like_num}}</div>
         <div class="scrapNum-{{post.id}}">스크랩 {{post.scrap_num}}</div>
         {% if user.is_authenticated %} {%if liked%}

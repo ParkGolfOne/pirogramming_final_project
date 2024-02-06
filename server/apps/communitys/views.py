@@ -178,7 +178,8 @@ def post_detail(request, pk, bid):
 
     # 게시글 관련 정보, 현재 접속 유저 가져오기
     post = Post.objects.get(id=pk)
-
+    post.view_num += 1
+    post.save()
 
     now_user = request.user
     try:
@@ -264,6 +265,8 @@ def sort_post(request, bid):
     elif type == "new":
         sort_posts = Post.objects.filter(
             board_id=bid).order_by('-created_date')
+    elif type == "popular":
+        sort_posts = Post.objects.filter(board_id=bid).order_by('-view_num')
     else:
         return JsonResponse([], safe=False)
     # 직접 JSON 형태로 데이터 구성
@@ -275,6 +278,7 @@ def sort_post(request, bid):
             'board': post.board.id,
             'title': post.title,
             'writer': post.writer.nickname,  # writer의 nickname 추가
+            'view_num' : post.view_num
         }
         sort_posts_json.append(post_data)
     print(sort_posts_json)
