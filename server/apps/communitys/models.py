@@ -22,6 +22,7 @@ class Post (models.Model):
     photo = models.ImageField('이미지', blank=True, upload_to='communitys/posts/%Y/%m/%d')
     like_num  = models.IntegerField(default = 0)  # 좋아요 숫자
     scrap_num = models.IntegerField(default = 0) # 스크랩 숫자
+    view_num = models.IntegerField(default = 1)  # 조회수
     created_date = models.DateTimeField('작성일', auto_created=True, auto_now_add=True)
     updated_date = models.DateTimeField('수정일', auto_created=True, auto_now=True)
     # tags = models.ManyToManyField(Tag)                  # 태그 추가시 주석 해제
@@ -66,5 +67,10 @@ class Like (models.Model):
 # 스크랩 모델
 class Scrap (models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, verbose_name='소속 게시글')
+    user = models.ForeignKey(User, on_delete=models.CASCADE,  verbose_name='유저')
+
+# 게시판 즐겨찾기
+class Bookmark(models.Model):
+    board = models.ForeignKey(Board, on_delete=models.CASCADE, verbose_name='소속 게시판')
     user = models.ForeignKey(User, on_delete=models.CASCADE,  verbose_name='유저')
 
