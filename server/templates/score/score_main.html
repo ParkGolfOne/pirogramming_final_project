@@ -11,9 +11,6 @@
 </head>
 <body>
     <h1>Main Score Page</h1>
-    {% if user.is_authenticated %}
-    <a href="{% url 'users:logout'%}"><div class="scoreMainBtn">로그아웃</div></a>
-    {% endif %}
     <div class="scoreBanner"></div>
     {% if user.is_authenticated %}
     <a href="{% url 'score:score_history' user.id %}"><div class="scoreMainBtn">나의 기록</div></a>

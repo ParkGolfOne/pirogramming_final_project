@@ -13,12 +13,6 @@
     <a href="{% url 'communitys:board_list' %}">커뮤니티 홈</a>
     <a href="{% url 'communitys:post_list' bid %}">게시판 홈</a>
     <div>
-      {% if user.is_authenticated %}
-      <a href="{% url 'users:logout'%}">로그아웃</a>{% else %}
-      <a href="{% url 'users:login'%}"> 로그인</a
-      ><a href="{% url 'users:signup'%}"> 회원가입</a>{% endif %}
-    </div>
-    <div>
       <h1 style="color: green; font-size: 40px">{{post.title}}</h1>
       <a href="{% url 'users:main' post.writer.id %}"
         ><h3>{{post.writer}}</h3></a

@@ -11,9 +11,6 @@
 
 </head>
 <body>
-    {% if user.is_authenticated %}
-    <div class="scoreMainBtn"> <a href="{% url 'users:logout'%}">로그아웃</a></div>
-    {% endif %}
     <a href="{% url 'score:score_main'%}">스코어 메인페이지 링크</a>
     <h1>점수 디테일 페이지</h1>
     <div class="scoreGrid">
@@ -21,32 +18,32 @@
       <div>파</div>
       <div>점수</div>
       <div>1</div>
-      <div>{{score.par.hole1}}</div>
-      <div>{{score.scores.hole1}}</div>
+      <div class="score-detail-value">{{score.par.hole1}}</div>
+      <div class="score-detail-value">{{score.scores.hole1}}</div>
       <div>2</div>
-      <div>{{score.par.hole2}}</div>
-      <div>{{score.scores.hole2}}</div>
+      <div class="score-detail-value">{{score.par.hole2}}</div>
+      <div class="score-detail-value">{{score.scores.hole2}}</div>
       <div>3</div>
-      <div>{{score.par.hole3}}</div>
-      <div>{{score.scores.hole3}}</div>
+      <div class="score-detail-value">{{score.par.hole3}}</div>
+      <div class="score-detail-value">{{score.scores.hole3}}</div>
       <div>4</div>
-      <div>{{score.par.hole4}}</div>
-      <div>{{score.scores.hole4}}</div>
+      <div class="score-detail-value">{{score.par.hole4}}</div>
+      <div class="score-detail-value">{{score.scores.hole4}}</div>
       <div>5</div>
-      <div>{{score.par.hole5}}</div>
-      <div>{{score.scores.hole5}}</div>
+      <div class="score-detail-value">{{score.par.hole5}}</div>
+      <div class="score-detail-value">{{score.scores.hole5}}</div>
       <div>6</div>
-      <div>{{score.par.hole6}}</div>
-      <div>{{score.scores.hole6}}</div>
+      <div class="score-detail-value">{{score.par.hole6}}</div>
+      <div class="score-detail-value">{{score.scores.hole6}}</div>
       <div>7</div>
-      <div>{{score.par.hole7}}</div>
-      <div>{{score.scores.hole7}}</div>
+      <div class="score-detail-value">{{score.par.hole7}}</div>
+      <div class="score-detail-value">{{score.scores.hole7}}</div>
       <div>8</div>
-      <div>{{score.par.hole8}}</div>
-      <div>{{score.scores.hole8}}</div>
+      <div class="score-detail-value">{{score.par.hole8}}</div>
+      <div class="score-detail-value">{{score.scores.hole8}}</div>
       <div>9</div>
-      <div>{{score.par.hole9}}</div>
-      <div>{{score.scores.hole9}}</div>
+      <div class="score-detail-value">{{score.par.hole9}}</div>
+      <div class="score-detail-value">{{score.scores.hole9}}</div>
       <div>합계</div>
       <div>/</div>
       <div>{{score.total_score}}</div>
@@ -60,10 +57,9 @@
         {%csrf_token%}
         <a
           href="{% url 'score:score_update' score.id %}"
-          class="btn btn-primary"
-          >수정하기</a
+          class="btn btn-primary"><div class="score-detail-btn">수정하기</div></a
         >
-        <button type="submit">삭제하기</button>
+        <button type="submit" class="score-detail-btn">삭제하기</button>
       </form>
     {% endif %}
 </body>

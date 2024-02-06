@@ -11,7 +11,7 @@
 </head>
 <body>
     <a href="{% url 'score:score_main'%}">스코어 메인페이지 링크</a>
-    점수 수정 페이지
+    <h1>점수 수정 페이지</h1>
     <form method="POST" action="" enctype="multipart/form-data">
       {% csrf_token %} {{ form }}
       <div class="scoreGrid">
@@ -49,7 +49,7 @@
         <div>/</div>
         <div>/</div>
       </div>
-      <input type="submit" value="점수 등록" />
+      <input type="submit" value="점수 등록" class="score-create-btn"/>
     </form>
 </body>
 </html>
