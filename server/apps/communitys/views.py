@@ -221,7 +221,64 @@ def post_detail(request, pk, bid):
     }
     return render(request, "communitys/posts/post_detail.html",context)
 
+# 함수 이름 : search_post
+# 전달인자 : request, bid
+# 기능 : 해당 쿼리에 해당하는 게시글 반환
+def search_post(request, bid):
+    type = request.GET.get('searchType', None)
+    input = request.GET.get('input', None)
+    if type == "title":
+        search_posts = Post.objects.filter(
+            board_id=bid, title__icontains=input)
+    elif type == "writer":
+        search_posts = Post.objects.filter(
+            board_id=bid, writer__nickname__icontains=input)
+    elif type == "all":
+        search_posts = Post.objects.filter(board_id=bid)
+    else:
+        return JsonResponse([], safe=False)
+    # 직접 JSON 형태로 데이터 구성
+    search_posts_json = []
+    for post in search_posts:
+        post_data = {
+            'pk': post.id,
+            'board': post.board.id,
+            'title': post.title,
+            'writer': post.writer.nickname,  # writer의 nickname 추가
+        }
+        search_posts_json.append(post_data)
+    return JsonResponse(search_posts_json, safe=False)
 
+# 함수 이름 : sort_post
+# 전달인자 : request, bid
+# 기능 : 해당 요청에 맞는 정렬된 게시글 반환
+def sort_post(request, bid):
+    type = request.GET.get('sortType', None)
+    print("type : ", type)
+    if type == "like":
+        sort_posts = Post.objects.filter(board_id=bid).order_by('-like_num')
+    elif type == "scrap":
+        sort_posts = Post.objects.filter(board_id=bid).order_by('-scrap_num')
+    elif type == "old":
+        sort_posts = Post.objects.filter(board_id=bid).order_by('created_date')    
+    elif type == "new":
+        sort_posts = Post.objects.filter(
+            board_id=bid).order_by('-created_date')
+    else:
+        return JsonResponse([], safe=False)
+    # 직접 JSON 형태로 데이터 구성
+    sort_posts_json = []
+    print(sort_posts)
+    for post in sort_posts:
+        post_data = {
+            'pk': post.id,
+            'board': post.board.id,
+            'title': post.title,
+            'writer': post.writer.nickname,  # writer의 nickname 추가
+        }
+        sort_posts_json.append(post_data)
+    print(sort_posts_json)
+    return JsonResponse(sort_posts_json, safe=False)
 
 
 ###########################################################

@@ -1,3 +1,11 @@
 {% block content %}
-{{nearest}}
+<div>
+    <h4>** 우리 집에서 가까운 파크골프장 **</h4>
+</div>
+{% for nearest in nearests %}
+<div>
+    {{nearest}}km
+</div>
+{% endfor %}
+<br>
 {% endblock %}

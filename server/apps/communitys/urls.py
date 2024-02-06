@@ -17,6 +17,8 @@ urlpatterns = [
     path('<int:bid>/main/<int:pk>/', post_detail ,name="post_detail" ),
     path('<int:bid>/main/post_update/<int:pk>/',post_update, name="post_update"),
     path('<int:bid>/main/post_delete/<int:pk>/', post_delete, name="post_delete"),
+    path("<int:bid>/search_post/", search_post, name="search_post"),
+    path("<int:bid>/sort_post/", sort_post, name="sort_post"),
 
     # 댓글 url
     path('comment_create/',comment_create, name="comment_create"),
