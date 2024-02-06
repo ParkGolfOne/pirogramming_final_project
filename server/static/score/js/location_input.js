@@ -60,11 +60,12 @@ function changeLocationInput() {
           });
           // 클릭시 해당 정보 가져오기
           listItems = document.querySelectorAll(".nameOption");
-          listItems.addEventListener("click", function (e) {
-            content.value = e.innerText;
-            match_content.innerHTML = "";
-          });
-          // 일치하는 이름이 없으므로 제출 불가
+          listItems.forEach((list_item) => {
+            list_item.addEventListener("click", function (e) {
+              content.value = list_item.innerText;
+              match_content.innerHTML = "";
+            });
+          })
           scoreSubmitBtn.disabled = true;
           scoreSubmitBtn.innerText = "올바른 골프장 이름을 입력 바랍니다.";
         }
@@ -72,11 +73,12 @@ function changeLocationInput() {
     }
   };
 
-  content.addEventListener("change", findLocation);
+
   content.addEventListener("keyup", findLocation);
-  // content.addEventListener("input", findLocation);
+  content.addEventListener("input", findLocation);
 
   content.addEventListener("blur", () => {
   content.value = document.querySelector(".nameOption").innerText;
+  match_content.innerHTML = "";
   });
 }
