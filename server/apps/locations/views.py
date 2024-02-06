@@ -77,3 +77,7 @@ def location_distance (request, pk):
         'nearests' : nearests,
     }
     return render(request, 'locations/location_distance.html', ctx)
+
+#내 현재 위치 정보를 기반으로 한 가장 가까운 파크골프장 5곳
+def location_myplace (request):
+    return render(request, 'locations/location_myplace.html')
