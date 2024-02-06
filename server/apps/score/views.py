@@ -129,31 +129,11 @@ def score_delete(request, sid):
 # 기능 : 유저의 상세 기록들을 볼 수 있는 페이지
 def score_history(request, uid):
     user = User.objects.get(id = uid)
-    sort_type = request.GET.get('sort')
-    if sort_type == '최신순':
-        try:
-            # 추후에 날짜 데이터 삽입시 변경.
-            scores = Score.objects.filter(player = user).order_by('-id')
-        except Score.DoesNotExist:
-            scores=[]
-    elif sort_type == '오래된순':
-        try:
-            # 추후에 날짜 데이터 삽입시 변경.
-            scores = Score.objects.filter(player = user).order_by('id')
-        except Score.DoesNotExist:
-            scores=[]
-    elif sort_type == '점수순':
-        try:
-            # 추후에 날짜 데이터 삽입시 변경.
-            scores = Score.objects.filter(player = user).order_by('-total_score')
-        except Score.DoesNotExist:
-            scores=[]
-    else :
-        try:
-            # 추후에 날짜 데이터 삽입시 변경.
-            scores = Score.objects.filter(player = user).order_by('-id')
-        except Score.DoesNotExist:
-            scores=[] 
+    try:
+        # 추후에 날짜 데이터 삽입시 변경.
+        scores = Score.objects.filter(player = user).order_by('-id')
+    except Score.DoesNotExist:
+        scores=[] 
 
     
 
@@ -249,6 +229,7 @@ def take_score_info (request):
     user_id = req["user_id"]
     flag = req["flag"]
     select_name = req["location_name"]
+    sort_type = req["sort"]
     user = get_object_or_404(User, id=user_id)
     score_info = []
     # 만약 location 필터가 있을 시
@@ -261,7 +242,7 @@ def take_score_info (request):
 
         # 해당 유저의 모든 Score 모델 가져오기
         try:
-            score_list = Score.objects.filter(player = user, ground = ground)
+            score_list = Score.objects.filter(player = user, ground = ground).order_by(sort_type)
             scores = list(score_list.values_list("total_score", flat=True))
         except Score.DoesNotExist:
             scores = []
@@ -271,7 +252,7 @@ def take_score_info (request):
         # 해당 유저의 모든 Score 모델 가져오기
         
         try:
-            score_list = Score.objects.filter(player = user)
+            score_list = Score.objects.filter(player = user).order_by(sort_type)
             scores = list(score_list.values_list("total_score", flat=True))
         except Score.DoesNotExist:
             score_list = []

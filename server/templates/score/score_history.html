@@ -39,16 +39,16 @@
       </select>
     </div>
     <div>
-      <form action="">
-        <input class="scoreSortBtn" type="submit" name="sort" value="최신순" />
-        <input
-          class="scoreSortBtn"
-          type="submit"
-          name="sort"
-          value="오래된순"
-        />
-        <input class="scoreSortBtn" type="submit" name="sort" value="점수순" />
-      </form>
+      <select
+          class="sortSelect sortInfo"
+          type="select"
+          name="sortType"
+          onchange="changeSort()"
+        >
+          <option value="-id">최신순</option>
+          <option value="id">오래된순</option>
+          <option value="total_score">점수순</option>
+        </select>
     </div>
     <div class="scoreList"></div>
     <script src="{% static 'score/js/filter.js' %}"></script>

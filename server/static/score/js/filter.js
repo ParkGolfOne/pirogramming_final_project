@@ -1,9 +1,12 @@
 // views.py 에서 점수 데이터 받아오기
 //새 HTTPRequest 생성
 const requestUserScore = new XMLHttpRequest();
+const requestFilterScore = new XMLHttpRequest();
 const locationName = document.querySelector(".locationInfo");
 const userId = document.querySelector(".userId");
 const scoreList = document.querySelector(".scoreList");
+// 정렬 옵션 부분 가져오기
+const sortType = document.querySelector(".sortSelect")
 
 var myChart = null;
 
@@ -11,11 +14,12 @@ var myChart = null;
 // 전달인자 : none
 // 기능 : 서버에 유저의 total_score 전달 받음.
 function getScoreInfo(flag) {
+  // 기존 차트 지우기
   if (myChart !== null) {
     myChart.destroy();
   }
-  //유저 아이디 가져오기 (접속자 기준 x)
 
+  //유저 아이디 가져오기 (접속자 기준 x)
   user_id = userId.innerHTML;
 
   //선택한 골프장 가져오기
@@ -36,6 +40,7 @@ function getScoreInfo(flag) {
       user_id: user_id,
       flag: flag,
       location_name: location_name,
+      sort : "-id",
     })
   );
 }
@@ -51,7 +56,7 @@ requestUserScore.onreadystatechange = () => {
       scoreList.innerHTML = "";
       score_info.forEach((element) => {
         scoreList.innerHTML += `<div class="scoreBox">
-        <a href="{% url 'score:score_detail' ${element.score_id} %}">
+        <a href="/score/score_detail/${element.score_id}/">
           <div>${element.ground_name}</div>
           <div class="totalScore">기록 : ${element.total_score}</div>
         </a>
@@ -117,3 +122,53 @@ requestUserScore.onreadystatechange = () => {
 };
 
 getScoreInfo(false);
+
+
+// 함수명 : changeSort
+// 전달인자 : 없음
+// 기능 : 점수 리스트를 바꾸어준다.
+function changeSort(){
+  //유저 아이디 가져오기 (접속자 기준 x)
+  user_id = userId.innerHTML;
+
+  //선택한 골프장 가져오기
+  let location_name = locationName.value;
+  //전체 필터면 flag false->objects.all()
+  if (location_name == "all") {
+    flag = false;
+  }
+  const url = `/score/take_score_info/`;
+  requestFilterScore.open("POST", url, true);
+  requestFilterScore.setRequestHeader(
+    "Content-Type",
+    "application/x-www-form-urlencoded"
+  );
+
+  requestFilterScore.send(
+    JSON.stringify({
+      user_id: user_id,
+      flag: flag,
+      location_name: location_name,
+      sort : sortType.value,
+    })
+  );
+}
+
+// 스코어 정보 요청 응답 온 후
+requestFilterScore.onreadystatechange = () => {
+  if (requestFilterScore.readyState === XMLHttpRequest.DONE) {
+    if (requestFilterScore.status < 400) {
+      const { scores, score_info } = JSON.parse(requestFilterScore.response);
+      // 스코어
+      scoreList.innerHTML = "";
+      score_info.forEach((element) => {
+        scoreList.innerHTML += `<div class="scoreBox">
+        <a href="/score/score_detail/${element.score_id}/">
+          <div>${element.ground_name}</div>
+          <div class="totalScore">기록 : ${element.total_score}</div>
+        </a>
+      </div>`;
+      });
+    }
+  }
+};
