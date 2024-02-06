@@ -2,7 +2,7 @@ const searchInput = document.querySelector("#friend_search_input");
 const relContainer = document.querySelector(".rel_search");
 const ul = document.querySelector(".pop_rel_friend");
 
-searchInput.addEventListener("change", displayInputValue);
+searchInput.addEventListener("input", displayInputValue);
 searchInput.addEventListener("keyup", displayInputValue);
 
 
