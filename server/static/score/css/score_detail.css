@@ -1,3 +1,4 @@
+/* score_create.html과 score_detail.html에 함께 사용중 */
 .scoreGrid{
     display:grid;
     grid-template-columns: repeat(3, 1fr);
