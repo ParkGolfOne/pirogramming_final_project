@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div>
+  <h2>친구 추가 페이지</h2>
+  <h4>친구 추가할 사용자를 검색하세요</h4>
+  <input id= "friend_search_input">
+  <container class = "rel_search">
+      <ul class="pop_rel_friend" id="candidate_list"></ul>
+  </container>
+  {% comment %} css 를 위해 남겨둠 {% endcomment %}
+  {% comment %} <ul id="candidate_list">
+    {% for candidate in candidates %}
+    <li>사용자 id: {{ candidate.username }} 사용자 닉네임: {{ candidate.nickname }}
+      <form action="{% url 'users:add_friend' pk %}" method="post"
+      id="add_friend-form">
+        <input type="hidden" name="friend_id" value="{{ candidate.id }}">
+        <button type="button" onclick="addFriend({{ candidate.id }}, {{ pk }})">친구 추가</button>
+      </form>
+  </li>
+  {% endfor %} {% endcomment %}
+</ul>
+</div>
+{% endblock content %}
+
+{% block script %}
+<script>var userId={{request.user.pk}};</script>
+<script src="{% static 'users/js/add_friend.js' %}"></script>
+<script src="{% static 'search/js/search_friend.js' %}"></script>
+{% endblock script %}

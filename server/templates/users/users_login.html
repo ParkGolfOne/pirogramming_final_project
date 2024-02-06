@@ -1,9 +1,15 @@
 {% extends 'base.html' %}
-
+{%load static%}
+{% block head %}
+  <link rel="stylesheet" href="{% static 'users/css/user.css'%}" />
+{% endblock %}
 {% block content %}
 <form method="POST" action="" class="login-form">
     {% csrf_token %}
     {{ form }}
     <button class="user-btn">로그인</button>
+    <div class="user-login-btn"><a href="{% url 'social:begin' 'kakao' %}">카카오 로그인</a></div>
+    <div class="user-login-btn"><a href="{% url 'social:begin' 'naver' %}">네이버 로그인</a></div>
 </form>
+
 {% endblock %}

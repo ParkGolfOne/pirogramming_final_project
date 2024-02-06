@@ -1,0 +1,11 @@
+{% load static %}
+
+<input id= "friend_search_input">
+<container class = "rel_search">
+    <ul class="pop_rel_friend" id="candidate_list"></ul>
+</container>
+
+{% block script %}
+<script>var userId = {{ request.user.pk }};</script>
+<script src="{% static 'search/js/search_friend.js' %}"></script>
+{% endblock script %}

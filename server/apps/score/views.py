@@ -6,7 +6,17 @@ from .forms import *
 import json
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+#트랜잭션
 from django.db import transaction
+# 이미지 텍스트 인식 관련
+import requests
+import uuid
+import time
+import json
+import os
+from django.core.files.storage import default_storage
+from django.conf import settings
+
 
 
 ###########################################################
@@ -42,18 +52,13 @@ def score_input(request, uid):
     if request.method == "POST":
         form = ScoreForm(request.POST, request.FILES)
         if form.is_valid:
-            par = ''
-            for i in range(1, 10):
-                par += request.POST.get(f'par{i}', '')
-
-            score = ''
-            for i in range(1, 10):
-                score += request.POST.get(f'score{i}', '')
-
             score_instance = form.save(commit=False)
+            for i in range(1, 10):
+                hole_key = f'hole{i}'
+                score_instance.par[hole_key] = request.POST.get(f'par{i}', '')
+                score_instance.scores[hole_key] = request.POST.get(f'score{i}', '')
+
             score_instance.player = request.user
-            score_instance.par = par
-            score_instance.score = score
             score_instance.save()
         return redirect("score:score_detail", score_instance.id)
 
@@ -81,9 +86,16 @@ def score_update(request, sid):
     
     if request.method == "POST":
         form = ScoreForm(request.POST, instance = score)
-        if form.is_valid():
-            form.save()
-        return redirect("score:score_detail", sid)
+        if form.is_valid:
+            score_instance = form.save(commit=False)
+            for i in range(1, 10):
+                hole_key = f'hole{i}'
+                score_instance.par[hole_key] = request.POST.get(f'par{i}', '')
+                score_instance.scores[hole_key] = request.POST.get(f'score{i}', '')
+
+            score_instance.player = request.user
+            score_instance.save()
+        return redirect("score:score_detail", score_instance.id)
     
     if request.method == "GET":
         form = ScoreForm(instance=score)
@@ -91,6 +103,7 @@ def score_update(request, sid):
         context = {
             'form' : form,
             'sid' : sid,
+            'score' :score,
         }
 
         return render(request, "score/score_update.html",context)
@@ -137,10 +150,60 @@ def score_history(request, uid):
 # 함수 이름 : score_scan
 # 전달인자 : request
 # 기능 : --
-
+@csrf_exempt
+@transaction.atomic
 def score_scan(request):
-    pass
+    if request.method == "POST":
+        image = request.FILES.get('image')
+        if image:
+            # 파일 저장 경로 설정
+            save_path = os.path.join(settings.MEDIA_ROOT, 'uploads', image.name)
+            path = default_storage.save(save_path, image)
 
+            # 네이버 OCR API 호출
+            api_url ='url 입력'
+            secret_key = '시크릿키'
+            image_file_path = default_storage.path(path)  # 저장된 파일의 절대 경로
+
+            # API 요청 데이터 준비
+            request_json = {
+                'images': [
+                    {
+                        'format': 'jpg',
+                        'name': 'demo'
+                    }
+                ],
+                'requestId': str(uuid.uuid4()),
+                'version': 'V2',
+                'timestamp': int(round(time.time() * 1000))
+            }
+            payload = {'message': json.dumps(request_json).encode('UTF-8')}
+            files = [('file', (image.name, open(image_file_path, 'rb'), 'image/jpeg'))]
+            headers = {'X-OCR-SECRET': secret_key}
+
+            # API 요청 및 응답 처리
+            response = requests.post(api_url, headers=headers, data=payload, files=files)
+            result = response.json()
+
+            # 결과 추출 및 반환
+            text = [field['inferText'] for field in result['images'][0]['fields']]
+            result = extractParScore(text)
+            return JsonResponse({'par': result['par'], 'score' : result['score']})
+        return JsonResponse({'error': 'No image file provided'}, status=400)
+    
+
+def extractParScore(inputText):
+    par = []
+    score = []
+    mode = 0
+
+    for i in range(12,21):
+        par.append(inputText[i])
+    for j in range(23,32):
+        score.append(inputText[j])
+
+    return {'par' : par, 'score': score,}
+        
 
 ###########################################################
 #                   스코어 그래프 관련 함수                 #

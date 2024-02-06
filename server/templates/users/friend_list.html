@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div>
+    <h2>{{user.nickname}} 님의 현재 친구 목록</h2>
+    <ul id="friend_list">
+    {% for friend in friends %}
+      <li>사용자 id: {{ friend.username }} 사용자 닉네임: {{ friend.nickname }}
+      <form action="{% url 'users:delete_friend' pk %}" method="post" id="delete_friend-form">
+        {% csrf_token %}
+        <input type="hidden" name="friend_id" value="{{ friend.id }}">
+        <button type="button" onclick="deleteFriend({{ friend.id }}, {{ pk }})">친구 삭제</button>
+      </form>
+      </li>
+    {% endfor %}
+  </ul>
+  <a href="{% url 'users:add_friend' pk %}">친구 추가하러 가기</a>
+</div>
+{% endblock content %}
+
+{% block script %}
+<script>var userId={{pk}}</script>
+<script src="{% static 'users/js/delete_friend.js' %}"></script>
+{% endblock script %}
+
