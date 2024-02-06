@@ -170,8 +170,8 @@ def score_scan(request):
             path = default_storage.save(save_path, image)
 
             # 네이버 OCR API 호출
-            api_url = 'api url 값'
-            secret_key = '시크릿키값'
+            api_url = 'https://xovlh2grae.apigw.ntruss.com/custom/v1/28163/e66afde9b0424c8943c264dca6a7e9897424f749070abde67f29f7de86516947/general'
+            secret_key = 'TFZ2TllKVU1pbmRjZkJIU1F5SUNXTEVtWXNhUWVrV2E='
             image_file_path = default_storage.path(path)  # 저장된 파일의 절대 경로
 
             # API 요청 데이터 준비

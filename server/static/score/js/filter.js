@@ -63,8 +63,8 @@ requestUserScore.onreadystatechange = () => {
       </div>`;
       });
 
-      //차트 설정 시작
-      scores.unshift(0);
+      //차트 시작 설정
+      scores.unshift(90);
 
       let labels = [];
       for (let i = 0; i < scores.length; i++) {
@@ -104,6 +104,7 @@ requestUserScore.onreadystatechange = () => {
           },
           y: {
             beginAtZero: true,
+            reverse: true,
             min: 0,
             max: 90,
           },
