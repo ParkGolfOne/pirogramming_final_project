@@ -1,7 +1,16 @@
 {% extends 'base.html' %} {%load static%} {% block content %}
-<form method="POST" action="" id="signup-form" class="signup-form">
+<form method="POST" action="" id="signup-form"  class="signup-form">
   {% csrf_token %} {{ form }}
   <div class="form-group">
+    <!--도로명 주소 검색-->
+    <label for="address">주소 입력</label>
+    <input type="text" placeholder="도로명 주소" name="address_display" readonly="readonly" id="address_text">
+    <button onclick="execDaumPostcode()" name="btn-address">주소검색</button>
+    <!--상세 주소-->
+    <p class="sb-addr">
+        <input type="text" class="w-xl" placeholder="상세주소" name="street_number" id="address_detail">
+    </p>
+
     <label for="city">시/도:</label>
     <select id="city" class="signup-input">
       <option value="">선택해주세요</option>
@@ -19,4 +28,25 @@
 
 {% block script %}
 <script defer src="{% static 'users/js/signup.js' %}"></script>
+<!--다음 카카오 도로명 주소-->
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+function execDaumPostcode() {
+  console.log('execDaumPostcode');
+  new daum.Postcode({
+    oncomplete: function (data) {
+      var address = '';
+
+      if (data.userSelectedType === 'R') {
+      address = data.roadAddress;
+      } else {
+      address = data.jibunAddress;
+      }
+
+      document.getElementById('address_text').value = address;
+      document.getElementById('address_detail').focus(); // 커서를 상세주소 필드로 이동
+}
+    }).open();
+}
+</script>
 {% endblock script %}

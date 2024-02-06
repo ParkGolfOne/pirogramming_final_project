@@ -1,6 +1,4 @@
-{% extends 'base.html' %}
-{% load static %}
-{% block content %}
+{% extends 'base.html' %} {% load static %} {% block content %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -20,20 +18,34 @@
     <div class="scoreMainBtn">
       <a href="{% url 'score:score_input' user.id %}" class="score-history-btn">점수 입력하기</a>
     </div>
-    <div class="scoreList">
-      {% for score in scores %}
-      <div class="scoreBox">
-        <a href="{% url 'score:score_detail' score.id %}">
-          <div>{{score.ground.golf_name}}</div>
-          <div class="totalScore">기록 : {{score.total_score}}</div>
-        </a>
-      </div>
-      {% endfor%}
+    <div class="locationInputArea">
+      <span>장소 선택</span>
+      <select
+        class="locationSelect locationInfo"
+        type="select"
+        name="location"
+        onchange="getScoreInfo(true)"
+      >
+        <option value="all">전체</option>
+        {% for location in locations %}
+        <option value="{{location.golf_name}}">{{location.golf_name}}</option>
+        {% endfor%}
+      </select>
     </div>
-    <!-- 페이지네이션 -->
-    <script src="{% static 'score/js/score.js' %}"></script>
-    <!-- 차트 -->
-    <script src="{% static 'score/js/chart.js' %}"></script>
+    <div>
+      <select
+          class="sortSelect sortInfo"
+          type="select"
+          name="sortType"
+          onchange="changeSort()"
+        >
+          <option value="-id">최신순</option>
+          <option value="id">오래된순</option>
+          <option value="total_score">점수순</option>
+        </select>
+    </div>
+    <div class="scoreList"></div>
+    <script src="{% static 'score/js/filter.js' %}"></script>
   </body>
 </html>
 {% endblock %}

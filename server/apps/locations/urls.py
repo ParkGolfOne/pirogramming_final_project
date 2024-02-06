@@ -9,5 +9,6 @@ urlpatterns = [
     path('create/', location_create, name='create'),
     path('update/<int:pk>/', location_update, name='update'),
     path('delete/<int:pk>/', location_delete, name='delete'),
-    path('myhome/', location_distance, name='myhome'),
+    path('myhome/<int:pk>/', location_distance, name='myhome'),
+    path('myplace/', location_myplace, name='myplace'),
 ]
