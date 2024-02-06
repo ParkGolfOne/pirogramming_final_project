@@ -81,6 +81,8 @@ def signup(request):
     if request.method == 'POST':
         selected_city = request.POST.get('city')
         selected_town = request.POST.get('town')
+        street_address = request.POST.get('street_address')
+        detail_address = request.POST.get('detail_address')
         form = SignupForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
@@ -88,6 +90,8 @@ def signup(request):
                 city=selected_city, town=selected_town).first()
             # user에 region 정보를 저장
             user.region = region
+            user.address = street_address
+            user.detail_address = detail_address
             user.save()
             auth.login(request, user,
                        backend='apps.users.backends.CustomModelBackend')
