@@ -86,7 +86,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const xhr = new XMLHttpRequest();
     xhr.open("POST", url, true);
     xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
-
     xhr.send(formData);
   });
 });

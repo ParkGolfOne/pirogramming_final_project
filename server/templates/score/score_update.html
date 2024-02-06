@@ -9,7 +9,7 @@
   </head>
   <body>
     <a href="{% url 'score:score_main'%}">스코어 메인페이지 링크</a>
-    점수 수정 페이지
+    <h1>점수 수정 페이지</h1>
     <form method="POST" action="" enctype="multipart/form-data">
       {% csrf_token %}
       <div class="locationInputArea">
@@ -206,7 +206,7 @@
         <div>/</div>
         <div>/</div>
       </div>
-      <input class="scoreSubmitBtn" type="submit" value="점수 등록" />
+      <input class="scoreSubmitBtn" type="submit" value="점수 등록" /> <!--class="score-create-btn"-->
     </form>
     <!-- 이미지추출 -->
     <script src="{% static 'score/js/picture.js' %}"></script>

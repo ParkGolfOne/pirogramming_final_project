@@ -8,8 +8,9 @@
     {% csrf_token %}
     {{ form }}
     <button class="user-btn">로그인</button>
-    <div class="user-login-btn"><a href="{% url 'social:begin' 'kakao' %}">카카오 로그인</a></div>
-    <div class="user-login-btn"><a href="{% url 'social:begin' 'naver' %}">네이버 로그인</a></div>
+
+    <a href="{% url 'social:begin' 'kakao' %}"><div class="user-login-btn">카카오 로그인</div></a>
+    <a href="{% url 'social:begin' 'naver' %}"><div class="user-login-btn">네이버 로그인</div></a>
 </form>
 
 {% endblock %}
