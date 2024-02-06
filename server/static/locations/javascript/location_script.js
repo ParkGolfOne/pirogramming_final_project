@@ -8,11 +8,6 @@ function initMap() {
     var markPlace = {
         position : new naver.maps.LatLng(latitude.innerText, longitude.innerText),
         map: map,
-        icon: {
-            url : "${imageUrl}",
-            size : new naver.maps.Size(56, 70),
-            anchor : new naver.maps.Point(28, 70),
-        }
     };
     var marker = new naver.maps.Marker(markPlace);
 }
