@@ -52,19 +52,11 @@ class SignupForm(UserCreationForm):
         )
     )
 
-    address = forms.CharField(
-        label='상세 주소',
-        widget=forms.TextInput(
-            attrs={
-                'class': 'signup-input'
-            }
-        )
-    )
 
     class Meta:
         model = User
         fields = ['username', 'nickname', 'password1',
-                  'password2', 'birth', 'phone', 'address']
+                  'password2', 'birth', 'phone']
 
 
 class UpdateForm(forms.ModelForm):
@@ -93,15 +85,6 @@ class UpdateForm(forms.ModelForm):
         )
     )
 
-    address = forms.CharField(
-        label='상세 주소',
-        widget=forms.TextInput(
-            attrs={
-                'class': 'signup-input'
-            }
-        )
-    )
-
     class Meta:
         model = User
-        fields = ["nickname", "birth", "phone", "address"]
+        fields = ["nickname", "birth", "phone"]

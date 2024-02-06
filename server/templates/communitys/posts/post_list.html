@@ -9,19 +9,11 @@
   </head>
   <body>
     <a href="{% url 'communitys:board_list' %}">커뮤니티 홈</a>
-    <div>
-      {% if user.is_authenticated %}
-      <a href="{% url 'users:logout'%}">로그아웃</a>{% else %}
-      <a href="{% url 'users:login'%}"> 로그인</a
-      ><a href="{% url 'users:signup'%}"> 회원가입</a>{% endif %}
-    </div>
     <h1>{{board.name}}</h1>
     {% if board.admin == now_user%}
     <form action="{% url 'communitys:board_delete' bid  %}" method="POST">
       {%csrf_token%}
-      <a href="{% url 'communitys:board_update' bid %}" class="btn btn-primary"
-        >게시판 수정</a
-      >
+      <a href="{% url 'communitys:board_update' bid %}">게시판 수정</a>
       <button type="submit">게시판 삭제</button>
     </form>
     {% endif %}
@@ -45,20 +37,17 @@
       </select>
     </div>
     <div class="postList">
-      {% for post in posts%}
-      <a
-        href="{% url  'communitys:post_detail' bid post.pk%}"
-        class="postDetailLink"
-      >
+    {% for post in posts%}
+    <div class="post-container">
+      <a href="{% url  'communitys:post_detail' bid post.pk%}"
+        class="postDetailLink">
         <div>{{post.title}}</div>
-        <div>{{post.writer}}</div>
-        <div>조회수 {{post.view_num}}</div>
+        <div>작성자: {{post.writer}}</div>
+        <div>조회수: {{post.view_num}}</div>
       </a>
-      {% endfor%}
     </div>
-    <hr />
-    <hr />
-    <a href="{% url 'communitys:post_create' bid %}">글 작성하기</a>
+      {% endfor%}</div>
+    <a href="{% url 'communitys:post_create' bid %}" class=" communitys-btn">글 작성하기</a>
 
     <!-- 페이지 네이션 -->
   </body>

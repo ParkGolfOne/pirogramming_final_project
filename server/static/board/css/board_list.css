@@ -17,8 +17,7 @@
     width: 100px;
     height: auto;
 }
-.communitys-btn {
-    width: 70%;
+.board-btn {
     padding: 10px;
     border-radius: 5px;
     border: 1px solid var(--green--medium--color);
@@ -30,7 +29,7 @@
     align-items: center;
 
 }
-.communitys-btn:hover {
+.board-btn:hover {
     background-color: var(--green--medium--color);
     border: 1px solid var(--green--medium--color);
     transition: 0.1s;

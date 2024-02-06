@@ -1,5 +1,8 @@
 {% extends 'base.html' %}
-{%load static%}
+{% load static %}
+{% block head %}
+  <link rel="stylesheet" href="{% static 'posts/css/post_create.css'%}" />
+{% endblock %}
 {% block content %}
 <!DOCTYPE html>
 <html lang="en">
@@ -13,10 +16,10 @@
   <body>
     <a href="{% url 'communitys:board_list' %}">커뮤니티 홈</a>
     <a href="{% url 'communitys:post_list' bid %}">게시판 홈</a>
-    <form method="POST" action="" enctype="multipart/form-data">
+    <form method="POST" action="" enctype="multipart/form-data" class="post-create-form">
       <h1>NEW POST</h1>
       {% csrf_token %} {{ form }}
-      <input type="submit" value="글 등록" />
+      <input type="submit" value="글 등록" class="post-create-btn"/>
     </form>
   </body>
 </html>

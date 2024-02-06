@@ -85,6 +85,7 @@ def game_detail(request, game_id, round_count, player_count):
             players = Player.objects.filter(round_id=round.id)
             for player in players:
                 scores_data = player.score.scores 
+                player.name = request.POST.get(f'name_{player.id}', "플레이어")
                 for i in range(1, 10):
                     hole_key = f'hole{i}'
                     scores_data[hole_key] = int(request.POST.get(f'score{i}_{player.id}', 0))
