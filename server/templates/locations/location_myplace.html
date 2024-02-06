@@ -3,6 +3,11 @@
     <div id="myposition_map" style="width: 800px; height: 500px;"></div>
 {% endblock %}
 {% block script %}
-    <script src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=mzbzbj8tit"></script>
-    <script src="{% static 'locations/javascript/myposition_script.js' %}"></script>
+      <script src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=mzbzbj8tit">
+      </script>
+      <script>
+        var imageUrl = "{% static 'locations/images/golfFlag.png' %}";
+      </script>
+      <script src="{% static 'locations/javascript/myposition_script.js' %}">
+      </script>
 {% endblock %}
