@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .models import *
 from .forms import *
 from .geocoding import *
+from ..users.models import User
 
 # 골프장 목록 표시
 def location_list(request):
@@ -60,12 +61,19 @@ def location_delete(request, pk):
         location.delete()
         return redirect('locations:list')
     
-def location_distance (request):
-    address = "경기도 군포시 수리산로 244" #사용자 외래키에서 주소 필드 가져오기 {{user.address}}
-    instances = GolfLocation.objects.all() #사용자 주소와 비교할 골프장 인스턴스들
+#User 모델에서 address 필드 값 가져오기
+def get_user_address (request, pk):
+    user_address = User.objects.get(id=pk)
+    return user_address.address
     
-    nearest = find_nearest_golf(address, instances)
+# 내가 입력한 주소 (집)으로 부터 가장 가까운 골프장 5곳    
+def location_distance (request, pk):
+    address = get_user_address(request, pk)  #사용자 외래키에서 주소 필드 가져오기
+    instances = GolfLocation.objects.all() #사용자 주소와 비교할 골프장 인스턴스들
+
+    nearests = find_nearest_golf(address, instances)
+    
     ctx = {
-        'nearest' : nearest,
+        'nearests' : nearests,
     }
     return render(request, 'locations/location_distance.html', ctx)
