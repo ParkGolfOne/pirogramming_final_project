@@ -10,8 +10,7 @@ function initMap() {
         map: map,
         icon: {
             url : "${imageUrl}",
-            size : new naver.maps.Size(56, 70), 
-            origin : new naver.maps.Point(0, 0),
+            size : new naver.maps.Size(56, 70),
             anchor : new naver.maps.Point(28, 70),
         }
     };

@@ -12,7 +12,7 @@
     <a href="{% url 'locations:myhome' %}">내 주변 파크골프장</a>
   </div>
   <div>
-      {% for location in locations %}
+    {% for location in locations %}
     <div class="location-container">
       {% comment %} 골프장 이름 클릭 시 세부내용 페이지로 이동 {% endcomment %}
       <h4><a href="{% url 'locations:detail' location.pk %}">{{location.golf_name}}</a></h4>

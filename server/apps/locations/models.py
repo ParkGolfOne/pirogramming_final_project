@@ -1,4 +1,5 @@
 from django.db import models
+from ..users.models import *
 
 # 골프장 위치 모델
 class GolfLocation (models.Model):
@@ -16,5 +17,5 @@ class GolfLocation (models.Model):
     golf_runningdate = models.TextField(blank = True, null = True)
     golf_homepage = models.TextField(blank = True, null = True)
     golf_reservepage = models.TextField(blank = True, null = True)
+    #golf_user = models.ForeignKey(User, on_delete=models.CASCADE, blank = True, null = True)
     # golf_review = models.ForeignKey()
-    # golf_이용가능대상 = models.ForeignKey()
