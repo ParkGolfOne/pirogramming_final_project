@@ -1,5 +1,5 @@
 
-Kakao.init('7d2565115739c70be1903fea71d797fb');
+Kakao.init('api키');
 
 //점수 공유
 function shareKakaoScore(){
