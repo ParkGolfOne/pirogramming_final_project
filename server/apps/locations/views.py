@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import *
+from apps.region.models import *
 from .forms import *
 from .geocoding import *
 from ..users.models import User
@@ -7,8 +8,10 @@ from ..users.models import User
 # 골프장 목록 표시
 def location_list(request):
     locations = GolfLocation.objects.all()
+    regions = Region.objects.all()
     ctx = {
-        'locations' : locations
+        'locations' : locations,
+        'regions' : regions,
     }
     return render(request, 'locations/location_list.html', ctx)
 

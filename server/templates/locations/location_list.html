@@ -6,7 +6,9 @@
   <div class="location-header">
     <h1>전국 골프장 목록</h1>
     <div class="location-btn">
-      <a href="{% url 'locations:myhome' pk=user.id %}">내 집 주변 파크골프장</a>
+      <a href="{% url 'locations:myhome' pk=user.id %}"
+        >내 집 주변 파크골프장</a
+      >
     </div>
     <div>
       <a href="{% url 'locations:myplace' %}">현재 내 위치 주변 파크골프장</a>
@@ -14,11 +16,24 @@
     <div class="location-btn">
       <a href="{% url 'locations:create' %}">골프장 추가</a>
     </div>
-
   </div>
-  
+  <div class="locationInputArea">
+    <span>장소 검색 : </span>
+    <input class="locationInput locationInfo" type="text" name="location" />
+    <!-- 알맞는 데이터 나열   -->
+  </div>
+  <div class="form-group">
+    <label for="city">시/도:</label>
+    <select id="city" class="signup-input" onchange="findLocation()">
+      <option value=" ">선택해주세요</option>
+    </select>
+    <label for="town">군/구:</label>
+    <select id="town" class="signup-input" onchange="findLocation()">
+      <option value=" ">------</option>
+    </select>
+  </div>
   <div class="location-main-container">
-      {% for location in locations %}
+    {% for location in locations %}
 
     <div class="location-container">
       {% comment %} 골프장 이름 클릭 시 세부내용 페이지로 이동 {% endcomment %}
@@ -31,4 +46,8 @@
     {% endfor %}
   </div>
 </div>
-{% endblock %}
+{% endblock %} {% block script %}
+
+<!-- 장소검색 -->
+<script src="{% static 'locations/javascript/location_search.js' %}"></script>
+{%endblock%}

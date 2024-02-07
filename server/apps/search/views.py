@@ -23,15 +23,42 @@ from django.shortcuts import render
 # 전달인자 : request
 # 기능 : 해당 장소가 있는지 검색해준다.
 @csrf_exempt
-@transaction.atomic
 def search_location(request):
     req = json.loads(request.body)
     input_text = req["input_text"]
+    # city 값 
+
+    city = req.get("city")
+    town = req.get("town")
+
+
+    # 조건 1 : 인풋이 있을 때,
+    # 조건 2 : 인풋이 없을 때
+    filter_conditions1 = {'golf_name__startswith': input_text}
+    filter_conditions2 = {}
+    if city and town:
+        # city와 town 모두 존재하는 경우에만 필터 추가
+        filter_conditions2['golf_address__contains'] = city
+        filter_conditions2['golf_address__contains'] = town
+    elif city:
+        filter_conditions2['golf_address__contains'] = city
+
+
     location_names=[]
 
     if input_text:
-        locations = GolfLocation.objects.filter(golf_name__startswith=input_text)
-        location_names = list(locations.values_list("golf_name", flat=True))
+        try:
+            locations = GolfLocation.objects.filter(**filter_conditions1, **filter_conditions2)
+            location_names = list(locations.values_list("golf_name","id"))
+        except GolfLocation.DoesNotExist:
+            location_names = []
+    else :
+        try:
+            locations = GolfLocation.objects.filter(**filter_conditions2)
+            location_names = list(locations.values_list("golf_name","id"))
+        except GolfLocation.DoesNotExist:
+            location_names = []
+        
 
     return JsonResponse({'location_names': location_names})
 
