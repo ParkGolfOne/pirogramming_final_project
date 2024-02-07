@@ -19,7 +19,7 @@ import requests
 
 
 def home(request):
-    return render(request, 'base.html')
+    return render(request, 'main.html')
 
 ###########################################################
 #                      유저 개인 페이지                    #

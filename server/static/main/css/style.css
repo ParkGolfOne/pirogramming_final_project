@@ -4,16 +4,18 @@
     --green--light--color: #c4d7b2a3;
     --green--pale--color: rgba(255, 255, 255, 0.5);
     --white--border--color: #ddd;
+    --green--white--color: #20C997;
 }
 body{
     height: 100vh;
     font-size: 30px;
+    width: 100vw;
 }
 #header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: var(--green--dark--color);
+    background-color: var(--green--white--color);
     padding: 25px;
     height: 90px;
     width: 100%;
@@ -90,11 +92,10 @@ body{
     flex-direction: column;
     align-items: center;
     height: 90%;
+    max-width: 1520px;
     width: 90%;
-    background-color: var(--green--light--color);
-    border-radius: 30px;
     padding: 5%;
-    overflow: scroll;
+    overflow: auto;
 }
 /* pc일떄 */
 @media screen and (min-width: 700px) {
