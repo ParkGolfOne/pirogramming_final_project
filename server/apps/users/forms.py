@@ -51,12 +51,19 @@ class SignupForm(UserCreationForm):
             }
         )
     )
-
+    email = forms.CharField(
+        label='이메일',
+        widget=forms.TextInput(
+            attrs={
+                'class': 'signup-input'
+            }
+        )
+    )
 
     class Meta:
         model = User
         fields = ['username', 'nickname', 'password1',
-                  'password2', 'birth', 'phone']
+                  'password2', 'birth', 'phone', 'email']
 
 
 class UpdateForm(forms.ModelForm):

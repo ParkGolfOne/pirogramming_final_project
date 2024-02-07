@@ -6,7 +6,7 @@ User = get_user_model()
 class CustomModelBackend(ModelBackend):
     def authenticate(self, request, username=None, password=None, **kwargs):
         # 여기서 원하는 필드로 사용자 찾기
-        user = User.objects.filter(phone=username).first()
+        user = User.objects.filter(username=username).first()
 
         if user and user.check_password(password):
             return user
