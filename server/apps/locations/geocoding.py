@@ -7,32 +7,34 @@ from geopy.geocoders import Nominatim
 import math
 
 #골프장 모델의 인스턴스의 주소 필드를 받아와 경도와 위도를 불러오는 함수 정의 (네이버 지도 api 공식문서 참조)
-def get_location_by_address(address):
-    locations = GolfLocation.objects.filter(golf_address = address)
+# def get_location_by_address(address):
 
-    endpoint = "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode"
+#     locations = GolfLocation.objects.filter(golf_address = address)
 
-    for location in locations:
-        client_id = "mzbzbj8tit"
-        client_secret = "L77KOOKg5jnwg8IAcy7Ekpp0d0ToR9BpRpVHPUcl"
-        url = f"{endpoint}?query={location.golf_address}"
-        headers = {
-            "X-NCP-APIGW-API-KEY-ID" : client_id,
-            "X-NCP-APIGW-API-KEY" : client_secret,
-        }
-        response = requests.get(url, headers=headers)
-        data = response.json()
-        if data['addresses']:
-            first_address = data['addresses'][0]
-            longitude = first_address['x']
-            latitude = first_address['y']
-            return (latitude, longitude)
-        else:
-            return ('000', '000')
+#     endpoint = "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode"
+
+#     for location in locations:
+#         client_id = "mzbzbj8tit"
+#         client_secret = "L77KOOKg5jnwg8IAcy7Ekpp0d0ToR9BpRpVHPUcl"
+
+#         url = f"{endpoint}?query={location.golf_address}"
+#         headers = {
+#             "X-NCP-APIGW-API-KEY-ID" : client_id,
+#             "X-NCP-APIGW-API-KEY" : client_secret,
+#         }
+#         response = requests.get(url, headers=headers)
+#         data = response.json()
+#         if data['addresses']:
+#             first_address = data['addresses'][0]
+#             longitude = first_address['x']
+#             latitude = first_address['y']
+#             return (latitude, longitude)
+#         else:
+#             return ('000', '000')
         
 
 # 골프장 인스턴스들과의 거리를 계산하기 위해 사용자가 입력한 주소를 좌표로 바꾸는 함수
-def get_location_by_address_2(address, timeout=300):
+def get_location_by_address(address, timeout=300):
     geolocator = Nominatim(user_agent="locations_distance", timeout=timeout)
     coordinate = geolocator.geocode(address)
     return (coordinate.latitude, coordinate.longitude)
@@ -49,7 +51,7 @@ def haversine(lon1, lat1, lon2, lat2):
 
 # 헤버사인 공식을 통해 얻은 거리들을 오름차순으로 sort한 후 그 중 첫 5개만 제시하고자 하는 로직 (구현중..)
 def find_nearest_golf(user_address, instances):
-    user_lat, user_lon = get_location_by_address_2(user_address)
+    user_lat, user_lon = get_location_by_address(user_address)
     distances = []
     
     #views.py location_distance 함수에서 보낸 instance 들을 기반으로 작동
@@ -63,13 +65,15 @@ def find_nearest_golf(user_address, instances):
         instance_tuple = (instance, rounded_distance) #특정 골프장 모델과 유저의 주소의 거리를 튜플로 묶기
         distances.append(instance_tuple) #그 튜플을 하나의 리스트에 저장
         
-        sorted_distances = sorted(distances, key = lambda x : x[1]) #리스트에 저장된 골프장 객체와 거리를 거리 순서로 오름차순 정렬
-        five_instances = sorted_distances[:5] #그 중 상위 5개만 따로 저장
+    sorted_distances = sorted(distances, key = lambda x : x[1]) #리스트에 저장된 골프장 객체와 거리를 거리 순서로 오름차순 정렬
 
-        #골프장 객체의 이름은 이름끼리, 거리는 거리끼리 리스트에 저장
-        golf_names = [instance[0].golf_name for instance in five_instances]
-        golf_distance = [instance[1] for instance in five_instances]
+    five_instances = sorted_distances[:5] #그 중 상위 5개만 따로 저장
 
-        #골프장 객체와 이름을 매칭해서 저장
-        golf_lists = list(zip(golf_names, golf_distance))
+    #골프장 객체의 이름은 이름끼리, 거리는 거리끼리 리스트에 저장
+    golf_names = [instance[0].golf_name for instance in five_instances]
+
+    golf_distance = [instance[1] for instance in five_instances]
+
+    #골프장 객체와 이름을 매칭해서 저장
+    golf_lists = list(zip(golf_names, golf_distance))
     return golf_lists

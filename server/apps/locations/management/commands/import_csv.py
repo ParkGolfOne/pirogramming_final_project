@@ -30,8 +30,8 @@ class Command(BaseCommand):
                     golf_scale=row.get('golf_scale', ''),
                     golf_name=row['golf_name'],
                     golf_address=row.get('golf_address', ''),
-                    golf_latitude=0.0,  # 실제 위도 값이 필요하면 적절한 기본값 설정
-                    golf_longitude=0.0,  # 실제 경도 값이 필요하면 적절한 기본값 설정
+                    golf_latitude=float(row.get('golf_latitude', 0.0)),
+                    golf_longitude=float(row.get('golf_longitude', 0.0)),
                     golf_detail='', # 아직 정의되지 않았기 때문에 일단 빈칸으로 뒀음
                     golf_holes=int(row['golf_holes']) if row.get('golf_holes') else 0,
                 )
