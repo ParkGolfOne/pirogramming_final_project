@@ -1,5 +1,5 @@
 {% extends 'base.html' %} {%load static%} {% block content %}
-<form method="POST" action="{% static "/users/signup/" pk %}%}" id="signup-form"  class="signup-form">
+<form method="POST" action="{% static "/users/signup/" pk %}" id="signup-form"  class="signup-form">
   {{ form }}
   <div class="form-group">
     <!--도로명 주소 검색-->
@@ -15,13 +15,13 @@
 
     <label for="city">시/도:</label>
     <select id="city" class="signup-input">
-      <option value="">선택해주세요</option>
+      <option value="" disabled>선택해주세요</option>
     </select>
   </div>
   <div class="form-group">
     <label for="town">군/구:</label>
     <select id="town" class="signup-input">
-      <option value="">------</option>
+      <option value="" disabled>------</option>
     </select>
   </div>
   <button class="user-btn" type="submit" id="signup-form-submit" form="signup-form">회원가입</button>
