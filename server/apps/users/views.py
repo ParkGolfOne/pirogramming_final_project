@@ -3,6 +3,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, redirect
 from apps.users.forms import SignupForm, UpdateForm
 from django.contrib.auth.forms import AuthenticationForm
+from django.urls import reverse
 from django.http import JsonResponse
 from django.contrib import auth
 from apps.communitys.models import *
@@ -16,8 +17,6 @@ import requests
 # 함수 이름 : home
 # 전달인자 : request
 # 기능 : 기본 메인페이지로 이동
-
-
 def home(request):
     return render(request, 'base.html')
 
@@ -27,8 +26,6 @@ def home(request):
 # 함수 이름 : main
 # 전달인자 : request, pk
 # 기능 : 유저의 개인 페이지. 유저가 작성한 글, 댓글, 스크랩, 좋아요를 가져온다.
-
-
 def main(request, pk):
     user = User.objects.get(id=pk)
     now_user = request.user
@@ -75,7 +72,6 @@ def main(request, pk):
 # 전달인자 : request, pk
 # 기능 : 유저 회원가입
 
-
 @csrf_exempt
 def signup(request):
     if request.method == 'POST':
@@ -86,8 +82,7 @@ def signup(request):
         form = SignupForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
-            region = Region.objects.filter(
-                city=selected_city, town=selected_town).first()
+            region = Region.objects.filter(city=selected_city, town=selected_town).first()
             # user에 region 정보를 저장
             user.region = region
             user.address = street_address
@@ -95,7 +90,9 @@ def signup(request):
             user.save()
             auth.login(request, user,
                        backend='apps.users.backends.CustomModelBackend')
-            return redirect('users:main', user.id)
+            redirect_url = reverse('home')
+            return JsonResponse({'url': redirect_url})
+
         else:
             print("폼 유효성 검사 실패")
             print(form.errors)
@@ -104,14 +101,13 @@ def signup(request):
         form = SignupForm()
         context = {
             'form': form,
+            'pk': request.user.id,
         }
         return render(request, template_name='users/users_signup.html', context=context)
 
 # 함수 이름 : login
 # 전달인자 : request
 # 기능 : 유저 로그인
-
-
 def login(request):
     if request.method == 'POST':
         form = AuthenticationForm(request, request.POST)
@@ -135,8 +131,6 @@ def login(request):
 # 함수 이름 : logout
 # 전달인자 : request
 # 기능 : 유저 로그아웃
-
-
 def logout(request):
     user = request.user
     user.first_login = False
@@ -150,8 +144,6 @@ def logout(request):
 # 함수 이름 : update
 # 전달인자 : request, pk
 # 기능 : 유저 정보 수정
-
-
 @csrf_exempt
 def update(request, pk):
     user = User.objects.get(id=pk)

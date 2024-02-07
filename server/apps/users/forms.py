@@ -63,7 +63,7 @@ class SignupForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['username', 'nickname', 'password1',
-                  'password2', 'birth', 'phone']
+                  'password2', 'birth', 'phone', 'email']
 
 
 class UpdateForm(forms.ModelForm):

@@ -3,8 +3,6 @@ from django.db import models
 from apps.region.models import Region
 
 # 유저 모델
-
-
 class User(AbstractUser):
     username = models.CharField('아이디', max_length=15, null=False, unique=True)
     nickname = models.CharField('닉네임', max_length=31, null=False)
@@ -20,3 +18,7 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.nickname
+    
+    def save(self, *args, **kwargs):
+        print("save!!")
+        super().save(*args, **kwargs)
