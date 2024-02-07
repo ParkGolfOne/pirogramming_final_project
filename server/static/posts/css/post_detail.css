@@ -32,3 +32,110 @@
 .scraped {
   background-image: url("/static/posts/images/star-fill.png") !important;
 }
+.post-detail-title {
+  color: var(--green--dark--color);
+  /* margin-right: auto; */
+}
+.post-detail-writer {
+  /* margin-left: auto; */
+}
+.post-detail-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+.post-detail-container > img {
+ 
+  max-height: 500px;
+}
+.my-3 {
+  width: 100%;
+  word-break: break-word;
+}
+.post-date {
+  font-size: 20px;
+}
+.commentSection {
+  width: 100%;
+}
+.post-comment-title {
+  text-align: left;
+}
+.commentSection > .a_comment {
+  padding: 10px;
+  background-color: var(--green--pale--color);
+  border-radius: 5px;
+  margin: 10px 0px;
+}
+.post-detail-btns {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 10px;
+}
+.btn-primary, .post-delete-btn {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid var(--green--medium--color);
+  background-color: #ffffff;
+  cursor: pointer;
+  font-size: 20px;
+}
+.btn-primary:hover, 
+.post-delete-btn:hover, 
+.comment-upload-btn:hover {
+  background-color: var(--green--medium--color);
+    border: 1px solid var(--green--medium--color);
+    transition: 0.1s;
+}
+.input-area {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.comment-input-box,
+.comment-update-box {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-sizing: border-box;
+  background-color: #ffffff;
+}
+.comment-upload-btn {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid var(--green--medium--color);
+  background-color: #ffffff;
+  cursor: pointer;
+  width: 100px;
+}
+/* pc일떄 */
+@media screen and (min-width: 700px) {
+  /* .post-detail-container > img {
+      width: 600px;
+  } */
+  .post-detail-container {
+    width: 70%;
+}
+  
+}
+.comment-btns {
+  margin-left: auto;
+  display: flex;
+  justify-content: end;
+  gap: 10px;
+}
+.a_comment_content {
+  overflow-wrap: break-word;
+  width: 100%;
+}
+.a_comment_commenter {
+  font-size: 20px;
+}
+.post_buttons {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}

@@ -13,8 +13,8 @@
     {% if board.admin == now_user%}
     <form action="{% url 'communitys:board_delete' bid  %}" method="POST">
       {%csrf_token%}
-      <a href="{% url 'communitys:board_update' bid %}">게시판 수정</a>
-      <button type="submit">게시판 삭제</button>
+      <a href="{% url 'communitys:board_update' bid %}" class="post-list-btn">게시판 수정</a>
+      <button type="submit" class="post-list-btn">게시판 삭제</button>
     </form>
     {% endif %}
     <!--게시글 검색-->
@@ -48,8 +48,8 @@
       <a href="{% url  'communitys:post_detail' bid post.pk%}"
         class="postDetailLink">
         <div>{{post.title}}</div>
-        <div>작성자: {{post.writer}}</div>
-        <div>조회수: {{post.view_num}}</div>
+        <div class="post-detail">작성자: {{post.writer}}</div>
+        <div class="post-detail">조회수: {{post.view_num}}</div>
       </a>
     </div>
       {% endfor%}</div>
