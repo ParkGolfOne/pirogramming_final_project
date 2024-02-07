@@ -17,6 +17,13 @@
     width: 100px;
     height: auto;
 }
+
+.board-list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 .communitys-btn {
     width: 70%;
     padding: 10px;
