@@ -30,10 +30,11 @@ def search_location(request):
 
     city = req.get("city")
     town = req.get("town")
+    sortType = req.get("sortType")
 
 
-    # 조건 1 : 인풋이 있을 때,
-    # 조건 2 : 인풋이 없을 때
+    # 조건 1 : 시 ,
+    # 조건 2 : 군/구,
     filter_conditions1 = {'golf_name__startswith': input_text}
     filter_conditions2 = {}
     if city and town:
@@ -44,18 +45,19 @@ def search_location(request):
         filter_conditions2['golf_address__contains'] = city
 
 
+
     location_names=[]
 
     if input_text:
         try:
-            locations = GolfLocation.objects.filter(**filter_conditions1, **filter_conditions2)
-            location_names = list(locations.values_list("golf_name","id"))
+            locations = GolfLocation.objects.filter(**filter_conditions1, **filter_conditions2).order_by(sortType)
+            location_names = list(locations.values_list("golf_name","id","fav_num"))
         except GolfLocation.DoesNotExist:
             location_names = []
     else :
         try:
-            locations = GolfLocation.objects.filter(**filter_conditions2)
-            location_names = list(locations.values_list("golf_name","id"))
+            locations = GolfLocation.objects.filter(**filter_conditions2).order_by(sortType)
+            location_names = list(locations.values_list("golf_name","id","fav_num"))
         except GolfLocation.DoesNotExist:
             location_names = []
         

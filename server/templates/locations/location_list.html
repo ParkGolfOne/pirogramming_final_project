@@ -1,6 +1,7 @@
 {% extends 'base.html' %} {% load static %} {% block head %}
 <title>파골원 커뮤니티</title>
 <link rel="stylesheet" href="{% static 'locations/css/location_list.css'%}" />
+<link rel="stylesheet" href="{% static 'locations/css/location_fav.css'%}" />
 {% endblock %} {% block content %}
 <div>
   <div class="location-header">
@@ -24,30 +25,24 @@
   </div>
   <div class="form-group">
     <label for="city">시/도:</label>
-    <select id="city" class="signup-input" onchange="findLocation()">
+    <select id="city" class="locationList-input" onchange="findLocation()">
       <option value=" ">선택해주세요</option>
     </select>
     <label for="town">군/구:</label>
-    <select id="town" class="signup-input" onchange="findLocation()">
+    <select id="town" class="locationList-input" onchange="findLocation()">
       <option value=" ">------</option>
     </select>
+    <label for="sortType">기준 : </label>
+    <select id="sortType" class="locationList-input" onchange="findLocation()">
+      <option value="golf_name">이름순</option>
+      <option value="-fav_num">추천순</option>
+    </select>
   </div>
-  <div class="location-main-container">
-    {% for location in locations %}
-
-    <div class="location-container">
-      {% comment %} 골프장 이름 클릭 시 세부내용 페이지로 이동 {% endcomment %}
-      <h4>
-        <a href="{% url 'locations:detail' location.pk %}"
-          >{{location.golf_name}}</a
-        >
-      </h4>
-    </div>
-    {% endfor %}
-  </div>
+  <div class="location-main-container"></div>
 </div>
 {% endblock %} {% block script %}
-
+<!-- 장소 즐겨찾기 -->
+<script src="{% static 'locations/javascript/location_fav.js' %}"></script>
 <!-- 장소검색 -->
 <script src="{% static 'locations/javascript/location_search.js' %}"></script>
 {%endblock%}

@@ -1,6 +1,7 @@
 // 시, 군/구 선택
 var cityField = document.getElementById("city");
 var townField = document.getElementById("town");
+var sortType = document.getElementById("sortType");
 
 // 1. city 선택 목록 보여주는 기능
 // city 데이터 DB에서 요청
@@ -30,6 +31,7 @@ function populateCityOptions(cityData) {
     option.text = city;
     cityField.appendChild(option);
   });
+  findLocation();
 }
 
 fetchCityData();
@@ -84,11 +86,13 @@ function findLocation() {
     "Content-Type",
     "application/x-www-form-urlencoded"
   );
+  match_content.innerHTML = "불러오는 중...";
   requestFindLocation.send(
     JSON.stringify({
       input_text: content.value,
       city: cityField.value,
       town: townField.value,
+      sortType: sortType.value,
     })
   );
 }
@@ -108,7 +112,9 @@ requestFindLocation.onreadystatechange = () => {
         <a href="/locations/detail/${location[1]}/"
           >${location[0]}</a
         >
-      </h4>
+      </h4> 
+      <br>
+      <div>추천 ${location[2]}</div>
     </div>`;
         });
       }

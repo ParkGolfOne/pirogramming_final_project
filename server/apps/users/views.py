@@ -56,6 +56,12 @@ def main(request, pk):
     except Like.DoesNotExist:
         my_likes = []
 
+    # 즐겨찾기한 골프장 가져오기
+    try:
+        my_locations = LikeGolf.objects.filter(user=user)
+    except Like.DoesNotExist:
+        my_locations = []
+
     context = {
         "pk": pk,
         "user": user,
@@ -64,6 +70,7 @@ def main(request, pk):
         "my_comments": my_comments,
         "my_scraps": my_scraps,
         "my_likes": my_likes,
+        "my_locations" : my_locations,
     }
 
     return render(request, "users/users_main.html", context)
