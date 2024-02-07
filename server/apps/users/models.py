@@ -10,6 +10,7 @@ class User(AbstractUser):
     nickname = models.CharField('닉네임', max_length=31, null=False)
     birth = models.DateField(null=True)
     phone = models.CharField(max_length=15, null=False)
+    email = models.EmailField('이메일', max_length=255, null=False, unique=True)
     address = models.CharField(max_length=255, null=True)
     detail_address = models.CharField(max_length=255, null=True)
     first_login = models.BooleanField(default=True)

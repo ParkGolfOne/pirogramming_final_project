@@ -1,28 +1,35 @@
 {% extends 'base.html' %}
 {%load static%}
 {% block head %}
-
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="{% static 'users/css/user.css' %}" />
+<title>마이페이지</title>
 {% endblock %}
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="{% static 'users/css/user.css' %}" />
-  <title>마이페이지</title>
+
 {% block content %}
-    <h2 class="users-maintitle">마이페이지</h2>
-    {% if user.is_authenticated %} {% if now_user.id == pk %}
+  {% if user.is_authenticated %} {% if now_user.id == pk %}
     <h1>{{user.nickname}}님 페이지</h1>
     <div class="user-mypage-container">
+      <div class="user-mypage-header">
+        {% comment %} <div class="user-mypage-profile">
+          <img src="{{user.profile_image.url}}" alt="프로필 이미지" />
+        </div> {% endcomment %}
+        <div class="user-mypage-info">
+          <p>아이디: {{user.username}}</p>
+          <h2>닉네임: {{user.nickname}}</h2>
+        </div>
+      </div>
       <div class="user-mypage">
-            <h3 class="user-mypage-title">좋아요 누른 글</h3>
-            {% for like in my_likes%}
-            <div>
-              <a
-                href="{% url 'communitys:post_detail' like.post.board.id like.post.id%}"
-                ><span>{{like.post.title}}</span
-                ><span>{{like.post.writer.username}}</span></a
-              >
-            </div>
-            {% endfor %}
+        <h3 class="user-mypage-title">좋아요 누른 글</h3>
+          {% for like in my_likes%}
+          <div>
+          <a href="{% url 'communitys:post_detail' like.post.board.id like.post.id%}">
+          <span>{{like.post.title}}</span>
+          <span>{{like.post.writer.username}}</span>
+          </a>
+          </div>
+          {% endfor %}
           </div>
           <div class="user-mypage">
             <h3 class="user-mypage-title">스크랩한 글</h3>

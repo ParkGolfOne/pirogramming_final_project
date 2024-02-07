@@ -244,7 +244,6 @@ def kakao_unlink(request):
 def friend_list(request, pk):
     user = User.objects.get(id=pk)
     friends = user.friends.all()
-    print(friends)
     context = {
         'friends': friends,
         'user': user,
@@ -258,7 +257,6 @@ def friend_list(request, pk):
 def friend_candidates(request):
     user = request.user
     friends = user.friends.all()
-
     candidate_friends = User.objects.exclude(
         id__in=[friend.id for friend in friends]).exclude(id=user.id)
 
@@ -272,19 +270,10 @@ def friend_candidates(request):
 def add_friend(request, pk):
     if request.method == 'POST':
         user = request.user
-        friend = request.POST.get('friend')
-        print(friend)
+        friend_id = request.POST.get('friend')
+        friend = User.objects.get(id=friend_id)
         user.friends.add(friend)
-        friend_candidate = friend_candidates(request)
-        friend_candidate_json = []
-        for friend in friend_candidate:
-            friend_data = {
-                'id': friend.id,
-                'username': friend.username,
-                'nickname': friend.nickname,
-            }
-            friend_candidate_json.append(friend_data)
-        return JsonResponse(friend_candidate_json, safe=False)
+        return JsonResponse({"friend_id": friend_id}, safe=False)
 
     else:
         friend_candidate = friend_candidates(request)
