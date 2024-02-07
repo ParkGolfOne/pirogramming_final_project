@@ -18,7 +18,7 @@ import requests
 # 전달인자 : request
 # 기능 : 기본 메인페이지로 이동
 def home(request):
-    return render(request, 'base.html')
+    return render(request, 'main.html')
 
 ###########################################################
 #                      유저 개인 페이지                    #
