@@ -16,9 +16,11 @@ function addFriend(friend_id, pk) {
       const data = JSON.parse(xhr.responseText);
       console.log("data", data);
       updateCandidateList(data, pk);
+      searchInput.value = "";
+      candidateListField.innerHTML = "";
       console.log("친구 추가 완료");
     }
-  }
+  };
   xhr.send(formData);
 }
 
@@ -33,7 +35,7 @@ function updateCandidateList(data, userId) {
     form.setAttribute("id", "add_friend-form");
     form.innerHTML = `<input type="hidden" name="friend_id" value=${friend.id}>
       <button type="button" onclick="addFriend(${friend.id}, ${userId})">친구 추가</button>`;
-    
+
     li.appendChild(form);
     candidateListField.appendChild(li);
   });

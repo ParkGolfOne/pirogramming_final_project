@@ -17,6 +17,7 @@
       <button type="submit">게시판 삭제</button>
     </form>
     {% endif %}
+    <!--게시글 검색-->
     <div class="post_search">
       <select id="post_search_select">
         <option value="title">제목</option>
@@ -25,7 +26,11 @@
       <input id="post_search_input" />
       <button id="post_search_btn">검색</button>
     </div>
+    <!---->
+    <!--전체 게시글 보기-->
     <button id="post_list_btn">전체 게시글 보기</button>
+    <!---->
+    <!--게시글 정렬-->
     <div class="post_sort">
       <select id="post_sort_select">
         <option value="" disabled selected>----------</option>
@@ -36,6 +41,7 @@
         <option value="popular">조회수순</option>
       </select>
     </div>
+    <!---->
     <div class="postList">
     {% for post in posts%}
     <div class="post-container">
