@@ -25,37 +25,21 @@
     <h3 class="user-mypage-title">스크랩한 글</h3>
     {% for scrap in my_scraps%}
     <div>
-      <a
-        href="{% url 'communitys:post_detail' scrap.post.board.id scrap.post.id%}"
-        ><span>{{scrap.post.title}}</span
-        ><span>{{scrap.post.writer.username}}</span></a
-      >
-            </div>
-            {% endfor %}
-          </div>
-          <div class="user-mypage">
-            <h3 class="user-mypage-title">내가 작성한 글</h3>
-            {% for post in my_posts%}
-            <div>
-              <a href="{% url 'communitys:post_detail' post.board.id post.id%}"
-                ><span>{{post.title}}</span><span>{{post.writer.username}}</span></a
-              >
-            </div>
-            {% endfor %}
-          </div>
+      <a href="{% url 'communitys:post_detail' scrap.post.board.id scrap.post.id%}"><span>{{scrap.post.title}}</span
+       ><span>{{scrap.post.writer.username}}</span></a>
     </div>
     {% endfor %}
-  </div>
-  <div class="user-mypage">
-    <h3 class="user-mypage-title">내가 작성한 글</h3>
-    {% for post in my_posts%}
-    <div>
-      <a href="{% url 'communitys:post_detail' post.board.id post.id%}"
-        ><span>{{post.title}}</span><span>{{post.writer.username}}</span></a
-      >
+   </div>
+    <div class="user-mypage">
+      <h3 class="user-mypage-title">내가 작성한 글</h3>
+      {% for post in my_posts%}
+      <div>
+        <a href="{% url 'communitys:post_detail' post.board.id post.id%}"
+          ><span>{{post.title}}</span><span>{{post.writer.username}}</span></a
+        >
+      </div>
+      {% endfor %}
     </div>
-    {% endfor %}
-  </div>
   <div class="user-mypage">
     <h3 class="user-mypage-title">골프장 즐겨찾기</h3>
     {% for location in my_locations%}
@@ -77,14 +61,19 @@
       >내 친구 보기</a
     >
   </div>
-  <div class="user-btn-box">
-    <h3 class="user-btn-title">계정</h3>
-    <a href="{% url 'users:update' user.pk %}" class="user-mypage-btn"
-      >회원정보 수정</a
-    >
-    <a href="{% url 'users:logout' %}" class="user-mypage-btn">로그아웃</a>
-    <a href="" class="user-mypage-btn">회원 탈퇴</a>
-  </div>
+  <div class="user-btn-container">
+    <div class="user-btn-box">
+      <h3 class="user-btn-title">친구</h3>
+      <a href="{% url 'users:add_friend' user.pk %}" class="user-mypage-btn">친구신청 보내기</a>
+      <a href="{% url 'users:friend_list' user.pk %}" class="user-mypage-btn">내 친구 보기</a>
+    </div>
+    <div class="user-btn-box">
+      <h3 class="user-btn-title">계정</h3>
+      <a href="{% url 'users:update' user.pk %}" class="user-mypage-btn">회원정보 수정</a>
+      <form method="post" action="{% url 'users:delete' user.pk %}" class="user-mypage-btn">
+        <button type="submit">회원 탈퇴</button>
+      </form>
+    </div>
 </div>
 
 {%else%}
