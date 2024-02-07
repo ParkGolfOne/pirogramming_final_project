@@ -223,7 +223,6 @@ def social_login(request):
                 print("폼 유효성 검사 실패")
                 print(form.errors)
                 return redirect('users:update', user.pk)
-
         else:
             form = UpdateForm(instance=user)
             context = {
