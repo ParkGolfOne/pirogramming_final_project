@@ -19,8 +19,12 @@
     </div>
   </div>
   <div class="locationInputArea">
-    <span>장소 검색 : </span>
-    <input class="locationInput locationInfo" type="text" name="location" />
+    <input
+      class="locationInput locationInfo"
+      type="text"
+      name="location"
+      placeholder="파크골프장 이름을 입력해주세요."
+    />
     <!-- 알맞는 데이터 나열   -->
   </div>
   <div class="form-group">
@@ -41,8 +45,6 @@
   <div class="location-main-container"></div>
 </div>
 {% endblock %} {% block script %}
-<!-- 장소 즐겨찾기 -->
-<script src="{% static 'locations/javascript/location_fav.js' %}"></script>
 <!-- 장소검색 -->
 <script src="{% static 'locations/javascript/location_search.js' %}"></script>
 {%endblock%}

@@ -1,4 +1,5 @@
 const locationInput = document.querySelector(".locationInputArea");
+const scoreSubmitBtn = document.querySelector(".scoreSubmitBtn");
 //초기 세팅
 scoreSubmitBtn.disabled = true;
 scoreSubmitBtn.innerText = "올바른 골프장 이름을 입력 바랍니다.";
@@ -11,7 +12,6 @@ function changeLocationInput() {
   // 검색 추가시
   const content = document.querySelector(".locationInput");
   const match_content = document.querySelector(".matchLocation");
-  const scoreSubmitBtn = document.querySelector(".scoreSubmitBtn");
 
   // 댓글 업데이트 부분
   //새 HTTPRequest 생성
