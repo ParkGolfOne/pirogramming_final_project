@@ -82,6 +82,7 @@ def main(request, pk):
 @csrf_exempt
 def signup(request):
     if request.method == 'POST':
+        print(request.POST)
         selected_city = request.POST.get('city')
         selected_town = request.POST.get('town')
         street_address = request.POST.get('street_address')
@@ -98,12 +99,14 @@ def signup(request):
             auth.login(request, user,
                        backend='apps.users.backends.CustomModelBackend')
             redirect_url = reverse('home')
-            return JsonResponse({'url': redirect_url})
+            return JsonResponse({'result': 'success', 'url': redirect_url})
 
         else:
             print("폼 유효성 검사 실패")
             print(form.errors)
-            return redirect('users:signup')
+            print(form.errors.as_json())
+            print(form.non_field_errors())
+            return JsonResponse({'result': 'failed', 'error': form.errors})
     else:
         form = SignupForm()
         context = {
