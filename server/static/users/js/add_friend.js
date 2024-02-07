@@ -15,28 +15,22 @@ function addFriend(friend_id, pk) {
     if (xhr.readyState === 4 && xhr.status === 200) {
       const data = JSON.parse(xhr.responseText);
       console.log("data", data);
-      updateCandidateList(data, pk);
-      searchInput.value = "";
-      candidateListField.innerHTML = "";
+      updateCandidateList(data.friend_id, pk);
       console.log("친구 추가 완료");
     }
   };
   xhr.send(formData);
 }
 
-function updateCandidateList(data, userId) {
-  candidateListField.innerHTML = "";
-  data.forEach((friend) => {
-    const li = document.createElement("li");
-    li.innerHTML = `사용자 id: ${friend.username} 사용자 닉네임: ${friend.nickname}`;
-    const form = document.createElement("form");
-    form.setAttribute("method", "post");
-    form.setAttribute("action", `/users/add_friend/${userId}/`);
-    form.setAttribute("id", "add_friend-form");
-    form.innerHTML = `<input type="hidden" name="friend_id" value=${friend.id}>
-      <button type="button" onclick="addFriend(${friend.id}, ${userId})">친구 추가</button>`;
+// 친구 추가 이후 바뀌는 화면
+function updateCandidateList(friend_id) {
+  var liElements = candidateListField.getElementsByTagName("li");
 
-    li.appendChild(form);
-    candidateListField.appendChild(li);
-  });
+  for (var i = 0; i < liElements.length; i++) {
+    var inputElement = liElements[i].querySelector(`input[name="friend_id"]`);
+    if (inputElement && inputElement.value === friend_id) {
+      liElements[i].remove();
+      break; // 값을 찾았으면 반복문을 종료
+    }
+  }
 }

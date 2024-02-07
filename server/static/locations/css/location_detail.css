@@ -34,11 +34,11 @@
     width: 100%;
 }
 .location-detail-btn {
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid var(--green--medium--color);
-    background-color: #ffffff;
-    cursor: pointer;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid var(--green--medium--color);
+  background-color: #ffffff;
+  cursor: pointer;
 }
 .location-detail-btn:hover {
     background-color: var(--green--medium--color);

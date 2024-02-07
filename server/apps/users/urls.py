@@ -8,6 +8,7 @@ urlpatterns = [
     path("login/", views.login, name="login"),
     path("logout/", views.logout, name="logout"),
     path("signup/", views.signup, name="signup"),
+    path("delete/<int:pk>/", views.delete, name="delete"),
     path("update/<int:pk>/", views.update, name="update"),
 
     # 소셜 로그인 관련 기능

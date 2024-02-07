@@ -19,3 +19,8 @@ class GolfLocation (models.Model):
     golf_reservepage = models.TextField(blank = True, null = True)
     #golf_user = models.ForeignKey(User, on_delete=models.CASCADE, blank = True, null = True)
     # golf_review = models.ForeignKey()
+    fav_num =  models.IntegerField(default = 0)
+
+class LikeGolf(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    ground = models.ForeignKey(GolfLocation, on_delete=models.CASCADE)
