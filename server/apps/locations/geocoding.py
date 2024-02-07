@@ -7,30 +7,28 @@ from geopy.geocoders import Nominatim
 import math
 
 #골프장 모델의 인스턴스의 주소 필드를 받아와 경도와 위도를 불러오는 함수 정의 (네이버 지도 api 공식문서 참조)
-# def get_location_by_address(address):
+def get_location_by_address(address):
+    locations = GolfLocation.objects.filter(golf_address = address)
 
-#     locations = GolfLocation.objects.filter(golf_address = address)
+    endpoint = "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode"
 
-#     endpoint = "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode"
-
-#     for location in locations:
-#         client_id = "mzbzbj8tit"
-#         client_secret = "L77KOOKg5jnwg8IAcy7Ekpp0d0ToR9BpRpVHPUcl"
-
-#         url = f"{endpoint}?query={location.golf_address}"
-#         headers = {
-#             "X-NCP-APIGW-API-KEY-ID" : client_id,
-#             "X-NCP-APIGW-API-KEY" : client_secret,
-#         }
-#         response = requests.get(url, headers=headers)
-#         data = response.json()
-#         if data['addresses']:
-#             first_address = data['addresses'][0]
-#             longitude = first_address['x']
-#             latitude = first_address['y']
-#             return (latitude, longitude)
-#         else:
-#             return ('000', '000')
+    for location in locations:
+        client_id = "mzbzbj8tit"
+        client_secret = "L77KOOKg5jnwg8IAcy7Ekpp0d0ToR9BpRpVHPUcl"
+        url = f"{endpoint}?query={location.golf_address}"
+        headers = {
+            "X-NCP-APIGW-API-KEY-ID" : client_id,
+            "X-NCP-APIGW-API-KEY" : client_secret,
+        }
+        response = requests.get(url, headers=headers)
+        data = response.json()
+        if data['addresses']:
+            first_address = data['addresses'][0]
+            longitude = first_address['x']
+            latitude = first_address['y']
+            return (latitude, longitude)
+        else:
+            return ('000', '000')
         
 
 # 골프장 인스턴스들과의 거리를 계산하기 위해 사용자가 입력한 주소를 좌표로 바꾸는 함수
