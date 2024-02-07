@@ -94,7 +94,7 @@ body{
     height: 90%;
     max-width: 1520px;
     width: 90%;
-    padding: 5%;
+    background-color: aliceblue;
     overflow: auto;
 }
 /* pc일떄 */
