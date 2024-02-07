@@ -1,8 +1,9 @@
-{% extends 'base.html' %} {%load static%} {% block head %} {% endblock %}
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+{% extends 'base.html' %}
+{%load static%}
+{% block head %}
 <link rel="stylesheet" href="{% static 'users/css/user.css' %}" />
 <title>마이페이지</title>
+ {% endblock %}
 {% block content %}
 <h2 class="users-maintitle">마이페이지</h2>
 {% if user.is_authenticated %} {% if now_user.id == pk %}
@@ -29,6 +30,19 @@
         ><span>{{scrap.post.title}}</span
         ><span>{{scrap.post.writer.username}}</span></a
       >
+            </div>
+            {% endfor %}
+          </div>
+          <div class="user-mypage">
+            <h3 class="user-mypage-title">내가 작성한 글</h3>
+            {% for post in my_posts%}
+            <div>
+              <a href="{% url 'communitys:post_detail' post.board.id post.id%}"
+                ><span>{{post.title}}</span><span>{{post.writer.username}}</span></a
+              >
+            </div>
+            {% endfor %}
+          </div>
     </div>
     {% endfor %}
   </div>

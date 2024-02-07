@@ -63,24 +63,50 @@ document.addEventListener("DOMContentLoaded", function () {
       townField.appendChild(option);
     });
   }
-
+  
   // 입력 받은 시와 동네를 백엔드로 넘기기
   // 폼 제출 시 사용할 이벤트 헨들러 추가
   var form = document.getElementById("signup-form");
   form.addEventListener("submit", function (event) {
     event.preventDefault(); // 폼 기본 동작 방지
-
+  
     const formData = new FormData(form);
     formData.append("city", cityField.value);
     formData.append("town", townField.value);
     formData.append("street_address", addressField.value);
     formData.append("detail_address", sbAddressField.value);
-
+  
     const url = "/users/signup/";
     const xhr = new XMLHttpRequest();
     xhr.open("POST", url, true);
     xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+    
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        const data = JSON.parse(xhr.responseText);
+        window.location.replace(data.url); 
+      }
+    };
 
     xhr.send(formData);
-  });
+  })
+
 });
+
+function execDaumPostcode(event) {
+  event.preventDefault();
+  new daum.Postcode({
+    oncomplete: function (data) {
+      var address = "";
+
+      if (data.userSelectedType === "R") {
+        address = data.roadAddress;
+      } else {
+        address = data.jibunAddress;
+      }
+
+      document.getElementById("address_text").value = address;
+      document.getElementById("address_detail").focus(); // 커서를 상세주소 필드로 이동
+    },
+  }).open();
+}

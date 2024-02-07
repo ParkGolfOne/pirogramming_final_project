@@ -92,6 +92,37 @@ def board_update(request, bid):
 
         return render(request, "communitys/board/board_update.html",context)
 
+# 함수 이름 : board_search
+# 전달인자 : request
+# 기능 : 해당 요청에 맞는 게시판 검색
+def board_search(request):
+    type = request.GET.get('searchType', None)
+    input = request.GET.get('input', None)
+    if type == "name":
+        search_boards = Board.objects.filter(name__icontains=input)
+    elif type == "admin":
+        search_boards = Board.objects.filter(admin__nickname__icontains=input)
+    elif type == "all":
+        search_boards = Board.objects.all()
+    else:
+        return JsonResponse([], safe=False)
+    # 직접 JSON 형태로 데이터 구성
+    search_board_json = []
+    for board in search_boards:
+        if not board.thumbnail:
+            thumbnail= ""
+        else:
+            board.thumbnail.url = ""
+        board_data = {
+            'pk': board.id,
+            'name': board.name,
+            'thumbnail': thumbnail,
+            'admin': board.admin.nickname,  # admin의 nickname 추가
+        }
+        search_board_json.append(board_data)
+    print(search_board_json)
+    return JsonResponse(search_board_json, safe=False)
+
 
 ###########################################################
 #                   게시글 관련 함수                       #
