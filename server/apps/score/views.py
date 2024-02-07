@@ -52,7 +52,7 @@ def score_input(request, uid):
     if request.method == "POST":
         # 장소 정보 추가
         location_name = request.POST.get('location')
-        
+
         score_instance = Score.objects.create(player = request.user,ground = GolfLocation.objects.get(golf_name = location_name))
     
         for i in range(1, 10):
@@ -171,8 +171,8 @@ def score_scan(request):
             path = default_storage.save(save_path, image)
 
             # 네이버 OCR API 호출
-            api_url = 'https://xovlh2grae.apigw.ntruss.com/custom/v1/28163/e66afde9b0424c8943c264dca6a7e9897424f749070abde67f29f7de86516947/general'
-            secret_key = 'TFZ2TllKVU1pbmRjZkJIU1F5SUNXTEVtWXNhUWVrV2E='
+            api_url = ''
+            secret_key = ''
             image_file_path = default_storage.path(path)  # 저장된 파일의 절대 경로
 
             # API 요청 데이터 준비
