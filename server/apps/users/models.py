@@ -13,8 +13,7 @@ class User(AbstractUser):
     address = models.CharField(max_length=255, null=True)
     detail_address = models.CharField(max_length=255, null=True)
     first_login = models.BooleanField(default=True)
-    region = models.ForeignKey(
-        Region, on_delete=models.PROTECT, null=True, blank=True)
+    region = models.ForeignKey(Region, on_delete=models.PROTECT, null=True, blank=True)
     # 친구 속성 추가
     friends = models.ManyToManyField('self', symmetrical=True, blank=True)
 
