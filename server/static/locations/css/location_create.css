@@ -1,0 +1,26 @@
+/* location_crate.html과 location_update.html에 함께 사용 */
+
+.location-form input[type="text"],
+.location-form input[type="number"],
+.location-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-sizing: border-box;
+    background-color: #ffffff;
+}
+.location-form-btn {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid var(--green--medium--color);
+    background-color: #ffffff;
+    cursor: pointer;
+    width: 100%;
+}
+.location-form-btn:hover {
+    background-color: var(--green--medium--color);
+    border: 1px solid var(--green--medium--color);
+    transition: 0.1s;
+}

@@ -39,9 +39,12 @@ const updatePostField = (postArray) => {
     div1.innerHTML = post.title;
     var div2 = document.createElement("div");
     div2.innerHTML = post.writer;
+    var div3 = document.createElement("div");
+    div3.innerText = `조회수 ${post.view_num}`;
 
     a.appendChild(div1);
     a.appendChild(div2);
+    a.appendChild(div3);
     postListContainer.appendChild(a);
   });
 };
@@ -80,10 +83,13 @@ const updateAllPostField = (postArray) => {
     div1.innerHTML = post.title;
     var div2 = document.createElement("div");
     div2.innerHTML = post.writer;
+    var div3 = document.createElement("div");
+    div3.innerText = `조회수 ${post.view_num}`;
 
     a.appendChild(div1);
     a.appendChild(div2);
-    postListContainer.appendChild(a);
+    a.appendChild(div3);
+    postListContainer.appendChild(a); 
   });
 };
 

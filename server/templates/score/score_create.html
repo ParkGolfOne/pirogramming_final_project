@@ -6,15 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>점수 입력</title>
     <link rel="stylesheet" href="{% static 'score/css/score_detail.css'%}" />
-    <link rel="stylesheet" href="{% static 'score/css/score_create.css'%}" />
   </head>
   <body>
     <a href="{% url 'score:score_main'%}">스코어 메인페이지 링크</a>
     <h1>NEW SCORE</h1>
-
-    <div>
-      <h4>!!점수표 사진을 넣어주시면, 최대한 자동입력해드립니다!! (DEMO)</h4>
-      <div>아직 아래와 같은 형식을 정확히 지켜주셔야합니다!</div>
+    <div class="score-content">
+      <h4>점수표 사진을 넣어주시면, 최대한 자동입력해드립니다</h4>
+      <div>(아직 아래와 같은 형식을 정확히 지켜주셔야합니다)</div>
 
       {% csrf_token %}
       <div>
@@ -35,8 +33,8 @@
       <button class="takePictureInfo" onclick="extractPicture()">
         이미지 분석
       </button>
-    </div>
-    <form method="POST" action="" enctype="multipart/form-data">
+    </div>  
+    <form method="POST" action="" enctype="multipart/form-data" class="score-form">
       {% csrf_token %}
       <div class="locationInputArea">
         <span>장소 선택</span>
@@ -51,7 +49,7 @@
           {% endfor%}
         </select>
         <button class="" onclick="changeLocationInput()">검색하기</button>
-      </div>
+      </div>                                                                      
       <div class="scoreGrid">
         <div>홀</div>
         <div>파</div>
@@ -123,7 +121,7 @@
         <div>/</div>
         <div>/</div>
       </div>
-      <input class="scoreSubmitBtn" type="submit" value="점수 등록" />
+      <input class="scoreSubmitBtn" type="submit" value="점수 등록" /> <!--class="score-create-btn"-->
     </form>
 
     <!-- 이미지추출 -->

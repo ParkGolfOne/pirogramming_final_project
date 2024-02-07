@@ -11,18 +11,15 @@
     <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 </head>
 <body>
-    {% if user.is_authenticated %}
-    <div class="scoreMainBtn"> <a href="{% url 'users:logout'%}">로그아웃</a></div>
-    {% endif %}
     <a href="{% url 'score:score_main'%}">스코어 메인페이지 링크</a>
-    점수 디테일 페이지
+    <h1>점수 디테일 페이지</h1>
     <div class="scoreGrid">
       <div>홀</div>
       <div>파</div>
       <div>점수</div>
       <div>1</div>
-      <div>{{score.par.hole1}}</div>
-      <div class="scoreArea">{{score.scores.hole1}}</div>
+      <div>{{score.par.hole1}}</div> <!--class="score-detail-value"-->
+      <div class="scoreArea">{{score.scores.hole1}}</div> <!--class="score-detail-value"-->
       <div>2</div>
       <div>{{score.par.hole2}}</div>
       <div class="scoreArea">{{score.scores.hole2}}</div>
@@ -60,10 +57,9 @@
         {%csrf_token%}
         <a
           href="{% url 'score:score_update' score.id %}"
-          class="btn btn-primary"
-          >수정하기</a
+          class="btn btn-primary"><div class="score-detail-btn">수정하기</div></a
         >
-        <button type="submit">삭제하기</button>
+        <button type="submit" class="score-detail-btn">삭제하기</button>
       </form>
     {% endif %}
     <button id='kakaotalk-sharing-btn' onclick="shareKakaoScore()">카카오톡 공유하기</button>

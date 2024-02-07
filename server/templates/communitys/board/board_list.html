@@ -1,15 +1,12 @@
-{% extends 'base.html' %} {% load static%} {% block head %}
-<title>파골원 커뮤니티</title>
-<link rel="stylesheet" href="{% static 'board/css/board_list.css'%}" />
-{% endblock %} {% block content %}
-<h1>파골원 커뮤니티 리스트</h1>
-<div>
-  {% if user.is_authenticated %}
-  <a href="{% url 'users:logout'%}">로그아웃</a>{% else %}
-  <a href="{% url 'users:login'%}"> 로그인</a
-  ><a href="{% url 'users:signup'%}"> 회원가입</a>{% endif %}
-</div>
-<!--게시판 검색-->
+{% extends 'base.html' %}
+{% load static%}
+  
+{% block head %}
+  <title>파골원 커뮤니티</title>
+  <link rel="stylesheet" href="{% static 'board/css/board_list.css'%}" />
+{% endblock %}
+
+{% block content %}
 <div class="board_search">
   <select id="board_search_select">
     <option value="name">게시판명</option>
@@ -37,15 +34,12 @@
   {% endfor%}
 </div>
 <!---->
-
-{% if user.is_authenticated %}
-<div class="communitys-btn">
-  <a href="{% url 'communitys:board_create' %}">게시판 추가</a>
-  {% endif %}
-</div>
-
+{% if user.is_authenticated %}    
+<a href="{% url 'communitys:board_create' %}"><div class="board-btn">게시판 추가</div></a>
+{% endif %}
 <!-- 페이지 네이션 -->
-{% endblock %} {% block script %}
+{% endblock %} 
+{% block script %}
 <script>var defaultImage="{% static 'posts/images/no_images.png' %}";</script>
 <script src="{% static 'posts/js/boards.js'%}"></script>
 <script src="{% static 'board/js/search_board.js'%}"></script>

@@ -9,20 +9,14 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
   <body>
-    {% if user.is_authenticated %}
-    <div class="scoreMainBtn">
-      <a href="{% url 'users:logout'%}">로그아웃</a>
-    </div>
-    {% endif %}
     <a href="{% url 'score:score_main'%}">스코어 메인페이지 링크</a>
     <!-- 아래를 그래프 차트 그리는데 사용합니다. 수정시 userId 안에는 uid만 있게 해주세요! -->
     <h2 class="userId">{{uid}}</h2>
     <div>
-      <h4>점수 변화</h4>
       <canvas id="myChart" width="400" height="250"></canvas>
     </div>
     <div class="scoreMainBtn">
-      <a href="{% url 'score:score_input' user.id %}">점수 입력하기</a>
+      <a href="{% url 'score:score_input' user.id %}" class="score-history-btn">점수 입력하기</a>
     </div>
     <div class="locationInputArea">
       <span>장소 선택</span>
