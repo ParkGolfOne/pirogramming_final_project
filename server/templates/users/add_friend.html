@@ -19,7 +19,7 @@
       <form action="{% url 'users:add_friend' pk %}" method="post" id="add_friend-form">
         <input type="hidden" name="friend_id" value="{{ candidate.id }}">
         <button type="button" onclick="addFriend({{ candidate.id }}, {{ pk }})">친구 추가</button>
-        </form>
+      </form>
   </li>
   {% endfor %} {% endcomment %}
 </ul>

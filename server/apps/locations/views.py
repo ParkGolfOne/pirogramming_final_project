@@ -1,24 +1,47 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import *
+from apps.region.models import *
 from .forms import *
 from .geocoding import *
 from ..users.models import User
+from django.views.decorators.csrf import csrf_exempt
+from django.db import transaction
+import json
+from django.http import JsonResponse
+
 
 # 골프장 목록 표시
 def location_list(request):
     locations = GolfLocation.objects.all()
+    regions = Region.objects.all()
     ctx = {
-        'locations' : locations
+        'locations' : locations,
+        'regions' : regions,
     }
     return render(request, 'locations/location_list.html', ctx)
 
 #골프장 세부 내용 표시
 def location_detail (request, pk):
     location = GolfLocation.objects.get(id=pk)
+
+    # 즐겨찾기 여부 찾기
+    now_user = request.user
+    try:
+        faved = LikeGolf.objects.get(user = now_user, ground = location)
+    except LikeGolf.DoesNotExist:
+        faved = False
+    except:
+        faved = False
+    else:
+        faved = True
+
+
     ctx = {
         'location' : location,
-        'pk' : pk
+        'pk' : pk,
+        'faved' : faved,
     }
+
     return render(request, 'locations/location_detail.html', ctx)
 
 
@@ -81,3 +104,32 @@ def location_distance (request, pk):
 #내 현재 위치 정보를 기반으로 한 가장 가까운 파크골프장 5곳
 def location_myplace (request):
     return render(request, 'locations/location_myplace.html')
+
+
+
+###########################################################
+#                 골프장 즐겨찾기 관련 함수                 #
+###########################################################
+@csrf_exempt
+@transaction.atomic
+def add_fav_location(request):
+    req = json.loads(request.body)
+    location_id = req["location_id"]
+    location = get_object_or_404(GolfLocation, id=location_id)
+    now_user = request.user
+
+    try:
+        favPointer = LikeGolf.objects.get(ground=location, user=now_user)
+        favPointer.delete()
+        location.fav_num -= 1  
+
+        favTag = 'nonfav'
+        location.save()
+        return JsonResponse({'location_id' : location_id, 'favNum' : location.fav_num, 'favTag' : favTag})
+    except LikeGolf.DoesNotExist:
+        LikeGolf.objects.create(ground=location, user=now_user)
+        location.fav_num += 1
+
+        favTag = 'faved'
+        location.save()
+        return JsonResponse({'location_id' : location_id, 'favNum' : location.fav_num, 'favTag' : favTag})

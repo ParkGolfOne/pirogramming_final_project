@@ -1,46 +1,66 @@
-{% extends 'base.html' %}
-{% load static %}
-{% block head %}
-  <link rel="stylesheet" href="{% static 'locations/css/location_detail.css'%}" />
-{% endblock %}
+{% extends 'base.html' %} {% load static %} {% block head %}
+<link rel="stylesheet" href="{% static 'locations/css/location_detail.css'%}" />
+<link rel="stylesheet" href="{% static 'locations/css/location_fav.css'%}" />
+{% endblock %} {% block content %}
+<div
+  style="
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+  "
+>
+  <div id="location_map" style="width: 800px; height: 500px"></div>
+  <h2>골프장 이름: {{location.golf_name}}</h2>
+  {%if faved%}
+  <button
+    class="postFavBtn fav-{{location.id}} faved"
+    onclick="pushFav({{location.id}})"
+  ></button>
+  {%else%}
+  <button
+    class="postFavBtn fav-{{location.id}}"
+    onclick="pushFav({{location.id}})"
+  ></button>
+  {% endif %}
+  <div class="favNum-{{location.id}}">추천 {{location.fav_num}}</div>
+  <h4>골프장 규모: {{location.golf_scale}}</h4>
+  <h4>골프장 주소: {{location.golf_address}}</h4>
+  <h4>골프장 상세내용: {{location.golf_detail}}</h4>
+  <h4>
+    골프장 경도: <span id="longitude">{{ location.golf_longitude }}</span>
+  </h4>
+  <h4>골프장 위도: <span id="latitude">{{ location.golf_latitude }}</span></h4>
+  <h4>홀: {{location.golf_holes}}</h4>
+  {% if location.golf_image %}
+  <a href="{% url 'locations:detail' location.pk %}">
+    <img src="{{ location.golf_image.url }}" />
+  </a>
+  {% else %}
+  <a href="{% url 'locations:detail' location.pk %}">
+    <img src="{% static 'locations/images/no_img.png/' %}" />
+  </a>
+  {% endif %}
+  <br />
 
-{% block content %}
-      <div style="display: flex; justify-content: center; flex-direction: column; align-items: center;">
-
-        <div id="location_map" style="width: 800px; height: 500px;"></div>
-        <h2>골프장 이름: {{location.golf_name}}</h2>
-        <h4>골프장 규모: {{location.golf_scale}}</h4>
-        <h4>골프장 주소: {{location.golf_address}}</h4>
-        <h4>골프장 상세내용: {{location.golf_detail}}</h4>
-        <h4>골프장 경도: <span id="longitude">{{ location.golf_longitude }}</span></h4>
-        <h4>골프장 위도: <span id="latitude">{{ location.golf_latitude }}</span></h4>
-        <h4>홀: {{location.golf_holes}}</h4>
-        {% if location.golf_image %}
-          <a href="{% url 'locations:detail' location.pk %}">
-            <img src="{{ location.golf_image.url }}">
-          </a>
-        {% else %}
-        <a href="{% url 'locations:detail' location.pk %}">
-          <img src="{% static 'locations/images/no_img.png/' %}">
-        </a>
-        {% endif %}
-        <br>
-
-        <a href="{% url 'locations:update' location.pk %}" class="location-detail-btn">수정하기</a>
-        <form action="{% url 'locations:delete' location.pk %}" method = "post">
-        {% csrf_token %}
-            <button type='submit' class="location-detail-btn">삭제하기</button>
-        </form>
-      </div>
-{% endblock %}
-{% block script %}
-      <script src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=mzbzbj8tit">
-      </script>
-      <script>
-        var imageUrl = "{% static 'locations/images/golfFlag.png' %}";
-      </script>
-      <script src="{% static 'locations/javascript/location_script.js' %}">
-        var latitude = document.getElementById('latitude');
-        var longitude = document.getElementById('longitude');
-      </script>
+  <a href="{% url 'locations:update' location.pk %}" class="location-detail-btn"
+    >수정하기</a
+  >
+  <form action="{% url 'locations:delete' location.pk %}" method="post">
+    {% csrf_token %}
+    <button type="submit" class="location-detail-btn">삭제하기</button>
+  </form>
+</div>
+{% endblock %} {% block script %}
+<!-- 장소 즐겨찾기 -->
+<script src="{% static 'locations/javascript/location_fav.js' %}"></script>
+<!-- 맵 -->
+<script src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=mzbzbj8tit"></script>
+<script>
+  var imageUrl = "{% static 'locations/images/golfFlag.png' %}";
+</script>
+<script src="{% static 'locations/javascript/location_script.js' %}">
+  var latitude = document.getElementById('latitude');
+  var longitude = document.getElementById('longitude');
+</script>
 {% endblock %}
