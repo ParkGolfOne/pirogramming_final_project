@@ -104,8 +104,6 @@ def signup(request):
         else:
             print("폼 유효성 검사 실패")
             print(form.errors)
-            print(form.errors.as_json())
-            print(form.non_field_errors())
             return JsonResponse({'result': 'failed', 'error': form.errors})
     else:
         form = SignupForm()
@@ -172,16 +170,21 @@ def update(request, pk):
             user.detail_address = detail_address
             user.save()
             redirect_url = reverse('users:main', kwargs={'pk': user.pk})
-            return JsonResponse({'url': redirect_url})
+            return JsonResponse({'result': 'success', 'url': redirect_url})
         else:
             print("폼 유효성 검사 실패")
             print(form.errors)
-            return redirect('users:update', user.pk)
+            return JsonResponse({'result': 'fail', 'error': form.errors})
     else:
         form = UpdateForm(instance=user)
         context = {
             'form': form,
             'pk': pk,
+            "username": user.username,
+            "nickname": user.nickname,
+            "birth": user.birth,
+            "phone": user.phone,
+            "email": user.email,
             'city': user.region.city,
             'town': user.region.town,
             'street_address': user.address,

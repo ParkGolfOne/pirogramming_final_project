@@ -77,21 +77,13 @@ class UpdateForm(forms.ModelForm):
             }
         )
     )
-    birth = forms.CharField(
+    birth = forms.DateField(
         label='생일',
-        widget=forms.TextInput(
-            attrs={
-                'class': 'signup-input'
-            }
-        )
+        required=False
     )
     phone = forms.CharField(
         label='전화번호',
-        widget=forms.TextInput(
-            attrs={
-                'class': 'signup-input'
-            }
-        )
+        required=False
     )
     email = forms.CharField(
         label='이메일',
@@ -104,5 +96,4 @@ class UpdateForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ["nickname", "birth", "phone"]
         fields = ['username', 'nickname', 'birth', 'phone', 'email']
