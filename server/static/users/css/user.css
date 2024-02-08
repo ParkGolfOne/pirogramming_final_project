@@ -22,6 +22,9 @@
     background-color: #ffffff;
     cursor: pointer;
 }
+.user-mypage-btn button {
+    font-size: 30px;
+}
 .user-btn {
     width: 100%;
 }
@@ -94,4 +97,19 @@
     width: 100%;
     width: auto;
     margin: 5px;
+}
+.user-mypage {
+    max-width: 100%;
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+.user-mypage a, .user-mypage span {
+    display: inline-block; 
+    max-width: 100%;
+    overflow-wrap: break-word;
+    word-break: break-all;
+}
+.user-mypage div a span:nth-child(3) {
+    color: gray;
+    font-size: 20px;
 }

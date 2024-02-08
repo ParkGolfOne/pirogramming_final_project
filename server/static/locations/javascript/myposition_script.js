@@ -1,6 +1,6 @@
 var latitude = 0;
 var longitude = 0;
-var position_list = document.getElementById('position_point').innerText;
+var position_list = document.getElementById('position_list').innerText;
 
 function get_my_location() {
     if (navigator.geolocation){

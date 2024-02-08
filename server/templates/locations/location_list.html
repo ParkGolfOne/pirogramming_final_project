@@ -7,9 +7,13 @@
   <div class="location-header">
     <h1>전국 골프장 목록</h1>
     <div class="location-btn">
+      {% if user.is_authenticated%}
       <a href="{% url 'locations:myhome' pk=user.id %}"
         >내 집 주변 파크골프장</a
       >
+      {% else %}
+      <div>내 집 주변 파크골프장 - 로그인 먼저 해주세요</div>
+      {% endif %}
     </div>
     <div class="location-btn">
       <a href="{% url 'locations:myplace' %}">현재 내 위치 주변 파크골프장</a>
