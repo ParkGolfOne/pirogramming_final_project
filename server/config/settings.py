@@ -10,15 +10,21 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
+import environ
 from pathlib import Path
 import os
-import os
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 
-load_dotenv()
+# load_dotenv()
+
+env = environ.Env()
+environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Take environment variables from .env file
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 
 # Quick-start development settings - unsuitable for production
@@ -73,15 +79,15 @@ LOGIN_REDIRECT_URL = 'communitys:board_list'  # 로그인 후 이동할 페이�
 ACCOUNT_LOGOUT_ON_GET = True  # 로그 아웃 요청 시 바로 로그아웃 되도록
 # 소셜 로그인 후 추가정보 입력을 위한 페이지로 이동
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = "users:social_login"
-
+SOCIAL_AUTH_URL_NAMESPACE = 'social'
 #############################
 # 1. 카카오
-SOCIAL_AUTH_KAKAO_KEY = os.environ.get('SOCIAL_AUTH_KAKAO_KEY')
-SOCIAL_AUTH_KAKAO_SECRET = os.environ.get('SOCIAL_AUTH_KAKAO_SECRET')
+SOCIAL_AUTH_KAKAO_KEY = os.environ.get('SOCIAL_AUTH_KAKAO_KEY').strip()
+SOCIAL_AUTH_KAKAO_SECRET = os.environ.get('SOCIAL_AUTH_KAKAO_SECRET').strip()
 
 # 2. 네이버
-SOCIAL_AUTH_NAVER_KEY = os.environ.get('SOCIAL_AUTH_NAVER_KEY')
-SOCIAL_AUTH_NAVER_SECRET = os.environ.get('SOCIAL_AUTH_NAVER_SECRET')
+SOCIAL_AUTH_NAVER_KEY = os.environ.get('SOCIAL_AUTH_NAVER_KEY').strip()
+SOCIAL_AUTH_NAVER_SECRET = os.environ.get('SOCIAL_AUTH_NAVER_SECRET').strip()
 ##############################
 
 
@@ -201,7 +207,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
-        
+
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
