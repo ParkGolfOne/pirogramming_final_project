@@ -1,0 +1,74 @@
+{% extends 'base.html' %} {% load static %} {% block head %}
+<link rel="stylesheet" href="{% static 'locations/css/location_detail.css'%}" />
+<link rel="stylesheet" href="{% static 'locations/css/location_fav.css'%}" />
+{% endblock %} {% block content %}
+  <h2>{{location.golf_name}}</h2>
+  <div class="location-container">
+  <div id="location_map"></div>
+  <div class="location-detail-container">
+    {%if faved%}
+    <button
+        class="postFavBtn fav-{{location.id}} faved"
+        onclick="pushFav({{location.id}})"
+    ></button>
+    {%else%}
+    <button
+        class="postFavBtn fav-{{location.id}}"
+        onclick="pushFav({{location.id}})"
+    ></button>
+    {% endif %}
+    <div class="favNum-{{location.id}}">추천 {{location.fav_num}}</div>
+    <div class="location-detail-area">
+        <h3>규모</h3>
+        <h4>{{location.golf_scale}}</h4>
+      </div>
+      <div class="location-detail-area">
+        <h3>주소</h3>
+        <h4>{{location.golf_address}}</h4>
+      </div>
+      <div class="location-detail-area">
+        <h3>상세내용</h3>
+        <h4>{{location.golf_detail}}</h4>
+      </div>
+      <div class="location-detail-area">
+        <h3>경도</h3>
+        <h4><span id="longitude">{{ location.golf_longitude }}</span></h4>
+      </div>
+      <div class="location-detail-area">
+        <h3>위도</h3>
+        <h4><span id="latitude">{{ location.golf_latitude }}</span></h4>
+      </div>
+      <div class="location-detail-area">
+        <h3>홀</h3>
+        <h4>{{location.golf_holes}}</h4>
+      </div>       
+  </div>
+</div>
+  <!-- {% if location.golf_image %}
+  <a href="{% url 'locations:detail' location.pk %}">
+    <img src="{{ location.golf_image.url }}" />
+  </a>
+  {% else %}
+  <a href="{% url 'locations:detail' location.pk %}">
+    <img src="{% static 'locations/images/no_img.png/' %}" />
+  </a>
+  {% endif %}
+  <br /> -->
+
+  <a href="{% url 'locations:update' location.pk %}" class="location-detail-btn"
+    >수정하기</a
+  >
+  <form action="{% url 'locations:delete' location.pk %}" method="post">
+    {% csrf_token %}
+    <button type="submit" class="location-detail-btn">삭제하기</button>
+  </form>
+{% endblock %} {% block script %}
+<!-- 장소 즐겨찾기 -->
+<script src="{% static 'locations/javascript/location_fav.js' %}"></script>
+<!-- 맵 -->
+<script src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=mzbzbj8tit"></script>
+<script src="{% static 'locations/javascript/location_script.js' %}">
+  var latitude = document.getElementById('latitude');
+  var longitude = document.getElementById('longitude');
+</script>
+{% endblock %}

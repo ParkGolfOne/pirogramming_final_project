@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+  <title>점수 입력</title>
+  <link rel="stylesheet" href="{% static 'score/css/score_detail.css'%}" />
+  <link rel="stylesheet" href="{% static 'score/css/score_create.css'%}" />
+  <style>
+    .game_form{  
+      width: 100%;
+    }
+    .coures > h2{
+      text-align: center;
+      font-size: 40px;
+    }
+    .coures_ul{
+      width: 100%;
+      display: flex; 
+      flex-direction: row;
+      justify-content: space-around;
+    }
+    .coures_li{
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .coures_li > div{
+        width: 150px;
+        border :1px solid lightgreen;
+        margin: 10px;
+        text-align: center;
+        display:flex;
+        align-items: center;
+        justify-content: center;
+        height: 30px;
+    }
+
+    .coures_li > div >  input {
+        width: 90px;
+        border:none;
+    }
+  </style>
+{% endblock %}
+{% block content %}
+<a href="{% url 'games:game_set'%}">게임 다시 설정</a>
+<h1>{{ game.name }} 점수입력 페이지</h1>
+
+<!-- 각 라운드에 대해 반복 -->
+<form method="POST" action="" enctype="multipart/form-data" class="game_form">
+{% csrf_token %} {{ form }}
+<input type="submit" name = "save" value="임시 저장" />
+<input type="submit" name = "save" value="점수 저장" />
+{% for round in rounds %}
+    <div class="coures">
+        <h2>코스 {{ forloop.counter }}</h2>
+        <!-- 각 플레이어에 대해 반복 -->
+        <ul class="coures_ul">
+            <li class="coures_li coures_li_hole">
+              <div></div>
+              <div>홀</div>
+              <div>1</div>
+              <div>2</div>
+              <div>3</div>
+              <div>4</div>
+              <div>5</div>
+              <div>6</div>
+              <div>7</div>
+              <div>8</div>
+              <div>9</div>
+              <div>/</div>
+              <div>/</div>
+            </li>
+            <li class="coures_li coures_li_par">
+              <div></div>
+              <div>파</div>
+              <div><input type="number" min="1" max = "10" name="par1_{{round.id}}" value="{{ round.par.hole1}}"/></div>
+              <div><input type="number" min="1" max = "10" name="par2_{{round.id}}" value="{{ round.par.hole2}}"/></div>
+              <div><input type="number" min="1" max = "10" name="par3_{{round.id}}" value="{{ round.par.hole3}}"/></div>
+              <div><input type="number" min="1" max = "10" name="par4_{{round.id}}" value="{{ round.par.hole4}}"/></div>
+              <div><input type="number" min="1" max = "10" name="par5_{{round.id}}" value="{{ round.par.hole5}}"/></div>
+              <div><input type="number" min="1" max = "10" name="par6_{{round.id}}" value="{{ round.par.hole6}}"/></div>
+              <div><input type="number" min="1" max = "10" name="par7_{{round.id}}" value="{{ round.par.hole7}}"/></div>
+              <div><input type="number" min="1" max = "10" name="par8_{{round.id}}" value="{{ round.par.hole8}}"/></div>
+              <div><input type="number" min="1" max = "10" name="par9_{{round.id}}" value="{{ round.par.hole9}}"/></div>                           
+              <div>/</div>
+              <div>/</div>  
+            </li>
+            {% for player in round.round_player.all %}
+              <li class="coures_li">
+                  <div><input type="number" min="1" max = "10" name="name_{{player.id}}" value="{{ player.name}}"/></div>
+                  <div>점수</div>
+                  <div><input type="number" min="1" max = "10" name="score1_{{player.id}}" value="{{ player.score.scores.hole1}}"/></div>
+                  <div><input type="number" min="1" max = "10" name="score2_{{player.id}}" value="{{ player.score.scores.hole2}}"/></div>
+                  <div><input type="number" min="1" max = "10" name="score3_{{player.id}}" value="{{ player.score.scores.hole3}}"/></div>
+                  <div><input type="number" min="1" max = "10" name="score4_{{player.id}}" value="{{ player.score.scores.hole4}}"/></div>
+                  <div><input type="number" min="1" max = "10" name="score5_{{player.id}}" value="{{ player.score.scores.hole5}}"/></div>
+                  <div><input type="number" min="1" max = "10" name="score6_{{player.id}}" value="{{ player.score.scores.hole6}}"/></div>
+                  <div><input type="number" min="1" max = "10" name="score7_{{player.id}}" value="{{ player.score.scores.hole7}}"/></div>
+                  <div><input type="number" min="1" max = "10" name="score8_{{player.id}}" value="{{ player.score.scores.hole8}}"/></div>
+                  <div><input type="number" min="1" max = "10" name="score9_{{player.id}}" value="{{ player.score.scores.hole9}}"/></div>
+                  <div>합계</div>
+                  <div>/</div>                        
+              </li>
+            {% empty %}
+                <li>No players in this round.</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endfor %}
+{% endblock %}
+

@@ -1,0 +1,149 @@
+{% extends 'base.html' %} {%load static%} {% block content %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>파골원 커뮤 디테일</title>
+    <link rel="stylesheet" href="{%static 'posts/css/post_detail.css'%}" />
+  </head>
+  <body>
+    <a href="{% url 'communitys:board_list' %}">커뮤니티 홈</a>
+    <a href="{% url 'communitys:post_list' bid %}">게시판 홈</a>
+    <div class="post-detail-container">
+      <h1 class="post-detail-title">{{post.title}}</h1>
+      <a href="{% url 'users:main' post.writer.id %}" class="post-detail-writer"
+        ><h3>{{post.writer}}</h3></a
+      >
+      {% if post.photo.url != '' %}
+      <img src="{{post.photo.url}}" alt="게시글 이미지" />
+      {% else %}
+      <img src="{% static 'posts/images/no_images.png' %}" alt="대체 텍스트" />
+      {% endif %}
+
+      <h2 class="my-3">{{ post.content|safe }}</h2>
+
+      <div>[공유하기 넣을 곳]</div>
+      <div class="post_buttons">
+        <div>
+          <div class="view">조회수 {{post.view_num}}</div>
+          <div class="likeNum-{{post.id}}">좋아요 {{post.like_num}}</div>
+          <div class="scrapNum-{{post.id}}">스크랩 {{post.scrap_num}}</div>
+        </div>
+        <div>
+          {% if user.is_authenticated %} {%if liked%}
+          <button
+            class="postLikeBtn like-{{post.id}} liked"
+            onclick="pushLike({{post.id}})"
+          ></button>
+          {%else%}
+          <button
+            class="postLikeBtn like-{{post.id}}"
+            onclick="pushLike({{post.id}})"
+          ></button>
+          {% endif %} {%if scraped%}
+          <button
+            class="postScrapBtn scrap-{{post.id}} scraped"
+            onclick="pushScrap({{post.id}})"
+          ></button>
+          {%else%}
+          <button
+            class="postScrapBtn scrap-{{post.id}}"
+            onclick="pushScrap({{post.id}})"
+          ></button>
+          {% endif %} {% endif %}
+        </div>
+      </div>
+      {% if post.writer == now_user %}
+      <div class="post-detail-btns">
+        <div class="post-date">
+          <p>작성일: {{post.created_date}}</p>
+          <p>수정일: {{post.updated_date}}</p>
+        </div>
+        <form
+          action="{% url 'communitys:post_delete' bid post.pk %}"
+          method="POST"
+        >
+          {%csrf_token%}
+          <a
+            href="{% url 'communitys:post_update' bid post.pk %}"
+            class="btn btn-primary"
+            >수정하기</a
+          >
+          <button type="submit" class="post-delete-btn">삭제하기</button>
+        </form>
+      </div>
+      {% endif %}
+      <div class="commentSection">
+        {% if comments %} {% for comment in comments%}
+        <div class="a_comment Cid-{{comment.id}}">
+          <div class="a_comment_commenter">{{comment.commenter.username}}</div>
+          <div class="a_comment_content">{{comment.content}}</div>
+          <div class="comment-btns">
+            {% if comment.commenter == now_user%}
+            <button
+              class="a_comment_delete"
+              onclick="deleteComment({{comment.id}})"
+            >
+              삭제
+            </button>
+            <button
+              class="a_comment_delete"
+              onclick="updateCommentBtn({{comment.id}})"
+            >
+              수정
+            </button>
+            {% endif %} {% if user.is_authenticated %}
+            <button
+              class="a_comment_delete"
+              onclick="likeComment({{comment.id}})"
+            >
+              좋아요
+            </button>
+            <button
+              class="a_comment_reply"
+              onclick="writeReply({{post.id}}, {{comment.id}})"
+            >
+              답글
+            </button>
+            {% endif %} {% if comment.child_comments_num > 0 %}
+            <div>
+              <button
+                class="a_comment_reply"
+                onclick="openReply({{post.id}}, {{comment.id}})"
+              >
+                답글 {{comment.child_comments_num}} 개
+              </button>
+            </div>
+            {% endif %}
+          </div>
+          <section class="replySection"></section>
+        </div>
+        {%endfor%} {% endif%}
+      </div>
+      <hr />
+      {% if user.is_authenticated %}
+      <div class="input-area">
+        <input type="text" class="comment-input-box" /><button
+          class="comment-upload-btn"
+          onclick="writeComment({{post.id}})"
+        >
+          댓글 등록
+        </button>
+      </div>
+      {%else%}
+      <div class="input-area">
+        <span> 댓글을 작성하려면 로그인을 해주세요!</span>
+      </div>
+      {% endif%}
+      <hr />
+    </div>
+    <!-- 댓글 -->
+    <script src="{% static 'posts/js/comment.js'%}"></script>
+    <!-- 대댓글  -->
+    <script src="{% static 'posts/js/reply.js'%}"></script>
+    <!-- 좋아요 & 스크랩 -->
+    <script src="{% static 'posts/js/like_scrap.js' %}"></script>
+  </body>
+</html>
+{% endblock %}

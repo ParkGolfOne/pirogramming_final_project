@@ -1,0 +1,88 @@
+{% extends 'base.html' %} {%load static%} 
+
+{% block head %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" href="{% static "users/css/signup.css" %}">
+{% endblock head %}
+
+{% block content %}
+<form method="POST" id="signup-form" class="signup-form">
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <label for="id_username">아이디:</label>
+      <input type="text" name="username" class="signup-input" autofocus="" required="" id="id_username">
+      <div class="errorMessage"></div>
+    </div>
+    <div class="col-md-6 mb-3">
+      <label for="id_nickname">닉네임:</label>
+      <input type="text" name="nickname" class="signup-input" required="" id="id_nickname">
+      <div class="errorMessage"></div>
+    </div>
+  </div>
+  <div class="mb-3">
+    <label for="id_password1">비밀번호:</label>
+    <input type="password" name="password1" class="signup-input" required="" id="id_password1">
+    <div class="errorMessage"></div>
+  </div>
+  <div class="mb-3">
+    <label for="id_password2">비밀번호 확인:</label>
+    <input type="password" name="password2" class="signup-input" required="" id="id_password2">  
+    <div class="errorMessage"></div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <label for="id_birth">생일:</label>
+      <input type="text" name="birth" class="signup-input" id="id_birth">
+      <div class="errorMessage"></div>
+    </div>
+    <div class="col-md-6 mb-3">
+      <label for="id_phone">전화번호:</label>
+      <input type="text" name="phone" class="signup-input" id="id_phone">
+      <div class="errorMessage"></div>
+    </div>
+  </div>
+  <div class="mb-3">
+    <label for="id_email">이메일:</label>
+    <input type="text" name="email" class="signup-input" required="" id="id_email">
+    <div class="errorMessage"></div>
+  </div>
+  <div class="mb-3">
+    <!--도로명 주소 검색-->
+    <label for="address">주소 입력</label>
+    <div id="address-input-container">
+      <input type="text" placeholder="도로명 주소" name="address" readonly="readonly" id="address" required="">
+      <button onclick="execDaumPostcode(event)" name="btn-address" id="btn-address" class="user-btn">검색</button>
+      <div class="errorMessage"></div>
+    </div>
+  </div>
+  <div class="mb-3">
+    <!--상세 주소-->
+    <label for="address_detail">상세 주소 입력</label>
+    <input type="text" class="signup-input" placeholder="상세주소" name="address_detail" id="address_detail">
+    <div class="errorMessage"></div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <label for="city">시/도:</label>
+      <select id="city" class="selectbox" required="">
+        <option value="" disabled>선택해주세요</option>
+      </select>
+      <div class="errorMessage"></div>
+    </div>
+    <div class="col-md-6 mb-3">
+      <label for="town">군/구:</label>
+      <select id="town" class="selectbox" required="">
+        <option value="" disabled>------</option>
+      </select>
+      <div class="errorMessage"></div>
+    </div>
+  </div>
+  <button class="user-btn" type="submit" id="signup-form-submit" form="signup-form">회원가입</button>
+</form>
+{% endblock content %} 
+
+{% block script %}
+<script src="{% static 'users/js/signup.js' %}"></script>
+<!--다음 카카오 도로명 주소-->
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+{% endblock script %}

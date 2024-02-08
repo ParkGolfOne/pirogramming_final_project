@@ -1,0 +1,291 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>점수 입력</title>
+    <link rel="stylesheet" href="{% static 'score/css/score_detail.css'%}" />
+  </head>
+  <body>
+    <a href="{% url 'score:score_main'%}">스코어 메인페이지 링크</a>
+    <h1>NEW SCORE</h1>
+    <div class="score-content">
+      <h4>점수표 사진을 넣어주시면, 최대한 자동입력해드립니다</h4>
+      <div>(아직 아래와 같은 형식을 정확히 지켜주셔야합니다)</div>
+
+      {% csrf_token %}
+      <div>
+        <img
+          id="preview"
+          src="{% static 'score/images/score_ex.PNG'%}"
+          alt="your image"
+        />
+      </div>
+      <input
+        type="file"
+        id="uploadedImage"
+        name="uploadedImage"
+        onchange="showImage(this)"
+        accept="image/*"
+      />
+
+      <button class="takePictureInfo" onclick="extractPicture()">
+        이미지 분석
+      </button>
+    </div>
+    <form
+      method="POST"
+      action=""
+      enctype="multipart/form-data"
+      class="score-form"
+    >
+      {% csrf_token %}
+      <div class="locationInputArea">
+        <span>장소 선택</span>
+        <select
+          class="locationSelect locationInfo"
+          type="select"
+          name="location"
+          required=""
+        >
+          <option value="{{null}}">-------</option>
+          {% for location in locations %}
+          <option value="{{location.golf_name}}">{{location.golf_name}}</option>
+          {% endfor%}
+        </select>
+        <button class="" onclick="changeLocationInput()">검색하기</button>
+      </div>
+      <div class="scoreGrid">
+        <div>홀</div>
+        <div>파</div>
+        <div>점수</div>
+        <div>1</div>
+        <div>
+          <input
+            class="parInput"
+            type="text"
+            maxlength="1"
+            name="par1"
+            placeholder="3 ~ 5"
+            required=""
+          />
+          <div class="errorMessage"></div>
+        </div>
+        <div>
+          <input
+            class="scoreInput"
+            type="number"
+            min="1"
+            max="10"
+            name="score1"
+            placeholder="0 ~ 10"
+            required=""
+          />
+          <div class="errorMessage"></div>
+        </div>
+        <div>2</div>
+        <div>
+          <input
+            class="parInput"
+            type="text"
+            maxlength="1"
+            name="par2"
+            placeholder="3 ~ 5"
+            required=""
+          />
+          <div class="errorMessage"></div>
+        </div>
+        <div>
+          <input
+            class="scoreInput"
+            type="number"
+            min="1"
+            max="10"
+            name="score2"
+            placeholder="0 ~ 10"
+            required=""
+          />
+          <div class="errorMessage"></div>
+        </div>
+        <div>3</div>
+        <div>
+          <input
+            class="parInput"
+            type="text"
+            maxlength="1"
+            name="par3"
+            placeholder="3 ~ 5"
+            required=""
+          />
+          <div class="errorMessage"></div>
+        </div>
+        <div>
+          <input
+            class="scoreInput"
+            type="number"
+            min="1"
+            max="10"
+            name="score3"
+            placeholder="0 ~ 10"
+            required=""
+          />
+          <div class="errorMessage"></div>
+        </div>
+        <div>4</div>
+        <div>
+          <input
+            class="parInput"
+            type="text"
+            maxlength="1"
+            name="par4"
+            placeholder="3 ~ 5"
+            required=""
+          />
+          <div class="errorMessage"></div>
+        </div>
+        <div>
+          <input
+            class="scoreInput"
+            type="number"
+            min="1"
+            max="10"
+            name="score4"
+            placeholder="0 ~ 10"
+            required=""
+          />
+          <div class="errorMessage"></div>
+        </div>
+        <div>5</div>
+        <div>
+          <input
+            class="parInput"
+            type="text"
+            maxlength="1"
+            name="par5"
+            placeholder="3 ~ 5"
+            required=""
+          />
+          <div class="errorMessage"></div>
+        </div>
+        <div>
+          <input
+            class="scoreInput"
+            type="number"
+            min="1"
+            max="10"
+            name="score5"
+            placeholder="0 ~ 10"
+            required=""
+          />
+          <div class="errorMessage"></div>
+        </div>
+        <div>6</div>
+        <div>
+          <input
+            class="parInput"
+            type="text"
+            maxlength="1"
+            name="par6"
+            placeholder="3 ~ 5"
+            required=""
+          />
+          <div class="errorMessage"></div>
+        </div>
+        <div>
+          <input
+            class="scoreInput"
+            type="number"
+            min="1"
+            max="10"
+            name="score6"
+            placeholder="0 ~ 10"
+            required=""
+          />
+          <div class="errorMessage"></div>
+        </div>
+        <div>7</div>
+        <div>
+          <input
+            class="parInput"
+            type="text"
+            maxlength="1"
+            name="par7"
+            placeholder="3 ~ 5"
+            required=""
+          />
+          <div class="errorMessage"></div>
+        </div>
+        <div>
+          <input
+            class="scoreInput"
+            type="number"
+            min="1"
+            max="10"
+            name="score7"
+            placeholder="0 ~ 10"
+            required=""
+          />
+          <div class="errorMessage"></div>
+        </div>
+        <div>8</div>
+        <div>
+          <input
+            class="parInput"
+            type="text"
+            maxlength="1"
+            name="par8"
+            placeholder="3 ~ 5"
+            required=""
+          />
+          <div class="errorMessage"></div>
+        </div>
+        <div>
+          <input
+            class="scoreInput"
+            type="number"
+            min="1"
+            max="10"
+            name="score8"
+            placeholder="0 ~ 10"
+            required=""
+          />
+          <div class="errorMessage"></div>
+        </div>
+        <div>9</div>
+        <div>
+          <input
+            class="parInput"
+            type="text"
+            maxlength="1"
+            name="par9"
+            placeholder="3 ~ 5"
+            required=""
+          />
+          <div class="errorMessage"></div>
+        </div>
+        <div>
+          <input
+            class="scoreInput"
+            type="number"
+            min="1"
+            max="10"
+            name="score9"
+            placeholder="0 ~ 10"
+            required=""
+          />
+          <div class="errorMessage"></div>
+        </div>
+        <div>합계</div>
+        <div>/</div>
+        <div>/</div>
+      </div>
+      <input class="scoreSubmitBtn" type="submit" value="점수 등록" />
+    </form>
+    <!-- 이미지추출 -->
+    <script src="{% static 'score/js/picture.js' %}"></script>
+    <!-- 장소 입력방식 변경 -->
+    <script src="{% static 'score/js/location_input.js' %}"></script>
+  </body>
+</html>
+{% endblock%}

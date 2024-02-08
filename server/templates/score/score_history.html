@@ -1,0 +1,53 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>유저 포트폴리오</title>
+    <link rel="stylesheet" href="{% static 'score/css/score_history.css'%}" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <a href="{% url 'score:score_main'%}">스코어 메인페이지 링크</a>
+    <!-- 아래를 그래프 차트 그리는데 사용합니다. 수정시 userId 안에는 uid만 있게 해주세요! -->
+    <h2 class="userId">{{uid}}</h2>
+    <div>
+      <canvas id="myChart" width="400" height="250"></canvas>
+    </div>
+    <div class="scoreMainBtn">
+      <a href="{% url 'score:score_input' user.id %}" class="score-history-btn"
+        >점수 입력하기</a
+      >
+    </div>
+    <div class="locationInputArea">
+      <span>장소 선택</span>
+      <select
+        class="locationSelect locationInfo"
+        type="select"
+        name="location"
+        onchange="getScoreInfo(1)"
+      >
+        <option value="all">전체</option>
+        {% for location in locations %}
+        <option value="{{location.golf_name}}">{{location.golf_name}}</option>
+        {% endfor%}
+      </select>
+    </div>
+    <div>
+      <select
+        class="sortSelect sortInfo"
+        type="select"
+        name="sortType"
+        onchange="changeSort()"
+      >
+        <option value="-id">최신순</option>
+        <option value="id">오래된순</option>
+        <option value="total_score">점수순</option>
+      </select>
+    </div>
+    <div class="scoreList"></div>
+    <script src="{% static 'score/js/filter.js' %}"></script>
+  </body>
+</html>
+{% endblock %}

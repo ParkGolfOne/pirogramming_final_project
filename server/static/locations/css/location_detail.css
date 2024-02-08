@@ -1,0 +1,52 @@
+.location-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#location_map {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 8 / 5;
+    margin: 10px 0px; 
+}
+/* pc일떄 */
+@media screen and (min-width: 700px) {
+    .location-container {
+        flex-direction: row;
+        align-items: normal;
+        gap: 10px;
+    }
+}
+.location-detail-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+.location-detail-area {
+    border: 1px solid var(--white--border--color);
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px;
+    background-color: var(--green--pale--color);
+    width: 100%;
+}
+.location-detail-btn {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid var(--green--medium--color);
+  background-color: #ffffff;
+  cursor: pointer;
+  font-size: 30px;
+  margin: 5px;
+}
+.location-detail-btn:hover {
+    background-color: var(--green--medium--color);
+    border: 1px solid var(--green--medium--color);
+    transition: 0.1s;
+}
+.location-detail-area > h4 {
+    font-size: 25px;
+}

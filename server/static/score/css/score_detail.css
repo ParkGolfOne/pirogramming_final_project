@@ -1,0 +1,66 @@
+/* score_create.html과 score_detail.html에 함께 사용중 */
+.scoreGrid{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin-top: 10px;
+}
+
+.scoreGrid > div{
+    width: 100px;
+    margin: 10px;
+    text-align: center;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.scoreGrid > div > input, 
+.score-par, 
+.scoreArea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-sizing: border-box;
+    background-color: #ffffff;
+}
+.scoreGrid > div > input:hover,
+.scoreGrid > div > input:focus {
+    border: 1px solid var(--green--dark--color);
+}
+.scoreSubmitBtn,
+.score-detail-btn {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid var(--green--medium--color);
+    background-color: #ffffff;
+    cursor: pointer;
+    width: 100%;
+    margin: 10px 0px;
+    font-size: 30px;
+}
+.score-create-btn:hover, .score-detail-btn:hover {
+    background-color: var(--green--medium--color);
+    border: 1px solid var(--green--medium--color);
+    transition: 0.1s;
+}
+#preview{
+    width: 100%;
+    padding: 10px;
+}
+@media screen and (min-width: 700px) {
+    #preview {
+        width: 50vw;
+    }
+}
+.score-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.score-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+  <link rel="stylesheet" href="{% static 'locations/css/location_create.css'%}" />
+{% endblock %}
+
+{% block content %}
+    <form action = "{% url 'locations:create' %}" method = "post" enctype="multipart/form-data" class="location-form">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type="submit" class="location-form-btn">추가완료</button>
+    </form>
+{% endblock %}

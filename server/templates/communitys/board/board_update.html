@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <a href="{% url 'communitys:board_list' %}">커뮤니티 홈</a>
+    <div>
+      <h1>게시판 수정하기</h1>
+      <form
+        action="{% url 'communitys:board_update' bid %}"
+        method="post"
+        enctype="multipart/form-data"
+      >
+        {%csrf_token%} {{form.as_p}}
+
+        <button>수정하기</button>
+      </form>
+    </div>
+  </body>
+</html>
+{% endblock %}

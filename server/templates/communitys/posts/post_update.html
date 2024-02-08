@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+  <link rel="stylesheet" href="{% static 'posts/css/post_create.css'%}" />
+{% endblock %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>파골원 커뮤 수정페이지</title>
+    <!-- 폼  html형식 글 작성(tiny사용) 지원을 위해 스크립트 파일 추가-->
+    {{ form.media }}
+  </head>
+  <body>
+    <a href="{% url 'communitys:board_list' %}">커뮤니티 홈</a>
+    <a href="{% url 'communitys:post_list' bid %}">게시판 홈</a>
+    <div>
+      <h1>글 수정하기</h1>
+      <form
+        action="{% url 'communitys:post_update' bid pk  %}"
+        method="post"
+        enctype="multipart/form-data"
+        class="post-create-form"
+      >
+        {%csrf_token%} {{form.as_p}}
+
+        <button class="post-create-btn">수정하기</button>
+      </form>
+    </div>
+  </body>
+</html>
+{% endblock %}

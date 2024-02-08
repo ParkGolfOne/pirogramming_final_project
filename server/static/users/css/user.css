@@ -1,0 +1,115 @@
+.login-form input[type="text"],
+.login-form input[type="password"],
+.signup-form input[type="text"],
+.signup-form input[type="password"],
+.users-update-form input[type="text"],
+.users-update-form input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-sizing: border-box;
+    background-color: #ffffff;
+}
+.signup-form > .form-group > label {
+    margin-bottom: 5px;
+}
+.user-btn, .user-mypage-btn, .user-login-btn {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid var(--green--medium--color);
+    background-color: #ffffff;
+    cursor: pointer;
+}
+.user-mypage-btn button {
+    font-size: 30px;
+}
+.user-btn {
+    width: 100%;
+}
+.user-btn:hover, .user-mypage-btn:hover, .user-login-btn:hover {
+    background-color: var(--green--medium--color);
+    border: 1px solid var(--green--medium--color);
+    transition: 0.1s;
+}
+.user-mypage-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    flex-direction: column;
+    
+}
+.user-mypage, .user-btn-box {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid var(--white--border--color);
+    background-color: var(--green--pale--color);
+    margin: 5px;
+    width: 100%;
+}
+.user-mypage-title, .user-btn-title {
+    position: relative;
+}
+
+.user-mypage-title::before, 
+.user-btn-title::before {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 1px;
+    background: #bbb;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.user-login-btn {
+    width: 100%;
+    margin: 10px 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.user-btn-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;    
+}
+/* pc일떄 */
+@media screen and (min-width: 700px) {
+    .user-btn-container,
+    .user-mypage-container {
+        flex-direction: row;    
+    }
+    
+}
+
+.user-btn-box {
+    display: flex;
+    flex-direction: column;
+    
+}
+.user-mypage-btn {
+    display: block;
+    text-align: center;
+    width: 100%;
+    width: auto;
+    margin: 5px;
+}
+.user-mypage {
+    max-width: 100%;
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+.user-mypage a, .user-mypage span {
+    display: inline-block; 
+    max-width: 100%;
+    overflow-wrap: break-word;
+    word-break: break-all;
+}
+.user-mypage div a span:nth-child(3) {
+    color: gray;
+    font-size: 20px;
+}
