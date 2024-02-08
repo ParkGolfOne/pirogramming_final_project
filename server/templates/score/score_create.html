@@ -47,7 +47,7 @@
           class="locationSelect locationInfo"
           type="select"
           name="location"
-          onchange="checkSubmitPossible()"
+          required=""
         >
           <option value="{{null}}">-------</option>
           {% for location in locations %}
@@ -67,17 +67,21 @@
             type="text"
             maxlength="1"
             name="par1"
-            onchange="checkSubmitPossible()"
+            placeholder="3 ~ 5"
+            required=""
           />
+          <div class="errorMessage"></div>
         </div>
         <div>
           <input
             class="scoreInput"
             type="text"
-            maxlength="1"
+            maxlength="2"
             name="score1"
-            onchange="checkSubmitPossible()"
+            placeholder="0 ~ 10"
+            required=""
           />
+          <div class="errorMessage"></div>
         </div>
         <div>2</div>
         <div>
@@ -86,17 +90,21 @@
             type="text"
             maxlength="1"
             name="par2"
-            onchange="checkSubmitPossible()"
+            placeholder="3 ~ 5"
+            required=""
           />
+          <div class="errorMessage"></div>
         </div>
         <div>
           <input
             class="scoreInput"
             type="text"
-            maxlength="1"
+            maxlength="2"
             name="score2"
-            onchange="checkSubmitPossible()"
+            placeholder="0 ~ 10"
+            required=""
           />
+          <div class="errorMessage"></div>
         </div>
         <div>3</div>
         <div>
@@ -105,17 +113,21 @@
             type="text"
             maxlength="1"
             name="par3"
-            onchange="checkSubmitPossible()"
+            placeholder="3 ~ 5"
+            required=""
           />
+          <div class="errorMessage"></div>
         </div>
         <div>
           <input
             class="scoreInput"
             type="text"
-            maxlength="1"
+            maxlength="2"
             name="score3"
-            onchange="checkSubmitPossible()"
+            placeholder="0 ~ 10"
+            required=""
           />
+          <div class="errorMessage"></div>
         </div>
         <div>4</div>
         <div>
@@ -124,17 +136,21 @@
             type="text"
             maxlength="1"
             name="par4"
-            onchange="checkSubmitPossible()"
+            placeholder="3 ~ 5"
+            required=""
           />
+          <div class="errorMessage"></div>
         </div>
         <div>
           <input
             class="scoreInput"
             type="text"
-            maxlength="1"
+            maxlength="2"
             name="score4"
-            onchange="checkSubmitPossible()"
+            placeholder="0 ~ 10"
+            required=""
           />
+          <div class="errorMessage"></div>
         </div>
         <div>5</div>
         <div>
@@ -143,17 +159,21 @@
             type="text"
             maxlength="1"
             name="par5"
-            onchange="checkSubmitPossible()"
+            placeholder="3 ~ 5"
+            required=""
           />
+          <div class="errorMessage"></div>
         </div>
         <div>
           <input
             class="scoreInput"
             type="text"
-            maxlength="1"
+            maxlength="2"
             name="score5"
-            onchange="checkSubmitPossible()"
+            placeholder="0 ~ 10"
+            required=""
           />
+          <div class="errorMessage"></div>
         </div>
         <div>6</div>
         <div>
@@ -162,17 +182,21 @@
             type="text"
             maxlength="1"
             name="par6"
-            onchange="checkSubmitPossible()"
+            placeholder="3 ~ 5"
+            required=""
           />
+          <div class="errorMessage"></div>
         </div>
         <div>
           <input
             class="scoreInput"
             type="text"
-            maxlength="1"
+            maxlength="2"
             name="score6"
-            onchange="checkSubmitPossible()"
+            placeholder="0 ~ 10"
+            required=""
           />
+          <div class="errorMessage"></div>
         </div>
         <div>7</div>
         <div>
@@ -181,17 +205,21 @@
             type="text"
             maxlength="1"
             name="par7"
-            onchange="checkSubmitPossible()"
+            placeholder="3 ~ 5"
+            required=""
           />
+          <div class="errorMessage"></div>
         </div>
         <div>
           <input
             class="scoreInput"
             type="text"
-            maxlength="1"
+            maxlength="2"
             name="score7"
-            onchange="checkSubmitPossible()"
+            placeholder="0 ~ 10"
+            required=""
           />
+          <div class="errorMessage"></div>
         </div>
         <div>8</div>
         <div>
@@ -200,17 +228,21 @@
             type="text"
             maxlength="1"
             name="par8"
-            onchange="checkSubmitPossible()"
+            placeholder="3 ~ 5"
+            required=""
           />
+          <div class="errorMessage"></div>
         </div>
         <div>
           <input
             class="scoreInput"
             type="text"
-            maxlength="1"
+            maxlength="2"
             name="score8"
-            onchange="checkSubmitPossible()"
+            placeholder="0 ~ 10"
+            required=""
           />
+          <div class="errorMessage"></div>
         </div>
         <div>9</div>
         <div>
@@ -219,17 +251,21 @@
             type="text"
             maxlength="1"
             name="par9"
-            onchange="checkSubmitPossible()"
+            placeholder="3 ~ 5"
+            required=""
           />
+          <div class="errorMessage"></div>
         </div>
         <div>
           <input
             class="scoreInput"
             type="text"
-            maxlength="1"
+            maxlength="2"
             name="score9"
-            onchange="checkSubmitPossible()"
+            placeholder="0 ~ 10"
+            required=""
           />
+          <div class="errorMessage"></div>
         </div>
         <div>합계</div>
         <div>/</div>
@@ -237,6 +273,8 @@
       </div>
       <input class="scoreSubmitBtn" type="submit" value="점수 등록" />
     </form>
+    <!-- 유효성 검사 및 제출 -->
+    <!-- <script src="{% static 'score/js/submit.js' %}"></script> -->
     <!-- 이미지추출 -->
     <script src="{% static 'score/js/picture.js' %}"></script>
     <!-- 장소 입력방식 변경 -->

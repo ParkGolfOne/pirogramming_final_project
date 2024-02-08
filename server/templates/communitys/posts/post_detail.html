@@ -146,32 +146,4 @@
     <script src="{% static 'posts/js/like_scrap.js' %}"></script>
   </body>
 </html>
-{% endblock %} {% block script%}
-<button id="kakaotalk-sharing-btn" onclick="shareKakaoScore()">
-  카카오톡 공유하기
-</button>
-<!--  네이버 밴드 공유하기  -->
-<span>
-  <script
-    type="text/javascript"
-    src="//developers.band.us/js/share/band-button.js?v=06022024"
-  ></script>
-  <script type="text/javascript">
-    new ShareBand.makeButton({
-      lang: "ko-KR",
-      type: "c",
-      text: "내 점수 보러가기",
-      withUrl: true,
-    });
-  </script>
-</span>
-<!-- 링크에 쓸 변수 작성 -->
-<script>
-  var sid = {{ sid }};
-  //var now_user = {{now_user.nickname}}
-  const thumbnailUrl  = "{% static 'base/images/parkgolfone_logo1.png' %}";
-
-  //console.log(now_user);
-</script>
-<script src="{% static 'js/link.js' %}"></script>
 {% endblock %}

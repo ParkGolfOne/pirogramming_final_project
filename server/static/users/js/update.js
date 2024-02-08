@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
   var cityField = document.getElementById("city");
   var townField = document.getElementById("town");
-  var addressField = document.getElementById("address_text");
+  var addressField = document.getElementById("address");
   var sbAddressField = document.getElementById("address_detail");
 
 
@@ -77,9 +77,12 @@ document.addEventListener("DOMContentLoaded", function () {
      Object.keys(dataArray).forEach((data) => {
        const errorMessagesForField = dataArray[data];
        const inputField = document.querySelector(`[name="${data}"]`);
+       console.log("inputField", inputField);
        const parentDiv = inputField.parentElement;
+       console.log("parentDiv", parentDiv);
        const fieldDiv = parentDiv.querySelector(".errorMessage");
-
+       console.log("fieldDiv", fieldDiv);
+       
        // 해당 필드에 오류 메시지가 있는 경우에만 처리
        if (errorMessagesForField.length > 0) {
          const errorMessageElement = document.createElement("p");
@@ -118,9 +121,16 @@ document.addEventListener("DOMContentLoaded", function () {
     } else {
       formData.append("town", townField.value);
     }
-      
-    formData.append("street_address", addressField.value);
-    formData.append("detail_address", sbAddressField.value);
+    if (addressField.value === "" ){
+      formData.append("street_address", "");
+    } else {
+      formData.append("street_address", addressField.value);
+    }
+    if (sbAddressField.value === "") {
+      formData.append("detail_address", "");
+    } else {
+      formData.append("detail_address", sbAddressField.value);
+    } 
     
     const url = `/users/update/${userId}/`;
     const xhr = new XMLHttpRequest();
@@ -132,7 +142,9 @@ document.addEventListener("DOMContentLoaded", function () {
         if (data.result == "success")  {
           window.location.replace(data.url);
         }
-        else {errorMessage(data.error);}
+        else {
+          console.log(data.error);
+          errorMessage(data.error);}
       }
     };
     xhr.send(formData);
@@ -151,7 +163,7 @@ function execDaumPostcode(event) {
         address = data.jibunAddress;
       }
 
-      document.getElementById("address_text").value = address;
+      document.getElementById("address").value = address;
       document.getElementById("address_detail").focus(); // 커서를 상세주소 필드로 이동
     },
   }).open();
