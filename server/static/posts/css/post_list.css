@@ -18,6 +18,10 @@
   border: 1px solid var(--green--medium--color);
   transition: 0.1s;
 }
+.post-list-btn {
+  font-size: 30px;
+  padding: 5px;
+}
 .communitys-btn {
   padding: 10px;
 
