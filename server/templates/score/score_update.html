@@ -18,7 +18,6 @@
           class="locationSelect locationInfo"
           type="select"
           name="location"
-          onchange="checkSubmitPossible()"
         >
           <option value="{{now_golf_name}}">{{now_golf_name}}</option>
           <option value="{{null}}">-------</option>
@@ -40,7 +39,7 @@
             maxlength="1"
             name="par1"
             value="{{score.par.hole1}}"
-            onchange="checkSubmitPossible()"
+            required=""
           />
         </div>
         <div>
@@ -50,7 +49,7 @@
             maxlength="1"
             name="score1"
             value="{{score.scores.hole1}}"
-            onchange="checkSubmitPossible()"
+            required=""
           />
         </div>
         <div>2</div>
@@ -61,7 +60,7 @@
             maxlength="1"
             name="par2"
             value="{{score.par.hole2}}"
-            onchange="checkSubmitPossible()"
+            required=""
           />
         </div>
         <div>
@@ -71,7 +70,7 @@
             maxlength="1"
             name="score2"
             value="{{score.scores.hole2}}"
-            onchange="checkSubmitPossible()"
+            required=""
           />
         </div>
         <div>3</div>
@@ -82,7 +81,7 @@
             maxlength="1"
             name="par3"
             value="{{score.par.hole3}} "
-            onchange="checkSubmitPossible()"
+            required=""
           />
         </div>
         <div>
@@ -92,7 +91,7 @@
             maxlength="1"
             name="score3"
             value="{{score.scores.hole3}}"
-            onchange="checkSubmitPossible()"
+            required=""
           />
         </div>
         <div>4</div>
@@ -103,7 +102,7 @@
             maxlength="1"
             name="par4"
             value="{{score.par.hole4}}"
-            onchange="checkSubmitPossible()"
+            required=""
           />
         </div>
         <div>
@@ -113,7 +112,7 @@
             maxlength="1"
             name="score4"
             value="{{score.scores.hole4}}"
-            onchange="checkSubmitPossible()"
+            required=""
           />
         </div>
         <div>5</div>
@@ -124,7 +123,7 @@
             maxlength="1"
             name="par5"
             value="{{score.par.hole5}}"
-            onchange="checkSubmitPossible()"
+            required=""
           />
         </div>
         <div>
@@ -134,7 +133,7 @@
             maxlength="1"
             name="score5"
             value="{{score.scores.hole5}}"
-            onchange="checkSubmitPossible()"
+            required=""
           />
         </div>
         <div>6</div>
@@ -145,7 +144,7 @@
             maxlength="1"
             name="par6"
             value="{{score.par.hole6}}"
-            onchange="checkSubmitPossible()"
+            required=""
           />
         </div>
         <div>
@@ -155,7 +154,7 @@
             maxlength="1"
             name="score6"
             value="{{score.scores.hole6}}"
-            onchange="checkSubmitPossible()"
+            required=""
           />
         </div>
         <div>7</div>
@@ -166,7 +165,7 @@
             maxlength="1"
             name="par7"
             value="{{score.par.hole7}}"
-            onchange="checkSubmitPossible()"
+            required=""
           />
         </div>
         <div>
@@ -176,7 +175,7 @@
             maxlength="1"
             name="score7"
             value="{{score.scores.hole7}}"
-            onchange="checkSubmitPossible()"
+            required=""
           />
         </div>
         <div>8</div>
@@ -187,7 +186,7 @@
             maxlength="1"
             name="par8"
             value="{{score.par.hole8}}"
-            onchange="checkSubmitPossible()"
+            required=""
           />
         </div>
         <div>
@@ -197,7 +196,7 @@
             maxlength="1"
             name="score8"
             value="{{score.scores.hole8}}"
-            onchange="checkSubmitPossible()"
+            required=""
           />
         </div>
         <div>9</div>
@@ -208,7 +207,7 @@
             maxlength="1"
             name="par9"
             value="{{score.par.hole9}}"
-            onchange="checkSubmitPossible()"
+            required=""
           />
         </div>
         <div>
@@ -218,7 +217,7 @@
             maxlength="1"
             name="score9"
             value="{{score.scores.hole9}}"
-            onchange="checkSubmitPossible()"
+            required=""
           />
         </div>
         <div>합계</div>
@@ -226,6 +225,7 @@
         <div>/</div>
       </div>
       <input class="scoreSubmitBtn" type="submit" value="점수 등록" />
+      <!--class="score-create-btn"-->
     </form>
     <!-- 이미지추출 -->
     <script src="{% static 'score/js/picture.js' %}"></script>
