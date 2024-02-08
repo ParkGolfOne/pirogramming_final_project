@@ -1,6 +1,4 @@
-{% extends 'base.html' %}
-{% load static %}
-{% block content %}
+{% extends 'base.html' %} {% load static %} {% block content %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -8,18 +6,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>점수 입력</title>
     <link rel="stylesheet" href="{% static 'score/css/score_detail.css'%}" />
-    <link rel="stylesheet" href="{% static 'score/css/score_create.css'%}" />
   </head>
   <body>
     <a href="{% url 'score:score_main'%}">스코어 메인페이지 링크</a>
     <h1>NEW SCORE</h1>
-
-    <div>
-      <h4>!!점수표 사진을 넣어주시면, 최대한 자동입력해드립니다!! (DEMO)</h4>
-      <div>아직 아래와 같은 형식을 정확히 지켜주셔야합니다!</div>
+    <div class="score-content">
+      <h4>점수표 사진을 넣어주시면, 최대한 자동입력해드립니다</h4>
+      <div>(아직 아래와 같은 형식을 정확히 지켜주셔야합니다)</div>
 
       {% csrf_token %}
-      <div><img id="preview" src="{% static 'score/images/score_ex.PNG'%}" alt="your image" /></div>
+      <div>
+        <img
+          id="preview"
+          src="{% static 'score/images/score_ex.PNG'%}"
+          alt="your image"
+        />
+      </div>
       <input
         type="file"
         id="uploadedImage"
@@ -27,53 +29,219 @@
         onchange="showImage(this)"
         accept="image/*"
       />
-      
+
       <button class="takePictureInfo" onclick="extractPicture()">
         이미지 분석
       </button>
     </div>
-    <form method="POST" action="" enctype="multipart/form-data">
-      {% csrf_token %} {{ form }}
+    <form
+      method="POST"
+      action=""
+      enctype="multipart/form-data"
+      class="score-form"
+    >
+      {% csrf_token %}
+      <div class="locationInputArea">
+        <span>장소 선택</span>
+        <select
+          class="locationSelect locationInfo"
+          type="select"
+          name="location"
+          onchange="checkSubmitPossible()"
+        >
+          <option value="{{null}}">-------</option>
+          {% for location in locations %}
+          <option value="{{location.golf_name}}">{{location.golf_name}}</option>
+          {% endfor%}
+        </select>
+        <button class="" onclick="changeLocationInput()">검색하기</button>
+      </div>
       <div class="scoreGrid">
         <div>홀</div>
         <div>파</div>
         <div>점수</div>
         <div>1</div>
-        <div><input class="parInput" type="text" maxlength="1" name="par1"/></div>
-        <div><input class="scoreInput" type="text" maxlength="1" name="score1" /></div>
+        <div>
+          <input
+            class="parInput"
+            type="text"
+            maxlength="1"
+            name="par1"
+            onchange="checkSubmitPossible()"
+          />
+        </div>
+        <div>
+          <input
+            class="scoreInput"
+            type="text"
+            maxlength="1"
+            name="score1"
+            onchange="checkSubmitPossible()"
+          />
+        </div>
         <div>2</div>
-        <div><input class="parInput"type="text" maxlength="1" name="par2" /></div>
-        <div><input class="scoreInput"type="text" maxlength="1" name="score2" /></div>
+        <div>
+          <input
+            class="parInput"
+            type="text"
+            maxlength="1"
+            name="par2"
+            onchange="checkSubmitPossible()"
+          />
+        </div>
+        <div>
+          <input
+            class="scoreInput"
+            type="text"
+            maxlength="1"
+            name="score2"
+            onchange="checkSubmitPossible()"
+          />
+        </div>
         <div>3</div>
-        <div><input class="parInput" type="text" maxlength="1" name="par3" /></div>
-        <div><input class="scoreInput" type="text" maxlength="1" name="score3" /></div>
+        <div>
+          <input
+            class="parInput"
+            type="text"
+            maxlength="1"
+            name="par3"
+            onchange="checkSubmitPossible()"
+          />
+        </div>
+        <div>
+          <input
+            class="scoreInput"
+            type="text"
+            maxlength="1"
+            name="score3"
+            onchange="checkSubmitPossible()"
+          />
+        </div>
         <div>4</div>
-        <div><input class="parInput" type="text" maxlength="1" name="par4" /></div>
-        <div><input class="scoreInput" type="text" maxlength="1" name="score4" /></div>
+        <div>
+          <input
+            class="parInput"
+            type="text"
+            maxlength="1"
+            name="par4"
+            onchange="checkSubmitPossible()"
+          />
+        </div>
+        <div>
+          <input
+            class="scoreInput"
+            type="text"
+            maxlength="1"
+            name="score4"
+            onchange="checkSubmitPossible()"
+          />
+        </div>
         <div>5</div>
-        <div><input class="parInput" type="text" maxlength="1" name="par5" /></div>
-        <div><input class="scoreInput" type="text" maxlength="1" name="score5" /></div>
+        <div>
+          <input
+            class="parInput"
+            type="text"
+            maxlength="1"
+            name="par5"
+            onchange="checkSubmitPossible()"
+          />
+        </div>
+        <div>
+          <input
+            class="scoreInput"
+            type="text"
+            maxlength="1"
+            name="score5"
+            onchange="checkSubmitPossible()"
+          />
+        </div>
         <div>6</div>
-        <div><input class="parInput" type="text" maxlength="1" name="par6" /></div>
-        <div><input class="scoreInput" type="text" maxlength="1" name="score6" /></div>
+        <div>
+          <input
+            class="parInput"
+            type="text"
+            maxlength="1"
+            name="par6"
+            onchange="checkSubmitPossible()"
+          />
+        </div>
+        <div>
+          <input
+            class="scoreInput"
+            type="text"
+            maxlength="1"
+            name="score6"
+            onchange="checkSubmitPossible()"
+          />
+        </div>
         <div>7</div>
-        <div><input class="parInput" type="text" maxlength="1" name="par7" /></div>
-        <div><input class="scoreInput" type="text" maxlength="1" name="score7" /></div>
+        <div>
+          <input
+            class="parInput"
+            type="text"
+            maxlength="1"
+            name="par7"
+            onchange="checkSubmitPossible()"
+          />
+        </div>
+        <div>
+          <input
+            class="scoreInput"
+            type="text"
+            maxlength="1"
+            name="score7"
+            onchange="checkSubmitPossible()"
+          />
+        </div>
         <div>8</div>
-        <div><input class="parInput" type="text" maxlength="1" name="par8" /></div>
-        <div><input class="scoreInput" type="text" maxlength="1" name="score8" /></div>
+        <div>
+          <input
+            class="parInput"
+            type="text"
+            maxlength="1"
+            name="par8"
+            onchange="checkSubmitPossible()"
+          />
+        </div>
+        <div>
+          <input
+            class="scoreInput"
+            type="text"
+            maxlength="1"
+            name="score8"
+            onchange="checkSubmitPossible()"
+          />
+        </div>
         <div>9</div>
-        <div><input class="parInput" type="text" maxlength="1" name="par9" /></div>
-        <div><input class="scoreInput" type="text" maxlength="1" name="score9" /></div>
+        <div>
+          <input
+            class="parInput"
+            type="text"
+            maxlength="1"
+            name="par9"
+            onchange="checkSubmitPossible()"
+          />
+        </div>
+        <div>
+          <input
+            class="scoreInput"
+            type="text"
+            maxlength="1"
+            name="score9"
+            onchange="checkSubmitPossible()"
+          />
+        </div>
         <div>합계</div>
         <div>/</div>
         <div>/</div>
       </div>
-      <input type="submit" value="점수 등록" />
+      <input class="scoreSubmitBtn" type="submit" value="점수 등록" />
     </form>
 
     <!-- 이미지추출 -->
     <script src="{% static 'score/js/picture.js' %}"></script>
+    <!-- 장소 입력방식 변경 -->
+    <script src="{% static 'score/js/location_input.js' %}"></script>
   </body>
 </html>
 {% endblock%}

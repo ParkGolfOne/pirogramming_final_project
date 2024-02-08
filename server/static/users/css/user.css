@@ -33,6 +33,8 @@
 .user-mypage-container {
     display: flex;
     justify-content: center;
+    width: 100%;
+    flex-direction: column;
     
 }
 .user-mypage, .user-btn-box {
@@ -41,10 +43,10 @@
     border: 1px solid var(--white--border--color);
     background-color: var(--green--pale--color);
     margin: 5px;
+    width: 100%;
 }
-.user-mypage-title {
+.user-mypage-title, .user-btn-title {
     position: relative;
-    padding-bottom: 10px;
 }
 
 .user-mypage-title::before, 
@@ -59,7 +61,6 @@
     left: 50%;
     transform: translateX(-50%);
 }
-
 .user-login-btn {
     width: 100%;
     margin: 10px 0px;
@@ -71,8 +72,17 @@
     width: 100%;
     display: flex;
     justify-content: center;
+    flex-direction: column;    
+}
+/* pc일떄 */
+@media screen and (min-width: 700px) {
+    .user-btn-container,
+    .user-mypage-container {
+        flex-direction: row;    
+    }
     
 }
+
 .user-btn-box {
     display: flex;
     flex-direction: column;

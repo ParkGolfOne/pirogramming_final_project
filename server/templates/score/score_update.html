@@ -1,56 +1,240 @@
-{% extends 'base.html' %}
-{% load static %}
-{% block content %}
+{% extends 'base.html' %} {% load static %} {% block content %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>점수 수정</title>
     <link rel="stylesheet" href="{% static 'score/css/score_detail.css'%}" />
-</head>
-<body>
+  </head>
+  <body>
     <a href="{% url 'score:score_main'%}">스코어 메인페이지 링크</a>
-    점수 수정 페이지
+    <h1>점수 수정 페이지</h1>
     <form method="POST" action="" enctype="multipart/form-data">
-      {% csrf_token %} {{ form }}
+      {% csrf_token %}
+      <div class="locationInputArea">
+        <span>장소 선택</span>
+        <select
+          class="locationSelect locationInfo"
+          type="select"
+          name="location"
+          onchange="checkSubmitPossible()"
+        >
+          <option value="{{now_golf_name}}">{{now_golf_name}}</option>
+          <option value="{{null}}">-------</option>
+          {% for location in locations %}
+          <option value="{{location.golf_name}}">{{location.golf_name}}</option>
+          {% endfor%}
+        </select>
+        <button class="" onclick="changeLocationInput()">검색하기</button>
+      </div>
       <div class="scoreGrid">
         <div>홀</div>
         <div>파</div>
         <div>점수</div>
         <div>1</div>
-        <div><input class="parInput" type="text" maxlength="1" name="par1" value="{{score.par.hole1}}"/></div>
-        <div><input class="scoreInput" type="text" maxlength="1" name="score1" value="{{score.scores.hole1}}" /></div>
+        <div>
+          <input
+            class="parInput"
+            type="text"
+            maxlength="1"
+            name="par1"
+            value="{{score.par.hole1}}"
+            onchange="checkSubmitPossible()"
+          />
+        </div>
+        <div>
+          <input
+            class="scoreInput"
+            type="text"
+            maxlength="1"
+            name="score1"
+            value="{{score.scores.hole1}}"
+            onchange="checkSubmitPossible()"
+          />
+        </div>
         <div>2</div>
-        <div><input class="parInput"type="text" maxlength="1" name="par2" value="{{score.par.hole2}}"/></div>
-        <div><input class="scoreInput"type="text" maxlength="1" name="score2" value="{{score.scores.hole2}}"/></div>
+        <div>
+          <input
+            class="parInput"
+            type="text"
+            maxlength="1"
+            name="par2"
+            value="{{score.par.hole2}}"
+            onchange="checkSubmitPossible()"
+          />
+        </div>
+        <div>
+          <input
+            class="scoreInput"
+            type="text"
+            maxlength="1"
+            name="score2"
+            value="{{score.scores.hole2}}"
+            onchange="checkSubmitPossible()"
+          />
+        </div>
         <div>3</div>
-        <div><input class="parInput" type="text" maxlength="1" name="par3" value="{{score.par.hole3}} "/></div>
-        <div><input class="scoreInput" type="text" maxlength="1" name="score3" value="{{score.scores.hole3}}"/></div>
+        <div>
+          <input
+            class="parInput"
+            type="text"
+            maxlength="1"
+            name="par3"
+            value="{{score.par.hole3}} "
+            onchange="checkSubmitPossible()"
+          />
+        </div>
+        <div>
+          <input
+            class="scoreInput"
+            type="text"
+            maxlength="1"
+            name="score3"
+            value="{{score.scores.hole3}}"
+            onchange="checkSubmitPossible()"
+          />
+        </div>
         <div>4</div>
-        <div><input class="parInput" type="text" maxlength="1" name="par4" value="{{score.par.hole4}}"/></div>
-        <div><input class="scoreInput" type="text" maxlength="1" name="score4" value="{{score.scores.hole4}}"/></div>
+        <div>
+          <input
+            class="parInput"
+            type="text"
+            maxlength="1"
+            name="par4"
+            value="{{score.par.hole4}}"
+            onchange="checkSubmitPossible()"
+          />
+        </div>
+        <div>
+          <input
+            class="scoreInput"
+            type="text"
+            maxlength="1"
+            name="score4"
+            value="{{score.scores.hole4}}"
+            onchange="checkSubmitPossible()"
+          />
+        </div>
         <div>5</div>
-        <div><input class="parInput" type="text" maxlength="1" name="par5" value="{{score.par.hole5}}"/></div>
-        <div><input class="scoreInput" type="text" maxlength="1" name="score5" value="{{score.scores.hole5}}"/></div>
+        <div>
+          <input
+            class="parInput"
+            type="text"
+            maxlength="1"
+            name="par5"
+            value="{{score.par.hole5}}"
+            onchange="checkSubmitPossible()"
+          />
+        </div>
+        <div>
+          <input
+            class="scoreInput"
+            type="text"
+            maxlength="1"
+            name="score5"
+            value="{{score.scores.hole5}}"
+            onchange="checkSubmitPossible()"
+          />
+        </div>
         <div>6</div>
-        <div><input class="parInput" type="text" maxlength="1" name="par6" value="{{score.par.hole6}}"/></div>
-        <div><input class="scoreInput" type="text" maxlength="1" name="score6" value="{{score.scores.hole6}}"/></div>
+        <div>
+          <input
+            class="parInput"
+            type="text"
+            maxlength="1"
+            name="par6"
+            value="{{score.par.hole6}}"
+            onchange="checkSubmitPossible()"
+          />
+        </div>
+        <div>
+          <input
+            class="scoreInput"
+            type="text"
+            maxlength="1"
+            name="score6"
+            value="{{score.scores.hole6}}"
+            onchange="checkSubmitPossible()"
+          />
+        </div>
         <div>7</div>
-        <div><input class="parInput" type="text" maxlength="1" name="par7" value="{{score.par.hole7}}"/></div>
-        <div><input class="scoreInput" type="text" maxlength="1" name="score7" value="{{score.scores.hole7}}"/></div>
+        <div>
+          <input
+            class="parInput"
+            type="text"
+            maxlength="1"
+            name="par7"
+            value="{{score.par.hole7}}"
+            onchange="checkSubmitPossible()"
+          />
+        </div>
+        <div>
+          <input
+            class="scoreInput"
+            type="text"
+            maxlength="1"
+            name="score7"
+            value="{{score.scores.hole7}}"
+            onchange="checkSubmitPossible()"
+          />
+        </div>
         <div>8</div>
-        <div><input class="parInput" type="text" maxlength="1" name="par8" value="{{score.par.hole8}}"/></div>
-        <div><input class="scoreInput" type="text" maxlength="1" name="score8" value="{{score.scores.hole8}}"/></div>
+        <div>
+          <input
+            class="parInput"
+            type="text"
+            maxlength="1"
+            name="par8"
+            value="{{score.par.hole8}}"
+            onchange="checkSubmitPossible()"
+          />
+        </div>
+        <div>
+          <input
+            class="scoreInput"
+            type="text"
+            maxlength="1"
+            name="score8"
+            value="{{score.scores.hole8}}"
+            onchange="checkSubmitPossible()"
+          />
+        </div>
         <div>9</div>
-        <div><input class="parInput" type="text" maxlength="1" name="par9" value="{{score.par.hole9}}"/></div>
-        <div><input class="scoreInput" type="text" maxlength="1" name="score9" value="{{score.scores.hole9}}"/></div>
+        <div>
+          <input
+            class="parInput"
+            type="text"
+            maxlength="1"
+            name="par9"
+            value="{{score.par.hole9}}"
+            onchange="checkSubmitPossible()"
+          />
+        </div>
+        <div>
+          <input
+            class="scoreInput"
+            type="text"
+            maxlength="1"
+            name="score9"
+            value="{{score.scores.hole9}}"
+            onchange="checkSubmitPossible()"
+          />
+        </div>
         <div>합계</div>
         <div>/</div>
         <div>/</div>
       </div>
-      <input type="submit" value="점수 등록" />
+      <input class="scoreSubmitBtn" type="submit" value="점수 등록" />
     </form>
-</body>
+    <!-- 이미지추출 -->
+    <script src="{% static 'score/js/picture.js' %}"></script>
+    <!-- 장소 입력방식 변경 -->
+    <script src="{% static 'score/js/location_input.js' %}"></script>
+    <script>
+      scoreSubmitBtn.disabled = false;
+      scoreSubmitBtn.value = "점수등록";
+    </script>
+  </body>
 </html>
 {% endblock %}

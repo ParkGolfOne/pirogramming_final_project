@@ -2,8 +2,8 @@ const searchInput = document.querySelector("#friend_search_input");
 const relContainer = document.querySelector(".rel_search");
 const ul = document.querySelector(".pop_rel_friend");
 
-searchInput.addEventListener("change", displayInputValue);
-searchInput.addEventListener("keyup", displayInputValue);
+searchInput.addEventListener("input", displayInputValue);
+// searchInput.addEventListener("keyup", displayInputValue);
 
 
 // displayInputValue
@@ -42,13 +42,8 @@ const updateFriendField = (friendData) => {
     form.setAttribute("action", `/users/add_friend/${userId}/`);
     form.setAttribute("id", "add_friend-form");
     form.innerHTML = `<input type="hidden" name="friend_id" value=${friend.id}>
-      <button type="button" onclick="addFriend(${friend.id}, ${userId})">친구 추가</button>`;
+      <button type="button" class="add_friend-btn" onclick="addFriend(${friend.id}, ${userId})">친구 추가</button>`;
     li.appendChild(form);
-    
-    // form.addEventListener("mousedown", function () {
-    //   addFriend(friend.id, userId);
-    // });
-
     ul.appendChild(li);
   });
 };

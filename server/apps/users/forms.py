@@ -35,25 +35,16 @@ class SignupForm(UserCreationForm):
             }
         )
     )
-    birth = forms.CharField(
+    birth = forms.DateField(
         label='생일',
-        widget=forms.TextInput(
-            attrs={
-                'class': 'signup-input'
-            }
-        )
+        required=False
     )
     phone = forms.CharField(
         label='전화번호',
-        widget=forms.TextInput(
-            attrs={
-                'class': 'signup-input'
-            }
-        )
+        required=False
     )
-
-    address = forms.CharField(
-        label='상세 주소',
+    email = forms.CharField(
+        label='이메일',
         widget=forms.TextInput(
             attrs={
                 'class': 'signup-input'
@@ -64,10 +55,23 @@ class SignupForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['username', 'nickname', 'password1',
-                  'password2', 'birth', 'phone', 'address']
+                  'password2', 'birth', 'phone', 'email', 'address']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
 
 
 class UpdateForm(forms.ModelForm):
+    username = forms.CharField(
+        label='아이디',
+        widget=forms.TextInput(
+            attrs={
+                'class': 'signup-input'
+            }
+        )
+    )
+
     nickname = forms.CharField(
         label='닉네임',
         widget=forms.TextInput(
@@ -76,25 +80,16 @@ class UpdateForm(forms.ModelForm):
             }
         )
     )
-    birth = forms.CharField(
+    birth = forms.DateField(
         label='생일',
-        widget=forms.TextInput(
-            attrs={
-                'class': 'signup-input'
-            }
-        )
+        required=False
     )
     phone = forms.CharField(
         label='전화번호',
-        widget=forms.TextInput(
-            attrs={
-                'class': 'signup-input'
-            }
-        )
+        required=False
     )
-
-    address = forms.CharField(
-        label='상세 주소',
+    email = forms.CharField(
+        label='이메일',
         widget=forms.TextInput(
             attrs={
                 'class': 'signup-input'
@@ -104,4 +99,8 @@ class UpdateForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ["nickname", "birth", "phone", "address"]
+        fields = ['username', 'nickname', 'birth',
+                  'phone', 'email', 'address']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)

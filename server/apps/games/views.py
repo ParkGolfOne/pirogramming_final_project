@@ -29,7 +29,7 @@ def game_set(request):
                 Round.objects.create(game=game, round_number = (i + 1) )
 
             # url에 라운드 수와 플레이어 수를 저장하고 game_detail로 보내기
-            return redirect(reverse('games:game_detail', args=(game.id, round_count, player_count)))
+            return redirect(reverse('games:game_detail', args=(game.id,player_count)))
     else:
         form = GameSetupForm()
         content = {
@@ -39,7 +39,7 @@ def game_set(request):
 
 @csrf_exempt  
 # game_detail은 게임과 라운드 관련 모든 정보를 보여 주고 수정 가능하게    
-def game_detail(request, game_id, round_count, player_count):
+def game_detail(request, game_id, player_count):
     
     # game_set에서 만든 게임과 라운드들 가져오기
     game = get_object_or_404(Game, id=game_id)
@@ -60,8 +60,7 @@ def game_detail(request, game_id, round_count, player_count):
         # 데이터 넘겨주고
         content = {
             'game': game,
-            'rounds': rounds, 
-            'round_count': round_count, 
+            'rounds': rounds,  
             "player_count" : player_count,
         }
         return render(request, 'games/game_detail.html', content)
@@ -85,6 +84,7 @@ def game_detail(request, game_id, round_count, player_count):
             players = Player.objects.filter(round_id=round.id)
             for player in players:
                 scores_data = player.score.scores 
+                player.name = request.POST.get(f'name_{player.id}', "플레이어")
                 for i in range(1, 10):
                     hole_key = f'hole{i}'
                     scores_data[hole_key] = int(request.POST.get(f'score{i}_{player.id}', 0))
@@ -92,12 +92,18 @@ def game_detail(request, game_id, round_count, player_count):
                 player.score.par = par_data
                 player.score.ground = game.ground
                 player.score.save()
-
+            if request.POST.get("save") == "점수 저장":
+                redirect("games:game_save")
     # 임시 저장이므로 다시 원래 페이지
-    return redirect('games:game_detail', game_id=game.id, round_count=round_count, player_count=player_count)
+    return redirect('games:game_detail', game_id=game.id, player_count=player_count)
 
 # 추가 구현 --> 저장페이지에서 유저를 고르면 유저의 스코어 보드에 일괄적으로 저장 즉, 스코어의 player를 유저로 바꾸는 것
 # 친구 기능이 되거나 나중에 ㄱㄱ
 # 최종 저장 기능도 만들어야 해욥
-# 이름 바꿀 수 있게 해야돼요
-        
+# # 이름 바꿀 수 있게 해야돼요
+def game_save(request, game_id):
+    game = get_object_or_404(Game, id=game_id)
+    rounds = Round.objects.filter(game_id=game_id)
+    for round in rounds:
+        players = Player.objects.filter(round_id=round.id)
+            

@@ -92,6 +92,37 @@ def board_update(request, bid):
 
         return render(request, "communitys/board/board_update.html",context)
 
+# 함수 이름 : board_search
+# 전달인자 : request
+# 기능 : 해당 요청에 맞는 게시판 검색
+def board_search(request):
+    type = request.GET.get('searchType', None)
+    input = request.GET.get('input', None)
+    if type == "name":
+        search_boards = Board.objects.filter(name__icontains=input)
+    elif type == "admin":
+        search_boards = Board.objects.filter(admin__nickname__icontains=input)
+    elif type == "all":
+        search_boards = Board.objects.all()
+    else:
+        return JsonResponse([], safe=False)
+    # 직접 JSON 형태로 데이터 구성
+    search_board_json = []
+    for board in search_boards:
+        if not board.thumbnail:
+            thumbnail= ""
+        else:
+            board.thumbnail.url = ""
+        board_data = {
+            'pk': board.id,
+            'name': board.name,
+            'thumbnail': thumbnail,
+            'admin': board.admin.nickname,  # admin의 nickname 추가
+        }
+        search_board_json.append(board_data)
+    print(search_board_json)
+    return JsonResponse(search_board_json, safe=False)
+
 
 ###########################################################
 #                   게시글 관련 함수                       #
@@ -178,7 +209,8 @@ def post_detail(request, pk, bid):
 
     # 게시글 관련 정보, 현재 접속 유저 가져오기
     post = Post.objects.get(id=pk)
-
+    post.view_num += 1
+    post.save()
 
     now_user = request.user
     try:
@@ -264,6 +296,8 @@ def sort_post(request, bid):
     elif type == "new":
         sort_posts = Post.objects.filter(
             board_id=bid).order_by('-created_date')
+    elif type == "popular":
+        sort_posts = Post.objects.filter(board_id=bid).order_by('-view_num')
     else:
         return JsonResponse([], safe=False)
     # 직접 JSON 형태로 데이터 구성
@@ -275,6 +309,7 @@ def sort_post(request, bid):
             'board': post.board.id,
             'title': post.title,
             'writer': post.writer.nickname,  # writer의 nickname 추가
+            'view_num' : post.view_num
         }
         sort_posts_json.append(post_data)
     print(sort_posts_json)

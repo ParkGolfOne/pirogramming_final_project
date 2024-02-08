@@ -1,26 +1,110 @@
 {% extends 'base.html' %} {%load static%}
 
+{% block head %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" href="{% static "users/css/signup.css" %}">
+{% endblock head%}
+
 {% block content %}
-<form method="POST" action="{% url 'users:update' pk %}" id="update-form" class="users-update-form">
-    {% csrf_token %}
-    {{ form }}
-    <div class="form-group">
-    <label for="city">시/도:</label>
-    <select id="city" class="update-input">
-      <option value="">{{city}}</option>
-    </select>
+<form method="POST" id="update-form" class="users-update-form">
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <label for="id_username">아이디:</label>
+      <input type="text" name="username" value="{{username}}" class="signup-input" required="" id="id_username">
+      <div class="errorMessage"></div>
     </div>
-    <div class="form-group">
-      <label for="town">군/구:</label>
-      <select id="town" class="update-input">
-        <option value="">{{town}}</option>
+    <div class="col-md-6 mb-3">
+      <label for="id_nickname">닉네임:</label>
+      <input type="text" name="nickname" value="{{nickname}}" class="signup-input" required="" id="id_nickname">
+      <div class="errorMessage"></div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <label for="id_birth">생일:</label>
+      {% if birth == None %}
+      <input type="text" name="birth" value="" class="signup-input" id="id_birth">
+      {% else %}
+      <input type="text" name="birth" value="{{birth}}" class="signup-input" id="id_birth">
+      {% endif %}
+      <div class="errorMessage"></div>
+    </div>
+    <div class="col-md-6 mb-3">
+      <label for="id_phone">전화번호:</label>
+      {% if phone == None %}
+      <input type="text" name="phone" class="signup-input" value="" id="id_phone">
+      {% else %}
+      <input type="text" name="phone" class="signup-input" value="{{phone}}" id="id_phone">
+      {% endif %}
+      <div class="errorMessage"></div>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <label for="id_email">이메일:</label>
+    <input type="text" name="email" value="{{email}}" class="signup-input" required="" id="id_email">
+    <div class="errorMessage"></div>
+  </div>
+  <div class="mb-3">
+    <!--도로명 주소 검색-->
+    <label for="address">주소 입력</label>
+    <div id="address-input-container">
+      {% if street_address != None %}
+      <input type="text" value="{{street_address}}" name="address" readonly="readonly" id="address" required="" />
+      {% else %}
+      <input type="text" value="" placeholder="도로명 주소" name="address" readonly="readonly" id="address" required=""/>
+      {% endif %}
+      <button onclick="execDaumPostcode(event)" name="btn-address" id="btn-address" class="user-btn">
+        검색
+      </button>
+      <div class="errorMessage"></div>
+    </div>
+  </div>
+  <!--상세 주소-->
+  <div class="mb-3">
+    <label for="address_detail">상세 주소 입력</label>
+    {% if detail_address != None %}
+    <input type="text" class="signup-input" value="{{detail_address}}" name="address_detail" id="address_detail" />
+    {% else %}
+    <input type="text" class="signup-input" value="" placeholder="상세주소" name="address_detail" id="address_detail" />
+    {% endif%}
+    <div class="errorMessage"></div>
+  </div>
+
+  <!--시도/군구 검색-->
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <label for="city">시/도:</label>
+      <select id="city" class="update-input selectbox" required="">
+        {% if city == None %}
+        <option value="">선택해주세요</option>
+        {% else %}
+        <option value="{{city}}">{{city}}</option>
+        {% endif %}
       </select>
+      <div class="errorMessage"></div>
     </div>
-  <input type="submit" value="개인 정보 수정" class="user-btn" />
+    <div class="col-md-6 mb-3">
+      <label for="town">군/구:</label>
+      <select id="town" class="update-input selectbox" required="">
+        {% if town == None %}
+        <option value="">선택해주세요</option>
+        {% else %}
+        <option value="{{town}}">{{town}}</option>
+        {% endif %}
+      </select>
+      <div class="errorMessage"></div>
+    </div>
+  </div>
+
+  <input type="submit" value="개인 정보 수정" class="user-btn" form="update-form" id="update-form-submit" />
 </form>
 {% endblock content %}
 
 {% block script %}
-<script>var userId = {{ request.user.pk }};</script>
+<script>
+  var userId = {{ request.user.pk }};
+</script>
 <script src="{% static 'users/js/update.js' %}"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 {% endblock script %}

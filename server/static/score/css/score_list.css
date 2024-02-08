@@ -5,3 +5,17 @@
     background-repeat: no-repeat;
     background-size: contain;
 }
+.scoreMainBtn {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid var(--green--medium--color);
+    background-color: #ffffff;
+    cursor: pointer;
+    margin: 10px;
+    
+}
+.scoreMainBtn:hover {
+    background-color: var(--green--medium--color);
+    border: 1px solid var(--green--medium--color);
+    transition: 0.1s;
+}

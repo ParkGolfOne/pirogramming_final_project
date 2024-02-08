@@ -47,6 +47,8 @@
 <!-- 각 라운드에 대해 반복 -->
 <form method="POST" action="" enctype="multipart/form-data" class="game_form">
 {% csrf_token %} {{ form }}
+<input type="submit" name = "save" value="임시 저장" />
+<input type="submit" name = "save" value="점수 저장" />
 {% for round in rounds %}
     <div class="coures">
         <h2>코스 {{ forloop.counter }}</h2>
@@ -84,7 +86,7 @@
             </li>
             {% for player in round.round_player.all %}
               <li class="coures_li">
-                  <div>{{ player.name }}</div> 
+                  <div><input type="text" maxlength="1" name="name_{{player.id}}" value="{{ player.name}}"/></div>
                   <div>점수</div>
                   <div><input type="text" maxlength="1" name="score1_{{player.id}}" value="{{ player.score.scores.hole1}}"/></div>
                   <div><input type="text" maxlength="1" name="score2_{{player.id}}" value="{{ player.score.scores.hole2}}"/></div>
@@ -96,9 +98,7 @@
                   <div><input type="text" maxlength="1" name="score8_{{player.id}}" value="{{ player.score.scores.hole8}}"/></div>
                   <div><input type="text" maxlength="1" name="score9_{{player.id}}" value="{{ player.score.scores.hole9}}"/></div>
                   <div>합계</div>
-                  <div>/</div>
-                  <div>/</div>        
-                <input type="submit" value="점수 등록" />                
+                  <div>/</div>                        
               </li>
             {% empty %}
                 <li>No players in this round.</li>

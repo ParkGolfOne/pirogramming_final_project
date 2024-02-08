@@ -1,8 +1,69 @@
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import *
+from apps.users.models import *
+from apps.locations.models import *
+from apps.score.models import *
+import json
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+#트랜잭션
+from django.db import transaction
 from apps.users.models import User
 from apps.users.views import friend_candidates
 from django.http import JsonResponse
 from django.core.serializers import serialize
 from django.shortcuts import render
+
+
+###########################################################
+#                       장소 검색하기                      #
+###########################################################
+
+# 함수 이름 : search_location
+# 전달인자 : request
+# 기능 : 해당 장소가 있는지 검색해준다.
+@csrf_exempt
+def search_location(request):
+    req = json.loads(request.body)
+    input_text = req["input_text"]
+    # city 값 
+
+    city = req.get("city")
+    town = req.get("town")
+    sortType = req.get("sortType")
+
+
+    # 조건 1 : 시 ,
+    # 조건 2 : 군/구,
+    filter_conditions1 = {'golf_name__startswith': input_text}
+    filter_conditions2 = {}
+    if city and town:
+        # city와 town 모두 존재하는 경우에만 필터 추가
+        filter_conditions2['golf_address__contains'] = city
+        filter_conditions2['golf_address__contains'] = town
+    elif city:
+        filter_conditions2['golf_address__contains'] = city
+
+
+
+    location_names=[]
+
+    if input_text:
+        try:
+            locations = GolfLocation.objects.filter(**filter_conditions1, **filter_conditions2).order_by(sortType)
+            location_names = list(locations.values_list("golf_name","id","fav_num"))
+        except GolfLocation.DoesNotExist:
+            location_names = []
+    else :
+        try:
+            locations = GolfLocation.objects.filter(**filter_conditions2).order_by(sortType)
+            location_names = list(locations.values_list("golf_name","id","fav_num"))
+        except GolfLocation.DoesNotExist:
+            location_names = []
+        
+
+    return JsonResponse({'location_names': location_names})
+
 
 ###########################################################
 #              쿼리에 해당하는 유저의 친구 반환              #
@@ -25,3 +86,4 @@ def search_candidate(request):
         })
     print(search_friends_json)
     return JsonResponse(search_friends_json, safe=False)
+

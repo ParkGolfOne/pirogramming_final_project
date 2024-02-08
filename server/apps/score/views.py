@@ -44,22 +44,23 @@ def score_input(request, uid):
 
         # HTML에 전달할 정보
         context = {
-            'form' : ScoreForm
+            'locations' : GolfLocation.objects.all()
         }
         return render(request,'score/score_create.html', context)
     
     # 스코어 생성 요청
     if request.method == "POST":
-        form = ScoreForm(request.POST, request.FILES)
-        if form.is_valid:
-            score_instance = form.save(commit=False)
-            for i in range(1, 10):
-                hole_key = f'hole{i}'
-                score_instance.par[hole_key] = request.POST.get(f'par{i}', '')
-                score_instance.scores[hole_key] = request.POST.get(f'score{i}', '')
+        # 장소 정보 추가
+        location_name = request.POST.get('location')
 
-            score_instance.player = request.user
-            score_instance.save()
+        score_instance = Score.objects.create(player = request.user,ground = GolfLocation.objects.get(golf_name = location_name))
+    
+        for i in range(1, 10):
+            hole_key = f'hole{i}'
+            score_instance.par[hole_key] = request.POST.get(f'par{i}', '')
+            score_instance.scores[hole_key] = request.POST.get(f'score{i}', '')
+        score_instance.save()
+        
         return redirect("score:score_detail", score_instance.id)
 
 
@@ -73,6 +74,7 @@ def score_detail(request, sid):
         context={
             'score'  : score,
             "now_user"  : now_user,
+            "sid" : sid,
         }
         return render(request,'score/score_detail.html',context)
 
@@ -85,25 +87,25 @@ def score_update(request, sid):
     score = Score.objects.get(id=sid)
     
     if request.method == "POST":
-        form = ScoreForm(request.POST, instance = score)
-        if form.is_valid:
-            score_instance = form.save(commit=False)
-            for i in range(1, 10):
-                hole_key = f'hole{i}'
-                score_instance.par[hole_key] = request.POST.get(f'par{i}', '')
-                score_instance.scores[hole_key] = request.POST.get(f'score{i}', '')
-
-            score_instance.player = request.user
-            score_instance.save()
+        location_name = request.POST.get('location')
+        
+        score_instance = Score.objects.create(player = request.user,ground = GolfLocation.objects.get(golf_name = location_name))
+    
+        for i in range(1, 10):
+            hole_key = f'hole{i}'
+            score_instance.par[hole_key] = request.POST.get(f'par{i}', '')
+            score_instance.scores[hole_key] = request.POST.get(f'score{i}', '')
+        score_instance.save()
+        
         return redirect("score:score_detail", score_instance.id)
     
     if request.method == "GET":
-        form = ScoreForm(instance=score)
         # HTML 에 전달할 정보
         context = {
-            'form' : form,
             'sid' : sid,
             'score' :score,
+            'locations' : GolfLocation.objects.all(),
+            'now_golf_name' : score.ground.golf_name,
         }
 
         return render(request, "score/score_update.html",context)
@@ -114,9 +116,10 @@ def score_update(request, sid):
 # 전달인자 : request, sid
 # 기능 : 선택한 점수 기록 삭제
 def score_delete(request, sid):
+    now_user = request.user
     if request.method == 'POST':
         Score.objects.get(id = sid).delete()
-        return redirect("score:score_main")
+        return redirect("score:score_history", now_user.id)
 
 
 ###########################################################
@@ -128,17 +131,25 @@ def score_delete(request, sid):
 # 기능 : 유저의 상세 기록들을 볼 수 있는 페이지
 def score_history(request, uid):
     user = User.objects.get(id = uid)
-
     try:
         # 추후에 날짜 데이터 삽입시 변경.
-        scores = Score.objects.filter(player = user).order_by('-id') 
+        scores = Score.objects.filter(player = user).order_by('-id')
     except Score.DoesNotExist:
-        scores=[]
+        scores=[] 
+
+    
+
+    locations=[] 
+    # 유저가 기록한 점수의 골프장 리스트 
+    for score in scores:
+        if score.ground not in locations:
+            locations.append(score.ground)        
 
     context={
         'scores' : scores,
         'user' : user,
         'uid' : uid,
+        'locations' : locations,
     }
     return render(request, 'score/score_history.html', context)
 
@@ -161,8 +172,8 @@ def score_scan(request):
             path = default_storage.save(save_path, image)
 
             # 네이버 OCR API 호출
-            api_url ='url 입력'
-            secret_key = '시크릿키'
+            api_url = 'https://xovlh2grae.apigw.ntruss.com/custom/v1/28163/e66afde9b0424c8943c264dca6a7e9897424f749070abde67f29f7de86516947/general'
+            secret_key = 'TFZ2TllKVU1pbmRjZkJIU1F5SUNXTEVtWXNhUWVrV2E='
             image_file_path = default_storage.path(path)  # 저장된 파일의 절대 경로
 
             # API 요청 데이터 준비
@@ -218,18 +229,38 @@ def take_score_info (request):
     # 아래 오류 수정
     req = json.loads(request.body)
     user_id = req["user_id"]
+    flag = req["flag"]
+    select_name = req["location_name"]
+    sort_type = req["sort"]
     user = get_object_or_404(User, id=user_id)
+    score_info = []
+    # 만약 location 필터가 있을 시
+    if flag:
+        # 해당 이름을 가진 로케이션 필드 가져오기
+        try:
+            ground = GolfLocation.objects.get(golf_name = select_name)
+        except GolfLocation.DoesNotExist:
+            print("골프장 이름 존재하지 않음. 해당 이름 체크 요망")
 
-    # 해당 유저의 모든 Score 모델 가져오기
-    try:
-        score_list = Score.objects.filter(player = user)
-    except Score.DoesNotExist:
-        score_list = []
+        # 해당 유저의 모든 Score 모델 가져오기
+        try:
+            score_list = Score.objects.filter(player = user, ground = ground).order_by(sort_type)
+            scores = list(score_list.values_list("total_score", flat=True))
+        except Score.DoesNotExist:
+            scores = []
 
-    # 전달할 total_score들의 리스트 :  scores
-    scores = []
-    for score in score_list:
-        scores.append(score.total_score)
+    # 전체 데이터 참고
+    else:
+        # 해당 유저의 모든 Score 모델 가져오기
+        
+        try:
+            score_list = Score.objects.filter(player = user).order_by(sort_type)
+            scores = list(score_list.values_list("total_score", flat=True))
+        except Score.DoesNotExist:
+            score_list = []
+            scores = []
 
-    return JsonResponse({'scores' : scores})
+    for one_score in score_list:
+        score_info.append({'score_id' : one_score.id, 'ground_name' : one_score.ground.golf_name,'total_score' : one_score.total_score})
+    return JsonResponse({'scores' : scores, 'score_info' : score_info})
 
