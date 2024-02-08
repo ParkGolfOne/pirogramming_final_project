@@ -82,6 +82,7 @@ def main(request, pk):
 @csrf_exempt
 def signup(request):
     if request.method == 'POST':
+        print(request.POST)
         selected_city = request.POST.get('city')
         selected_town = request.POST.get('town')
         street_address = request.POST.get('street_address')
@@ -98,12 +99,14 @@ def signup(request):
             auth.login(request, user,
                        backend='apps.users.backends.CustomModelBackend')
             redirect_url = reverse('home')
-            return JsonResponse({'url': redirect_url})
+            return JsonResponse({'result': 'success', 'url': redirect_url})
 
         else:
             print("폼 유효성 검사 실패")
             print(form.errors)
-            return redirect('users:signup')
+            print(form.errors.as_json())
+            print(form.non_field_errors())
+            return JsonResponse({'result': 'failed', 'error': form.errors})
     else:
         form = SignupForm()
         context = {
@@ -154,17 +157,22 @@ def logout(request):
 @csrf_exempt
 def update(request, pk):
     user = User.objects.get(id=pk)
-    selected_city = request.POST.get('city')
-    selected_town = request.POST.get('town')
     if request.method == 'POST':
+        selected_city = request.POST.get('city')
+        selected_town = request.POST.get('town')
+        street_address = request.POST.get('street_address')
+        detail_address = request.POST.get('detail_address')
         form = UpdateForm(request.POST, instance=user)
         if form.is_valid():
             user = form.save(commit=False)
             region = Region.objects.filter(
                 city=selected_city, town=selected_town).first()
             user.region = region
+            user.address = street_address
+            user.detail_address = detail_address
             user.save()
-            return redirect('users:main', user.pk)
+            redirect_url = reverse('users:main', kwargs={'pk': user.pk})
+            return JsonResponse({'url': redirect_url})
         else:
             print("폼 유효성 검사 실패")
             print(form.errors)
@@ -176,12 +184,24 @@ def update(request, pk):
             'pk': pk,
             'city': user.region.city,
             'town': user.region.town,
+            'street_address': user.address,
+            'detail_address': user.detail_address,
         }
         return render(request, template_name='users/users_update.html', context=context)
 
+@csrf_exempt
+@login_required
+def delete(request, pk):
+    user = User.objects.get(id=pk)
+    if request.method == "POST":
+        if user.social_auth.filter(provider='kakao').exists():
+            kakao_unlink(request)
+        user.delete()
+        return redirect('home')
+    
 
 ###########################################################
-#                      소셜로그인 관련 함수             #
+#                      소셜로그인 관련 함수                #
 ###########################################################
 # 함수 이름 : social_login
 # 전달인자 : request
@@ -194,15 +214,34 @@ def social_login(request):
         user.first_login = False
         user.save()
         if request.method == 'POST':
+            selected_city = request.POST.get('city')
+            selected_town = request.POST.get('town')
+            street_address = request.POST.get('street_address')
+            detail_address = request.POST.get('detail_address')
             form = UpdateForm(request.POST, instance=user)
             if form.is_valid():
-                form.save()
-                return redirect('users:main', user.id)
+                user = form.save(commit=False)
+                region = Region.objects.filter(
+                city=selected_city, town=selected_town).first()
+                user.region = region
+                user.address = street_address
+                user.detail_address = detail_address
+                user.save()
+                redirect_url = reverse('users:main', kwargs={'pk': user.pk})
+                return JsonResponse({'url': redirect_url})
+            else:
+                print("폼 유효성 검사 실패")
+                print(form.errors)
+                return redirect('users:update', user.pk)
         else:
             form = UpdateForm(instance=user)
             context = {
                 'form': form,
-                'pk': user.id,
+                'pk': user.pk,
+                'city': None,
+                'town': None,
+                'street_address': None,
+                'detail_address': None,
             }
             return render(request, template_name='users/users_update.html', context=context)
 

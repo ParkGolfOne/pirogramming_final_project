@@ -14,7 +14,9 @@
     justify-content: center;
 }
 
-.scoreGrid > div > input, .score-detail-value {
+.scoreGrid > div > input, 
+.score-par, 
+.scoreArea {
     width: 100%;
     padding: 10px;
     border: 1px solid #ddd;
@@ -26,7 +28,7 @@
 .scoreGrid > div > input:focus {
     border: 1px solid var(--green--dark--color);
 }
-.score-create-btn,
+.scoreSubmitBtn,
 .score-detail-btn {
     padding: 10px;
     border-radius: 5px;

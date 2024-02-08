@@ -2,36 +2,48 @@
 <link rel="stylesheet" href="{% static 'locations/css/location_detail.css'%}" />
 <link rel="stylesheet" href="{% static 'locations/css/location_fav.css'%}" />
 {% endblock %} {% block content %}
-<div
-  style="
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-  "
->
-  <div id="location_map" style="width: 800px; height: 500px"></div>
   <h2>골프장 이름: {{location.golf_name}}</h2>
-  {%if faved%}
-  <button
-    class="postFavBtn fav-{{location.id}} faved"
-    onclick="pushFav({{location.id}})"
-  ></button>
-  {%else%}
-  <button
-    class="postFavBtn fav-{{location.id}}"
-    onclick="pushFav({{location.id}})"
-  ></button>
-  {% endif %}
-  <div class="favNum-{{location.id}}">추천 {{location.fav_num}}</div>
-  <h4>골프장 규모: {{location.golf_scale}}</h4>
-  <h4>골프장 주소: {{location.golf_address}}</h4>
-  <h4>골프장 상세내용: {{location.golf_detail}}</h4>
-  <h4>
-    골프장 경도: <span id="longitude">{{ location.golf_longitude }}</span>
-  </h4>
-  <h4>골프장 위도: <span id="latitude">{{ location.golf_latitude }}</span></h4>
-  <h4>홀: {{location.golf_holes}}</h4>
+  <div class="location-container">
+  <div id="location_map"></div>
+  <div class="location-detail-container">
+    {%if faved%}
+    <button
+        class="postFavBtn fav-{{location.id}} faved"
+        onclick="pushFav({{location.id}})"
+    ></button>
+    {%else%}
+    <button
+        class="postFavBtn fav-{{location.id}}"
+        onclick="pushFav({{location.id}})"
+    ></button>
+    {% endif %}
+    <div class="favNum-{{location.id}}">추천 {{location.fav_num}}</div>
+    <div class="location-detail-area">
+        <h3>규모</h3>
+        <h4>{{location.golf_scale}}</h4>
+      </div>
+      <div class="location-detail-area">
+        <h3>주소</h3>
+        <h4>{{location.golf_address}}</h4>
+      </div>
+      <div class="location-detail-area">
+        <h3>상세내용</h3>
+        <h4>{{location.golf_detail}}</h4>
+      </div>
+      <div class="location-detail-area">
+        <h3>경도</h3>
+        <h4><span id="longitude">{{ location.golf_longitude }}</span></h4>
+      </div>
+      <div class="location-detail-area">
+        <h3>위도</h3>
+        <h4><span id="latitude">{{ location.golf_latitude }}</span></h4>
+      </div>
+      <div class="location-detail-area">
+        <h3>홀</h3>
+        <h4>{{location.golf_holes}}</h4>
+      </div>       
+  </div>
+  
   {% if location.golf_image %}
   <a href="{% url 'locations:detail' location.pk %}">
     <img src="{{ location.golf_image.url }}" />
@@ -63,4 +75,3 @@
   var latitude = document.getElementById('latitude');
   var longitude = document.getElementById('longitude');
 </script>
-{% endblock %}

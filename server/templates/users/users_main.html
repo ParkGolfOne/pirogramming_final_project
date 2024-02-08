@@ -1,10 +1,7 @@
-{% extends 'base.html' %}
-{%load static%}
-{% block head %}
+{% extends 'base.html' %} {%load static%} {% block head %}
 <link rel="stylesheet" href="{% static 'users/css/user.css' %}" />
 <title>마이페이지</title>
- {% endblock %}
-{% block content %}
+{% endblock %} {% block content %}
 <h2 class="users-maintitle">마이페이지</h2>
 {% if user.is_authenticated %} {% if now_user.id == pk %}
 <h1>{{user.nickname}}님 페이지</h1>
@@ -63,14 +60,19 @@
       >내 친구 보기</a
     >
   </div>
-  <div class="user-btn-box">
-    <h3 class="user-btn-title">계정</h3>
-    <a href="{% url 'users:update' user.pk %}" class="user-mypage-btn"
-      >회원정보 수정</a
-    >
-    <a href="{% url 'users:logout' %}" class="user-mypage-btn">로그아웃</a>
-    <a href="" class="user-mypage-btn">회원 탈퇴</a>
-  </div>
+  <div class="user-btn-container">
+    <div class="user-btn-box">
+      <h3 class="user-btn-title">친구</h3>
+      <a href="{% url 'users:add_friend' user.pk %}" class="user-mypage-btn">친구신청 보내기</a>
+      <a href="{% url 'users:friend_list' user.pk %}" class="user-mypage-btn">내 친구 보기</a>
+    </div>
+    <div class="user-btn-box">
+      <h3 class="user-btn-title">계정</h3>
+      <a href="{% url 'users:update' user.pk %}" class="user-mypage-btn">회원정보 수정</a>
+      <form method="post" action="{% url 'users:delete' user.pk %}" class="user-mypage-btn">
+        <button type="submit">회원 탈퇴</button>
+      </form>
+    </div>
 </div>
 
 {%else%}

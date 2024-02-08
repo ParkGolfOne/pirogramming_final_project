@@ -1,6 +1,6 @@
 .board-container {
     display: flex; 
-    width: 70%;
+    width: 100%;
     border: 1px solid var(--white--border--color);
     border-radius: 5px;
     padding: 10px;
@@ -11,11 +11,15 @@
     display: flex;
     color: inherit;
 }
-
+.board-container a div {
+    word-break: break-word;
+    
+}
 .board-container img {
     margin-left: auto;
     width: 100px;
     height: auto;
+    margin-right: 10px;
 }
 
 .board-list {
@@ -47,4 +51,10 @@
 .post_search {
     display: flex;
     align-items: center;
+}
+/* pc일떄 */
+@media screen and (min-width: 700px) {
+    .board-container {
+        width: 70%;
+    }
 }

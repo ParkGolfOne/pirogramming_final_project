@@ -1,6 +1,9 @@
 document.addEventListener("DOMContentLoaded", function () {
   var cityField = document.getElementById("city");
   var townField = document.getElementById("town");
+  var addressField = document.getElementById("address_text");
+  var sbAddressField = document.getElementById("address_detail");
+
 
   // 1. city 선택 목록 보여주는 기능
   // city 데이터 DB에서 요청
@@ -82,10 +85,38 @@ document.addEventListener("DOMContentLoaded", function () {
     } else {
       formData.append("town", townField.value);
     }
+      
+    formData.append("street_address", addressField.value);
+    formData.append("detail_address", sbAddressField.value);
+    
     const url = `/users/update/${userId}/`;
     const xhr = new XMLHttpRequest();
     xhr.open("POST", url, true);
     xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        const data = JSON.parse(xhr.responseText);
+        window.location.replace(data.url);
+      }
+    };
     xhr.send(formData);
   });
 });
+
+function execDaumPostcode(event) {
+  event.preventDefault();
+  new daum.Postcode({
+    oncomplete: function (data) {
+      var address = "";
+
+      if (data.userSelectedType === "R") {
+        address = data.roadAddress;
+      } else {
+        address = data.jibunAddress;
+      }
+
+      document.getElementById("address_text").value = address;
+      document.getElementById("address_detail").focus(); // 커서를 상세주소 필드로 이동
+    },
+  }).open();
+}
