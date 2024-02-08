@@ -51,12 +51,15 @@ class SignupForm(UserCreationForm):
             }
         )
     )
-    address = forms.CharField()
 
     class Meta:
         model = User
         fields = ['username', 'nickname', 'password1',
                   'password2', 'birth', 'phone', 'email', 'address']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
 
 
 class UpdateForm(forms.ModelForm):
@@ -96,4 +99,8 @@ class UpdateForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['username', 'nickname', 'birth', 'phone', 'email']
+        fields = ['username', 'nickname', 'birth',
+                  'phone', 'email', 'address']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)

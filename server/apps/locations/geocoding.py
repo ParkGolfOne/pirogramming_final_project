@@ -62,7 +62,7 @@ def find_nearest_golf(user_address, instances):
         distance = haversine(user_lon, user_lat, instance_lon, instance_lat)
         rounded_distance = round(distance, 2) #구한 거리를 소수점 2자리 수로 변환
 
-        instance_tuple = (instance, rounded_distance) #특정 골프장 모델과 유저의 주소의 거리를 튜플로 묶기
+        instance_tuple = (instance, rounded_distance) #특정 골프장 모델과 좌표, 유저의 주소의 거리를 튜플로 묶기
         distances.append(instance_tuple) #그 튜플을 하나의 리스트에 저장
         
     sorted_distances = sorted(distances, key = lambda x : x[1]) #리스트에 저장된 골프장 객체와 거리를 거리 순서로 오름차순 정렬
@@ -71,7 +71,6 @@ def find_nearest_golf(user_address, instances):
 
     #골프장 객체의 이름은 이름끼리, 거리는 거리끼리 리스트에 저장
     golf_names = [instance[0].golf_name for instance in five_instances]
-
     golf_distance = [instance[1] for instance in five_instances]
 
     #골프장 객체와 이름을 매칭해서 저장
