@@ -8,6 +8,8 @@ function changeLocationInput() {
     <input class="locationInput locationInfo" type="text" name="location" required=""/>
     <!-- 알맞는 데이터 없을 시   -->
     <div class="matchLocation"></div>`;
+  scoreSubmitBtn.disabled = true;
+  scoreSubmitBtn.value = "장소 없음!";
   // 검색 추가시
   var content = document.querySelector(".locationInput");
   const match_content = document.querySelector(".matchLocation");
@@ -41,14 +43,23 @@ function changeLocationInput() {
         const { location_names } = JSON.parse(requestFindLocation.response);
         if (content.value == "") {
           match_content.innerText = "";
+          scoreSubmitBtn.disabled = true;
+          scoreSubmitBtn.value = "장소 없음!";
         } else if (location_names.length == 0) {
           match_content.innerText = "";
+          scoreSubmitBtn.disabled = true;
+          scoreSubmitBtn.value = "장소 없음!";
         } else if (
           location_names.length == 1 &&
           location_names[0][0] == content.value
         ) {
           match_content.innerHTML = "";
+          scoreSubmitBtn.disabled = false;
+          scoreSubmitBtn.value = "점수 등록";
         } else {
+          scoreSubmitBtn.disabled = true;
+          scoreSubmitBtn.value = "장소 없음!";
+
           match_content.innerHTML = "";
           location_names.forEach((element) => {
             match_content.innerHTML += `<li class="nameOption">${element[0]}</li>`;
@@ -59,6 +70,8 @@ function changeLocationInput() {
             list_item.addEventListener("click", function (e) {
               content.value = list_item.innerText;
               match_content.innerHTML = "";
+              scoreSubmitBtn.disabled = false;
+              scoreSubmitBtn.value = "점수 등록";
             });
           });
         }
@@ -70,7 +83,7 @@ function changeLocationInput() {
   content.addEventListener("input", findLocation);
 
   // content.addEventListener("blur", () => {
-  // content.value = document.querySelector(".nameOption").innerText;
-  // match_content.innerHTML = "";
+  //   content.value = document.querySelector(".nameOption").innerText;
+  //   match_content.innerHTML = "";
   // });
 }
