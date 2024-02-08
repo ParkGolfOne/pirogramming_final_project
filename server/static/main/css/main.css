@@ -16,19 +16,18 @@
     .main_p_container > .left {
         width: 100%;
         max-width: 100%;
+        height: 70%;
     }
 }
 
 .main_p_container > .right{
     width: 49%;
-    
     border-radius: 16px;    
 }
 
 @media screen and (max-width: 960px){
     .main_p_container > .right {
         width: 100%;
-        margin-top: 20px;
     }
 }
 
@@ -54,6 +53,7 @@
     width: 64px;
     height: 64px;
     font-size: 0;
+    border: none;
     background: url(../images/search.png) #20C997 no-repeat center center;
 }
 
