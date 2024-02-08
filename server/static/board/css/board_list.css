@@ -58,3 +58,12 @@
         width: 70%;
     }
 }
+.board_search_input {
+    width: 100%;
+    padding: 15px;
+    margin: 10px 0px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-sizing: border-box;
+    background-color: #ba4242;
+}

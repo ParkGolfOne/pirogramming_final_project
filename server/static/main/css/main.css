@@ -65,7 +65,7 @@
     padding: 0 20px;
     font-size: 18px;
     border-radius: 16px;
-    background-color: aqua;
+    background-color: rgb(47, 47, 47);
 }
 
 .right_box{
@@ -79,7 +79,7 @@
 .one{
     width: 48%;
     height: 48%;
-    background-color: aqua;
+    background-color: rgb(47, 47, 47);
     border-radius: 16px;
 }
 

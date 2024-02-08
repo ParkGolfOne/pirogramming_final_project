@@ -2,7 +2,7 @@
 <link rel="stylesheet" href="{% static 'locations/css/location_detail.css'%}" />
 <link rel="stylesheet" href="{% static 'locations/css/location_fav.css'%}" />
 {% endblock %} {% block content %}
-  <h2>골프장 이름: {{location.golf_name}}</h2>
+  <h2>{{location.golf_name}}</h2>
   <div class="location-container">
   <div id="location_map"></div>
   <div class="location-detail-container">
@@ -43,8 +43,8 @@
         <h4>{{location.golf_holes}}</h4>
       </div>       
   </div>
-  
-  {% if location.golf_image %}
+</div>
+  <!-- {% if location.golf_image %}
   <a href="{% url 'locations:detail' location.pk %}">
     <img src="{{ location.golf_image.url }}" />
   </a>
@@ -53,7 +53,7 @@
     <img src="{% static 'locations/images/no_img.png/' %}" />
   </a>
   {% endif %}
-  <br />
+  <br /> -->
 
   <a href="{% url 'locations:update' location.pk %}" class="location-detail-btn"
     >수정하기</a
@@ -62,9 +62,7 @@
     {% csrf_token %}
     <button type="submit" class="location-detail-btn">삭제하기</button>
   </form>
-</div>
-{% endblock %}
-{% block script %}
+{% endblock %} {% block script %}
 <!-- 장소 즐겨찾기 -->
 <script src="{% static 'locations/javascript/location_fav.js' %}"></script>
 <!-- 맵 -->

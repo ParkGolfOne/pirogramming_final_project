@@ -37,6 +37,7 @@
     cursor: pointer;
     width: 100%;
     margin: 10px 0px;
+    font-size: 30px;
 }
 .score-create-btn:hover, .score-detail-btn:hover {
     background-color: var(--green--medium--color);

@@ -39,6 +39,8 @@
   border: 1px solid var(--green--medium--color);
   background-color: #ffffff;
   cursor: pointer;
+  font-size: 30px;
+  margin: 5px;
 }
 .location-detail-btn:hover {
     background-color: var(--green--medium--color);
