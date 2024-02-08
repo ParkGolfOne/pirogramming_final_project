@@ -6,7 +6,7 @@ const locationName = document.querySelector(".locationInfo");
 const userId = document.querySelector(".userId");
 const scoreList = document.querySelector(".scoreList");
 // 정렬 옵션 부분 가져오기
-const sortType = document.querySelector(".sortSelect")
+const sortType = document.querySelector(".sortSelect");
 
 var myChart = null;
 
@@ -26,7 +26,7 @@ function getScoreInfo(flag) {
   let location_name = locationName.value;
   //전체 필터면 flag false->objects.all()
   if (location_name == "all") {
-    flag = false;
+    flag = 0;
   }
   const url = `/score/take_score_info/`;
   requestUserScore.open("POST", url, true);
@@ -40,7 +40,7 @@ function getScoreInfo(flag) {
       user_id: user_id,
       flag: flag,
       location_name: location_name,
-      sort : "-id",
+      sort: "-id",
     })
   );
 }
@@ -122,21 +122,21 @@ requestUserScore.onreadystatechange = () => {
   }
 };
 
-getScoreInfo(false);
-
+getScoreInfo(0);
 
 // 함수명 : changeSort
 // 전달인자 : 없음
 // 기능 : 점수 리스트를 바꾸어준다.
-function changeSort(){
+function changeSort() {
   //유저 아이디 가져오기 (접속자 기준 x)
   user_id = userId.innerHTML;
 
   //선택한 골프장 가져오기
   let location_name = locationName.value;
   //전체 필터면 flag false->objects.all()
+  flag = 1;
   if (location_name == "all") {
-    flag = false;
+    flag = 0;
   }
   const url = `/score/take_score_info/`;
   requestFilterScore.open("POST", url, true);
@@ -150,7 +150,7 @@ function changeSort(){
       user_id: user_id,
       flag: flag,
       location_name: location_name,
-      sort : sortType.value,
+      sort: sortType.value,
     })
   );
 }

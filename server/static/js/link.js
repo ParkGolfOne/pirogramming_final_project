@@ -32,3 +32,28 @@ function shareKakaoScore() {
     ],
   });
 }
+
+// function shareKakaPost() {
+//   Kakao.Share.createDefaultButton({
+//     container: "#kakaotalk-sharing-btn",
+//     objectType: "feed",
+//     content: {
+//       title: "점수",
+//       description: "나의 점수 공유!",
+//       imageUrl: thumbnailUrl,
+//       link: {
+//         mobileWebUrl: `http://127.0.0.1:8000/score/score_detail/${sid}/`,
+//         webUrl: `http://127.0.0.1:8000/score/score_detail/${sid}/`,
+//       },
+//     },
+//     buttons: [
+//       {
+//         title: "점수 보러가기~!!",
+//         link: {
+//           mobileWebUrl: `http://127.0.0.1:8000/score/score_detail/${sid}/`,
+//           webUrl: `http://127.0.0.1:8000/score/score_detail/${sid}/`,
+//         },
+//       },
+//     ],
+//   });
+// }
