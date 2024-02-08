@@ -18,17 +18,15 @@ def game_set(request):
             round_count = form.cleaned_data['round_count'] 
             player_count = form.cleaned_data['player_count']
         
-            # Game 인스턴스 생성
-            if request.user == :
-               creater 
+            # Game 인스턴스 생성    
             game = Game.objects.create(
-                create_by = request.user,
+                create_by = request.user if request.user.is_authenticated else None,
                 ground=None,  # 일단은 골프장 none
                 created_at=timezone.now()
             )
 
             # 라운드 수 만큼 Round 인스턴스 생성
-            for i in range(form.cleaned_data['round_count']):
+            for i in range(round_count):
                 Round.objects.create(game=game, round_number = (i + 1) )
 
             # url에 라운드 수와 플레이어 수를 저장하고 game_detail로 보내기

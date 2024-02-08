@@ -30,11 +30,45 @@ def score_main(request):
     return render(request, 'score/score_main.html')
 
 
-
-
 ###########################################################
 #                   스코어 CRUD 관련 함수                  #
 ###########################################################
+
+# # 함수 이름 : score_input
+# # 전달인자 : request
+# # 기능 : --
+# def score_input(request, uid):
+#     if request.method == "GET":
+
+#         # HTML에 전달할 정보
+#         context = {
+#             'locations' : GolfLocation.objects.all()
+#         }
+#         return render(request,'score/score_create.html', context)
+    
+#     # 스코어 생성 요청
+#     if request.method == "POST":
+
+#         form  = ScoreForm(request.POST)
+#         # 유효성 검사
+#         if form.is_valid():
+#             # 장소 정보 추가
+#             location_name = request.POST.get('location')
+#             score_instance = Score.objects.create(player = request.user,ground = GolfLocation.objects.get(golf_name = location_name))
+        
+#             for i in range(1, 10):
+#                 hole_key = f'hole{i}'
+#                 score_instance.par[hole_key] = request.POST.get(f'par{i}', '')
+#                 score_instance.scores[hole_key] = request.POST.get(f'score{i}', '')
+#             score_instance.save()
+            
+#             redirect_url = '/score/score_detail/${score_instance.id}'
+#             return JsonResponse({'result': 'success', 'url': redirect_url})
+#         else :
+#             print("폼 유효성 검사 실패")
+#             print(form.errors)
+#             return JsonResponse({'result': 'failed', 'error': form.errors})
+        
 
 # 함수 이름 : score_input
 # 전달인자 : request
@@ -62,6 +96,7 @@ def score_input(request, uid):
         score_instance.save()
         
         return redirect("score:score_detail", score_instance.id)
+
 
 
 # 함수 이름 : score_detail
