@@ -1,26 +1,54 @@
-{% extends 'base.html' %} {%load static%}
-
-{% block content %}
+{% extends 'base.html' %} {%load static%} {% block content %}
 <form method="POST" action="{% url 'users:update' pk %}" id="update-form" class="users-update-form">
-    {% csrf_token %}
-    {{ form }}
-    <div class="form-group">
+  {{ form }}
+  <div class="form-group">
+    <!--도로명 주소 검색-->
+    <label for="address_text">주소 입력</label>
+    <form id="address-form">
+      {% if street_address != None %}
+        <input type="text" value="{{street_address}}" name="address_text" readonly="readonly" id="address_text" />
+      {% else %}
+        <input type="text" placeholder="도로명 주소" name="address_text" readonly="readonly" id="address_text" />
+      {% endif %}
+      <button onclick="execDaumPostcode(event)" name="btn-address" form="address-form">
+        주소검색
+      </button>
+    </form>
+    <!--상세 주소-->
+    <p class="sb-addr">
+      {% if detail_address != None %}
+      <input type="text" class="w-xl" value="{{detail_address}}" name="address_detail" id="address_detail" />
+      {% else %}
+      <input type="text" class="w-xl" placeholder="상세주소" name="address_detail" id="address_detail" />
+      {% endif%}
+    </p>
+
+  <!--시도/군구 검색-->
     <label for="city">시/도:</label>
     <select id="city" class="update-input">
+      {% if city == None %}
+      <option value="" disabled>선택해주세요</option>
+      {% else %}
       <option value="">{{city}}</option>
+      {% endif %}
     </select>
-    </div>
-    <div class="form-group">
-      <label for="town">군/구:</label>
-      <select id="town" class="update-input">
-        <option value="">{{town}}</option>
-      </select>
-    </div>
-  <input type="submit" value="개인 정보 수정" class="user-btn" />
+  </div>
+  <div class="form-group">
+    <label for="town">군/구:</label>
+    <select id="town" class="update-input">
+      {% if town == None %}
+      <option value="">선택해주세요</option>
+      {% else %}
+      <option value="">{{town}}</option>
+      {% endif %}
+    </select>
+  </div>
+  <input type="submit" value="개인 정보 수정" class="user-btn" form="update-form" id="update-form-submit" />
 </form>
-{% endblock content %}
-
-{% block script %}
-<script>var userId = {{ request.user.pk }};</script>
+{% endblock content %} {% block script %}
+<script>
+  var userId = {{ request.user.pk }};
+</script>
 <script src="{% static 'users/js/update.js' %}"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 {% endblock script %}

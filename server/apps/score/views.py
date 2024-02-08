@@ -52,7 +52,7 @@ def score_input(request, uid):
     if request.method == "POST":
         # 장소 정보 추가
         location_name = request.POST.get('location')
-        
+
         score_instance = Score.objects.create(player = request.user,ground = GolfLocation.objects.get(golf_name = location_name))
     
         for i in range(1, 10):

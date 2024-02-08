@@ -3,6 +3,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, redirect
 from apps.users.forms import SignupForm, UpdateForm
 from django.contrib.auth.forms import AuthenticationForm
+from django.urls import reverse
 from django.http import JsonResponse
 from django.contrib import auth
 from apps.communitys.models import *
@@ -16,10 +17,8 @@ import requests
 # 함수 이름 : home
 # 전달인자 : request
 # 기능 : 기본 메인페이지로 이동
-
-
 def home(request):
-    return render(request, 'base.html')
+    return render(request, 'main.html')
 
 ###########################################################
 #                      유저 개인 페이지                    #
@@ -27,8 +26,6 @@ def home(request):
 # 함수 이름 : main
 # 전달인자 : request, pk
 # 기능 : 유저의 개인 페이지. 유저가 작성한 글, 댓글, 스크랩, 좋아요를 가져온다.
-
-
 def main(request, pk):
     user = User.objects.get(id=pk)
     now_user = request.user
@@ -56,6 +53,12 @@ def main(request, pk):
     except Like.DoesNotExist:
         my_likes = []
 
+    # 즐겨찾기한 골프장 가져오기
+    try:
+        my_locations = LikeGolf.objects.filter(user=user)
+    except Like.DoesNotExist:
+        my_locations = []
+
     context = {
         "pk": pk,
         "user": user,
@@ -64,6 +67,7 @@ def main(request, pk):
         "my_comments": my_comments,
         "my_scraps": my_scraps,
         "my_likes": my_likes,
+        "my_locations" : my_locations,
     }
 
     return render(request, "users/users_main.html", context)
@@ -75,10 +79,10 @@ def main(request, pk):
 # 전달인자 : request, pk
 # 기능 : 유저 회원가입
 
-
 @csrf_exempt
 def signup(request):
     if request.method == 'POST':
+        print(request.POST)
         selected_city = request.POST.get('city')
         selected_town = request.POST.get('town')
         street_address = request.POST.get('street_address')
@@ -86,8 +90,7 @@ def signup(request):
         form = SignupForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
-            region = Region.objects.filter(
-                city=selected_city, town=selected_town).first()
+            region = Region.objects.filter(city=selected_city, town=selected_town).first()
             # user에 region 정보를 저장
             user.region = region
             user.address = street_address
@@ -95,23 +98,26 @@ def signup(request):
             user.save()
             auth.login(request, user,
                        backend='apps.users.backends.CustomModelBackend')
-            return redirect('users:main', user.id)
+            redirect_url = reverse('home')
+            return JsonResponse({'result': 'success', 'url': redirect_url})
+
         else:
             print("폼 유효성 검사 실패")
             print(form.errors)
-            return redirect('users:signup')
+            print(form.errors.as_json())
+            print(form.non_field_errors())
+            return JsonResponse({'result': 'failed', 'error': form.errors})
     else:
         form = SignupForm()
         context = {
             'form': form,
+            'pk': request.user.id,
         }
         return render(request, template_name='users/users_signup.html', context=context)
 
 # 함수 이름 : login
 # 전달인자 : request
 # 기능 : 유저 로그인
-
-
 def login(request):
     if request.method == 'POST':
         form = AuthenticationForm(request, request.POST)
@@ -135,8 +141,6 @@ def login(request):
 # 함수 이름 : logout
 # 전달인자 : request
 # 기능 : 유저 로그아웃
-
-
 def logout(request):
     user = request.user
     user.first_login = False
@@ -150,22 +154,25 @@ def logout(request):
 # 함수 이름 : update
 # 전달인자 : request, pk
 # 기능 : 유저 정보 수정
-
-
 @csrf_exempt
 def update(request, pk):
     user = User.objects.get(id=pk)
-    selected_city = request.POST.get('city')
-    selected_town = request.POST.get('town')
     if request.method == 'POST':
+        selected_city = request.POST.get('city')
+        selected_town = request.POST.get('town')
+        street_address = request.POST.get('street_address')
+        detail_address = request.POST.get('detail_address')
         form = UpdateForm(request.POST, instance=user)
         if form.is_valid():
             user = form.save(commit=False)
             region = Region.objects.filter(
                 city=selected_city, town=selected_town).first()
             user.region = region
+            user.address = street_address
+            user.detail_address = detail_address
             user.save()
-            return redirect('users:main', user.pk)
+            redirect_url = reverse('users:main', kwargs={'pk': user.pk})
+            return JsonResponse({'url': redirect_url})
         else:
             print("폼 유효성 검사 실패")
             print(form.errors)
@@ -177,12 +184,24 @@ def update(request, pk):
             'pk': pk,
             'city': user.region.city,
             'town': user.region.town,
+            'street_address': user.address,
+            'detail_address': user.detail_address,
         }
         return render(request, template_name='users/users_update.html', context=context)
 
+@csrf_exempt
+@login_required
+def delete(request, pk):
+    user = User.objects.get(id=pk)
+    if request.method == "POST":
+        if user.social_auth.filter(provider='kakao').exists():
+            kakao_unlink(request)
+        user.delete()
+        return redirect('home')
+    
 
 ###########################################################
-#                      소셜로그인 관련 함수             #
+#                      소셜로그인 관련 함수                #
 ###########################################################
 # 함수 이름 : social_login
 # 전달인자 : request
@@ -195,15 +214,34 @@ def social_login(request):
         user.first_login = False
         user.save()
         if request.method == 'POST':
+            selected_city = request.POST.get('city')
+            selected_town = request.POST.get('town')
+            street_address = request.POST.get('street_address')
+            detail_address = request.POST.get('detail_address')
             form = UpdateForm(request.POST, instance=user)
             if form.is_valid():
-                form.save()
-                return redirect('users:main', user.id)
+                user = form.save(commit=False)
+                region = Region.objects.filter(
+                city=selected_city, town=selected_town).first()
+                user.region = region
+                user.address = street_address
+                user.detail_address = detail_address
+                user.save()
+                redirect_url = reverse('users:main', kwargs={'pk': user.pk})
+                return JsonResponse({'url': redirect_url})
+            else:
+                print("폼 유효성 검사 실패")
+                print(form.errors)
+                return redirect('users:update', user.pk)
         else:
             form = UpdateForm(instance=user)
             context = {
                 'form': form,
-                'pk': user.id,
+                'pk': user.pk,
+                'city': None,
+                'town': None,
+                'street_address': None,
+                'detail_address': None,
             }
             return render(request, template_name='users/users_update.html', context=context)
 
@@ -244,7 +282,6 @@ def kakao_unlink(request):
 def friend_list(request, pk):
     user = User.objects.get(id=pk)
     friends = user.friends.all()
-    print(friends)
     context = {
         'friends': friends,
         'user': user,
@@ -258,7 +295,6 @@ def friend_list(request, pk):
 def friend_candidates(request):
     user = request.user
     friends = user.friends.all()
-
     candidate_friends = User.objects.exclude(
         id__in=[friend.id for friend in friends]).exclude(id=user.id)
 
@@ -272,19 +308,10 @@ def friend_candidates(request):
 def add_friend(request, pk):
     if request.method == 'POST':
         user = request.user
-        friend = request.POST.get('friend')
-        print(friend)
+        friend_id = request.POST.get('friend')
+        friend = User.objects.get(id=friend_id)
         user.friends.add(friend)
-        friend_candidate = friend_candidates(request)
-        friend_candidate_json = []
-        for friend in friend_candidate:
-            friend_data = {
-                'id': friend.id,
-                'username': friend.username,
-                'nickname': friend.nickname,
-            }
-            friend_candidate_json.append(friend_data)
-        return JsonResponse(friend_candidate_json, safe=False)
+        return JsonResponse({"friend_id": friend_id}, safe=False)
 
     else:
         friend_candidate = friend_candidates(request)

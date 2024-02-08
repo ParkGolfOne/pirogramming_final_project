@@ -1,6 +1,13 @@
 const locationInput = document.querySelector(".locationInputArea");
+const scoreSubmitBtn = document.querySelector(".scoreSubmitBtn");
+//초기 세팅
+scoreSubmitBtn.disabled = true;
+scoreSubmitBtn.value = "골프장 입력 오류";
 
 function changeLocationInput() {
+  //초기 세팅
+  scoreSubmitBtn.disabled = true;
+  scoreSubmitBtn.value = "골프장 입력 오류";
   locationInput.innerHTML = `<span>장소 검색 : </span>
     <input class="locationInput locationInfo" type="text" name="location" />
     <!-- 알맞는 데이터 없을 시   -->
@@ -8,11 +15,6 @@ function changeLocationInput() {
   // 검색 추가시
   const content = document.querySelector(".locationInput");
   const match_content = document.querySelector(".matchLocation");
-  const scoreSubmitBtn = document.querySelector(".scoreSubmitBtn");
-
-  //초기 세팅
-  scoreSubmitBtn.disabled = true;
-  scoreSubmitBtn.innerText = "올바른 골프장 이름을 입력 바랍니다.";
 
   // 댓글 업데이트 부분
   //새 HTTPRequest 생성
@@ -31,6 +33,7 @@ function changeLocationInput() {
     requestFindLocation.send(
       JSON.stringify({
         input_text: content.value,
+        sortType: "golf_name",
       })
     );
   }
@@ -44,39 +47,76 @@ function changeLocationInput() {
           match_content.innerText = "";
           // 일치하는 이름이 없으므로 제출 불가
           scoreSubmitBtn.disabled = true;
-          scoreSubmitBtn.innerText = "올바른 골프장 이름을 입력 바랍니다.";
+          scoreSubmitBtn.value = "골프장 입력 오류";
         } else if (
           location_names.length == 1 &&
-          location_names[0] == content.value
+          location_names[0][0] == content.value
         ) {
           match_content.innerHTML = "";
           // 정확히 일치하는 이름 있으므로 선택 가능
           scoreSubmitBtn.disabled = false;
-          scoreSubmitBtn.innerText = "점수등록";
+          scoreSubmitBtn.value = "점수등록";
         } else {
           match_content.innerHTML = "";
           location_names.forEach((element) => {
-            match_content.innerHTML += `<li class="nameOption">${element}</li>`;
+            match_content.innerHTML += `<li class="nameOption">${element[0]}</li>`;
           });
           // 클릭시 해당 정보 가져오기
           listItems = document.querySelectorAll(".nameOption");
-          listItems.addEventListener("click", function (e) {
-            content.value = e.innerText;
-            match_content.innerHTML = "";
+          listItems.forEach((list_item) => {
+            list_item.addEventListener("click", function (e) {
+              content.value = list_item.innerText;
+              match_content.innerHTML = "";
+              // 정확히 일치하는 이름 있으므로 선택 가능
+              scoreSubmitBtn.disabled = false;
+              scoreSubmitBtn.value = "점수등록";
+              allScoreCheck();
+            });
           });
-          // 일치하는 이름이 없으므로 제출 불가
           scoreSubmitBtn.disabled = true;
-          scoreSubmitBtn.innerText = "올바른 골프장 이름을 입력 바랍니다.";
+          scoreSubmitBtn.value = "골프장 입력 오류";
         }
       }
     }
   };
 
-  content.addEventListener("change", findLocation);
   content.addEventListener("keyup", findLocation);
-  // content.addEventListener("input", findLocation);
+  content.addEventListener("input", findLocation);
 
-  content.addEventListener("blur", () => {
-  content.value = document.querySelector(".nameOption").innerText;
-  });
+  // content.addEventListener("blur", () => {
+  // content.value = document.querySelector(".nameOption").innerText;
+  // match_content.innerHTML = "";
+  // });
+}
+
+function checkSubmitPossible() {
+  const locationSelect = document.querySelector(".locationSelect");
+  if (locationSelect.value != null) {
+    allScoreCheck();
+  }
+}
+
+function allScoreCheck() {
+  const parSelect = document.querySelectorAll(".parInput");
+  const scoreSelect = document.querySelectorAll(".scoreInput");
+  for (let i = 0; i < 9; i++) {
+    const p = parSelect[i];
+    if (p.value < 3 || p.value > 5) {
+      scoreSubmitBtn.value = "PAR 오입력";
+      scoreSubmitBtn.disabled = true;
+
+      return; // 함수 전체 종료
+    }
+  }
+
+  for (let i = 0; i < 9; i++) {
+    const s = scoreSelect[i];
+    if (s.value == "" || s.value < 0 || s.value > 10) {
+      scoreSubmitBtn.value = "점수 범위 오류";
+      scoreSubmitBtn.disabled = true;
+      return; // 함수 전체 종료
+    }
+  }
+  scoreSubmitBtn.disabled = false;
+  scoreSubmitBtn.value = "점수등록";
 }

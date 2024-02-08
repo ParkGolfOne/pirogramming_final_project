@@ -1,0 +1,19 @@
+.postFavBtn {
+  width: 26px;
+  height: 26px;
+  margin: 7px;
+  background-color: transparent;
+  border: none;
+  background-image: url("/static/locations/images/nofav.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  transition: 0.2s;
+}
+
+.postFavBtn:hover {
+  opacity: 0.5;
+}
+
+.faved {
+  background-image: url("/static/locations/images/faved.png") !important;
+}
