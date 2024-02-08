@@ -3,6 +3,7 @@ from .models import *
 from .forms import *
 from .geocoding import *
 from ..users.models import User
+import json
 
 # 골프장 목록 표시
 def location_list(request):
@@ -80,4 +81,10 @@ def location_distance (request, pk):
 
 #내 현재 위치 정보를 기반으로 한 가장 가까운 파크골프장 5곳
 def location_myplace (request):
-    return render(request, 'locations/location_myplace.html')
+    #템플릿에 골프장 모델의 인스턴스들의 좌표를 보내줌 -> 자바스크립트에서 처리하기 위해
+    positions = [[float(position.golf_latitude), float(position.golf_longitude)] for position in GolfLocation.objects.all()]
+    positions_json = json.dumps(positions)
+    ctx = {
+        'positions' : positions_json
+    }
+    return render(request, 'locations/location_myplace.html', ctx)

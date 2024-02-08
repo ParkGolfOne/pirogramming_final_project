@@ -36,9 +36,7 @@
 {% block script %}
       <script src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=mzbzbj8tit">
       </script>
-      <script>
-        var imageUrl = "{% static 'locations/images/golfFlag.png' %}";
-      </script>
+
       <script src="{% static 'locations/javascript/location_script.js' %}">
         var latitude = document.getElementById('latitude');
         var longitude = document.getElementById('longitude');
