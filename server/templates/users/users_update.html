@@ -22,12 +22,20 @@
   <div class="row">
     <div class="col-md-6 mb-3">
       <label for="id_birth">생일:</label>
+      {% if birth == None %}
+      <input type="text" name="birth" value="" class="signup-input" id="id_birth">
+      {% else %}
       <input type="text" name="birth" value="{{birth}}" class="signup-input" id="id_birth">
+      {% endif %}
       <div class="errorMessage"></div>
     </div>
     <div class="col-md-6 mb-3">
       <label for="id_phone">전화번호:</label>
+      {% if phone == None %}
+      <input type="text" name="phone" class="signup-input" value="" id="id_phone">
+      {% else %}
       <input type="text" name="phone" class="signup-input" value="{{phone}}" id="id_phone">
+      {% endif %}
       <div class="errorMessage"></div>
     </div>
   </div>
@@ -39,17 +47,18 @@
   </div>
   <div class="mb-3">
     <!--도로명 주소 검색-->
-    <label for="address_text">주소 입력</label>
-    {% if street_address != None %}
-    <input type="text" value="{{street_address}}" name="address_text" readonly="readonly" id="address_text"
-      required="" />
-    {% else %}
-    <input type="text" placeholder="도로명 주소" name="address_text" readonly="readonly" id="address_text" required="" />
-    {% endif %}
-    <button onclick="execDaumPostcode(event)" name="btn-address" form="address-form">
-      검색
-    </button>
-    <div class="errorMessage"></div>
+    <label for="address">주소 입력</label>
+    <div id="address-input-container">
+      {% if street_address != None %}
+      <input type="text" value="{{street_address}}" name="address" readonly="readonly" id="address" required="" />
+      {% else %}
+      <input type="text" value="" placeholder="도로명 주소" name="address" readonly="readonly" id="address" required=""/>
+      {% endif %}
+      <button onclick="execDaumPostcode(event)" name="btn-address" id="btn-address" class="user-btn">
+        검색
+      </button>
+      <div class="errorMessage"></div>
+    </div>
   </div>
   <!--상세 주소-->
   <div class="mb-3">
@@ -57,7 +66,7 @@
     {% if detail_address != None %}
     <input type="text" class="signup-input" value="{{detail_address}}" name="address_detail" id="address_detail" />
     {% else %}
-    <input type="text" class="signup-input" placeholder="상세주소" name="address_detail" id="address_detail" />
+    <input type="text" class="signup-input" value="" placeholder="상세주소" name="address_detail" id="address_detail" />
     {% endif%}
     <div class="errorMessage"></div>
   </div>
@@ -66,23 +75,25 @@
   <div class="row">
     <div class="col-md-6 mb-3">
       <label for="city">시/도:</label>
-      <select id="city" class="update-input">
+      <select id="city" class="update-input selectbox" required="">
         {% if city == None %}
-        <option value="" disabled>선택해주세요</option>
+        <option value="">선택해주세요</option>
         {% else %}
-        <option value="">{{city}}</option>
+        <option value="{{city}}">{{city}}</option>
         {% endif %}
       </select>
+      <div class="errorMessage"></div>
     </div>
     <div class="col-md-6 mb-3">
       <label for="town">군/구:</label>
-      <select id="town" class="update-input">
+      <select id="town" class="update-input selectbox" required="">
         {% if town == None %}
         <option value="">선택해주세요</option>
         {% else %}
-        <option value="">{{town}}</option>
+        <option value="{{town}}">{{town}}</option>
         {% endif %}
       </select>
+      <div class="errorMessage"></div>
     </div>
   </div>
 
