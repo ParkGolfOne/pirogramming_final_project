@@ -114,7 +114,6 @@ document.addEventListener("DOMContentLoaded", function () {
     formData.append("town", townField.value);
     formData.append("street_address", addressField.value);
     formData.append("detail_address", sbAddressField.value);
-    console.log(formData);
     const url = "/users/signup/";
     const xhr = new XMLHttpRequest();
     xhr.open("POST", url, true);
@@ -124,9 +123,7 @@ document.addEventListener("DOMContentLoaded", function () {
       if (xhr.readyState === 4 && xhr.status === 200) {
         const data = JSON.parse(xhr.responseText);
         if (data.result == "success"){ window.location.replace(data.url);}
-        else {
-          console.log(data.error);
-          errorMessage(data.error);} 
+        else {errorMessage(data.error);} 
       }
     };
 
