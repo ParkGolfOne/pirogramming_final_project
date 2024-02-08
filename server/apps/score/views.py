@@ -116,9 +116,10 @@ def score_update(request, sid):
 # 전달인자 : request, sid
 # 기능 : 선택한 점수 기록 삭제
 def score_delete(request, sid):
+    now_user = request.user
     if request.method == 'POST':
         Score.objects.get(id = sid).delete()
-        return redirect("score:score_main")
+        return redirect("score:score_history", now_user.id)
 
 
 ###########################################################
