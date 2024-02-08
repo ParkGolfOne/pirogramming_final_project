@@ -104,9 +104,9 @@ def location_distance (request, pk):
 def location_myplace (request):
     #템플릿에 골프장 모델의 인스턴스들의 좌표를 보내줌 -> 자바스크립트에서 처리하기 위해
     positions = [[float(position.golf_latitude), float(position.golf_longitude)] for position in GolfLocation.objects.all()]
-    positions_json = json.dumps(positions)
+    position_json = json.dumps(positions)
     ctx = {
-        'positions' : positions_json
+        'positions_list' : position_json
     }
     return render(request, 'locations/location_myplace.html', ctx)
 

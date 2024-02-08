@@ -1,7 +1,7 @@
 {% load static %}
 {% block content %}
     <div id="myposition_map" style="width: 800px; height: 500px;"></div>
-    <div id="position_point">{{ positions|safe }}</div>
+    <div id="position_list">{{ position_list }}</div>
 {% endblock %}
 {% block script %}
       <script src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=mzbzbj8tit">
