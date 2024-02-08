@@ -17,6 +17,8 @@ import requests
 # 함수 이름 : home
 # 전달인자 : request
 # 기능 : 기본 메인페이지로 이동
+
+
 def home(request):
     return render(request, 'main.html')
 
@@ -26,6 +28,8 @@ def home(request):
 # 함수 이름 : main
 # 전달인자 : request, pk
 # 기능 : 유저의 개인 페이지. 유저가 작성한 글, 댓글, 스크랩, 좋아요를 가져온다.
+
+
 def main(request, pk):
     user = User.objects.get(id=pk)
     now_user = request.user
@@ -67,7 +71,7 @@ def main(request, pk):
         "my_comments": my_comments,
         "my_scraps": my_scraps,
         "my_likes": my_likes,
-        "my_locations" : my_locations,
+        "my_locations": my_locations,
     }
 
     return render(request, "users/users_main.html", context)
@@ -78,6 +82,7 @@ def main(request, pk):
 # 함수 이름 : signup
 # 전달인자 : request, pk
 # 기능 : 유저 회원가입
+
 
 @csrf_exempt
 def signup(request):
@@ -90,7 +95,8 @@ def signup(request):
         form = SignupForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
-            region = Region.objects.filter(city=selected_city, town=selected_town).first()
+            region = Region.objects.filter(
+                city=selected_city, town=selected_town).first()
             # user에 region 정보를 저장
             user.region = region
             user.address = street_address
@@ -116,6 +122,8 @@ def signup(request):
 # 함수 이름 : login
 # 전달인자 : request
 # 기능 : 유저 로그인
+
+
 def login(request):
     if request.method == 'POST':
         form = AuthenticationForm(request, request.POST)
@@ -139,6 +147,8 @@ def login(request):
 # 함수 이름 : logout
 # 전달인자 : request
 # 기능 : 유저 로그아웃
+
+
 def logout(request):
     user = request.user
     user.first_login = False
@@ -152,6 +162,8 @@ def logout(request):
 # 함수 이름 : update
 # 전달인자 : request, pk
 # 기능 : 유저 정보 수정
+
+
 @csrf_exempt
 def update(request, pk):
     user = User.objects.get(id=pk)
@@ -192,6 +204,7 @@ def update(request, pk):
         }
         return render(request, template_name='users/users_update.html', context=context)
 
+
 @csrf_exempt
 @login_required
 def delete(request, pk):
@@ -201,7 +214,7 @@ def delete(request, pk):
             kakao_unlink(request)
         user.delete()
         return redirect('home')
-    
+
 
 ###########################################################
 #                      소셜로그인 관련 함수                #
@@ -225,22 +238,27 @@ def social_login(request):
             if form.is_valid():
                 user = form.save(commit=False)
                 region = Region.objects.filter(
-                city=selected_city, town=selected_town).first()
+                    city=selected_city, town=selected_town).first()
                 user.region = region
                 user.address = street_address
                 user.detail_address = detail_address
                 user.save()
                 redirect_url = reverse('users:main', kwargs={'pk': user.pk})
-                return JsonResponse({'url': redirect_url})
+                return JsonResponse({'result': 'success', 'url': redirect_url})
             else:
                 print("폼 유효성 검사 실패")
                 print(form.errors)
-                return redirect('users:update', user.pk)
+                return JsonResponse({'result': 'fail', 'error': form.errors})
         else:
             form = UpdateForm(instance=user)
             context = {
                 'form': form,
                 'pk': user.pk,
+                "username": user.username,
+                "nickname": user.nickname,
+                "birth": None,
+                "phone": None,
+                "email": "",
                 'city': None,
                 'town': None,
                 'street_address': None,
@@ -248,10 +266,11 @@ def social_login(request):
             }
             return render(request, template_name='users/users_update.html', context=context)
 
-
 # 함수 이름 : kakao_unlink
 # 전달인자 : request
 # 기능 : 카카오 소셜 로그아웃한 경우, 해당 계정과의 연결을 끊음
+
+
 def kakao_unlink(request):
     user = request.user
     social_auth = user.social_auth.get(provider='kakao')
@@ -295,6 +314,8 @@ def friend_list(request, pk):
 # 함수 이름 : friend_candidates
 # 전달인자 : request
 # 기능 : 현재 유저의 친구 후보(본인 + 친구가 아닌 사람들)을 db에서 가져옴
+
+
 def friend_candidates(request):
     user = request.user
     friends = user.friends.all()
@@ -306,6 +327,8 @@ def friend_candidates(request):
 # 함수 이름 : add_friend
 # 전달인자 : request. pk
 # 기능 : 유저 friend로 입력 받은 친구 추가 (쌍방으로)
+
+
 @csrf_exempt
 @login_required
 def add_friend(request, pk):
@@ -327,6 +350,8 @@ def add_friend(request, pk):
 # 함수 이름 : delete_friend
 # 전달인자 : request. pk
 # 기능 : 입력받은 friend 삭제 (쌍방으로)
+
+
 @csrf_exempt
 @login_required
 def delete_friend(request, pk):
