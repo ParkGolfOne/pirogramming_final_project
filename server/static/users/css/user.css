@@ -15,7 +15,7 @@
 .signup-form > .form-group > label {
     margin-bottom: 5px;
 }
-.user-btn, .user-mypage-btn, .user-login-btn {
+.user-btn, .user-mypage-btn {
     padding: 10px;
     border-radius: 5px;
     border: 1px solid var(--green--medium--color);
@@ -27,8 +27,9 @@
 }
 .user-btn {
     width: 100%;
+    margin-bottom: 20px;
 }
-.user-btn:hover, .user-mypage-btn:hover, .user-login-btn:hover {
+.user-btn:hover, .user-mypage-btn:hover {
     background-color: var(--green--medium--color);
     border: 1px solid var(--green--medium--color);
     transition: 0.1s;
@@ -66,10 +67,47 @@
 }
 .user-login-btn {
     width: 100%;
-    margin: 10px 0px;
+    margin-bottom: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
+    font-size: 10px;
+    gap: 5px;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.simple-icons--naver {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='white' d='M16.273 12.845L7.376 0H0v24h7.726V11.156L16.624 24H24V0h-7.727z'/%3E%3C/svg%3E");
+}
+.ri--kakao-talk-line {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M12 3c5.8 0 10.501 3.664 10.501 8.185c0 4.52-4.701 8.184-10.5 8.184a13.51 13.51 0 0 1-1.727-.11l-4.408 2.883c-.501.265-.678.236-.472-.413l.892-3.678c-2.88-1.46-4.785-3.99-4.785-6.866c0-4.52 4.7-8.185 10.5-8.185m5.908 8.06l1.47-1.424a.472.472 0 0 0-.656-.678l-1.928 1.866V9.282a.472.472 0 0 0-.944 0v2.557a.472.472 0 0 0 0 .222V13.5a.472.472 0 0 0 .944 0v-1.363l.427-.413l1.428 2.033a.472.472 0 1 0 .773-.543zm-2.958 1.924h-1.46V9.297a.472.472 0 0 0-.943 0v4.159c0 .26.21.472.471.472h1.932a.472.472 0 1 0 0-.944m-5.857-1.091l.696-1.708l.638 1.707zm2.523.487l.002-.016a.469.469 0 0 0-.127-.32l-1.046-2.8a.69.69 0 0 0-.627-.474a.696.696 0 0 0-.653.447l-1.662 4.075a.472.472 0 0 0 .874.357l.332-.813h2.07l.298.8a.472.472 0 1 0 .884-.33zM8.294 9.302a.472.472 0 0 0-.471-.472H4.578a.472.472 0 1 0 0 .944h1.16v3.736a.472.472 0 0 0 .944 0V9.774h1.14a.472.472 0 0 0 .472-.472'/%3E%3C/svg%3E");
+}
+.kakao-btn {
+    background-color: #FAE100;
+    border: 1px solid #edd500;
+}
+.naver-btn {
+    background-color: #03C75A;
+    border: 1px solid #17b75e;
+}
+
+.naver-btn:hover{
+    background-color: #17b75e;
+    transition: 0.1s;
+}
+.kakao-btn:hover {
+    background-color: #edd500;
 }
 .user-btn-container {
     width: 100%;
@@ -78,18 +116,31 @@
     flex-direction: column;    
 }
 /* pc일떄 */
+
+
+.login-form > div > label {
+    font-size: 10px;
+}
+
+.login-form label {
+    display: block; 
+}
+.login-form {
+    padding: 40px;
+    width: 80%;
+}
 @media screen and (min-width: 700px) {
     .user-btn-container,
     .user-mypage-container {
         flex-direction: row;    
     }
-    
+    .login-form {
+        width: 380px;
+    }
 }
-
 .user-btn-box {
     display: flex;
     flex-direction: column;
-    
 }
 .user-mypage-btn {
     display: block;

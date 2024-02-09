@@ -9,8 +9,12 @@
     {{ form }}
     <button class="user-btn">로그인</button>
 
-    <a href="{% url 'social:begin' 'kakao' %}"><div class="user-login-btn">카카오 로그인</div></a>
-    <a href="{% url 'social:begin' 'naver' %}"><div class="user-login-btn">네이버 로그인</div></a>
+    <a href="{% url 'social:begin' 'kakao' %}">
+      <div class="user-login-btn kakao-btn">
+        <span class="ri--kakao-talk-line"></span>카카오 로그인</div>
+    </a>
+    <a href="{% url 'social:begin' 'naver' %}">
+      <div class="user-login-btn naver-btn">
+        <span class="simple-icons--naver"></span>네이버 로그인</div></a>
 </form>
-
 {% endblock %}
