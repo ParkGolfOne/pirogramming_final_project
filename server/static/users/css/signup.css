@@ -1,3 +1,31 @@
+/* bootstrap 때문에 안먹힌 css 수정*/
+a {
+    text-decoration: none !important;
+}
+
+.main-menu {
+    margin-bottom: 0 !important;
+}
+
+@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+
+label {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 1.2rem !important;
+}
+
+input {
+    margin-bottom: 10px !important;
+}
+
+/* 그냥 이 페이지를 위한 css */
+.signup-form-title {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 3rem !important;
+    text-align: center !important;
+    margin-bottom: 2.5rem !important;
+}
+
 #signup-form {
     padding: 40px;
 }
@@ -26,6 +54,7 @@
 #address-input-container button {
     width: 60px;
     display: block;
+    margin-bottom: 0 !important;
     margin-left: 10px;
 }
 
