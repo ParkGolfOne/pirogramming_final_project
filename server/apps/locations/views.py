@@ -103,7 +103,7 @@ def location_distance (request, pk):
 #내 현재 위치 정보를 기반으로 한 가장 가까운 파크골프장 5곳
 def location_myplace (request):
     #템플릿에 골프장 모델의 인스턴스들의 좌표를 보내줌 -> 자바스크립트에서 처리하기 위해
-    positions = [[float(position.golf_latitude), float(position.golf_longitude)] for position in GolfLocation.objects.all()]
+    positions = [[position.golf_name, float(position.golf_latitude), float(position.golf_longitude)] for position in GolfLocation.objects.all()]
     position_json = json.dumps(positions)
     ctx = {
         'positions_list' : position_json
