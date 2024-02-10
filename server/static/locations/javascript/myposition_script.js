@@ -1,6 +1,41 @@
-var latitude = 0;
-var longitude = 0;
-var position_list = document.getElementById('position_list').innerText;
+//아래 함수에서 return한 두 배열을 하나의 배열로 묶어주기 -> 이로써 거리를 해당 골프장 이름, 좌표와 매칭시킬 수 있음 -> 거리를 정렬하면 그에 맞게 골프장 정보도 정렬
+function combineArrays(distances, positions_list){
+    const roundedDistances = distances.map(item => item.toFixed(2)); //계산된 거리를 소수 2자리 수로 반올림 해버리기
+    return positions_list.map((item, index) => [roundedDistances[index], item]);
+}
+
+function myplace_nearest_golf(){
+    const distances = [];
+
+    for (let i = 0 ; i < positions_list.length ; i++){
+        const r = 6372; // 지구의 반지름이라내요
+        const element = positions_list[i];
+        const lat1 = latitude * Math.PI / 180;
+        const lon1 = longitude * Math.PI / 180;
+        const lat2 = element[1] * Math.PI / 180;
+        const lon2 = element[2] * Math.PI / 180;
+
+        const diffLat = lat2 - lat1; 
+        const diffLon = lon2 - lon1; 
+
+        // 헤버사인 공식 사용
+        const a = Math.sin(diffLat / 2) * Math.sin(diffLat / 2) +
+                  Math.cos(lat1) * Math.cos(lat2) *
+                  Math.sin(diffLon / 2) * Math.sin(diffLon / 2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        const distance = r * c;
+
+        distances.push(distance); // 거리 반환후 배열 distances에 추가해주기
+    }
+
+    //뷰에서 넘겨준 모든 골프장 객체와 해당 골프장과 나의 현재 거리를 배열로 return
+    return {
+        distances : distances, 
+        positions_list : positions_list,
+    }
+
+}
+
 
 function get_my_location() {
     if (navigator.geolocation){
@@ -8,6 +43,7 @@ function get_my_location() {
     }
 }
 
+//내 위치를 찾는 위 함수의 콜백함수 -> 나의 현재위치를 지도에 표시해줌 + 나의 위치를 latitude와 longitude 변수에 할당하여 myplace_nearest_golf 함수에 넘겨줌
 function showPosition(position) {
     latitude = position.coords.latitude;
     longitude = position.coords.longitude;
@@ -26,36 +62,15 @@ function showPosition(position) {
         map: map,
     };
     var marker = new naver.maps.Marker(markPlace);
+    
+    //위에서 정의한 함수들을 실행 -> 나의 위치를 찾아 변수에 할당 -> 각 골프장 객체와 거리 계산 -> 거리와 매칭되는 골프장 정보를 2차원 배열에 묶기
+    const distance_data = myplace_nearest_golf();
+    const combined_data = combineArrays(distance_data.distances, distance_data.positions_list);
+
+    const organized_data = combined_data.sort((a, b) => a[0] - b[0]);
+    const final_five = organized_data.slice(0,5);
+    console.log(final_five);
 }
 
-function myplace_nearest_golf(){
-    const distances = [];
-    for (let i = 0 ; i < position_list.length ; i++){
-        const r = 6372; // 지구의 반지름이라내요
-        const element = position_list[i];
-        const lat1 = latitude * Math.PI / 180;
-        const lon1 = longitude * Math.PI / 180;
-        const lat2 = element[0] * Math.PI / 180;
-        const lon2 = element[1] * Math.PI / 180;
 
-        const diffLat = lat2 - lat1; 
-        const diffLon = lon2 - lon1; 
-
-        // 헤버사인 공식 사용
-        const a = Math.sin(diffLat / 2) * Math.sin(diffLat / 2) +
-                  Math.cos(lat1) * Math.cos(lat2) *
-                  Math.sin(diffLon / 2) * Math.sin(diffLon / 2);
-        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        const distance = r * c;
-
-        distances.push(distance); // 거리 반환후 배열 distances에 추가해주기
-    }
-    return distances;
-
-}
-
-console.log(latitude);
-console.log(longitude);
-naver.maps.onJSContentLoaded = get_my_location;
-const list = myplace_nearest_golf();
-console.log(list);
+naver.maps.onJSContentLoaded = get_my_location();
