@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>점수 입력</title>
     <link rel="stylesheet" href="{% static 'score/css/score_detail.css'%}" />
+    <link rel="stylesheet" href="{% static 'score/css/score_create.css'%}" />
   </head>
   <body>
     <a href="{% url 'score:score_main'%}">스코어 메인페이지 링크</a>
@@ -22,13 +23,17 @@
           alt="your image"
         />
       </div>
-      <input
-        type="file"
-        id="uploadedImage"
-        name="uploadedImage"
-        onchange="showImage(this)"
-        accept="image/*"
-      />
+      <div id="fileInputArea">
+        <div class="pictureIcon"></div>
+        <span>1개의 이미지를 끌어와 업로드하기!</span>
+        <input
+          type="file"
+          id="uploadedImage"
+          name="uploadedImage"
+          onchange="showImage(this)"
+          accept="image/*"
+        />
+      </div>
 
       <button class="takePictureInfo" onclick="extractPicture()">
         이미지 분석

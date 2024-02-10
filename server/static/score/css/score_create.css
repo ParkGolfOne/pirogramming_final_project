@@ -1,0 +1,45 @@
+/* 점수 이미지 분석 버튼 */
+
+.score-content > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 드래그 박스 */
+#fileInputArea {
+  width: 400px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid var(--green--medium--color);
+  margin: 5px;
+
+  display: flex;
+  flex-direction: column;
+}
+
+/* 드래그 박스 안 아이콘 */
+.pictureIcon {
+  height: 30px;
+  width: 30px;
+  background-image: url("/static/score/images/image-fill.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/* 드래그 박스 안 글씨 */
+#fileInputArea > span {
+  font-size: 15px;
+  margin: 5px;
+}
+
+/* 이미지 분석 버튼 */
+.takePictureInfo {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid var(--green--medium--color);
+  background-color: #ffffff;
+  cursor: pointer;
+  font-size: 15px;
+  margin: 5px;
+}

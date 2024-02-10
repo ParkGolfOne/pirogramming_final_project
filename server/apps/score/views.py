@@ -200,7 +200,9 @@ def score_scan(request):
             result = response.json()
 
             # 결과 추출 및 반환
+            # 받아온 텍스트 저장
             text = [field['inferText'] for field in result['images'][0]['fields']]
+            # 텍스트에서 결과값 뽑아내는 함수
             result = extractParScore(text)
             return JsonResponse({'par': result['par'], 'score' : result['score']})
         return JsonResponse({'error': 'No image file provided'}, status=400)
@@ -210,11 +212,13 @@ def extractParScore(inputText):
     par = []
     score = []
     mode = 0
-
-    for i in range(12,21):
-        par.append(inputText[i])
-    for j in range(23,32):
-        score.append(inputText[j])
+    try : 
+        for i in range(12,21):
+            par.append(inputText[i])
+        for j in range(23,32):
+            score.append(inputText[j])
+    except IndexError:
+         return {'par' : par, 'score': score,}
 
     return {'par' : par, 'score': score,}
         
