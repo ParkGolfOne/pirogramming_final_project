@@ -1,9 +1,16 @@
-/* 점수 이미지 분석 버튼 */
+/* 이미지 미리보기 */
 
+/* 점수 이미지 분석 버튼 */
 .score-content > div {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.takePictureInfo:hover {
+  background-color: var(--green--medium--color);
+  border: 1px solid var(--green--medium--color);
+  transition: 0.1s;
 }
 
 /* 드래그 박스 */
@@ -42,4 +49,49 @@
   cursor: pointer;
   font-size: 15px;
   margin: 5px;
+}
+
+/* 점수 증감 버튼 */
+.decBtn,
+.incBtn {
+  width: 30%;
+  padding: 5px;
+  font-size: 20px;
+  border: 1px solid lightgray;
+  background-color: #ffffff;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+}
+
+/* 점수 증감 버튼 호버 */
+.decBtn:hover,
+.incBtn:hover {
+  border: 1px solid var(--green--dark--color);
+}
+
+/* 점수 감소 버튼 */
+.decBtn {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+/* 점수 증가 버튼 */
+.incBtn {
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+/* 전체 스코어 블록 */
+.totalBox {
+  width: 100%;
+  padding: 5px;
+  font-size: 20px;
+  border: 1px solid lightgray;
+  background-color: #ffffff;
+  height: 36.36px;
+  border-radius: 10px;
 }

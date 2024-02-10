@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="{% static 'score/css/score_create.css'%}" />
   </head>
   <body>
-    <a href="{% url 'score:score_main'%}">스코어 메인페이지 링크</a>
+    <a href="{% url 'score:score_main'%}">스코어 홈</a>
     <h1>NEW SCORE</h1>
     <div class="score-content">
       <h4>점수표 사진을 넣어주시면, 최대한 자동입력해드립니다</h4>
@@ -67,226 +67,290 @@
         <div>점수</div>
         <div>1</div>
         <div>
+          <div class="decBtn" onclick="decPar(1)">-</div>
           <input
-            class="parInput"
-            type="text"
-            maxlength="1"
+            class="parInput par1"
+            type="number"
+            min="3"
+            max="5"
             name="par1"
             placeholder="3 ~ 5"
             required=""
+            value="4"
           />
-          <div class="errorMessage"></div>
+          <div class="incBtn" onclick="incPar(1)">+</div>
         </div>
         <div>
+          <div class="decBtn" onclick="decScore(1)">-</div>
           <input
-            class="scoreInput"
+            class="scoreInput score1"
             type="number"
             min="1"
             max="10"
             name="score1"
             placeholder="0 ~ 10"
             required=""
+            value="4"
           />
+          <div class="incBtn" onclick="incScore(1)">+</div>
           <div class="errorMessage"></div>
         </div>
         <div>2</div>
         <div>
+          <div class="decBtn" onclick="decPar(2)">-</div>
           <input
-            class="parInput"
-            type="text"
-            maxlength="1"
+            class="parInput par2"
+            type="number"
+            min="3"
+            max="5"
             name="par2"
             placeholder="3 ~ 5"
             required=""
+            value="4"
           />
+          <div class="incBtn" onclick="incPar(2)">+</div>
           <div class="errorMessage"></div>
         </div>
         <div>
+          <div class="decBtn" onclick="decScore(2)">-</div>
           <input
-            class="scoreInput"
+            class="scoreInput score2"
             type="number"
             min="1"
             max="10"
             name="score2"
             placeholder="0 ~ 10"
             required=""
+            value="4"
           />
+          <div class="incBtn" onclick="incScore(2)">+</div>
           <div class="errorMessage"></div>
         </div>
         <div>3</div>
         <div>
+          <div class="decBtn" onclick="decPar(3)">-</div>
           <input
-            class="parInput"
-            type="text"
-            maxlength="1"
+            class="parInput par3"
+            type="number"
+            min="3"
+            max="5"
             name="par3"
             placeholder="3 ~ 5"
             required=""
+            value="4"
           />
+          <div class="incBtn" onclick="incPar(3)">+</div>
           <div class="errorMessage"></div>
         </div>
         <div>
+          <div class="decBtn" onclick="decScore(3)">-</div>
           <input
-            class="scoreInput"
+            class="scoreInput score3"
             type="number"
             min="1"
             max="10"
             name="score3"
             placeholder="0 ~ 10"
             required=""
+            value="4"
           />
+          <div class="incBtn" onclick="incScore(3)">+</div>
           <div class="errorMessage"></div>
         </div>
         <div>4</div>
         <div>
+          <div class="decBtn" onclick="decPar(4)">-</div>
           <input
-            class="parInput"
-            type="text"
-            maxlength="1"
+            class="parInput par4"
+            type="number"
+            min="3"
+            max="5"
             name="par4"
             placeholder="3 ~ 5"
             required=""
+            value="4"
           />
+          <div class="incBtn" onclick="incPar(4)">+</div>
           <div class="errorMessage"></div>
         </div>
         <div>
+          <div class="decBtn" onclick="decScore(4)">-</div>
           <input
-            class="scoreInput"
+            class="scoreInput score4"
             type="number"
             min="1"
             max="10"
             name="score4"
             placeholder="0 ~ 10"
             required=""
+            value="4"
           />
+          <div class="incBtn" onclick="incScore(4)">+</div>
           <div class="errorMessage"></div>
         </div>
         <div>5</div>
         <div>
+          <div class="decBtn" onclick="decPar(5)">-</div>
           <input
-            class="parInput"
-            type="text"
-            maxlength="1"
+            class="parInput par5"
+            type="number"
+            min="3"
+            max="5"
             name="par5"
             placeholder="3 ~ 5"
             required=""
+            value="4"
           />
+          <div class="incBtn" onclick="incPar(5)">+</div>
           <div class="errorMessage"></div>
         </div>
         <div>
+          <div class="decBtn" onclick="decScore(5)">-</div>
           <input
-            class="scoreInput"
+            class="scoreInput score5"
             type="number"
             min="1"
             max="10"
             name="score5"
             placeholder="0 ~ 10"
             required=""
+            value="4"
           />
+          <div class="incBtn" onclick="incScore(5)">+</div>
           <div class="errorMessage"></div>
         </div>
         <div>6</div>
         <div>
+          <div class="decBtn" onclick="decPar(6)">-</div>
           <input
-            class="parInput"
-            type="text"
-            maxlength="1"
+            class="parInput par6"
+            type="number"
+            min="3"
+            max="5"
             name="par6"
             placeholder="3 ~ 5"
             required=""
+            value="4"
           />
+          <div class="incBtn" onclick="incPar(6)">+</div>
           <div class="errorMessage"></div>
         </div>
         <div>
+          <div class="decBtn" onclick="decScore(6)">-</div>
           <input
-            class="scoreInput"
+            class="scoreInput score6"
             type="number"
             min="1"
             max="10"
             name="score6"
             placeholder="0 ~ 10"
             required=""
+            value="4"
           />
+          <div class="incBtn" onclick="incScore(6)">+</div>
           <div class="errorMessage"></div>
         </div>
         <div>7</div>
         <div>
+          <div class="decBtn" onclick="decPar(7)">-</div>
           <input
-            class="parInput"
-            type="text"
-            maxlength="1"
+            class="parInput par7"
+            type="number"
+            min="3"
+            max="5"
             name="par7"
             placeholder="3 ~ 5"
             required=""
+            value="4"
           />
+          <div class="incBtn" onclick="incPar(7)">+</div>
           <div class="errorMessage"></div>
         </div>
         <div>
+          <div class="decBtn" onclick="decScore(7)">-</div>
           <input
-            class="scoreInput"
+            class="scoreInput score7"
             type="number"
             min="1"
             max="10"
             name="score7"
             placeholder="0 ~ 10"
             required=""
+            value="4"
           />
+          <div class="incBtn" onclick="incScore(7)">+</div>
           <div class="errorMessage"></div>
         </div>
         <div>8</div>
         <div>
+          <div class="decBtn" onclick="decPar(8)">-</div>
           <input
-            class="parInput"
-            type="text"
-            maxlength="1"
+            class="parInput par8"
+            type="number"
+            min="3"
+            max="5"
             name="par8"
             placeholder="3 ~ 5"
             required=""
+            value="4"
           />
+          <div class="incBtn" onclick="incPar(8)">+</div>
           <div class="errorMessage"></div>
         </div>
         <div>
+          <div class="decBtn" onclick="decScore(8)">-</div>
           <input
-            class="scoreInput"
+            class="scoreInput score8"
             type="number"
             min="1"
             max="10"
             name="score8"
             placeholder="0 ~ 10"
             required=""
+            value="4"
           />
+          <div class="incBtn" onclick="incScore(8)">+</div>
           <div class="errorMessage"></div>
         </div>
         <div>9</div>
         <div>
+          <div class="decBtn" onclick="decPar(9)">-</div>
           <input
-            class="parInput"
-            type="text"
-            maxlength="1"
+            class="parInput par9"
+            type="number"
+            min="3"
+            max="5"
             name="par9"
             placeholder="3 ~ 5"
             required=""
+            value="4"
           />
+          <div class="incBtn" onclick="incPar(9)">+</div>
           <div class="errorMessage"></div>
         </div>
         <div>
+          <div class="decBtn" onclick="decScore(9)">-</div>
           <input
-            class="scoreInput"
+            class="scoreInput score9"
             type="number"
             min="1"
             max="10"
             name="score9"
             placeholder="0 ~ 10"
             required=""
+            value="4"
           />
+          <div class="incBtn" onclick="incScore(9)">+</div>
           <div class="errorMessage"></div>
         </div>
         <div>합계</div>
-        <div>/</div>
-        <div>/</div>
+        <div class="totalParBox totalBox">36</div>
+        <div class="totalScoreBox totalBox">36</div>
       </div>
       <input class="scoreSubmitBtn" type="submit" value="점수 등록" />
     </form>
+    <!-- 숫자 증감 처리 -->
+    <script src="{% static 'score/js/scoreChange.js' %}"></script>
     <!-- 이미지추출 -->
     <script src="{% static 'score/js/picture.js' %}"></script>
     <!-- 장소 입력방식 변경 -->

@@ -25,7 +25,7 @@ pictureInputArea.addEventListener("dragover", function (e) {
   // 제출 혹은 업로드 방지를 하기 위해서 아래의 preventDefault 사용
   e.preventDefault();
 
-  this.style.backgroundColor = "green";
+  this.style.backgroundColor = "#789461";
 });
 
 /* Drag 한 포인터가 박스 밖으로 나갈 때 */
