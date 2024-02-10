@@ -133,14 +133,19 @@ def login(request):
                        backend='apps.users.backends.CustomModelBackend')
             return redirect('users:main', user.id)
         else:
+            error_message = list(map(str, form.error_messages.values()))
+            merged_string = ' '.join(error_message)
+            error = merged_string.replace('%(username)s', "유저")
             context = {
                 'form': form,
+                'message': error
             }
             return render(request, template_name='users/users_login.html', context=context)
     else:
         form = AuthenticationForm()
         context = {
             'form': form,
+            'message': None
         }
         return render(request, template_name='users/users_login.html', context=context)
 
