@@ -2,57 +2,8 @@
 <link rel="stylesheet" href="{% static 'users/css/user.css' %}" />
 <title>마이페이지</title>
 {% endblock %} {% block content %}
-<h2 class="users-maintitle">마이페이지</h2>
 {% if user.is_authenticated %} {% if now_user.id == pk %}
-<h1>{{user.nickname}}님 페이지</h1>
-<div class="user-mypage-container">
-  <div class="user-mypage">
-    <h3 class="user-mypage-title">좋아요 누른 글</h3>
-    {% for like in my_likes%}
-    <div>
-      <a
-        href="{% url 'communitys:post_detail' like.post.board.id like.post.id%}"
-        ><span>{{like.post.title}}</span
-        ><br><span>{{like.post.writer.username}}</span></a
-      >
-    </div>
-    {% endfor %}
-  </div>
-  <div class="user-mypage">
-    <h3 class="user-mypage-title">스크랩한 글</h3>
-    {% for scrap in my_scraps%}
-    <div>
-      <a
-        href="{% url 'communitys:post_detail' scrap.post.board.id scrap.post.id%}"
-        ><span>{{scrap.post.title}}</span
-        ><br><span>{{scrap.post.writer.username}}</span></a
-      ><br>
-    </div>
-    {% endfor %}
-   </div>
-    <div class="user-mypage">
-      <h3 class="user-mypage-title">내가 작성한 글</h3>
-      {% for post in my_posts%}
-      <div>
-        <a href="{% url 'communitys:post_detail' post.board.id post.id%}"
-          ><span>{{post.title}}</span><br>
-          <span>{{post.writer.username}}</span></a
-        >
-      </div>
-      {% endfor %}
-
-  </div>
-  <div class="user-mypage">
-    <h3 class="user-mypage-title">골프장 즐겨찾기</h3>
-    {% for location in my_locations%}
-    <div>
-      <a href="{% url 'locations:detail' location.ground.id%}"
-        ><span>{{location.ground.golf_name}}</span></a
-      >
-    </div>
-    {% endfor %}
-  </div>
-</div>
+<h1>{{user.nickname}}님 마이페이지</h1>
 <div class="user-btn-container">
   <div class="user-btn-box">
     <h3 class="user-btn-title">친구</h3>
@@ -63,14 +14,70 @@
       >내 친구 보기</a
     >
   </div>
-    <div class="user-btn-box">
-      <h3 class="user-btn-title">계정</h3>
-      <a href="{% url 'users:update' user.pk %}" class="user-mypage-btn">회원정보 수정</a>
-      <form method="post" action="{% url 'users:delete' user.pk %}" class="user-mypage-btn">
-        <button type="submit">회원 탈퇴</button>
-      </form>
-    </div>
+  <div class="user-btn-box">
+    <h3 class="user-btn-title">계정</h3>
+    <a href="{% url 'users:update' user.pk %}" class="user-mypage-btn">회원정보 수정</a>
+    <form method="post" action="{% url 'users:delete' user.pk %}" class="user-mypage-btn">
+      <button type="submit">회원 탈퇴</button>
+    </form>
   </div>
+</div>
+<!-- <a href="" class="mypage-interest"><div class="like-icon"></div>좋아요 누른 글</a>
+<a href="" class="mypage-interest"><div class="scrap-icon"></div>스크랩한 글</a>
+<a href="" class="mypage-interest"><div class="write-icon"></div>내가 작성한 글</a>
+<a href="" class="mypage-interest"><div class="bookmark-icon"></div>골프장 즐겨찾기</a> -->
+
+<ul class="user-btn-option">
+  <li data-target="likes">좋아요</li>
+  <li data-target="scraps">스크랩</li>
+  <li data-target="posts">나의 글</li>
+  <li data-target="bookmarks">즐겨찾기</li>
+</ul>
+
+
+<div class="user-mypage-container">
+  <div class="user-mypage" id="likes">
+    {% for like in my_likes%}
+    <div>
+      <a
+        href="{% url 'communitys:post_detail' like.post.board.id like.post.id%}"
+        ><span>{{like.post.title}}</span
+        ><br><span>{{like.post.writer.username}}</span></a
+      >
+    </div>
+    {% endfor %}
+  </div>
+  <div class="user-mypage" id="scraps">
+    {% for scrap in my_scraps%}
+    <div>
+      <a
+        href="{% url 'communitys:post_detail' scrap.post.board.id scrap.post.id%}"
+        ><span>{{scrap.post.title}}</span
+        ><br><span>{{scrap.post.writer.username}}</span></a
+      ><br>
+    </div>
+    {% endfor %}
+   </div>
+    <div class="user-mypage" id="posts">
+      {% for post in my_posts%}
+      <div>
+        <a href="{% url 'communitys:post_detail' post.board.id post.id%}"
+          ><span>{{post.title}}</span><br>
+          <span>{{post.writer.username}}</span></a
+        >
+      </div>
+      {% endfor %}
+  </div>
+  <div class="user-mypage" id="bookmarks">
+    {% for location in my_locations%}
+    <div>
+      <a href="{% url 'locations:detail' location.ground.id%}"
+        ><span>{{location.ground.golf_name}}</span></a
+      >
+    </div>
+    {% endfor %}
+  </div>
+</div>
 
 {%else%}
 <h1>{{user.nickname}}님 페이지</h1>
@@ -81,3 +88,6 @@
 <div><a href="{% url 'social:begin' 'naver' %}">네이버 로그인</a></div>
 <div><a href="{% url 'users:signup' %}">회원가입</a></div>
 {% endif %} {% endblock %}
+{% block script %}
+<script src="{% static 'users/js/mypage.js' %}"></script>
+{%endblock%}

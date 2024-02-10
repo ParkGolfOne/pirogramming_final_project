@@ -131,8 +131,10 @@ body{
     font-size: 1.8rem;
     width: 100%;
 }
-
+h1, h2, h3, h4, h5{
+    font-weight: bold;    
+}
 h1{
-    font-size: 40px;
-    font-weight: old;    
+    font-size: 30px;
+    font-weight: bold;    
 }

@@ -12,9 +12,8 @@
 
 #address-input-container {
     display: flex;
-    gap: 10px;
     justify-content: space-between;
-    align-items: center;
+    align-items: baseline;
     text-align: center;
 }
 
@@ -27,6 +26,7 @@
 #address-input-container button {
     width: 60px;
     display: block;
+    margin-left: 10px;
 }
 
 #update-form .selectbox,
