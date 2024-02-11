@@ -57,18 +57,46 @@ function showPosition(position) {
     };
     var map = new naver.maps.Map('myposition_map', mapOptions);
 
+    var bounds = new naver.maps.LatLngBounds();
+
+    var myLocation = new naver.maps.LatLng(latitude, longitude);
+
     var markPlace = {
-        position : new naver.maps.LatLng(latitude, longitude),
+        position : myLocation,
         map: map,
+        icon : {
+            content : '<div style="width: 14px; height: 14px; background-color: red; border: 2px solid #fff; border-radius: 50%;"></div>',
+            anchor : new naver.maps.Point(7,7),
+        }
     };
     var marker = new naver.maps.Marker(markPlace);
+
+    bounds.extend(myLocation);
     
     //위에서 정의한 함수들을 실행 -> 나의 위치를 찾아 변수에 할당 -> 각 골프장 객체와 거리 계산 -> 거리와 매칭되는 골프장 정보를 2차원 배열에 묶기
     const distance_data = myplace_nearest_golf();
     const combined_data = combineArrays(distance_data.distances, distance_data.positions_list);
 
+    // 2차원 배열의 첫번째 요소(거리)를 기준으로 오름차순 정렬
     const organized_data = combined_data.sort((a, b) => a[0] - b[0]);
+
+    //가장 거리가 작은 (가까운) 5개의 요소만 최종적으로 저장
     const final_five = organized_data.slice(0,5);
+    
+    final_five.map(item => {
+        const golfLat = item[1][1];
+        const golfLon = item[1][2];
+        const markerPositions = new naver.maps.LatLng(golfLat, golfLon);
+
+        new naver.maps.Marker({
+            position : markerPositions,
+            map: map,
+        });
+        bounds.extend(markerPositions);
+    });
+    
+    //모든 마커가 보일 수 있도록 지도 zoom 뷰 조절
+    map.fitBounds(bounds);
     console.log(final_five);
 }
 
