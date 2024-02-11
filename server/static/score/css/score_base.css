@@ -1,0 +1,25 @@
+.scoreHomeIcon {
+  width: 30px;
+  height: 30px;
+  background-image: url("/static/score/images/home-base.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  transition: 0.3s;
+}
+
+.scoreHomeLink:hover > .scoreHomeIcon {
+  background-image: url("/static/score/images/home-fill.png");
+}
+
+.scoreHomeLink {
+  margin: 10px;
+  font-size: 20px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+
+  padding: 5px;
+  margin: 10px 0 15px;
+}

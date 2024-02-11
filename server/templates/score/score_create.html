@@ -7,9 +7,13 @@
     <title>점수 입력</title>
     <link rel="stylesheet" href="{% static 'score/css/score_detail.css'%}" />
     <link rel="stylesheet" href="{% static 'score/css/score_create.css'%}" />
+    <link rel="stylesheet" href="{% static 'score/css/score_base.css'%}" />
   </head>
   <body>
-    <a href="{% url 'score:score_main'%}">스코어 홈</a>
+    <a href="{% url 'score:score_main'%}" class="scoreHomeLink"
+      ><div class="scoreHomeIcon"></div>
+      <span>스코어 홈</span></a
+    >
     <h1>NEW SCORE</h1>
     <div class="score-content">
       <h4>점수표 사진을 넣어주시면, 최대한 자동입력해드립니다</h4>
@@ -59,7 +63,10 @@
           <option value="{{location.golf_name}}">{{location.golf_name}}</option>
           {% endfor%}
         </select>
-        <button class="" onclick="changeLocationInput()">검색하기</button>
+        <button
+          class="changeLocationInput"
+          onclick="changeLocationInput()"
+        ></button>
       </div>
       <div class="scoreGrid">
         <div>홀</div>

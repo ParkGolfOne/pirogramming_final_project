@@ -7,9 +7,13 @@
     <title>점수 수정</title>
     <link rel="stylesheet" href="{% static 'score/css/score_detail.css'%}" />
     <link rel="stylesheet" href="{% static 'score/css/score_create.css'%}" />
+    <link rel="stylesheet" href="{% static 'score/css/score_base.css'%}" />
   </head>
   <body>
-    <a href="{% url 'score:score_main'%}">스코어 메인페이지 링크</a>
+    <a href="{% url 'score:score_main'%}" class="scoreHomeLink"
+      ><div class="scoreHomeIcon"></div>
+      <span>스코어 홈</span></a
+    >>
     <h1>점수 수정 페이지</h1>
     <form method="POST" action="" enctype="multipart/form-data">
       {% csrf_token %}

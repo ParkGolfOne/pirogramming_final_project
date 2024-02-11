@@ -1,24 +1,27 @@
-{% extends 'base.html' %}
-{% load static %}
-{% block content %}
+{% extends 'base.html' %} {% load static %} {% block content %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>점수 메인</title>
+    <link rel="stylesheet" href="{% static 'score/css/score_main.css'%}" />
     <link rel="stylesheet" href="{% static 'score/css/score_list.css'%}" />
-</head>
-<body>
-    <h1>Main Score Page</h1>
+  </head>
+  <body>
+    <h1 class="mainPageHeader">Main Score Page</h1>
     <div class="scoreBanner"></div>
     {% if user.is_authenticated %}
-    <a href="{% url 'score:score_history' user.id %}"><div class="scoreMainBtn">나의 기록</div></a>
-    <a href="{% url 'score:score_input' user.id %}"><div class="scoreMainBtn">점수 입력하기</div></a>
+    <a href="{% url 'score:score_history' user.id %}"
+      ><div class="scoreMainBtn">나의 기록</div></a
+    >
+    <a href="{% url 'score:score_input' user.id %}"
+      ><div class="scoreMainBtn">점수 입력하기</div></a
+    >
     {% else %}
     <h2>로그인하여 당신의 스코어를 기록해보세요!</h2>
     <a href="{% url 'users:login'%}"><div class="scoreMainBtn">로그인</div></a>
     {% endif %}
-</body>
+  </body>
 </html>
 {% endblock %}

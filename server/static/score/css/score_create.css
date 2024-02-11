@@ -95,3 +95,53 @@
   height: 36.36px;
   border-radius: 10px;
 }
+
+/* 장소 선택하는 단일 줄 */
+.locationInputArea {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+
+/* 장소 선택 select */
+.locationInfo {
+  padding: 5px;
+  border-radius: 10px;
+  margin: 10px 0;
+  width: 250px;
+  position: relative;
+}
+
+/* 장소 선택을 검색으로 바꾸는 버튼 */
+.changeLocationInput {
+  height: 30px;
+  width: 30px;
+  background-image: url("/static/score/images/search-eye-line.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  transition: 0.3s;
+}
+
+.changeLocationInput:hover {
+  filter: brightness(1.5);
+}
+
+.listArea {
+  position: relative;
+}
+
+/* 검색 자동완성 후보 리스트 */
+.matchLocation {
+  position: absolute;
+  top: 0px;
+  z-index: 5;
+  gap: 10px;
+
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  font-size: 15px;
+}

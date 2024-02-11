@@ -6,10 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>세부 점수</title>
     <link rel="stylesheet" href="{% static 'score/css/score_detail.css'%}" />
+    <link rel="stylesheet" href="{% static 'score/css/score_base.css'%}" />
     <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
   </head>
   <body>
-    <a href="{% url 'score:score_main'%}">스코어 메인페이지 링크</a>
+    <a href="{% url 'score:score_main'%}" class="scoreHomeLink"
+      ><div class="scoreHomeIcon"></div>
+      <span>스코어 홈</span></a
+    >
     <h1>점수 디테일 페이지</h1>
     <div class="scoreGrid">
       <div>홀</div>
