@@ -19,24 +19,28 @@
       justify-content: space-around;
     }
     .coures_li{
+      width: 20%;
       display: flex;
       flex-direction: column;
     }
     
-    .coures_li > div{
-        width: 150px;
-        border :1px solid lightgreen;
-        margin: 10px;
-        text-align: center;
-        display:flex;
-        align-items: center;
-        justify-content: center;
-        height: 30px;
+    .coures_li > div > input{
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      box-sizing: border-box;
+      background-color: #ffffff;
     }
 
-    .coures_li > div >  input {
-        width: 90px;
-        border:none;
+    .coures_li > div {
+      width: 100px;
+      height: 38px;
+      margin: 10px;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
   </style>
 {% endblock %}
