@@ -28,7 +28,7 @@ requestLike.onreadystatechange = () => {
         newnum = Number(likenum) - 1;
       }
 
-      element.innerHTML = `좋아요 ${newnum}`;
+      element.innerHTML = `${newnum}`;
     }
   }
 };
@@ -63,7 +63,7 @@ requestScrap.onreadystatechange = () => {
         newnum = Number(scrapnum) - 1;
       }
 
-      element.innerHTML = `스크랩 ${newnum}`;
+      element.innerHTML = `${newnum}`;
     }
   }
 };

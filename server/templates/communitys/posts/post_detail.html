@@ -18,28 +18,28 @@
         <span class="bxs--right-arrow"></span>
       </a>
     </div>
-    
     <div class="post-detail-container">
-      <h1 class="post-detail-title">{{post.title}}</h1>
-      <a href="{% url 'users:main' post.writer.id %}" class="post-detail-writer"
-        ><h3>{{post.writer}}</h3></a
-      >
+      <div class="post-info">
+        <h1 class="post-detail-title">{{post.title}}</h1>
+        <div class="post-write-info">
+          <div>
+            <span class="lets-icons--user-alt-fill"></span>
+          <div>
+            <a href="{% url 'users:main' post.writer.id %}" class="post-detail-writer"
+            ><h4>{{post.writer}}</h4></a>
+            <span>{{post.created_date}}</span>
+            <span class="view">조회 {{post.view_num}}</span>
+          </div>
+          </div>
+        </div>
+      </div>
       {% if post.photo.url != '' %}
       <img src="{{post.photo.url}}" alt="게시글 이미지" />
-      {% else %}
-      <img src="{% static 'posts/images/no_images.png' %}" alt="대체 텍스트" />
       {% endif %}
-
       <h2 class="my-3">{{ post.content|safe }}</h2>
-
       <div>[공유하기 넣을 곳]</div>
-      <div class="post_buttons">
-        <div>
-          <div class="view">조회수 {{post.view_num}}</div>
-          <div class="likeNum-{{post.id}}">좋아요 {{post.like_num}}</div>
-          <div class="scrapNum-{{post.id}}">스크랩 {{post.scrap_num}}</div>
-        </div>
-        <div>
+      <div class="post-user">
+        <div class="post_buttons">
           {% if user.is_authenticated %} {%if liked%}
           <button
             class="postLikeBtn like-{{post.id}} liked"
@@ -50,7 +50,9 @@
             class="postLikeBtn like-{{post.id}}"
             onclick="pushLike({{post.id}})"
           ></button>
-          {% endif %} {%if scraped%}
+          {% endif %} 
+          <div class="likeNum-{{post.id}}"> {{post.like_num}}</div>
+          {%if scraped%}
           <button
             class="postScrapBtn scrap-{{post.id}} scraped"
             onclick="pushScrap({{post.id}})"
@@ -60,15 +62,31 @@
             class="postScrapBtn scrap-{{post.id}}"
             onclick="pushScrap({{post.id}})"
           ></button>
-          {% endif %} {% endif %}
+          {% endif %} <div class="scrapNum-{{post.id}}"> {{post.scrap_num}}</div>
+          {% else %}
+          <div class="likeNum-{{post.id}}"><span class="material-symbols--thumb-up"></span> {{post.like_num}}</div>
+          <div class="scrapNum-{{post.id}}"><span class="tdesign--star-filled"></span> {{post.scrap_num}}</div>
+          {% endif %}
         </div>
+        {% if post.writer == now_user %}
+          <div class="post-detail-btns">
+            <form
+              action="{% url 'communitys:post_delete' bid post.pk %}"
+              method="POST"
+            >
+              {%csrf_token%}
+              <a
+                href="{% url 'communitys:post_update' bid post.pk %}"
+                class="btn btn-primary"
+                >수정하기</a
+              >
+              <button type="submit" class="post-delete-btn">삭제하기</button>
+            </form>
+          </div>
+          {% endif %}
       </div>
-      {% if post.writer == now_user %}
+      <!-- {% if post.writer == now_user %}
       <div class="post-detail-btns">
-        <div class="post-date">
-          <p>작성일: {{post.created_date}}</p>
-          <p>수정일: {{post.updated_date}}</p>
-        </div>
         <form
           action="{% url 'communitys:post_delete' bid post.pk %}"
           method="POST"
@@ -82,7 +100,7 @@
           <button type="submit" class="post-delete-btn">삭제하기</button>
         </form>
       </div>
-      {% endif %}
+      {% endif %} -->
       <div class="commentSection">
         {% if comments %} {% for comment in comments%}
         <div class="a_comment Cid-{{comment.id}}">

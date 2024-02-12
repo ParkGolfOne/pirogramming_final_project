@@ -1,4 +1,7 @@
 /* post_create.html과 post_update.html에 함께 사용하고 있음 */
+.post-create-container {
+    width: 100%;
+}
 .post-create-form input[type="text"] {
     width: 100%;
     padding: 10px;
@@ -6,6 +9,10 @@
     border-radius: 10px;
     box-sizing: border-box;
     background-color: #ffffff;
+}
+.post-create-form h1,
+.post-create-container h1 {
+    text-align: center;
 }
 .post-create-form > div {
     padding: 10px;
@@ -25,4 +32,36 @@
     background-color: var(--green--medium--color);
     border: 1px solid var(--green--medium--color);
     transition: 0.1s;
+}
+.before-icons {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+.before-icon {
+    display: flex;
+    font-size: 25px;
+}
+.bxs--left-arrow {
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='m4.431 12.822l13 9A1 1 0 0 0 19 21V3a1 1 0 0 0-1.569-.823l-13 9a1.003 1.003 0 0 0 0 1.645'/%3E%3C/svg%3E");
+}
+  
+.bxs--right-arrow {
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='m4.431 12.822l13 9A1 1 0 0 0 19 21V3a1 1 0 0 0-1.569-.823l-13 9a1.003 1.003 0 0 0 0 1.645'/%3E%3C/svg%3E");
+    transform: scaleX(-1);
+}
+@media screen and (min-width: 700px) {
+    .post-create-container {
+        width: 70%;
+    }
 }

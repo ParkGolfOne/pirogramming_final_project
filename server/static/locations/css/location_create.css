@@ -15,9 +15,11 @@
     padding: 10px;
     border-radius: 5px;
     border: 1px solid var(--green--medium--color);
-    background-color: #ffffff;
+    background-color: var(--green--bright--color);
     cursor: pointer;
     width: 100%;
+    color: white;
+    font-size: 15px;
 }
 .location-form-btn:hover {
     background-color: var(--green--medium--color);
