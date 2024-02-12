@@ -242,6 +242,7 @@ def post_detail(request, pk, bid):
     # all_post = user.post_set.all()
 
     # HTML 에 전달할 정보
+    # Tony: Post에 Foreign Key로 묶여져있어서, post 객체만 전달해도 comments, liked, scraped 정보 전달이 가능하지 않나요?
     context = {
         "post" : post,
         "bid" : bid,
@@ -328,6 +329,7 @@ def sort_post(request, bid):
 def comment_create(request):
     print(request.body)
     req = json.loads(request.body)
+    # Tony: 만약 키에 해당하는 값이 없으면 에러가 발생하지 않나요?
     post_id = req["post_id"]
     content = req["content"]
     commenter = request.user
@@ -346,6 +348,7 @@ def comment_create(request):
 @transaction.atomic
 def reply_create(request):
     req = json.loads(request.body)
+    # Tony: 만약 키에 해당하는 값이 없으면 에러가 발생하지 않나요?
     post_id = req["post_id"]
     content = req["content"]
     parent_comment_id = req["parent_comment_id"]
@@ -381,6 +384,7 @@ def reply_list(request):
 @transaction.atomic
 def comment_delete(request, pk):
     req = json.loads(request.body)
+    # Tony: 만약 키에 해당하는 값이 없으면 에러가 발생하지 않나요?
     cid = req["comment_id"]
 
     try:
@@ -398,6 +402,7 @@ def comment_delete(request, pk):
 @transaction.atomic
 def comment_update(request, pk):
     req = json.loads(request.body)
+    # Tony: 만약 키에 해당하는 값이 없으면 에러가 발생하지 않나요?
     cid = req["comment_id"]
     content = req["content"]
 
@@ -424,6 +429,7 @@ def comment_update(request, pk):
 # 기능 : 게시글 좋아요
 @csrf_exempt
 @transaction.atomic
+# Tony: CamelCase vs snake_head 명명법
 def pushPostLike(request):
     req = json.loads(request.body)
     post_id = req["post_id"]
@@ -452,6 +458,7 @@ def pushPostLike(request):
 # 기능 : 게시글 좋아요
 @csrf_exempt
 @transaction.atomic
+# Tony: CamelCase vs snake_head 명명법
 def pushCommentLike(request):
     pass
     
@@ -461,6 +468,7 @@ def pushCommentLike(request):
 ###########################################################
 @csrf_exempt
 @transaction.atomic
+# Tony: CamelCase vs snake_head 명명법
 def pushScrap(request):
     req = json.loads(request.body)
     post_id = req["post_id"]
