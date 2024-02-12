@@ -3,7 +3,6 @@
 const requestUserScore = new XMLHttpRequest();
 const requestFilterScore = new XMLHttpRequest();
 const locationName = document.querySelector(".locationInfo");
-const userId = document.querySelector(".userId");
 const scoreList = document.querySelector(".scoreList");
 // 정렬 옵션 부분 가져오기
 const sortType = document.querySelector(".sortSelect");
@@ -18,9 +17,6 @@ function getScoreInfo(flag) {
   if (myChart !== null) {
     myChart.destroy();
   }
-
-  //유저 아이디 가져오기 (접속자 기준 x)
-  user_id = userId.innerHTML;
 
   //선택한 골프장 가져오기
   let location_name = locationName.value;
@@ -85,9 +81,45 @@ requestUserScore.onreadystatechange = () => {
           },
         ],
       };
-
+      // 차트 등장 애니메이션을 위한 설정
+      const totalDuration = 300;
+      const delayBetweenPoints = totalDuration / data.length;
+      const previousY = (ctx) =>
+        ctx.index === 0
+          ? ctx.chart.scales.y.getPixelForValue(100)
+          : ctx.chart
+              .getDatasetMeta(ctx.datasetIndex)
+              .data[ctx.index - 1].getProps(["y"], true).y;
       // 차트 옵션 설정
       const chartOptions = {
+        animation: {
+          x: {
+            type: "number",
+            easing: "easeInQuad",
+            duration: delayBetweenPoints,
+            from: NaN, // the point is initially skipped
+            delay(ctx) {
+              if (ctx.type !== "data" || ctx.xStarted) {
+                return 0;
+              }
+              ctx.xStarted = true;
+              return ctx.index * delayBetweenPoints;
+            },
+          },
+          y: {
+            type: "number",
+            easing: "easeInQuad",
+            duration: delayBetweenPoints,
+            from: previousY,
+            delay(ctx) {
+              if (ctx.type !== "data" || ctx.yStarted) {
+                return 0;
+              }
+              ctx.yStarted = true;
+              return ctx.index * delayBetweenPoints;
+            },
+          },
+        },
         responsive: false,
         plugins: {
           legend: {

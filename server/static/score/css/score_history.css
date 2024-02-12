@@ -1,3 +1,4 @@
+
 .before-icon {
   display: flex;
   width: 100%;
@@ -11,6 +12,7 @@
   background-size: 100% 100%;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='m4.431 12.822l13 9A1 1 0 0 0 19 21V3a1 1 0 0 0-1.569-.823l-13 9a1.003 1.003 0 0 0 0 1.645'/%3E%3C/svg%3E");
 }
+
 .scoreList {
   display: flex;
   flex-direction: column;
@@ -26,10 +28,43 @@
   margin: 10px;
   background-color: var(--green--pale--color);
   width: 100%;
+
+  transition: 0.4s;
 }
+
+.scoreBox:hover {
+  scale: 105%;
+  box-shadow: 3px 3px 3px;
+}
+
 #myChart {
-  width: 100% !important;
+  width: 500px;
+  height: 150px;
+
+  transition: 0.3s;
 }
+
+#myChart:hover {
+  scale: 105%;
+}
+
+/* 전체 차트 영역 */
+.chartArea {
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 1px 1px 2px;
+  border: none;
+
+  width: 70%;
+  padding: 20px;
+  margin: 20px 0 15px;
+
+  display: flex;
+  align-items: center;
+
+}
+
+/* 점수 추가 버튼 */
 .score-history-btn {
   padding: 10px;
   border-radius: 5px;
@@ -40,14 +75,19 @@
   display: flex;
   justify-content: center;
   align-items: center;
+
   color: white !important;
   font-size: 15px;
   width: 400px;
 }
+
 .score-history-btn:hover {
   background-color: var(--green--medium--color);
   border: 1px solid var(--green--medium--color);
-  transition: 0.1s;
+  transition: 0.3s;
+}
+
+
 }
 .sortSelect-box {
   width: 100%;
@@ -69,3 +109,18 @@
     width: 70%;
   }
 }
+
+
+/* 점수 추가 버튼 안의 아이콘 */
+/* .addBtnIcon {
+  background-image: url("/static/score/images/addBox-fill.png");
+  transition: 0.1s;
+  width: 20px;
+  height: 20px;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+.score-history-btn:hover > .addBtnIcon {
+  background-image: url("/static/score/images/addBox-base.png");
+} */
+

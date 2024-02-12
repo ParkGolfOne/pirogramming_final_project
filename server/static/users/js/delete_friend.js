@@ -1,4 +1,4 @@
-const friendListField = document.getElementById("friend_list");
+const friendListField = document.querySelector(".friend-container");
 
 function deleteFriend(friend_id, pk) {
   const form = document.getElementById("delete_friend-form");
@@ -16,21 +16,37 @@ function deleteFriend(friend_id, pk) {
       console.log("data", data);
       updateFriendList(data, userId);
     }
-  }
+  };
   xhr.send(formData);
 }
 
 function updateFriendList(data, userId) {
-    friendListField.innerHTML = "";
-    data.forEach((friend) => {
-        const li = document.createElement("li");
-        li.innerHTML = `사용자 id: ${friend.username} 사용자 닉네임: ${friend.nickname}`;
-        const form = document.createElement("form");
-        form.setAttribute("method", "post");
-        form.setAttribute("action", `/users/delete_friend/${userId}/`);
-        form.setAttribute("id", "delete_friend-form");
-        form.innerHTML = `<input type="hidden" name="friend_id" value=${friend.id}><button type="button" onclick="deleteFriend(${friend.id}, ${userId})">친구 삭제</button>`;
-        li.appendChild(form);
-        friendListField.appendChild(li);
-    });
+  friendListField.innerHTML = "";
+  data.forEach((friend) => {
+    const div = document.createElement("div");
+    div.classList.add("row", "justify-content-center");
+    const div1 = document.createElement("div");
+    div1.classList.add("col-9");
+    div1.innerHTML = `<p>ID: ${friend.username}</p>
+        <p>닉네임: ${friend.nickname}</p>`;
+    const div2 = document.createElement("div");
+    div2.classList.add("col-2");
+    const form = document.createElement("form");
+    form.setAttribute("method", "post");
+    form.setAttribute("action", `/users/delete_friend/${userId}/`);
+    form.setAttribute("id", "delete_friend-form");
+    form.innerHTML = `<input type="hidden" name="friend_id" value=${friend.id}><button type="button" onclick="deleteFriend(${friend.id}, ${userId})">친구 삭제</button>`;
+
+    div2.appendChild(form);
+    div.appendChild(div1);
+    div.appendChild(div2);
+
+    friendListField.appendChild(div);
+  });
 }
+
+document
+  .getElementById("addFriendButton")
+  .addEventListener("click", function () {
+    window.location.href = `/users/add_friend/${userId}`;
+  });

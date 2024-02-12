@@ -1,5 +1,4 @@
-// require("dotenv").config();
-// Kakao.init(process.env.KAKAO_LINK_API_KEY);
+Kakao.init("7d2565115739c70be1903fea71d797fb");
 
 //점수 공유
 function shareKakaoScore() {

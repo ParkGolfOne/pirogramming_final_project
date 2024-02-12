@@ -3,6 +3,7 @@
 {% endblock %} {% block content %}
 <form method="POST" action="" class="login-form">
   {% csrf_token %} {% if message != None %}
+  <!--로그인 에러 메세지 띄우기-->
   <script>
     window.onload = function () {
       var errorMessage = "{{message}}";
@@ -11,6 +12,7 @@
       }
     };
   </script>
+  <!---->
   {% else %} {% endif %}
   {{ form }}
   <button class="user-btn">로그인</button>

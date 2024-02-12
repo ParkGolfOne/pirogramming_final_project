@@ -1,25 +1,36 @@
-{% extends 'base.html' %}
-{% load static %}
-{% block content %}
-<div>
-    <h2>{{user.nickname}} 님의 현재 친구 목록</h2>
-    <ul id="friend_list">
-    {% for friend in friends %}
-      <li>사용자 id: {{ friend.username }} 사용자 닉네임: {{ friend.nickname }}
-      <form action="{% url 'users:delete_friend' pk %}" method="post" id="delete_friend-form">
-        {% csrf_token %}
-        <input type="hidden" name="friend_id" value="{{ friend.id }}">
-        <button type="button" onclick="deleteFriend({{ friend.id }}, {{ pk }})">친구 삭제</button>
-      </form>
-      </li>
-    {% endfor %}
-  </ul>
-  <a href="{% url 'users:add_friend' pk %}">친구 추가하러 가기</a>
-</div>
-{% endblock content %}
+{% extends 'base.html' %} {% load static %} {% block head %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+  integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+<link rel="stylesheet" href="{% static 'users/css/friend_list.css'%}" />
+<link rel="stylesheet" href="{% static 'users/css/user.css'%}" />
+{% endblock head %} {% block content %}
 
-{% block script %}
-<script>var userId={{pk}}</script>
+<div class="content-container">
+  <h2>{{user.nickname}} 님의 현재 친구 목록</h2>
+  <div class="friend-container">
+    {% for friend in friends %}
+    <div class="row justify-content-center">
+      <div class="col-9">
+        <p>ID: {{ friend.username }}</p>
+        <p>닉네임: {{ friend.nickname }}</p>
+      </div>
+      <div class="col-2">
+        <form action="{% url 'users:delete_friend' pk %}" method="post" id="delete_friend-form">
+          {% csrf_token %}
+          <input type="hidden" name="friend_id" value="{{ friend.id }}" />
+          <button class="user-btn" type="button" onclick="deleteFriend({{ friend.id }}, {{ pk }})">
+            친구 삭제
+          </button>
+        </form>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  <button class="user-btn" id="addFriendButton">친구 추가하러 가기</button>
+</div>
+{% endblock content %} {% block script %}
+<script>
+  var userId = {{ pk }}
+</script>
 <script src="{% static 'users/js/delete_friend.js' %}"></script>
 {% endblock script %}
-
