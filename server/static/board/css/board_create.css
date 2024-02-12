@@ -2,16 +2,52 @@
     padding: 10px;
     border-radius: 5px;
     border: 1px solid var(--green--medium--color);
-    background-color: #ffffff;
+    background-color: var(--green--bright--color);
     cursor: pointer;
     width: 100%;
     margin: 10px 0px;
+    color: white;
+    font-size: 15px;
 }
 .board-btn:hover {
     background-color: var(--green--medium--color);
     border: 1px solid var(--green--medium--color);
     transition: 0.1s;
 }
-.signup-block {
-    
+/* .signup-block {
+    width: 100%;
+} */
+#id_name {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 10px;
+    width: 100%;
 }
+#id_admin {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 10px;
+}
+.community-update-btn {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid var(--green--medium--color);
+  background-color: var(--green--bright--color);
+  cursor: pointer;
+  font-size: 30px;
+  margin: 5px;
+  color: white;
+  font-size: 15px;
+  line-height: 1;
+  width: 100%;
+}
+.community-update-btn:hover {
+    background-color: var(--green--medium--color);
+    border: 1px solid var(--green--medium--color);
+    transition: 0.1s;
+}
+/* @media screen and (min-width: 700px) {
+    .signup-block {
+        width: 70%;
+    }
+} */

@@ -109,8 +109,8 @@ body {
   overflow-x: hidden;
   color: #333;
 }
-button {
-  line-height: 1;
+button, a {
+  /* line-height: 1; */
   font-family: 'Noto Sans KR', sans-serif;
   color: #333;
 }

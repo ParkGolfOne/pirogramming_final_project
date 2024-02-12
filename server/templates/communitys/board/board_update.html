@@ -1,4 +1,8 @@
 {% extends 'base.html' %}
+{% load static %}
+{% block head %}
+  <link rel="stylesheet" href="{% static 'board/css/board_create.css'%}" />
+{% endblock %}
 {% block content %}
 <!DOCTYPE html>
 <html lang="en">
@@ -18,7 +22,7 @@
       >
         {%csrf_token%} {{form.as_p}}
 
-        <button>수정하기</button>
+        <button class="community-update-btn">수정하기</button>
       </form>
     </div>
   </body>

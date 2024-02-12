@@ -9,7 +9,10 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
   <body>
-    <a href="{% url 'score:score_main'%}">스코어 메인페이지 링크</a>
+    <a href="{% url 'score:score_main'%}" class="before-icon">
+      <span class="bxs--left-arrow"></span>
+      <div>스코어 홈</div>
+    </a>
     <!-- 아래를 그래프 차트 그리는데 사용합니다. 수정시 userId 안에는 uid만 있게 해주세요! -->
     <h2 class="userId">{{uid}}</h2>
     <div>
@@ -34,7 +37,7 @@
         {% endfor%}
       </select>
     </div>
-    <div>
+    <div class="sortSelect-box">
       <select
         class="sortSelect sortInfo"
         type="select"
