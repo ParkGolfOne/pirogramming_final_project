@@ -5,7 +5,9 @@ from django.utils import timezone
 from django.urls import reverse
 from apps.score.models import Score
 from apps.users.models import User
+from apps.locations.models import GolfLocation
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib import messages
 
 # 게임 설정및 게임 생성 페이지
 def game_set(request):
@@ -17,11 +19,13 @@ def game_set(request):
             #폼에서 라운드 수 와 플레이어 수를 입력받아 저장
             round_count = form.cleaned_data['round_count'] 
             player_count = form.cleaned_data['player_count']
-        
+            location_name = request.POST.get('location')
+
             # Game 인스턴스 생성    
             game = Game.objects.create(
                 create_by = request.user if request.user.is_authenticated else None,
-                ground=None,  # 일단은 골프장 none
+                game_name = form.data['game_name'],
+                ground = GolfLocation.objects.get(golf_name = location_name),
                 created_at=timezone.now()
             )
 
@@ -33,8 +37,10 @@ def game_set(request):
             return redirect(reverse('games:game_update', args=(game.id,player_count)))
     else:
         form = GameSetupForm()
+        locations = GolfLocation.objects.all()
         content = {
-            'form': form
+            'form': form,
+            'locations' : locations
         }
         return render(request, 'games/game_create.html', content)
 
@@ -96,14 +102,14 @@ def game_update(request, game_id, player_count):
                 player.score.save()
         if request.POST.get("save") == "점수 저장":
             print(1)
-            return redirect("games:game_save", game_id=game.id)
+            return redirect("games:game_save", game_id=game.id, player_count=player_count )
     # 임시 저장이므로 다시 원래 페이지
     return redirect('games:game_update', game_id=game.id, player_count=player_count)
 
 # 추가 구현 --> 저장페이지에서 유저를 고르면 유저의 스코어 보드에 일괄적으로 저장 즉, 스코어의 player를 유저로 바꾸는 것
 # 친구 기능이 되거나 나중에 ㄱㄱ
 # # 이름 바꿀 수 있게 해야돼요
-def game_save(request, game_id):
+def game_save(request, game_id, player_count):
     game = get_object_or_404(Game, id=game_id)
     rounds = Round.objects.filter(game_id=game_id)
     
@@ -111,13 +117,12 @@ def game_save(request, game_id):
         content = {
             'game': game,
             'rounds': rounds,
+            'player_count' : player_count,
         }
         return render(request, 'games/game_detail.html', content)
     
     if request.method == 'POST':
-        for round in rounds:
-            players = Player.objects.filter(round_id=round.id)
-            for player in players:
-                get_object_or_404(User_id = request.POST.get(f'name_{player.id}'))
-                # 넘겨줄떄 id로 넘겨야 할듯
-                # player.score.player =
+        player = Player.objects.get( id= request.POST.get('player_id') )
+        player.score.player = request.user if request.user.is_authenticated else None
+        player.score.save()
+        return redirect(request.path)
