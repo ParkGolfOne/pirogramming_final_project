@@ -1,6 +1,10 @@
 {% extends 'base.html' %} {% load static %} {% block head %}
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-  integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+<link
+  rel="stylesheet"
+  href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+  integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+  crossorigin="anonymous"
+/>
 <link rel="stylesheet" href="{% static 'users/css/friend_list.css'%}" />
 <link rel="stylesheet" href="{% static 'users/css/user.css'%}" />
 {% endblock head %} {% block content %}
@@ -9,16 +13,27 @@
   <h2>{{user.nickname}} 님의 현재 친구 목록</h2>
   <div class="friend-container">
     {% for friend in friends %}
-    <div class="row justify-content-center">
-      <div class="col-9">
+    <div class="row">
+      <div class="friend-image">
+        <img src="{{friend.image.url}}" class="friend-image" />
+      </div>
+      <div class="friend-info">
         <p>ID: {{ friend.username }}</p>
         <p>닉네임: {{ friend.nickname }}</p>
       </div>
-      <div class="col-2">
-        <form action="{% url 'users:delete_friend' pk %}" method="post" id="delete_friend-form">
+      <div class="friend-btn">
+        <form
+          action="{% url 'users:delete_friend' pk %}"
+          method="post"
+          id="delete_friend-form"
+        >
           {% csrf_token %}
           <input type="hidden" name="friend_id" value="{{ friend.id }}" />
-          <button class="user-btn" type="button" onclick="deleteFriend({{ friend.id }}, {{ pk }})">
+          <button
+            class="user-btn"
+            type="button"
+            onclick="deleteFriend({{ friend.id }}, {{ pk }})"
+          >
             친구 삭제
           </button>
         </form>

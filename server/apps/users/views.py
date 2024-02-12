@@ -87,12 +87,12 @@ def main(request, pk):
 @csrf_exempt
 def signup(request):
     if request.method == 'POST':
-        print(request.POST)
+        print(request.POST, request.FILES)
         selected_city = request.POST.get('city')
         selected_town = request.POST.get('town')
         street_address = request.POST.get('street_address')
         detail_address = request.POST.get('detail_address')
-        form = SignupForm(request.POST)
+        form = SignupForm(request.POST, request.FILES)
         if form.is_valid():
             user = form.save(commit=False)
             region = Region.objects.filter(
@@ -177,7 +177,7 @@ def update(request, pk):
         selected_town = request.POST.get('town')
         street_address = request.POST.get('street_address')
         detail_address = request.POST.get('detail_address')
-        form = UpdateForm(request.POST, instance=user)
+        form = UpdateForm(request.POST, request.FILES, instance=user)
         if form.is_valid():
             user = form.save(commit=False)
             region = Region.objects.filter(
