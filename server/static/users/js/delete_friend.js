@@ -35,7 +35,7 @@ function updateFriendList(data, userId) {
     form.setAttribute("method", "post");
     form.setAttribute("action", `/users/delete_friend/${userId}/`);
     form.setAttribute("id", "delete_friend-form");
-    form.innerHTML = `<input type="hidden" name="friend_id" value=${friend.id}><button type="button" onclick="deleteFriend(${friend.id}, ${userId})">친구 삭제</button>`;
+    form.innerHTML = `<input type="hidden" name="friend_id" value=${friend.id}><button type="button" class="user-btn" onclick="deleteFriend(${friend.id}, ${userId})">친구 삭제</button>`;
 
     div2.appendChild(form);
     div.appendChild(div1);
