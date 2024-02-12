@@ -9,7 +9,12 @@
     flex-direction: column;
     align-items: center;
 }
-
+.locationList-input {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px 0px;
+}
 .location-container {
     display: flex;
     flex-direction: column;
@@ -52,5 +57,18 @@
     background-color: #ffffff;
 }
 .form-group {
+    display: flex;
+    flex-direction: column;
     margin-bottom: 10px;
+    font-size: 20px;
 }
+@media screen and (min-width: 700px) {
+    .form-group {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .locationList-input {
+        margin: 0px 5px;
+    }
+  }

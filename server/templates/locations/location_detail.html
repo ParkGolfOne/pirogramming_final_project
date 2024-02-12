@@ -54,14 +54,16 @@
   </a>
   {% endif %}
   <br /> -->
+  <div class="location-btns">
+    <a href="{% url 'locations:update' location.pk %}" class="location-detail-btn"
+      >수정하기</a
+    >
+    <form action="{% url 'locations:delete' location.pk %}" method="post">
+      {% csrf_token %}
+      <button type="submit" class="location-detail-btn">삭제하기</button>
+    </form>    
+  </div>
 
-  <a href="{% url 'locations:update' location.pk %}" class="location-detail-btn"
-    >수정하기</a
-  >
-  <form action="{% url 'locations:delete' location.pk %}" method="post">
-    {% csrf_token %}
-    <button type="submit" class="location-detail-btn">삭제하기</button>
-  </form>
 {% endblock %} {% block script %}
 <!-- 장소 즐겨찾기 -->
 <script src="{% static 'locations/javascript/location_fav.js' %}"></script>

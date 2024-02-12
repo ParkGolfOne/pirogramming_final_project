@@ -8,7 +8,10 @@
     <link rel="stylesheet" href="{% static 'posts/css/post_list.css'%}" />
   </head>
   <body>
-    <a href="{% url 'communitys:board_list' %}">커뮤니티 홈</a>
+    <a href="{% url 'communitys:board_list' %}" class="before-icon">
+      <span class="bxs--left-arrow"></span>
+      <div>커뮤니티 홈</div>
+    </a>
     <h1>{{board.name}}</h1>
     {% if board.admin == now_user%}
     <form action="{% url 'communitys:board_delete' bid  %}" method="POST">
@@ -24,7 +27,7 @@
         <option value="writer">작성자</option>
       </select>
       <input id="post_search_input" />
-      <button id="post_search_btn">검색</button>
+      <button id="post_search_btn"></button>
     </div>
     <!---->
     <!--전체 게시글 보기-->

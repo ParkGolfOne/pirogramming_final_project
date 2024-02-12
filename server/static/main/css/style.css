@@ -1,11 +1,12 @@
 :root {
     --green--dark--color: #1A5D1A;
-    --green--medium--color: #789461;
+    /* --green--medium--color: #1dc078; */
     --green--light--color: #c4d7b2a3;
     --green--pale--color: rgba(255, 255, 255, 0.5);
     --white--border--color: #ddd;
     --green--white--color: #20C997;
     --green--bright--color: #1dc078;
+    --green--medium--color: #29b375;
 }
 body{
     height: 100vh;

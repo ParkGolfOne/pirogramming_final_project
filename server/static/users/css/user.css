@@ -17,23 +17,29 @@
     margin-bottom: 5px;
 }
 
-.user-btn,
+.user-btn {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid var(--green--medium--color);
+    background-color: var(--green--bright--color);
+    cursor: pointer;
+    color: white;
+    width: 100%;
+    margin-bottom: 20px;
+    font-size: 15px;
+    line-height: 1;
+}
 .user-mypage-btn {
     padding: 10px;
     border-radius: 5px;
     border: 1px solid var(--green--medium--color);
-    background-color: #ffffff;
+    background-color: white;
     cursor: pointer;
 }
 
 .user-mypage-btn button {
     font-size: 30px;
-}
-
-.user-btn {
-    width: 100%;
-    margin-bottom: 20px;
-    font-size: 15px;
+    line-height: 1;
 }
 
 .user-btn:hover,
@@ -257,12 +263,10 @@
     margin: 10px 0px;
 }
 
-.user-btn-option>li {}
-
 .user-btn-option>li:hover {
     cursor: pointer;
     font-weight: bold;
-    color: var(--green--dark--color);
+    color: var(--green--bright--color);
 }
 
 @media screen and (min-width: 700px) {
@@ -282,5 +286,5 @@
 
 .active {
     font-weight: bold;
-    color: var(--green--dark--color);
+    color: var(--green--bright--color);
 }
