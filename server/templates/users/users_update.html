@@ -6,7 +6,7 @@
 {% endblock head%}
 
 {% block content %}
-<form method="POST" id="update-form" class="users-update-form">
+<form method="POST" id="update-form" class="users-update-form" enctype="multipart/form-data">
   <div class="row">
     <div class="col-md-6 mb-3">
       <label for="id_username">아이디:</label>
@@ -96,7 +96,11 @@
       <div class="errorMessage"></div>
     </div>
   </div>
-
+  <div class="mb-3">
+    <label for="id_image">프로필 사진 (선택)</label>
+    <input type="file" name="image" id="id_image" accept=".png, .jpeg" />
+    <div class="errorMessage"></div>
+  </div>
   <input type="submit" value="개인 정보 수정" class="user-btn" form="update-form" id="update-form-submit" />
 </form>
 {% endblock content %}

@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from .models import User
 
+
 class SignupForm(UserCreationForm):
     username = forms.CharField(
         label='아이디',
@@ -51,15 +52,18 @@ class SignupForm(UserCreationForm):
             }
         )
     )
+    image = forms.ImageField(
+        label="이미지",
+        required=False
+    )
 
     class Meta:
         model = User
-        fields = ['username', 'nickname', 'password1',
+        fields = ['username', 'nickname', 'image', 'password1',
                   'password2', 'birth', 'phone', 'email', 'address']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-
 
 
 class UpdateForm(forms.ModelForm):
@@ -96,11 +100,15 @@ class UpdateForm(forms.ModelForm):
             }
         )
     )
+    image = forms.ImageField(
+        label="이미지",
+        required=False
+    )
 
     class Meta:
         model = User
         fields = ['username', 'nickname', 'birth',
-                  'phone', 'email', 'address']
+                  'phone', 'email', 'address', 'image']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

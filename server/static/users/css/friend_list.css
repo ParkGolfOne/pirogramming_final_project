@@ -34,19 +34,43 @@ label {
 
 .row {
     display: flex;
+    align-items: center;
     background-color: rgba(111, 120, 126, 0.3);
     border-radius: 30px;
     margin: 10px;
     padding: 15px;
+    justify-content: center;
 }
 
 .row div {
     text-align: center;
     font-size: 2rem;
+    margin: auto 0;
 }
 
-.row .col-2 {
-    margin: auto 0;
+.row .friend-image {
+    width: 100px;
+    height: 100%;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.row .friend-info {
+    width: 60%;
+}
+
+.row .friend-btn {
+    width: 20%;
+}
+
+.row .friend-btn button {
+    width: 100px !important;
+
 }
 
 .user-btn {
