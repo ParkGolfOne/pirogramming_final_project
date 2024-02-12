@@ -5,7 +5,7 @@ from django.utils import timezone
 from apps.locations.models import *
 from apps.score.models import Score
 def default_scores():
-    return {"hole1": 0, "hole2": 0, "hole3": 0, "hole4": 0, "hole5": 0, "hole6": 0, "hole7": 0, "hole8": 0, "hole9": 0}
+    return {"hole1": 4, "hole2": 4, "hole3": 4, "hole4": 4, "hole5": 4, "hole6": 4, "hole7": 4, "hole8": 4, "hole9": 4}
 
 # 게임 모델 게임을 
 class Game(models.Model):
@@ -24,5 +24,5 @@ class Round(models.Model):
 # 플레이어 --> 라운드 마다 플레이어 수 만큼의 스코어 보드 필요 --> 둘과 일대일 관계인 플레이어 모델 생성
 class Player(models.Model):
     round = models.ForeignKey(Round, on_delete=models.CASCADE, related_name='round_player')
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=144)
     score = models.ForeignKey(Score, on_delete=models.CASCADE, related_name='score_player')

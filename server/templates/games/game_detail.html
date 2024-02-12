@@ -45,12 +45,10 @@
   </style>
 {% endblock %}
 {% block content %}
-<a href="{% url 'games:game_set'%}">게임 다시 설정</a>
-<h1>{{ game.name }} 점수입력 페이지</h1>
+<h1>{{ game.name }} 게임 페이지</h1>
+<a href="{% url 'games:game_update' game.id player_count%}">점수 다시 입력</a>
 
 <!-- 각 라운드에 대해 반복 -->
-<form method="POST" action="" enctype="multipart/form-data" class="game_form">
-{% csrf_token %} {{ form }}
 {% for round in rounds %}
     <div class="coures">
         <h2>코스 {{ forloop.counter }}</h2>
@@ -89,6 +87,12 @@
             {% for player in round.round_player.all %}
               <li class="coures_li">
                   <div>"{{ player.name}}" </div>
+                  <form method="post" action="">
+                    {% csrf_token %}
+                    <input type="hidden" name="player_id" value="{{ player.id }}">
+                    <input type="submit" value="내 점수 저장하기">
+                    <input type="submit" value="다른 사람에게 넘겨주기(미완)">
+                  </form>
                   <div>점수</div>
                   <div>{{ player.score.scores.hole1}}</div>
                   <div>{{ player.score.scores.hole2}}</div>
@@ -106,6 +110,8 @@
                 <li>No players in this round.</li>
             {% endfor %}
         </ul>
+        
+        <a href="{% url 'games:game_set'%}">게임 다시 하기</a>
     </div>
 {% endfor %}
 {% endblock %}
