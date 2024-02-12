@@ -6,10 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>세부 점수</title>
     <link rel="stylesheet" href="{% static 'score/css/score_detail.css'%}" />
+    <link rel="stylesheet" href="{% static 'score/css/score_base.css'%}" />
     <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
   </head>
   <body>
-    <a href="{% url 'score:score_main'%}">스코어 메인페이지 링크</a>
+    <a href="{% url 'score:score_main'%}" class="scoreHomeLink"
+      ><div class="scoreHomeIcon"></div>
+      <span>스코어 홈</span></a
+    >
     <h1>점수 디테일 페이지</h1>
     <div class="scoreGrid">
       <div>홀</div>
@@ -56,24 +60,31 @@
       <button type="submit" class="score-detail-btn">삭제하기</button>
     </form>
     {% endif %}
-    <button id="kakaotalk-sharing-btn" onclick="shareKakaoScore({{sid}})">
-      카카오톡 공유하기
-    </button>
-    <!--  네이버 밴드 공유하기  -->
-    <span>
-      <script
-        type="text/javascript"
-        src="//developers.band.us/js/share/band-button.js?v=06022024"
-      ></script>
-      <script type="text/javascript">
-        new ShareBand.makeButton({
-          lang: "ko-KR",
-          type: "c",
-          text: "내 점수 보러가기",
-          withUrl: true,
-        });
-      </script>
-    </span>
+    <div class="shareList">
+      <span>공유하기</span>
+      <div>
+        <button
+          id="kakaotalk-sharing-btn"
+          onclick="shareKakaoScore({{sid}})"
+        ></button>
+        <!--  네이버 밴드 공유하기  -->
+        <span>
+          <script
+            type="text/javascript"
+            src="//developers.band.us/js/share/band-button.js?v=06022024"
+          ></script>
+          <script type="text/javascript">
+            new ShareBand.makeButton({
+              lang: "ko-KR",
+              type: "c",
+              text: "내 점수 보러가기",
+              withUrl: true,
+            });
+          </script>
+        </span>
+      </div>
+    </div>
+
     <!-- 링크에 쓸 변수 작성 -->
     <script>
       var sid = {{ sid }};

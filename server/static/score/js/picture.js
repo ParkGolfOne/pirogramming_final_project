@@ -1,17 +1,55 @@
+var dragImage;
+
 // 이미지 미리보기
 function showImage(input) {
   if (input.files && input.files[0]) {
     var reader = new FileReader();
-    reader.onload = function(e) {
-      document.getElementById('preview').src = e.target.result;
+    reader.onload = function (e) {
+      document.getElementById("preview").src = e.target.result;
     };
     reader.readAsDataURL(input.files[0]);
   } else {
-    document.getElementById('preview').src = "";
+    document.getElementById("preview").src =
+      "/static/score/images/score_ex.PNG";
   }
 }
 
+// 이미지 드래그 앤 드랍
+const pictureInputArea = document.querySelector("#fileInputArea");
+
+/* Drag 한뒤 첫 번재 진입시*/
+pictureInputArea.addEventListener("dragenter", function (e) {});
+
+/* Drage 해서 박스 안에 포인터 있을 때*/
+pictureInputArea.addEventListener("dragover", function (e) {
+  // 제출 혹은 업로드 방지를 하기 위해서 아래의 preventDefault 사용
+  e.preventDefault();
+
+  this.style.backgroundColor = "#789461";
+});
+
+/* Drag 한 포인터가 박스 밖으로 나갈 때 */
+pictureInputArea.addEventListener("dragleave", function (e) {
+  this.style.backgroundColor = "rgba(0, 0, 0, 0)";
+});
+
+/* Drag 후 Drop 했을 때*/
+pictureInputArea.addEventListener("drop", function (e) {
+  // 제출 혹은 업로드 방지를 하기 위해서 아래의 preventDefault 사용
+  e.preventDefault();
+
+  dragImage = e.dataTransfer.files[0];
+  showImage(e.dataTransfer);
+  pictureInputArea.innerHTML = `<button class="imageDeleteBtn" onclick="deleteImage()">이미지 내리기</button>`;
+
+  this.style.backgroundColor = "white";
+});
+
 //  이미지 파일 추출
+
+function inputPicture() {}
+
+function dragInPicture() {}
 
 //새 HTTPRequest 생성
 const requestExtractImage = new XMLHttpRequest();
@@ -20,46 +58,70 @@ const requestExtractImage = new XMLHttpRequest();
 // 전달인자 : --
 // 기능 : 서버에 댓글 작성 요청 및 댓글 내용 전달
 function extractPicture() {
-  var button = document.querySelector(".takePictureInfo");
-  button.disabled = true;
-  button.innerText='분석중....'
-
   const fileInput = document.querySelector("#uploadedImage");
   const formData = new FormData();
-  formData.append("image", fileInput.files[0])
-
-
+  if (dragImage) {
+    formData.append("image", dragImage);
+  } else if (fileInput !== null) {
+    formData.append("image", fileInput.files[0]);
+  } else {
+    alert("이미지가 업로드 되지 않았습니다.");
+    return;
+  }
 
   const url = `/score/scan_scorePaper/`;
   requestExtractImage.open("POST", url, true);
   requestExtractImage.setRequestHeader("X-Requested-With", "XMLHttpRequest");
- 
   requestExtractImage.send(formData);
+
+  var button = document.querySelector(".takePictureInfo");
+  button.disabled = true;
+  button.innerText = "분석중....";
 }
 
-// 댓글 추가 요청 응답 온 후
+// 이미지 분석 요청 응답 온 후
 requestExtractImage.onreadystatechange = () => {
   if (requestExtractImage.readyState === XMLHttpRequest.DONE) {
     if (requestExtractImage.status < 400) {
+      alert("분석 완료!");
       const { par, score } = JSON.parse(requestExtractImage.response);
 
-      parInputs = document.querySelectorAll('.parInput')
-      scoreInputs = document.querySelectorAll('.scoreInput')
+      parInputs = document.querySelectorAll(".parInput");
+      scoreInputs = document.querySelectorAll(".scoreInput");
 
       let i = 0;
-      parInputs.forEach(element=>{
+      parInputs.forEach((element) => {
         element.value = par[i];
         i += 1;
-      })
+      });
       i = 0;
-      scoreInputs.forEach(element=>{
+      scoreInputs.forEach((element) => {
         element.value = score[i];
         i += 1;
-      })
+      });
 
       var button = document.querySelector(".takePictureInfo");
       button.disabled = false;
-      button.innerText='이미지 분석'
+      button.innerText = "이미지 분석";
     }
   }
 };
+
+// 업로드된 이미지 내리기
+function deleteImage() {
+  pictureInputArea.innerHTML = `<div class="pictureIcon"></div>
+  <span>1개의 이미지를 끌어와 업로드하기!</span>
+  <input
+    type="file"
+    id="uploadedImage"
+    name="uploadedImage"
+    onchange="showImage(this)"
+    accept="image/*"
+  />`;
+  // 기본 이미지로 변경
+  document.getElementById("preview").src = "/static/score/images/score_ex.PNG";
+
+  console.log("이미지 삭제 실행");
+  // drag된 이미지 초기화
+  dragImage = "";
+}

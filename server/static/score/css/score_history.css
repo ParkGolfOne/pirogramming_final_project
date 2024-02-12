@@ -1,3 +1,7 @@
+.welcomeHistory {
+  margin: 30px 0 10px;
+}
+
 .scoreList {
   display: flex;
   flex-direction: column;
@@ -13,11 +17,43 @@
   margin: 10px;
   background-color: var(--green--pale--color);
   width: 100%;
+
+  transition: 0.4s;
 }
+
+.scoreBox:hover {
+  scale: 105%;
+  box-shadow: 3px 3px 3px;
+}
+
 #myChart {
-  width: 100px;
-  height: 100px;
+  width: 500px;
+  height: 150px;
+
+  transition: 0.3s;
 }
+
+#myChart:hover {
+  scale: 105%;
+}
+
+/* 전체 차트 영역 */
+.chartArea {
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 1px 1px 2px;
+  border: none;
+
+  width: 70%;
+  padding: 20px;
+  margin: 20px 0 15px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 점수 추가 버튼 */
 .score-history-btn {
   padding: 10px;
   border-radius: 5px;
@@ -28,9 +64,71 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 10px;
+
+  font-size: 15px;
 }
+
 .score-history-btn:hover {
   background-color: var(--green--medium--color);
   border: 1px solid var(--green--medium--color);
+  transition: 0.3s;
+}
+
+/* 점수 추가 버튼 안의 아이콘 */
+.addBtnIcon {
+  background-image: url("/static/score/images/addBox-fill.png");
   transition: 0.1s;
+  width: 20px;
+  height: 20px;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+.score-history-btn:hover > .addBtnIcon {
+  background-image: url("/static/score/images/addBox-base.png");
+}
+
+/* 장소 선택하는 단일줄 속성 */
+.locationInputArea {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+
+.locationInputArea > span {
+  font-size: 15px;
+  font-weight: bold;
+}
+
+/* 필터 선택 버튼 전체 속성*/
+.sortSelect,
+.locationSelect {
+  padding: 5px;
+  border-radius: 10px;
+  margin: 10px 0;
+  width: 100px;
+}
+
+.sortSelect:hover,
+.locationSelect:hover {
+  border: 1px solid var(--green--medium--color);
+  background-color: var(--green--medium--color);
+  color: #ffffff;
+}
+
+.sortSelect:hover > option,
+.locationSelect:hover > option {
+  background-color: #ffffff;
+  color: black;
+}
+
+/* 정렬 선택버튼 */
+.sortSelect {
+  width: 100px;
+}
+
+/* 장소 선택버튼 */
+.locationSelect {
+  width: 150px;
 }
