@@ -113,7 +113,6 @@ requestFindLocation.onreadystatechange = () => {
           >${location[0]}</a
         >
       </h4> 
-      <br>
       <div>추천 ${location[2]}</div>
     </div>`;
         });

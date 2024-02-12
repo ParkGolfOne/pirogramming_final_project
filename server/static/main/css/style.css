@@ -1,25 +1,26 @@
 :root {
-  --green--dark--color: #1a5d1a;
-  --green--medium--color: #789461;
-  --green--light--color: #c4d7b2a3;
-  --green--pale--color: rgba(255, 255, 255, 0.5);
-  --white--border--color: #ddd;
-  --green--white--color: #20c997;
+    --green--dark--color: #1A5D1A;
+    --green--medium--color: #789461;
+    --green--light--color: #c4d7b2a3;
+    --green--pale--color: rgba(255, 255, 255, 0.5);
+    --white--border--color: #ddd;
+    --green--white--color: #20C997;
+    --green--bright--color: #1dc078;
 }
-body {
-  height: 100vh;
-  font-size: 30px;
-  width: 100vw;
+body{
+    height: 100vh;
+    font-size: 30px;
+    width: 100vw;
 }
 #header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: var(--green--white--color);
-  padding: 25px;
-  height: 90px;
-  width: 100%;
-  color: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--green--bright--color);
+    padding: 25px 5%;
+    height: 90px;
+    width: 100%;
+    color: #ffffff;
 }
 .title-container {
   display: flex;
@@ -74,28 +75,30 @@ body {
   z-index: 2;
 }
 .main-sidebar > ul {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin: 20px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 20px;
 }
-#main {
-  position: relative;
-  height: calc(100vh - 160px);
+#main{
+    position: relative;
+    height: calc(100vh - 160px);
 }
-.main-container {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 90%;
-  max-width: 1520px;
-  width: 90%;
-  background-color: aliceblue;
-  overflow: auto;
+.main-container{
+    position:absolute;
+    left:50%;
+    top: 50%;
+    transform:translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 95%;
+    max-width: 1520px;
+    width: 95%;
+    background-color: aliceblue;
+    overflow: auto;
+
 }
 /* pc일떄 */
 @media screen and (min-width: 700px) {
@@ -119,11 +122,13 @@ body {
   flex-direction: column;
 }
 #mobileFooter {
-  height: 70px;
-  width: 100%;
-  background-color: var(--green--dark--color);
-  bottom: 0;
-  color: #ffffff;
+
+    height: 70px;
+    width: 100%;
+    background-color: var(--green--bright--color);
+    bottom: 0;
+    color: #ffffff;
+
 }
 #mobileFooter > ul {
   display: flex;
@@ -133,7 +138,11 @@ body {
   width: 100%;
 }
 
-h1 {
-  font-size: 40px;
-  font-weight: old;
+h1, h2, h3, h4, h5{
+    font-weight: bold;    
 }
+h1{
+    font-size: 30px;
+    font-weight: bold;    
+}
+
