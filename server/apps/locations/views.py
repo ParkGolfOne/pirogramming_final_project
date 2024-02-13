@@ -34,11 +34,19 @@ def location_detail (request, pk):
     else:
         faved = True
 
+    # 해당 리뷰가 있다면 가져오기
+    try:
+        reviews = Review.objects.filter(ground = location)
+    except Review.DoesNotExist:
+        reviews = []
+
 
     ctx = {
         'location' : location,
         'pk' : pk,
         'faved' : faved,
+        'reviews' : reviews,
+        'now_user' : request.user,
     }
 
     return render(request, 'locations/location_detail.html', ctx)
@@ -138,3 +146,76 @@ def add_fav_location(request):
         favTag = 'faved'
         location.save()
         return JsonResponse({'location_id' : location_id, 'favNum' : location.fav_num, 'favTag' : favTag})
+
+
+
+###########################################################
+#                       리뷰 관련 함수                     #
+###########################################################
+    
+
+# 함수 이름 : review_create
+# 전달인자 : request
+# 기능 : --
+@csrf_exempt
+@transaction.atomic
+def review_create(request):
+    req = json.loads(request.body)
+    # 골프장 정보
+    ground_id = req["ground_id"]
+    ground = get_object_or_404(GolfLocation, id=ground_id)
+    # 리뷰어
+    reviewer = request.user
+    # 내용
+    content = req["content"]
+    # 레이팅
+    rating = req["rating"]
+
+
+    new_review = Review.objects.create(ground = ground, reviewer = reviewer, content = content )      
+    
+    return JsonResponse({'reviewer' : new_review.reviewer.nickname, 'content' : new_review.content, 'reviewId' : new_review.id, 'rating' : rating})
+
+
+
+# 함수 이름 : review_delete
+# 전달인자 : request
+# 기능 : --
+@csrf_exempt
+@transaction.atomic
+def review_delete(request):
+    req = json.loads(request.body)
+    rid = req["review_id"]
+
+    try:
+        get_object_or_404(Review, id = rid).delete()
+    except 404:
+        print("해당 리뷰가 이미 존재하지 않습니다!")
+    else:
+        return JsonResponse({'review_id' : rid})
+
+
+# 함수 이름 : review_update
+# 전달인자 : request
+# 기능 : --
+@csrf_exempt
+@transaction.atomic
+def review_update(request):
+    req = json.loads(request.body)
+    rid = req["review_id"]
+    content = req["content"]
+    # 레이팅
+    rating = req["rating"]
+    
+
+
+    try:
+        target_review = get_object_or_404(Review, id = rid)
+    except 404:
+        print("존재하지 않는 댓글 update 시도!")
+    else:
+        target_review.content = content
+        target_review.save()
+
+    return JsonResponse({'reviewer' : target_review.reviewer.nickname, 'content' : content,'reviewId' : rid, 'rating' : rating,})
+

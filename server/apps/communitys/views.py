@@ -335,7 +335,7 @@ def comment_create(request):
 
     newcomment = Comment.objects.create(post = post, commenter = commenter, content = content )      
     
-    return JsonResponse({'commenter' : newcomment.commenter.username, 'content' : newcomment.content, 'commentId' : newcomment.id})
+    return JsonResponse({'commenter' : newcomment.commenter.nickname, 'content' : newcomment.content, 'commentId' : newcomment.id})
 
 
 
