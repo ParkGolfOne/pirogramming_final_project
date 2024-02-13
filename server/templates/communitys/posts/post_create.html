@@ -14,13 +14,20 @@
     {{ form.media }}
   </head>
   <body>
-    <a href="{% url 'communitys:board_list' %}">커뮤니티 홈</a>
-    <a href="{% url 'communitys:post_list' bid %}">게시판 홈</a>
-    <form method="POST" action="" enctype="multipart/form-data" class="post-create-form">
-      <h1>NEW POST</h1>
-      {% csrf_token %} {{ form }}
-      <input type="submit" value="글 등록" class="post-create-btn"/>
-    </form>
+    <div class="post-create-container">
+      <div class="before-icons">
+        <a href="{% url 'communitys:board_list' %}" class="before-icon">
+          <span class="bxs--left-arrow"></span>커뮤니티 홈</a>
+        <a href="{% url 'communitys:post_list' bid %}" class="before-icon">
+          게시판 홈<span class="bxs--right-arrow"></span></a>
+      </div>    
+      <form method="POST" action="" enctype="multipart/form-data" class="post-create-form">
+        <h1>NEW POST</h1>
+        {% csrf_token %} {{ form }}
+        <input type="submit" value="글 등록" class="post-create-btn"/>
+      </form>
+    </div>
+    
   </body>
 </html>
 {% endblock %}
