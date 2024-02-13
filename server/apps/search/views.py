@@ -50,7 +50,7 @@ def search_location(request):
             locations = GolfLocation.objects.filter(
                 **filter_conditions1, **filter_conditions2).order_by(sortType)
             location_names = list(locations.values_list(
-                "golf_name", "id", "fav_num"))
+                "golf_name", "id", "fav_num", "golf_rate_num", "golf_rate"))
         except GolfLocation.DoesNotExist:
             location_names = []
     else:
@@ -58,7 +58,7 @@ def search_location(request):
             locations = GolfLocation.objects.filter(
                 **filter_conditions2).order_by(sortType)
             location_names = list(locations.values_list(
-                "golf_name", "id", "fav_num"))
+                "golf_name", "id", "fav_num", "golf_rate_num", "golf_rate"))
         except GolfLocation.DoesNotExist:
             location_names = []
 
