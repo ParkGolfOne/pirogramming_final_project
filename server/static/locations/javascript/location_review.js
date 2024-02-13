@@ -5,23 +5,25 @@ const requestReviewDelete = new XMLHttpRequest();
 // 함수명 : deleteReview
 // 전달인자 : review_id
 // 기능 : 서버에 리뷰 삭제 요청 하기 위해 review_id 전달
-function deleteReview(review_id) {
+function deleteReview(review_id, ground_id) {
   const url = `/locations/review_delete/`;
   requestReviewDelete.open("POST", url, true);
   requestReviewDelete.setRequestHeader(
     "Content-Type",
     "application/x-www-form-urlencoded"
   );
-  requestReviewDelete.send(JSON.stringify({ review_id: review_id }));
+  requestReviewDelete.send(JSON.stringify({ review_id: review_id, ground_id : ground_id }));
 }
 
 // 리뷰 삭제 요청 응답 온 후
 requestReviewDelete.onreadystatechange = () => {
   if (requestReviewDelete.readyState === XMLHttpRequest.DONE) {
     if (requestReviewDelete.status < 400) {
-      const { review_id } = JSON.parse(requestReviewDelete.response);
+      const { review_id, totalRate, rateNum } = JSON.parse(requestReviewDelete.response);
       const element = document.querySelector(`.Rid-${review_id}`);
       element.remove();
+      const rateDisplay = document.querySelector(".rateNum");
+      rateDisplay.innerText = `평가수 ${rateNum} 평점 ${totalRate}`;
     }
   }
 };
@@ -57,7 +59,7 @@ function writeReview(ground_id) {
 requestReviewAdd.onreadystatechange = () => {
   if (requestReviewAdd.readyState === XMLHttpRequest.DONE) {
     if (requestReviewAdd.status < 400) {
-      const { reviewer, content, reviewId, rate } = JSON.parse(
+      const { reviewer, content, reviewId, rating, totalRate, rateNum, groundId } = JSON.parse(
         requestReviewAdd.response
       );
       const element = document.querySelector(".reviewSection");
@@ -65,19 +67,23 @@ requestReviewAdd.onreadystatechange = () => {
       element.innerHTML += `<div class="a_review Rid-${reviewId}">
             <div class="a_review_reviewer">${reviewer}</div>
             <div class="a_review_content">${content}</div>
-            <div class="a_review_rating">${rate}</div>
+            <div class="a_review_rating">${rating}</div>
             <button
               class="a_review_delete"
-              onclick="deleteReview(${reviewId})"
+              onclick="deleteReview(${reviewId}, ${groundId})"
             >
               삭제
             </button>
             <button
               class="a_review_delete"
-              onclick="updateReviewBtn(${reviewId})"
+              onclick="updateReviewBtn(${reviewId}, ${groundId})"
             >
               수정
             </button>`;
+
+      
+      const rateDisplay = document.querySelector(".rateNum");
+      rateDisplay.innerText = `평가수 ${rateNum} 평점 ${totalRate}`;
     }
   }
 };
@@ -89,7 +95,7 @@ const requestReviewUpdate = new XMLHttpRequest();
 // 함수명 : updateReview
 // 전달인자 : review_id
 // 기능 : 서버에 댓글 작성 요청 및 댓글 내용 전달
-function updateReview(review_id) {
+function updateReview(review_id, ground_id) {
   const content = document.querySelector(".review-update-box");
   const rating = document.querySelector(".rateSelect")
   const url = `/locations/review_update/`;
@@ -100,6 +106,7 @@ function updateReview(review_id) {
   );
   requestReviewUpdate.send(
     JSON.stringify({
+      ground_id : ground_id,
       review_id: review_id,
       content: content.value,
       rating : rating.value,
@@ -112,13 +119,13 @@ function updateReview(review_id) {
 requestReviewUpdate.onreadystatechange = () => {
   if (requestReviewUpdate.readyState === XMLHttpRequest.DONE) {
     if (requestReviewUpdate.status < 400) {
-      const { reviewer, content, reviewId, rate } = JSON.parse(
+      const { reviewer, content, reviewId, rating, totalRate,rateNum } = JSON.parse(
         requestReviewUpdate.response
       );
       const element = document.querySelector(`.Rid-${reviewId}`);
       element.innerHTML = `<div class="a_review_reviewer">${reviewer}</div>
             <div class="a_review_content">${content}</div>
-            <div class="a_review_rating">${rate}</div>
+            <div class="a_review_rating">${rating}</div>
             <button
               class="a_review_delete"
               onclick="deleteReview(${reviewId})"
@@ -131,6 +138,8 @@ requestReviewUpdate.onreadystatechange = () => {
             >
               수정
             </button>`;
+    const rateDisplay = document.querySelector(".rateNum");
+    rateDisplay.innerText = `평가수 ${rateNum} 평점 ${totalRate}`;
     }
   }
 };
@@ -138,12 +147,12 @@ requestReviewUpdate.onreadystatechange = () => {
 // 함수명 : updateReviewBtn
 // 전달인자 : review_id
 // 기능 : 리뷰 업데이트 버튼 입력시 input 칸으로 변경
-function updateReviewBtn(review_id) {
-  console.log(review_id)
+function updateReviewBtn(review_id, ground_id) {
   const element = document.querySelector(`.Rid-${review_id}`);
-  console.log(element)
+  const content = element.querySelector('.a_review_content').innerText
+  const rate = element.querySelector('.a_review_rating').innerText
   element.innerHTML = `<div class="input-area">
-        <input type="text" class="review-update-box" />
+        <input type="text" class="review-update-box" value=${content} />
         <select
         class="rateSelect"
         type="select"
@@ -164,7 +173,7 @@ function updateReviewBtn(review_id) {
       </select>
         <button
           class="review-upload-btn"
-          onclick="updateReview(${review_id})"
+          onclick="updateReview(${review_id}, ${ground_id})"
         >
           수정
         </button>

@@ -76,13 +76,13 @@
         {% if review.reviewer == now_user%}
         <button
           class="a_review_delete"
-          onclick="deleteReview({{review.id}})"
+          onclick="deleteReview({{review.id}},{{pk}})"
         >
           삭제
         </button>
         <button
           class="a_review_delete"
-          onclick="updateReviewBtn({{review.id}})"
+          onclick="updateReviewBtn({{review.id}}, {{pk}})"
         >
           수정
         </button>

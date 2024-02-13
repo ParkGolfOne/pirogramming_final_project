@@ -8,6 +8,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.db import transaction
 import json
 from django.http import JsonResponse
+# 소수점 계산
+from decimal import Decimal
 
 # 골프장 목록 표시
 def location_list(request):
@@ -171,10 +173,18 @@ def review_create(request):
     # 레이팅
     rating = req["rating"]
 
+    print("수정 전: ", ground.golf_rate)
+    rating_sum = ground.golf_rate * ground.golf_rate_num + Decimal(rating)
+    print("점수추가 합 : ", rating_sum)
+    ground.golf_rate_num += 1
+    print("총 개수 : ", ground.golf_rate_num)
+    ground.golf_rate = round(rating_sum / ground.golf_rate_num,2)
+    print("수정 후: ", ground.golf_rate)
+    ground.save()
 
-    new_review = Review.objects.create(ground = ground, reviewer = reviewer, content = content )      
+    new_review = Review.objects.create(ground = ground, reviewer = reviewer, content = content, rating = rating )      
     
-    return JsonResponse({'reviewer' : new_review.reviewer.nickname, 'content' : new_review.content, 'reviewId' : new_review.id, 'rating' : rating})
+    return JsonResponse({'reviewer' : new_review.reviewer.nickname, 'content' : new_review.content, 'reviewId' : new_review.id, 'rating' : rating , 'totalRate' : ground.golf_rate ,'rateNum' : ground.golf_rate_num, 'groundId' : ground_id})
 
 
 
@@ -186,13 +196,36 @@ def review_create(request):
 def review_delete(request):
     req = json.loads(request.body)
     rid = req["review_id"]
+    # 골프장 정보
+    ground_id = req["ground_id"]
 
     try:
-        get_object_or_404(Review, id = rid).delete()
+        reviewPointer = get_object_or_404(Review, id = rid)
+        tempRating = reviewPointer.rating
+        print("지워야할 리뷰 점수 : ", tempRating)
+
+        reviewPointer.delete()
     except 404:
         print("해당 리뷰가 이미 존재하지 않습니다!")
+        
+    
+
+    try:
+         # 골프장 정보
+        ground = get_object_or_404(GolfLocation, id=ground_id)
+    except 404:
+        print("존재하지 않는 파크골프장입니다.")
     else:
-        return JsonResponse({'review_id' : rid})
+        print("수정 전: ", ground.golf_rate)
+        rating_sum = ground.golf_rate * ground.golf_rate_num - tempRating
+        ground.golf_rate_num -= 1
+        if ground.golf_rate_num != 0:
+            ground.golf_rate = round(rating_sum / ground.golf_rate_num,2)
+        elif ground.golf_rate_num == 0:
+            ground.golf_rate = 5.00
+        print("수정 후: ", ground.golf_rate)
+        ground.save()
+        return JsonResponse({'review_id' : rid , 'totalRate' : ground.golf_rate, 'rateNum' : ground.golf_rate_num })
 
 
 # 함수 이름 : review_update
@@ -202,10 +235,14 @@ def review_delete(request):
 @transaction.atomic
 def review_update(request):
     req = json.loads(request.body)
+    # 골프장 정보
+    ground_id = req["ground_id"]
+    # 리뷰 아이디
     rid = req["review_id"]
+    # 리뷰 내용
     content = req["content"]
-    # 레이팅
-    rating = req["rating"]
+    # 리뷰 평점
+    rating = req["rating"]  
     
 
 
@@ -214,8 +251,22 @@ def review_update(request):
     except 404:
         print("존재하지 않는 댓글 update 시도!")
     else:
+        before_rating = target_review.rating
         target_review.content = content
+        target_review.rating = rating
         target_review.save()
 
-    return JsonResponse({'reviewer' : target_review.reviewer.nickname, 'content' : content,'reviewId' : rid, 'rating' : rating,})
+    try:
+         # 골프장 정보
+        ground = get_object_or_404(GolfLocation, id=ground_id)
+    except 404:
+        print("존재하지 않는 파크골프장입니다.")
+    else:
+        print("수정 전: ", ground.golf_rate)
+        rating_sum = ground.golf_rate * ground.golf_rate_num - before_rating + Decimal(rating)
+        ground.golf_rate = round(rating_sum / ground.golf_rate_num, 2)
+        print("수정 후: ", ground.golf_rate)
+        ground.save()
+        
+    return JsonResponse({'reviewer' : target_review.reviewer.nickname, 'content' : content,'reviewId' : rid, 'rating' : rating, 'totalRate' : ground.golf_rate, 'rateNum' : ground.golf_rate_num})
 
