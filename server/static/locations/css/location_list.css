@@ -33,7 +33,7 @@
 .location-btn {
     padding: 10px;
     border-radius: 5px;
-    border: 1px solid var(--green--medium--color);
+    border: 1px solid var(--green--dark--color);
     background-color: #ffffff;
     cursor: pointer;
     margin: 5px;
@@ -43,8 +43,7 @@
     width: 100%;
 }
 .location-btn:hover {
-    background-color: var(--green--medium--color);
-    border: 1px solid var(--green--medium--color);
+    background-color: var(--green--hover--color);
     transition: 0.1s;
 }
 .locationInput {

@@ -63,27 +63,25 @@
     font-size: 25px;
 }
 
-/* pc일떄 */
-@media screen and (min-width: 700px) {
-    .location-container {
-        flex-direction: row;
-        align-items: normal;
-        gap: 10px;
-    }
-}
 
 /*naver review*/
+.naver-review {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
 .naver-review-title {
     font-size: 30px;
-    margin-bottom: 20px;
+    margin: 20px 0px;
     text-align: center;
+
 }
 
 .review-container {
     display: flex;
-    align-content: flex-start;
+    align-content: center;
     flex-direction: column;
-    width: 700px;
+    width: 100%;
     gap: 15px;
 }
 
@@ -104,4 +102,16 @@
 
 .review-writer {
     font-size: 13px;
+}
+
+/* pc일떄 */
+@media screen and (min-width: 700px) {
+    .location-container {
+        flex-direction: row;
+        align-items: normal;
+        gap: 10px;
+    }
+    .review-container {
+        width: 70%;
+    }
 }
