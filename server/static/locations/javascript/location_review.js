@@ -179,3 +179,35 @@ function updateReviewBtn(review_id, ground_id) {
         </button>
       </div>`;
 }
+
+/* ***************별 관련 ajax************** */
+const stars = document.querySelectorAll(".star")
+const starline = document.querySelector(".starRate")
+
+starline.addEventListener('mousemove', (event) => {// 태그의 위치
+  const targetRect = targetElement.getBoundingClientRect();
+  
+  // 마우스의 현재 위치
+  const mouseX = event.clientX;
+  
+  // 태그의 구분점
+  const targetCenterX = targetRect.left + targetRect.width / 2;
+  const targetCenterY = targetRect.top + targetRect.height / 2;
+  
+  // 마우스와 태그의 중점 간의 거리
+  const distanceX = Math.abs(mouseX - targetCenterX);
+  const distanceY = Math.abs(mouseY - targetCenterY);
+  
+  // 태그의 너비와 높이의 반값
+  const halfWidth = targetRect.width / 2;
+  const halfHeight = targetRect.height / 2;
+  
+  // 마우스가 태그의 절반 이상의 위치에 있는지 확인
+  const isMouseOverHalfWidth = distanceX <= halfWidth;
+  const isMouseOverHalfHeight = distanceY <= halfHeight;
+  
+  if (isMouseOverHalfWidth && isMouseOverHalfHeight) {
+      console.log('마우스가 태그의 절반 이상의 위치에 있습니다.');
+  } else {
+      console.log('마우스가 태그의 절반 이하의 위치에 있습니다.');
+  }})

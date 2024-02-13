@@ -211,7 +211,6 @@ def review_delete(request):
     try:
         reviewPointer = get_object_or_404(Review, id = rid)
         tempRating = reviewPointer.rating
-        print("지워야할 리뷰 점수 : ", tempRating)
         print(type(tempRating))
 
         reviewPointer.delete()
@@ -226,14 +225,12 @@ def review_delete(request):
     except 404:
         print("존재하지 않는 파크골프장입니다.")
     else:
-        print("수정 전: ", ground.golf_rate)
         rating_sum = ground.golf_rate * ground.golf_rate_num - float(tempRating)
         ground.golf_rate_num -= 1
         if ground.golf_rate_num != 0:
             ground.golf_rate = rating_sum / ground.golf_rate_num
         elif ground.golf_rate_num == 0:
             ground.golf_rate = 5.00
-        print("수정 후: ", ground.golf_rate)
         ground.save()
         return JsonResponse({'review_id' : rid , 'totalRate' : round(ground.golf_rate,2), 'rateNum' : ground.golf_rate_num })
 
@@ -272,10 +269,8 @@ def review_update(request):
     except 404:
         print("존재하지 않는 파크골프장입니다.")
     else:
-        print("수정 전: ", ground.golf_rate)
-        rating_sum = ground.golf_rate * ground.golf_rate_num - before_rating + float(rating)
+        rating_sum = ground.golf_rate * ground.golf_rate_num - float(before_rating) + float(rating)
         ground.golf_rate = rating_sum / ground.golf_rate_num
-        print("수정 후: ", ground.golf_rate)
         ground.save()
         
     return JsonResponse({'reviewer' : target_review.reviewer.nickname, 'content' : content,'reviewId' : rid, 'rating' : rating, 'totalRate' : round(ground.golf_rate,2), 'rateNum' : ground.golf_rate_num})

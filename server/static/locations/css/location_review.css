@@ -1,0 +1,35 @@
+/* 리뷰 입력 칸 */
+.input-area{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin : 50px 0px;
+}
+
+/* 별 5개 모음 */
+.starRate{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    height:40px;
+}
+
+/* 별 개체 */
+.star {
+    width:40px;
+    height:100%;
+    gap: 10px;
+    background-image: url("/static/locations/images/star-line.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.star.half{
+    background-image: url("/static/locations/images/star-half-line.png");
+}
+
+
+.star.full{
+    background-image: url("/static/locations/images/star-fill.png");
+}

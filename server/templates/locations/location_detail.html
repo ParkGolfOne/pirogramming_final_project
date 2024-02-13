@@ -1,6 +1,7 @@
 {% extends 'base.html' %} {% load static %} {% block head %}
 <link rel="stylesheet" href="{% static 'locations/css/location_detail.css'%}" />
 <link rel="stylesheet" href="{% static 'locations/css/location_fav.css'%}" />
+<link rel="stylesheet" href="{% static 'locations/css/location_review.css'%}" />
 {% endblock %} {% block content %}
   <h2>{{location.golf_name}}</h2>
   <div class="location-container">
@@ -102,6 +103,13 @@
   {% if user.is_authenticated %}
   <div class="input-area">
     <input type="text" class="review-input-box" />
+    <div class="starRate">
+      <div class="star"></div>
+      <div class="star"></div>
+      <div class="star"></div>
+      <div class="star"></div>
+      <div class="star"></div>
+    </div>
     <select
         class="rateSelect"
         type="select"
@@ -129,12 +137,13 @@
   </div>
   {%else%}
   <div class="input-area">
-    <span> 댓글을 작성하려면 로그인을 해주세요!</span>
+    <span> 리뷰를 작성하려면 로그인을 해주세요!</span>
   </div>
   {% endif%}
   <hr />
 
 {% endblock %} {% block script %}
+<script>var inputRate = 5.0</script>
 <!-- 장소 즐겨찾기 -->
 <script src="{% static 'locations/javascript/location_fav.js' %}"></script>
 <!-- 리뷰 -->
