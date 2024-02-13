@@ -23,7 +23,7 @@ def game_set(request):
 
             # Game 인스턴스 생성    
             game = Game.objects.create(
-                create_by = request.user if request.user.is_authenticated else None,
+                created_by = request.user if request.user.is_authenticated else None,
                 game_name = form.data['game_name'],
                 ground = GolfLocation.objects.get(golf_name = location_name),
                 created_at=timezone.now()
