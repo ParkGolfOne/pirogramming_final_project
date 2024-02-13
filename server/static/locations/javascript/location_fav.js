@@ -17,17 +17,8 @@ requestFav.onreadystatechange = () => {
     if (requestFav.status < 400) {
       const { location_id, favNum, favTag } = JSON.parse(requestFav.response);
       const element = document.querySelector(`.favNum-${location_id}`);
-      const originHTML = element.innerHTML;
-      const [text, favnum] = originHTML.split(" ");
-      let newnum = 0;
-
-      if (favTag == "faved") {
-        newnum = Number(favnum) + 1;
-      } else {
-        newnum = Number(favnum) - 1;
-      }
-
-      element.innerHTML = `추천 ${newnum}`;
+ 
+      element.innerHTML = `추천 ${favNum}`;
     }
   }
 };
