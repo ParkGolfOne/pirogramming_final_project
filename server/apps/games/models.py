@@ -9,7 +9,7 @@ def default_scores():
 
 # 게임 모델 게임을 
 class Game(models.Model):
-    create_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,  verbose_name='create_user')
+    created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,  verbose_name='create_user')
     game_name = models.CharField('게임이름', max_length = 9, default = '게임')
     ground = models.ForeignKey(GolfLocation, null = True, blank = True ,on_delete=models.SET_NULL, verbose_name='골프장')
     created_at = models.DateTimeField(default=timezone.now)

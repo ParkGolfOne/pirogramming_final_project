@@ -137,10 +137,9 @@ def score_history(request, uid):
     try:
         # 추후에 날짜 데이터 삽입시 변경.
         scores = Score.objects.filter(player = user).order_by('-id')
+        # DoesNotExist 예외 x get()만 발생 / filter()는 빈 쿼리셋을 반환
     except Score.DoesNotExist:
         scores=[] 
-
-    
 
     locations=[] 
     # 유저가 기록한 점수의 골프장 리스트 
