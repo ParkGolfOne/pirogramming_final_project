@@ -172,6 +172,8 @@ def logout(request):
 @csrf_exempt
 def update(request, pk):
     user = User.objects.get(id=pk)
+    social_login_flag = "false"
+
     if request.method == 'POST':
         selected_city = request.POST.get('city')
         selected_town = request.POST.get('town')
@@ -206,7 +208,9 @@ def update(request, pk):
             'town': user.region.town,
             'street_address': user.address,
             'detail_address': user.detail_address,
+            "social_login_flag": social_login_flag,
         }
+        print(context)
         return render(request, template_name='users/users_update.html', context=context)
 
 
@@ -233,6 +237,7 @@ def social_login(request):
         return redirect('users:main', user.id)
     else:
         user.first_login = False
+        social_login_flag = "true"
         user.save()
         if request.method == 'POST':
             selected_city = request.POST.get('city')
@@ -268,7 +273,9 @@ def social_login(request):
                 'town': None,
                 'street_address': None,
                 'detail_address': None,
+                "social_login_flag": social_login_flag,
             }
+            print(context)
             return render(request, template_name='users/users_update.html', context=context)
 
 # 함수 이름 : kakao_unlink
