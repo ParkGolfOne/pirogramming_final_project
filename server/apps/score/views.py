@@ -18,10 +18,6 @@ from django.core.files.storage import default_storage
 from django.conf import settings
 import environ
 
-
-
-
-
 ###########################################################
 #                      스코어 메인페이지                   #
 ###########################################################
