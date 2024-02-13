@@ -64,8 +64,8 @@
           ></button>
           {% endif %} <div class="scrapNum-{{post.id}}"> {{post.scrap_num}}</div>
           {% else %}
-          <div class="likeNum-{{post.id}}"><span class="material-symbols--thumb-up"></span> {{post.like_num}}</div>
-          <div class="scrapNum-{{post.id}}"><span class="tdesign--star-filled"></span> {{post.scrap_num}}</div>
+          <div class="likeNum-{{post.id}}"><span class="material-symbols--thumb-up"></span>{{post.like_num}}</div>
+          <div class="scrapNum-{{post.id}}"><span class="tdesign--star-filled"></span>{{post.scrap_num}}</div>
           {% endif %}
         </div>
         {% if post.writer == now_user %}
