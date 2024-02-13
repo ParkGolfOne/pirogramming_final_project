@@ -22,7 +22,7 @@ class GolfLocation (models.Model):
     # golf_review = models.ForeignKey()
     fav_num =  models.IntegerField(default = 0)
     # 평점
-    golf_rate = models.DecimalField(default = 5.00, max_digits=3, decimal_places=2)
+    golf_rate = models.FloatField(default = 5.0) #, max_digits=3, decimal_places=2
     # 평점 개수
     golf_rate_num = models.IntegerField(default = 0)
 
