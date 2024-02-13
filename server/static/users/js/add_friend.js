@@ -1,28 +1,51 @@
-const candidateListField = document.getElementById("candidate_list");
+const candidateListField = document.querySelector("#id_search .candidate_list");
+function addFriend(friend_id, pk, event) {
 
-function addFriend(friend_id, pk) {
-  console.log("addFriend 함수 실행");
-  const form = document.getElementById("add_friend-form");
-  const formData = new FormData(form);
-  formData.append("friend", friend_id);
+  // 이벤트가 발생한 요소의 부모 요소의 클래스 이름 확인
+  const parentDiv = event.target.closest(".search");
+  const parentId = parentDiv.id;
 
-  const url = `/users/add_friend/${pk}/`;
-  const xhr = new XMLHttpRequest();
-  xhr.open("POST", url, true);
-  xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+  if (parentId == "id_search") {
+    const form = document.getElementById("add_friend-form");
+    const formData = new FormData(form);
+    formData.append("friend", friend_id);
 
-  xhr.onreadystatechange = function () {
-    if (xhr.readyState === 4 && xhr.status === 200) {
-      const data = JSON.parse(xhr.responseText);
-      console.log("data", data);
-      updateCandidateList(data.friend_id, pk);
-      console.log("친구 추가 완료");
-    }
-  };
-  xhr.send(formData);
+    const url = `/users/add_friend/${pk}/`;
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        const data = JSON.parse(xhr.responseText);
+        updateCandidateList(data.friend_id);
+      }
+    };
+    xhr.send(formData);
+  } else {
+    const candidateListField = document.querySelector(
+      "#email_search .candidate_list"
+    );
+    const form = document.getElementById("add_friend-form");
+    const formData = new FormData(form);
+    formData.append("friend", friend_id);
+
+    const url = `/users/add_friend/${pk}/`;
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        const data = JSON.parse(xhr.responseText);
+        delCandidateList(candidateListField);
+      }
+    };
+    xhr.send(formData);
+  }
 }
 
-// 친구 추가 이후 바뀌는 화면
+// 친구 추가 이후 바뀌는 화면 (id)
 function updateCandidateList(friend_id) {
   var liElements = candidateListField.getElementsByTagName("li");
 
@@ -33,4 +56,9 @@ function updateCandidateList(friend_id) {
       break; // 값을 찾았으면 반복문을 종료
     }
   }
+}
+
+// 친구 추가 이후 바뀌는 화면 (email)
+function delCandidateList(candidateListField) {
+  candidateListField.innerHTML = "";
 }

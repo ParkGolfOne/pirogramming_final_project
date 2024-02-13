@@ -371,6 +371,7 @@ def delete_friend(request, pk):
                 'id': friend.id,
                 'username': friend.username,
                 'nickname': friend.nickname,
+                'image': friend.image.url,
             }
             friend_json.append(friend_data)
         return JsonResponse(friend_json, safe=False)

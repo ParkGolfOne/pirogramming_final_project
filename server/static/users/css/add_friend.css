@@ -2,6 +2,7 @@
 @use postcss-nested;
 @import url('https://fonts.googleapis.com/css?family=Raleway:400,700,900');
 
+
 .search__container {
     padding: 64px;
     display: flex;
@@ -13,11 +14,41 @@
     gap: 24px;
 }
 
+.search__type {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.search__container label {
+    font-size: 2rem;
+}
+
+.search__container select {
+    font-size: 1.2rem;
+    padding: .8em .5em;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+}
+
+select::-ms-expand {
+    display: none;
+}
+
+.search__container select:focus {
+    border-color: #aaa;
+    box-shadow: 0 0 1px 2px var(--green--medium--color);
+    box-shadow: 0 0 0 2px -moz-mac-focusring;
+    outline: none;
+}
+
+
 .search__title {
     font-size: 22px;
     /* font-weight: 900; */
     text-align: center;
     color: var(--green--dark--color);
+    margin-bottom: 20px;
 }
 
 .search__input {
@@ -60,7 +91,7 @@
     }
 }
 
-#candidate_list {
+.candidate_list {
     display: flex;
     font-size: 20px;
     flex-direction: column;
@@ -69,7 +100,7 @@
     width: 100%;
 }
 
-#candidate_list li {
+.candidate_list li {
     display: flex;
     font-size: 20px;
     align-items: center;

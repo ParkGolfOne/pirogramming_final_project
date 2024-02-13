@@ -6,7 +6,7 @@ from apps.score.models import *
 import json
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-#트랜잭션
+# 트랜잭션
 from django.db import transaction
 from apps.users.models import User
 from apps.users.views import friend_candidates
@@ -26,12 +26,11 @@ from django.shortcuts import render
 def search_location(request):
     req = json.loads(request.body)
     input_text = req["input_text"]
-    # city 값 
+    # city 값
 
     city = req.get("city")
     town = req.get("town")
     sortType = req.get("sortType")
-
 
     # 조건 1 : 시 ,
     # 조건 2 : 군/구,
@@ -44,23 +43,24 @@ def search_location(request):
     elif city:
         filter_conditions2['golf_address__contains'] = city
 
-
-
-    location_names=[]
+    location_names = []
 
     if input_text:
         try:
-            locations = GolfLocation.objects.filter(**filter_conditions1, **filter_conditions2).order_by(sortType)
-            location_names = list(locations.values_list("golf_name","id","fav_num"))
+            locations = GolfLocation.objects.filter(
+                **filter_conditions1, **filter_conditions2).order_by(sortType)
+            location_names = list(locations.values_list(
+                "golf_name", "id", "fav_num"))
         except GolfLocation.DoesNotExist:
             location_names = []
-    else :
+    else:
         try:
-            locations = GolfLocation.objects.filter(**filter_conditions2).order_by(sortType)
-            location_names = list(locations.values_list("golf_name","id","fav_num"))
+            locations = GolfLocation.objects.filter(
+                **filter_conditions2).order_by(sortType)
+            location_names = list(locations.values_list(
+                "golf_name", "id", "fav_num"))
         except GolfLocation.DoesNotExist:
             location_names = []
-        
 
     return JsonResponse({'location_names': location_names})
 
@@ -72,18 +72,36 @@ def search_location(request):
 # 전달인자 : request
 # 기능 : 쿼리에 해당되는 친구 후보군 (본인+친구가 아닌 사람)을 반환
 def search_candidate(request):
-    input = request.GET.get('input', None)
+    input_value = request.GET.get('input', None)
+    search_type = request.GET.get('type', None)
+
     # 현재 요청하는 유저의 친구 후보군
     friend_candidate = friend_candidates(request)
-    # 입력 받은 input을 포함하는 유저들을 찾는다.
-    search_friends = friend_candidate.filter(username__icontains=input)
-    search_friends_json = []
-    for friend in search_friends:
-        search_friends_json.append({
-            "id": friend.id,
-            "username": friend.username,
-            "nickname": friend.nickname,
-        })
-    print(search_friends_json)
-    return JsonResponse(search_friends_json, safe=False)
 
+    # 만일 id에 대해 검색 요청이 들어온 경우 : input이 포함된 유저 보여줌
+    if search_type == "id":
+        # 입력 받은 input을 포함하는 유저들을 찾는다.
+        search_friends = friend_candidate.filter(username__icontains=input_value)
+        search_friends_json = []
+        for friend in search_friends:
+            search_friends_json.append({
+                "id": friend.id,
+                "username": friend.username,
+                "nickname": friend.nickname,
+            })
+        print(search_friends_json)
+        return JsonResponse(search_friends_json, safe=False)
+
+    # 만일 email에 대해 검색 요청이 들어온 경우 : input과 email이 정확히 일치하는 유저 보여줌
+    elif search_type == "email":
+        # 입력 받은 input을 포함하는 유저들을 찾는다.
+        search_friends = friend_candidate.filter(email__exact=input_value)
+        search_friends_json = []
+        for friend in search_friends:
+            search_friends_json.append({
+                "id": friend.id,
+                "username": friend.username,
+                "nickname": friend.nickname,
+            })
+        print(search_friends_json)
+        return JsonResponse(search_friends_json, safe=False)

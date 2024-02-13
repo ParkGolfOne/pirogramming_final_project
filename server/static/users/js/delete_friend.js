@@ -24,22 +24,27 @@ function updateFriendList(data, userId) {
   friendListField.innerHTML = "";
   data.forEach((friend) => {
     const div = document.createElement("div");
-    div.classList.add("row", "justify-content-center");
+    div.classList.add("row");
     const div1 = document.createElement("div");
-    div1.classList.add("col-9");
-    div1.innerHTML = `<p>ID: ${friend.username}</p>
-        <p>닉네임: ${friend.nickname}</p>`;
+    div1.classList.add("friend-image");
+    div1.innerHTML = `<img src=${friend.image} class="friend-image">`;
     const div2 = document.createElement("div");
-    div2.classList.add("col-2");
+    div2.classList.add("friend-info");
+    div2.innerHTML = `<p>ID: ${friend.username}</p>
+        <p>닉네임: ${friend.nickname}</p>`;
+    const div3 = document.createElement("div");
+    div3.classList.add("friend-btn");
     const form = document.createElement("form");
     form.setAttribute("method", "post");
     form.setAttribute("action", `/users/delete_friend/${userId}/`);
     form.setAttribute("id", "delete_friend-form");
     form.innerHTML = `<input type="hidden" name="friend_id" value=${friend.id}><button type="button" class="user-btn" onclick="deleteFriend(${friend.id}, ${userId})">친구 삭제</button>`;
 
-    div2.appendChild(form);
+    div3.appendChild(form);
+
     div.appendChild(div1);
     div.appendChild(div2);
+    div.appendChild(div3);
 
     friendListField.appendChild(div);
   });

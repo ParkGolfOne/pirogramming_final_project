@@ -10,7 +10,7 @@ def get_default_image():
     image_path = f'{MEDIA_ROOT}/user/default'  # 기본 이미지 디렉토리 경로
     default_images = os.listdir(image_path)
     final_image = os.path.join(image_path, random.choice(default_images))
-    return final_image.split('/media/')[1]
+    return final_image.split('media/')[1]
 
 # 유저 모델
 class User(AbstractUser):
