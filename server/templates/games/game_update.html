@@ -22,6 +22,7 @@
       width: 15%;
       display: flex;
       flex-direction: column;
+      align-items: center;
     }
     
     .coures_li > div > input{
@@ -43,6 +44,14 @@
       align-items: center;
       justify-content: center;
     }
+    .players_name{
+      display: flex;
+      justify-content: space-around;
+    }
+    .name{
+      width: 15%;
+      text-align: center;
+    }
 
     @media screen and (min-width: 700px){
       .coures_li > div > input{
@@ -60,14 +69,21 @@
 <form method="POST" action="" enctype="multipart/form-data" class="game_form">
 {% csrf_token %} {{ form }}
 <input class = 'scoreSubmitBtn' type="submit" name = "save" value="임시 저장" />
-<input type="submit" name = "save" value="점수 저장" />
+<input class = 'scoreSubmitBtn' type="submit" name = "save" value="점수 저장" />
 {% for round in rounds %}
     <div class="coures">
         <h2>코스 {{ forloop.counter }}</h2>
         <!-- 각 플레이어에 대해 반복 -->
+        <div class="players_name">
+          <div class="name"></div>
+          <div class="name"></div>
+          
+        {% for name in players_name %}
+          <div class="name" >{{name}}</div>
+        {% endfor %}
+        </div>
         <ul class="coures_ul">
             <li class="coures_li coures_li_hole">
-              <div></div>
               <div>홀</div>
               <div>1</div>
               <div>2</div>
@@ -82,7 +98,6 @@
               <div>/</div>
             </li>
             <li class="coures_li coures_li_par">
-              <div></div>
               <div>파</div>
               <div>
                 <div class="decBtn" onclick="decBtn(this)">-</div>
@@ -132,53 +147,52 @@
               <div>/</div>
               <div>/</div>  
             </li>
-            {% for player in round.round_player.all %}
+            {% for score in round.round_score.all %}
               <li class="coures_li">
-                  <div><input type="text" min="1" max = "10" name="name_{{player.id}}" value="{{ player.name}}"/></div>
                   <div>점수</div>
                   <div>
                     <div class="decBtn" onclick="decBtn(this)">-</div>
-                    <input type="number" min="1" max = "10" name="score1_{{player.id}}" value="{{ player.score.scores.hole1}}"/>
+                    <input type="number" min="1" max = "10" name="score1_{{score.id}}" value="{{ score.scores.hole1}}"/>
                     <div class="incBtn" onclick="incBtn(this)">+</div>
                   </div>
                   <div>
                     <div class="decBtn" onclick="decBtn(this)">-</div>
-                    <input type="number" min="1" max = "10" name="score2_{{player.id}}" value="{{ player.score.scores.hole2}}"/>
+                    <input type="number" min="1" max = "10" name="score2_{{score.id}}" value="{{ score.scores.hole2}}"/>
                     <div class="incBtn" onclick="incBtn(this)">+</div>
                   </div>
                   <div>
                     <div class="decBtn" onclick="decBtn(this)">-</div>
-                    <input type="number" min="1" max = "10" name="score3_{{player.id}}" value="{{ player.score.scores.hole3}}"/>
+                    <input type="number" min="1" max = "10" name="score3_{{score.id}}" value="{{ score.scores.hole3}}"/>
                     <div class="incBtn" onclick="incBtn(this)">+</div>
                   </div>
                   <div>
                     <div class="decBtn" onclick="decBtn(this)">-</div>
-                    <input type="number" min="1" max = "10" name="score4_{{player.id}}" value="{{ player.score.scores.hole4}}"/>
+                    <input type="number" min="1" max = "10" name="score4_{{score.id}}" value="{{ score.scores.hole4}}"/>
                     <div class="incBtn" onclick="incBtn(this)">+</div>
                   </div>
                   <div>
                     <div class="decBtn" onclick="decBtn(this)">-</div>
-                    <input type="number" min="1" max = "10" name="score5_{{player.id}}" value="{{ player.score.scores.hole5}}"/>
+                    <input type="number" min="1" max = "10" name="score5_{{score.id}}" value="{{ score.scores.hole5}}"/>
                     <div class="incBtn" onclick="incBtn(this)">+</div>
                   </div>
                   <div>
                     <div class="decBtn" onclick="decBtn(this)">-</div>
-                    <input type="number" min="1" max = "10" name="score6_{{player.id}}" value="{{ player.score.scores.hole6}}"/>
+                    <input type="number" min="1" max = "10" name="score6_{{score.id}}" value="{{ score.scores.hole6}}"/>
                     <div class="incBtn" onclick="incBtn(this)">+</div>
                   </div>
                   <div>
                     <div class="decBtn" onclick="decBtn(this)">-</div>
-                    <input type="number" min="1" max = "10" name="score7_{{player.id}}" value="{{ player.score.scores.hole7}}"/>
+                    <input type="number" min="1" max = "10" name="score7_{{score.id}}" value="{{ score.scores.hole7}}"/>
                     <div class="incBtn" onclick="incBtn(this)">+</div>
                   </div>
                   <div>
                     <div class="decBtn" onclick="decBtn(this)">-</div>
-                    <input type="number" min="1" max = "10" name="score8_{{player.id}}" value="{{ player.score.scores.hole8}}"/>
+                    <input type="number" min="1" max = "10" name="score8_{{score.id}}" value="{{ score.scores.hole8}}"/>
                     <div class="incBtn" onclick="incBtn(this)">+</div>
                   </div>
                   <div>
                     <div class="decBtn" onclick="decBtn(this)">-</div>
-                    <input type="number" min="1" max = "10" name="score9_{{player.id}}" value="{{ player.score.scores.hole9}}"/>
+                    <input type="number" min="1" max = "10" name="score9_{{score.id}}" value="{{ score.scores.hole9}}"/>
                     <div class="incBtn" onclick="incBtn(this)">+</div>
                   </div>
                   <div>합계</div>
