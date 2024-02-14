@@ -1,35 +1,159 @@
 /* 리뷰 입력 칸 */
-.input-area{
-    display:flex;
-    justify-content: center;
-    align-items: center;
-    gap: 15px;
-    margin : 50px 0px;
+.input-area {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin: 50px 0px;
 }
 
 /* 별 5개 모음 */
-.starRate{
-    display:flex;
-    align-items: center;
-    justify-content: center;
-    height:40px;
+.starRate {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
 }
 
 /* 별 개체 */
 .star {
-    width:40px;
-    height:100%;
-    gap: 10px;
-    background-image: url("/static/locations/images/star-line.png");
-    background-repeat: no-repeat;
-    background-size: contain;
+  width: 40px;
+  height: 100%;
+
+  background-image: url("/static/locations/images/star-line.png");
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
-.star.half{
-    background-image: url("/static/locations/images/star-half-line.png");
+.star.half {
+  background-image: url("/static/locations/images/star-half-line.png");
 }
 
+.star.full {
+  background-image: url("/static/locations/images/star-fill.png");
+}
 
-.star.full{
-    background-image: url("/static/locations/images/star-fill.png");
+/* 0.5 */
+.starRate.half > :nth-child(1) {
+  background-image: url("/static/locations/images/star-half-line.png");
+}
+.starRate.half > :nth-child(2),
+.starRate.half > :nth-child(3),
+.starRate.half > :nth-child(4),
+.starRate.half > :nth-child(5) {
+  background-image: url("/static/locations/images/star-line.png");
+}
+
+/* 1.0 */
+.starRate.one > :nth-child(1) {
+  background-image: url("/static/locations/images/star-fill.png");
+}
+.starRate.one > :nth-child(2),
+.starRate.one > :nth-child(3),
+.starRate.one > :nth-child(4),
+.starRate.one > :nth-child(5) {
+  background-image: url("/static/locations/images/star-line.png");
+}
+
+/* 1.5 */
+.starRate.one_half > :nth-child(1) {
+  background-image: url("/static/locations/images/star-fill.png");
+}
+.starRate.one_half > :nth-child(2) {
+  background-image: url("/static/locations/images/star-half-line.png");
+}
+
+.starRate.one_half > :nth-child(3),
+.starRate.one_half > :nth-child(4),
+.starRate.one_half > :nth-child(5) {
+  background-image: url("/static/locations/images/star-line.png");
+}
+
+/* 2.0 */
+.starRate.two > :nth-child(1),
+.starRate.two > :nth-child(2) {
+  background-image: url("/static/locations/images/star-fill.png");
+}
+
+.starRate.two > :nth-child(3),
+.starRate.two > :nth-child(4),
+.starRate.two > :nth-child(5) {
+  background-image: url("/static/locations/images/star-line.png");
+}
+
+/* 2.5 */
+.starRate.two_half > :nth-child(1),
+.starRate.two_half > :nth-child(2) {
+  background-image: url("/static/locations/images/star-fill.png");
+}
+
+.starRate.two_half > :nth-child(3) {
+  background-image: url("/static/locations/images/star-half-line.png");
+}
+
+.starRate.two_half > :nth-child(4),
+.starRate.two_half > :nth-child(5) {
+  background-image: url("/static/locations/images/star-line.png");
+}
+
+/* 3.0 */
+.starRate.three > :nth-child(1),
+.starRate.three > :nth-child(2),
+.starRate.three > :nth-child(3) {
+  background-image: url("/static/locations/images/star-fill.png");
+}
+
+.starRate.three > :nth-child(4),
+.starRate.three > :nth-child(5) {
+  background-image: url("/static/locations/images/star-line.png");
+}
+
+/* 3.5 */
+.starRate.three_half > :nth-child(1),
+.starRate.three_half > :nth-child(2),
+.starRate.three_half > :nth-child(3) {
+  background-image: url("/static/locations/images/star-fill.png");
+}
+
+.starRate.three_half > :nth-child(4) {
+  background-image: url("/static/locations/images/star-half-line.png");
+}
+
+.starRate.three_half > :nth-child(5) {
+  background-image: url("/static/locations/images/star-line.png");
+}
+
+/* 4.0 */
+.starRate.four > :nth-child(1),
+.starRate.four > :nth-child(2),
+.starRate.four > :nth-child(3),
+.starRate.four > :nth-child(4) {
+  background-image: url("/static/locations/images/star-fill.png");
+}
+
+.starRate.four > :nth-child(5) {
+  background-image: url("/static/locations/images/star-line.png");
+}
+
+/* 4.5 */
+.starRate.four_half > :nth-child(1),
+.starRate.four_half > :nth-child(2),
+.starRate.four_half > :nth-child(3),
+.starRate.four_half > :nth-child(4) {
+  background-image: url("/static/locations/images/star-fill.png");
+}
+
+.starRate.four_half > :nth-child(5) {
+  background-image: url("/static/locations/images/star-half-line.png");
+}
+
+/* 5.0 */
+.starRate.five > .star {
+  background-image: url("/static/locations/images/star-fill.png");
+}
+
+/* 리뷰안의 작은 별 */
+.smallStar > .star {
+  width: 20px;
+  height: 20px;
 }

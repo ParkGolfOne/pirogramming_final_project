@@ -42,7 +42,6 @@ def location_detail (request, pk):
     except Review.DoesNotExist:
         reviews = []
 
-
     ctx = {
         'location' : location,
         'pk' : pk,
@@ -181,6 +180,28 @@ def review_create(request):
     content = req["content"]
     # 레이팅
     rating = req["rating"]
+    rating = float(rating)
+    if(rating == 0.5):
+        rate_tag = 'half'
+    elif(rating == 1.0):
+        rate_tag = 'one'
+    elif(rating == 1.5):
+        rate_tag = 'one_half'
+    elif(rating == 2.0):
+        rate_tag = 'two'
+    elif(rating == 2.5):
+        rate_tag = 'two_half'
+    elif(rating == 3.0):
+        rate_tag = 'three'
+    elif(rating == 3.5):
+        rate_tag = 'three_half'
+    elif(rating == 4.0):
+        rate_tag = 'four'
+    elif(rating == 4.5):
+        rate_tag = 'four_half'
+    elif(rating == 5.0):
+        rate_tag = 'five'
+
 
     print("수정 전: ", ground.golf_rate)
     rating_sum = ground.golf_rate * ground.golf_rate_num + float(rating)
@@ -191,7 +212,7 @@ def review_create(request):
     print("수정 후: ", ground.golf_rate)
     ground.save()
 
-    new_review = Review.objects.create(ground = ground, reviewer = reviewer, content = content, rating = rating )      
+    new_review = Review.objects.create(ground = ground, reviewer = reviewer, content = content, rating = rating, rate_tag = rate_tag )      
     
     return JsonResponse({'reviewer' : new_review.reviewer.nickname, 'content' : new_review.content, 'reviewId' : new_review.id, 'rating' : rating , 'totalRate' : round(ground.golf_rate,2) ,'rateNum' : ground.golf_rate_num, 'groundId' : ground_id})
 
@@ -248,8 +269,32 @@ def review_update(request):
     rid = req["review_id"]
     # 리뷰 내용
     content = req["content"]
+    print("new_content : ", content)
     # 리뷰 평점
-    rating = req["rating"]  
+    rating = req["rating"] 
+    rating = float(rating)
+    if(rating == 0.50):
+        rate_tag = 'half'
+    elif(rating == 1.00):
+        rate_tag = 'one'
+    elif(rating == 1.5):
+        rate_tag = 'one_half'
+    elif(rating == 2.0):
+        rate_tag = 'two'
+    elif(rating == 2.50):
+        rate_tag = 'two_half'
+    elif(rating == 3.00):
+        rate_tag = 'three'
+    elif(rating == 3.50):
+        rate_tag = 'three_half'
+    elif(rating == 4.00):
+        rate_tag = 'four'
+    elif(rating == 4.50):
+        rate_tag = 'four_half'
+    elif(rating == 5.00):
+        rate_tag = 'five'
+    print("rate_tag : ", rate_tag)
+ 
     
 
 
@@ -261,6 +306,7 @@ def review_update(request):
         before_rating = target_review.rating
         target_review.content = content
         target_review.rating = rating
+        target_review.rate_tag = rate_tag
         target_review.save()
 
     try:
@@ -273,5 +319,5 @@ def review_update(request):
         ground.golf_rate = rating_sum / ground.golf_rate_num
         ground.save()
         
-    return JsonResponse({'reviewer' : target_review.reviewer.nickname, 'content' : content,'reviewId' : rid, 'rating' : rating, 'totalRate' : round(ground.golf_rate,2), 'rateNum' : ground.golf_rate_num})
+    return JsonResponse({'reviewer' : target_review.reviewer.nickname, 'content' : content,'reviewId' : rid, 'rating' : rating, 'totalRate' : round(ground.golf_rate,2), 'rateNum' : ground.golf_rate_num, 'groundId' : ground_id})
 

@@ -25,6 +25,7 @@ class GolfLocation (models.Model):
     golf_rate = models.FloatField(default = 5.0) #, max_digits=3, decimal_places=2
     # 평점 개수
     golf_rate_num = models.IntegerField(default = 0)
+    
 
 
 class LikeGolf(models.Model):
@@ -41,3 +42,4 @@ class Review(models.Model):
     rating = models.DecimalField('평점', default = 5.00, max_digits=3, decimal_places=2)
     created_date = models.DateTimeField('작성일', auto_now_add=True)
     updated_date = models.DateTimeField('수정일', auto_now=True)
+    rate_tag = models.CharField('태그',max_length = 10, default="five")

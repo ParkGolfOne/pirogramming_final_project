@@ -3,50 +3,53 @@
 <link rel="stylesheet" href="{% static 'locations/css/location_fav.css'%}" />
 <link rel="stylesheet" href="{% static 'locations/css/location_review.css'%}" />
 {% endblock %} {% block content %}
-  <h2>{{location.golf_name}}</h2>
-  <div class="location-container">
+<h2>{{location.golf_name}}</h2>
+<div class="location-container">
   <div id="location_map"></div>
   <div class="location-detail-container">
     {%if faved%}
     <button
-        class="postFavBtn fav-{{location.id}} faved"
-        onclick="pushFav({{location.id}})"
+      class="postFavBtn fav-{{location.id}} faved"
+      onclick="pushFav({{location.id}})"
     ></button>
     {%else%}
     <button
-        class="postFavBtn fav-{{location.id}}"
-        onclick="pushFav({{location.id}})"
+      class="postFavBtn fav-{{location.id}}"
+      onclick="pushFav({{location.id}})"
     ></button>
     {% endif %}
-    <div class="favNum-{{location.id}}"> 찜 {{location.fav_num}}</div>
-    <div class="rateNum">평가수 {{location.golf_rate_num}} 평점 {{location.golf_rate|floatformat:2}}</div>
+    <div class="favNum-{{location.id}}">찜 {{location.fav_num}}</div>
+    <div class="rateNum">
+      평가수 {{location.golf_rate_num}} 평점
+      {{location.golf_rate|floatformat:2}}
+    </div>
     <div class="location-detail-area">
-        <h3>규모</h3>
-        <h4>{{location.golf_scale}}</h4>
-      </div>
-      <div class="location-detail-area">
-        <h3>주소</h3>
-        <h4>{{location.golf_address}}</h4>
-      </div>
-      <div class="location-detail-area">
-        <h3>상세내용</h3>
-        <h4>{{location.golf_detail}}</h4>
-      </div>
-      <div class="location-detail-area">
-        <h3>경도</h3>
-        <h4><span id="longitude">{{ location.golf_longitude }}</span></h4>
-      </div>
-      <div class="location-detail-area">
-        <h3>위도</h3>
-        <h4><span id="latitude">{{ location.golf_latitude }}</span></h4>
-      </div>
-      <div class="location-detail-area">
-        <h3>홀</h3>
-        <h4>{{location.golf_holes}}</h4>
-      </div>       
+      <h3>규모</h3>
+      <h4>{{location.golf_scale}}</h4>
+    </div>
+    <div class="location-detail-area">
+      <h3>주소</h3>
+      <h4>{{location.golf_address}}</h4>
+    </div>
+    <div class="location-detail-area">
+      <h3>상세내용</h3>
+      <h4>{{location.golf_detail}}</h4>
+    </div>
+    <div class="location-detail-area">
+      <h3>경도</h3>
+      <h4><span id="longitude">{{ location.golf_longitude }}</span></h4>
+    </div>
+    <div class="location-detail-area">
+      <h3>위도</h3>
+      <h4><span id="latitude">{{ location.golf_latitude }}</span></h4>
+    </div>
+    <div class="location-detail-area">
+      <h3>홀</h3>
+      <h4>{{location.golf_holes}}</h4>
+    </div>
   </div>
 </div>
-  <!-- {% if location.golf_image %}
+<!-- {% if location.golf_image %}
   <a href="{% url 'locations:detail' location.pk %}">
     <img src="{{ location.golf_image.url }}" />
   </a>
@@ -56,94 +59,82 @@
   </a>
   {% endif %}
   <br /> -->
-  <div class="location-btns">
-    <a href="{% url 'locations:update' location.pk %}" class="location-detail-btn"
-      >수정하기</a
-    >
-    <form action="{% url 'locations:delete' location.pk %}" method="post">
-      {% csrf_token %}
-      <button type="submit" class="location-detail-btn">삭제하기</button>
-    </form>    
-  </div>
+<div class="location-btns">
+  <a href="{% url 'locations:update' location.pk %}" class="location-detail-btn"
+    >수정하기</a
+  >
+  <form action="{% url 'locations:delete' location.pk %}" method="post">
+    {% csrf_token %}
+    <button type="submit" class="location-detail-btn">삭제하기</button>
+  </form>
+</div>
 
-  <h3>리뷰</h3>
-  <div class="reviewSection">
-    {% if reviews %} {% for review in reviews%}
-    <div class="a_review Rid-{{review.id}}">
-      <div class="a_review_reviewer">{{review.reviewer.nickname}}</div>
-      <div class="a_review_content">{{review.content}}</div>
-      <div class="a_review_rating">{{review.rating}}</div>
-      <div class="review-btns">
-        {% if review.reviewer == now_user%}
-        <button
-          class="a_review_delete"
-          onclick="deleteReview({{review.id}},{{pk}})"
-        >
-          삭제
-        </button>
-        <button
-          class="a_review_delete"
-          onclick="updateReviewBtn({{review.id}}, {{pk}})"
-        >
-          수정
-        </button>
-        {% endif %} {% if user.is_authenticated %}
-        <!-- <button
+<h3>리뷰</h3>
+<div class="reviewSection">
+  {% if reviews %} {% for review in reviews%}
+  <div class="a_review Rid-{{review.id}}">
+    <div class="a_review_reviewer">{{review.reviewer.nickname}}</div>
+    <div class="a_review_content">{{review.content}}</div>
+    <div class="a_review_rating">{{review.rating}}</div>
+    <div class="starRate {{review.rate_tag}} smallStar">
+      <div class="star"></div>
+      <div class="star"></div>
+      <div class="star"></div>
+      <div class="star"></div>
+      <div class="star"></div>
+    </div>
+    <div class="review-btns">
+      {% if review.reviewer == now_user%}
+      <button
+        class="a_review_delete"
+        onclick="deleteReview({{review.id}},{{pk}})"
+      >
+        삭제
+      </button>
+      <button
+        class="a_review_delete"
+        onclick="updateReviewBtn({{review.id}}, {{pk}})"
+      >
+        수정
+      </button>
+      {% endif %} {% if user.is_authenticated %}
+      <!-- <button
           class="a_review_delete"
           onclick="likeComment({{review.id}})"
         >
           좋아요
         </button> -->
-        {% endif %} 
-      </div>
+      {% endif %}
     </div>
-    {%endfor%} {% endif%}
   </div>
-  <hr />
-  {% if user.is_authenticated %}
-  <div class="input-area">
-    <input type="text" class="review-input-box" />
-    <div class="starRate">
-      <div class="star"></div>
-      <div class="star"></div>
-      <div class="star"></div>
-      <div class="star"></div>
-      <div class="star"></div>
-    </div>
-    <select
-        class="rateSelect"
-        type="select"
-        name="review"
-        onchange=""
-      >
-        <option value="5.0">5.0</option>
-        <option value="4.5">4.5</option>
-        <option value="4.0">4.0</option>
-        <option value="3.5">3.5</option>
-        <option value="3.0">3.0</option>
-        <option value="2.5">2.5</option>
-        <option value="2.0">2.0</option>
-        <option value="1.5">1.5</option>
-        <option value="1.0">1.0</option>
-        <option value="0.5">0.5</option>
-        <option value="0.0">0.0</option>
-      </select>
-    <button
-      class="review-upload-btn"
-      onclick="writeReview({{pk}})"
-    >
-      리뷰 등록
-    </button>
+  {%endfor%}{% endif%}
+</div>
+<hr />
+{% if user.is_authenticated %}
+<div class="input-area">
+  <input type="text" class="review-input-box" />
+  <div class="starRate addRate">
+    <div class="star"></div>
+    <div class="star"></div>
+    <div class="star"></div>
+    <div class="star"></div>
+    <div class="star"></div>
   </div>
-  {%else%}
-  <div class="input-area">
-    <span> 리뷰를 작성하려면 로그인을 해주세요!</span>
-  </div>
-  {% endif%}
-  <hr />
+  <button class="review-upload-btn" onclick="writeReview({{pk}})">
+    리뷰 등록
+  </button>
+</div>
+{%else%}
+<div class="input-area">
+  <span> 리뷰를 작성하려면 로그인을 해주세요!</span>
+</div>
+{% endif%}
+<hr />
 
 {% endblock %} {% block script %}
-<script>var inputRate = 5.0</script>
+<script>
+  var inputRate = 0.0;
+</script>
 <!-- 장소 즐겨찾기 -->
 <script src="{% static 'locations/javascript/location_fav.js' %}"></script>
 <!-- 리뷰 -->
