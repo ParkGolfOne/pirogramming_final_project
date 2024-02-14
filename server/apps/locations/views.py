@@ -220,7 +220,7 @@ def review_create(request):
     ground.save()
 
 
-    return JsonResponse({'reviewer' : new_review.reviewer.nickname, 'content' : new_review.content, 'reviewId' : new_review.id, 'rating' : rating , 'totalRate' : round(ground.golf_rate,2) ,'rateNum' : ground.golf_rate_num, 'groundId' : ground_id})
+    return JsonResponse({'reviewer' : new_review.reviewer.nickname, 'content' : new_review.content, 'reviewId' : new_review.id, 'rating' : rating , 'totalRate' : round(ground.golf_rate,2) ,'rateNum' : ground.golf_rate_num, 'groundId' : ground_id, 'profile_url' : request.user.image.url})
 
 
 
@@ -320,5 +320,5 @@ def review_update(request):
         ground.golf_rate = cal_avg_rate(ground)
         ground.save()
         
-    return JsonResponse({'reviewer' : target_review.reviewer.nickname, 'content' : content,'reviewId' : rid, 'rating' : rating, 'totalRate' : round(ground.golf_rate,2), 'rateNum' : ground.golf_rate_num, 'groundId' : ground_id})
+    return JsonResponse({'reviewer' : target_review.reviewer.nickname, 'content' : content,'reviewId' : rid, 'rating' : rating, 'totalRate' : round(ground.golf_rate,2), 'rateNum' : ground.golf_rate_num, 'groundId' : ground_id, 'profile_url' : request.user.image.url})
 

@@ -157,3 +157,96 @@
   width: 20px;
   height: 20px;
 }
+
+/* 리뷰 섹션 */
+.reviewSection {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 15px;
+  width: 70%;
+}
+
+/* 리뷰 블럭 개체*/
+.a_review {
+  background-color: rgba(111, 120, 126, 0.1);
+  padding: 10px;
+  width: 100%;
+}
+
+@media screen and (min-width: 700px) {
+  .a_review {
+    width: 85%;
+  }
+}
+
+/* 리뷰어 */
+.a_review_reviewer {
+  margin-bottom: 10px;
+  font-size: 25px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.a_review_reviewer_profile {
+  width: 30px;
+  height: 30px;
+}
+
+/* 리뷰 내용 */
+.a_review_content {
+  font-size: 15px;
+}
+
+.a_review_rating {
+  font-size: 15px;
+  font-weight: bold;
+  margin-top: 5px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* 리뷰 작성 구간 */
+.input-area {
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+
+  background-color: rgba(111, 120, 126, 0.1);
+
+  padding: 30px;
+}
+
+.input-area > h4 {
+  margin-bottom: 5px;
+}
+
+/* 리뷰 작성 칸 */
+.review-input-box,
+.review-update-box {
+  width: 80%;
+  height: min(40px);
+}
+
+/* 리뷰 등록 버튼 */
+.review-upload-btn {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid var(--green--medium--color);
+  background-color: var(--green--bright--color);
+  cursor: pointer;
+  margin: 5px;
+  color: white !important;
+  font-size: 15px;
+  line-height: 1;
+}
+
+/* 수정하기 */
+.updateInput.input-area {
+  background-color: transparent !important;
+  width: 100% !important;
+}

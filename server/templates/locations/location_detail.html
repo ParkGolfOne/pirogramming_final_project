@@ -74,16 +74,25 @@
 <div class="reviewSection">
   {% if reviews %} {% for review in reviews%}
   <div class="a_review Rid-{{review.id}}">
-    <div class="a_review_reviewer">{{review.reviewer.nickname}}</div>
-    <div class="a_review_content">{{review.content}}</div>
-    <div class="a_review_rating">{{review.rating}}</div>
-    <div class="starRate {{review.rate_tag}} smallStar">
-      <div class="star"></div>
-      <div class="star"></div>
-      <div class="star"></div>
-      <div class="star"></div>
-      <div class="star"></div>
+    <div class="a_review_reviewer">
+      <img
+        class="a_review_reviewer_profile"
+        src="{{review.reviewer.image.url}} "
+      />
+      <div class="a_review_reviewer_nickname">{{review.reviewer.nickname}}</div>
     </div>
+    <div class="a_review_content">{{review.content}}</div>
+    <div class="a_review_rating">
+      <span>{{review.rating}}</span>
+      <div class="starRate {{review.rate_tag}} smallStar">
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+      </div>
+    </div>
+
     <div class="review-btns">
       {% if review.reviewer == now_user%}
       <button
@@ -113,7 +122,7 @@
 <hr />
 {% if user.is_authenticated %}
 <div class="input-area">
-  <input type="text" class="review-input-box" />
+  <h4>나의 리뷰를 작성해주세요!</h4>
   <div class="starRate addRate">
     <div class="star"></div>
     <div class="star"></div>
@@ -121,6 +130,7 @@
     <div class="star"></div>
     <div class="star"></div>
   </div>
+  <input type="text" class="review-input-box" />
   <button class="review-upload-btn" onclick="writeReview({{pk}})">
     리뷰 등록
   </button>
@@ -131,7 +141,6 @@
 </div>
 {% endif%}
 <hr />
-
 
 <div class="naver-review">
   <div class="naver-review-title">네이버 블로그 리뷰</div>
