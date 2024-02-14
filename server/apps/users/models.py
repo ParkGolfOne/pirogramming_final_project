@@ -6,6 +6,8 @@ import random
 import os
 
 # default 사진을 random으로 뽑는 함수
+
+
 def get_default_image():
     image_path = f'{MEDIA_ROOT}/user/default'  # 기본 이미지 디렉토리 경로
     default_images = os.listdir(image_path)
@@ -13,6 +15,8 @@ def get_default_image():
     return final_image.split('media/')[1]
 
 # 유저 모델
+
+
 class User(AbstractUser):
     username = models.CharField('아이디', max_length=15, null=False, unique=True)
     nickname = models.CharField('닉네임', max_length=31, null=False)
