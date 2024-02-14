@@ -61,10 +61,81 @@ function showPosition(position) {
         markers.push(marker);
         bounds.extend(markerLocations);
     });
-    
     //모든 마커가 보일 수 있도록 지도 zoom 뷰 조절
     map.fitBounds(bounds);
-    console.log(markers);
-}
+
+    var htmlMarker1 = {
+            content: '<div style="cursor:pointer;width:40px;height:40px;line-height:42px;font-size:10px;color:white;text-align:center;font-weight:bold;background:url(/static/locations/images/cluster-marker-1.png);background-size:contain;"></div>',
+            size: N.Size(40, 40),
+            anchor: N.Point(20, 20)
+        },
+        htmlMarker2 = {
+            content: '<div style="cursor:pointer;width:40px;height:40px;line-height:42px;font-size:10px;color:white;text-align:center;font-weight:bold;background:url(/static/locations/images/cluster-marker-2.png);background-size:contain;"></div>',
+            size: N.Size(40, 40),
+            anchor: N.Point(20, 20)
+        },
+        htmlMarker3 = {
+            content: '<div style="cursor:pointer;width:40px;height:40px;line-height:42px;font-size:10px;color:white;text-align:center;font-weight:bold;background:url(/static/locations/images/cluster-marker-3.png);background-size:contain;"></div>',
+            size: N.Size(40, 40),
+            anchor: N.Point(20, 20)
+        },
+        htmlMarker4 = {
+            content: '<div style="cursor:pointer;width:40px;height:40px;line-height:42px;font-size:10px;color:white;text-align:center;font-weight:bold;background:url(/static/locations/images/cluster-marker-4.png);background-size:contain;"></div>',
+            size: N.Size(40, 40),
+            anchor: N.Point(20, 20)
+        }, 
+        htmlMarker5 = {
+            content: '<div style="cursor:pointer;width:40px;height:40px;line-height:42px;font-size:10px;color:white;text-align:center;font-weight:bold;background:url(/static/locations/images/cluster-marker-5.png);background-size:contain;"></div>',
+            size: N.Size(40, 40),
+            anchor: N.Point(20, 20)
+        };
+
+    var markerClustering = new MarkerClustering({
+        minClusterSize: 2,
+        maxZoom: 13,
+        map: map,
+        markers: markers,
+        disableClickZoom: false,
+        gridSize: 120,
+        icons: [htmlMarker1, htmlMarker2, htmlMarker3, htmlMarker4, htmlMarker5],
+        indexGenerator: [10, 100, 200, 500, 1000],
+        stylingFunction : function(clusterMarker, count){
+             // 클러스터 마커의 DOM을 가져옴
+             var element = clusterMarker.getElement();
+             // 첫 번째 div 요소를 선택
+             var firstChild = element.querySelector('div');
+             // 첫번째 요소가 존재할 때 div 요소의 택스트를 마커의 수로 표시
+             if(firstChild){
+                 firstChild.textContent = count;
+                }
+            }
+        }
+    )
+};
+
+// function createMarkerClustering(map, markers){
+//     let clusterOptions = {
+//         minClusterSize: 2,
+// 	    maxZoom: 13,
+// 	    map: map,
+// 	    markers: markers,
+// 	    disableClickZoom: false,
+// 	    gridSize: 120,
+// 	    indexGenerator: [10, 100, 200, 500, 1000],
+// 	    stylingFunction : function(clusterMarker, count){
+//             // 클러스터 마커의 DOM을 가져옴
+//             var element = clusterMarker.getElement();
+//             // 첫 번째 div 요소를 선택
+//             var firstChild = element.querySelector('div');
+//             // 첫번째 요소가 존재할 때 div 요소의 택스트를 마커의 수로 표시
+//             if(firstChild){
+//                 firstChild.textContent = count;
+//             }
+//         }
+//     }
+//     var clusteredMarkers = new CustomMarkerClusterer(map, markers, clusterOptions);
+
+//     return clusteredMarkers;
+// }
 
 get_my_location();
