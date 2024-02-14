@@ -1,8 +1,10 @@
 {% extends 'base.html' %} {% load static %} {% block head %}
 <link rel="stylesheet" href="{% static 'locations/css/location_detail.css'%}" />
 <link rel="stylesheet" href="{% static 'locations/css/location_fav.css'%}" />
+<link rel="stylesheet" href="{% static 'locations/css/location_review.css'%}" />
 {% endblock %} {% block content %}
 <h2 class="golf-name">{{location.golf_name}}</h2>
+
 <div class="location-container">
   <div id="location_map"></div>
   <div class="location-detail-container">
@@ -17,7 +19,11 @@
       onclick="pushFav({{location.id}})"
     ></button>
     {% endif %}
-    <div class="favNum-{{location.id}}">추천 {{location.fav_num}}</div>
+    <div class="favNum-{{location.id}}">찜 {{location.fav_num}}</div>
+    <div class="rateNum">
+      평가수 {{location.golf_rate_num}} 평점
+      {{location.golf_rate|floatformat:2}}
+    </div>
     <div class="location-detail-area">
       <h3>규모</h3>
       <h4>{{location.golf_scale}}</h4>
@@ -63,13 +69,83 @@
     <button type="submit" class="location-detail-btn">삭제하기</button>
   </form>
 </div>
+
+<h3>리뷰</h3>
+<div class="reviewSection">
+  {% if reviews %} {% for review in reviews%}
+  <div class="a_review Rid-{{review.id}}">
+    <div class="a_review_reviewer">{{review.reviewer.nickname}}</div>
+    <div class="a_review_content">{{review.content}}</div>
+    <div class="a_review_rating">{{review.rating}}</div>
+    <div class="starRate {{review.rate_tag}} smallStar">
+      <div class="star"></div>
+      <div class="star"></div>
+      <div class="star"></div>
+      <div class="star"></div>
+      <div class="star"></div>
+    </div>
+    <div class="review-btns">
+      {% if review.reviewer == now_user%}
+      <button
+        class="a_review_delete"
+        onclick="deleteReview({{review.id}},{{pk}})"
+      >
+        삭제
+      </button>
+      <button
+        class="a_review_delete"
+        onclick="updateReviewBtn({{review.id}}, {{pk}})"
+      >
+        수정
+      </button>
+      {% endif %} {% if user.is_authenticated %}
+      <!-- <button
+          class="a_review_delete"
+          onclick="likeComment({{review.id}})"
+        >
+          좋아요
+        </button> -->
+      {% endif %}
+    </div>
+  </div>
+  {%endfor%}{% endif%}
+</div>
+<hr />
+{% if user.is_authenticated %}
+<div class="input-area">
+  <input type="text" class="review-input-box" />
+  <div class="starRate addRate">
+    <div class="star"></div>
+    <div class="star"></div>
+    <div class="star"></div>
+    <div class="star"></div>
+    <div class="star"></div>
+  </div>
+  <button class="review-upload-btn" onclick="writeReview({{pk}})">
+    리뷰 등록
+  </button>
+</div>
+{%else%}
+<div class="input-area">
+  <span> 리뷰를 작성하려면 로그인을 해주세요!</span>
+</div>
+{% endif%}
+<hr />
+
+
 <div class="naver-review">
   <div class="naver-review-title">네이버 블로그 리뷰</div>
   {% include 'locations/naver_review.html' %}
 </div>
+
 {% endblock %} {% block script %}
+<script>
+  var inputRate = 0.0;
+</script>
 <!-- 장소 즐겨찾기 -->
 <script src="{% static 'locations/javascript/location_fav.js' %}"></script>
+<!-- 리뷰 -->
+<script src="{% static 'locations/javascript/location_review.js'%}"></script>
 <!-- 맵 -->
 <script src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=mzbzbj8tit"></script>
 <script src="{% static 'locations/javascript/location_script.js' %}">

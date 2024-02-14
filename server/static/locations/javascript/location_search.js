@@ -113,7 +113,9 @@ requestFindLocation.onreadystatechange = () => {
           >${location[0]}</a
         >
       </h4> 
-      <div>추천 ${location[2]}</div>
+      <div>찜 ${location[2]}</div>
+      <div>리뷰수 ${location[3]}</div>
+      <div>평점 ${location[4].toFixed(2)}</div>
     </div>`;
         });
       }

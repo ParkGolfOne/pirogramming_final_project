@@ -103,7 +103,7 @@
       <div class="commentSection">
         {% if comments %} {% for comment in comments%}
         <div class="a_comment Cid-{{comment.id}}">
-          <div class="a_comment_commenter">{{comment.commenter.username}}</div>
+          <div class="a_comment_commenter">{{comment.commenter.nickname}}</div>
           <div class="a_comment_content">{{comment.content}}</div>
           <div class="comment-btns">
             {% if comment.commenter == now_user%}
