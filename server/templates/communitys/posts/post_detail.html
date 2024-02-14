@@ -23,10 +23,9 @@
         <h1 class="post-detail-title">{{post.title}}</h1>
         <div class="post-write-info">
           <div>
-            <span class="lets-icons--user-alt-fill"></span>
+            <img src="{{ user.image.url }}" alt="프로필사진" class="mypage-img">
           <div>
-            <a href="{% url 'users:main' post.writer.id %}" class="post-detail-writer"
-            ><h4>{{post.writer}}</h4></a>
+            <h4>{{post.writer}}</h4>
             <span>{{post.created_date}}</span>
             <span class="view">조회 {{post.view_num}}</span>
           </div>

@@ -17,19 +17,18 @@
         </div>
         <div class="right">
             <div class="right_box">
-                <div class="one">
-
-                </div>
-                <div class="one">
-
-                </div>
-                <div class="one">
-                    <a href="{% url 'locations:cluster' %}">마커 클러스터</a>
-                </div>
-                
-                <div class="one">
-                    <a href="{% url 'games:game_set' %}">게임하러가기</a>
-                </div>
+                <a href="{% url 'locations:list' %}" class="one">
+                    <span class="uiw--map"></span>
+                    <div>지도</div></a>
+                <a href="{% url 'communitys:board_list' %}" class="one">
+                    <span class="codicon--book"></span><div>커뮤니티</div></a>
+                <a href="{% url 'score:score_main' %}" class="one">
+                    <span class="material-symbols--scoreboard-outline-rounded"></span>
+                    <div>스코어</div></a>
+                <a href="{% url 'games:game_set' %}" class="one">
+                    <span class="cil--golf-alt"></span>
+                    <div>게임하러가기</div>
+                </a>
             </div>
         </div>        
     </div>

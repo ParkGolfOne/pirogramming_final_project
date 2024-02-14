@@ -1,5 +1,6 @@
 /* bootstrap 때문에 안먹힌 css 수정*/
 a {
+    color: inherit !important;
     text-decoration: none !important;
 }
 
@@ -17,7 +18,7 @@ label {
 input {
     margin-bottom: 10px !important;
 }
-
+/****************************/
 /* 그냥 이 페이지를 위한 css */
 .signup-form-title {
     font-family: 'Noto Sans KR', sans-serif;

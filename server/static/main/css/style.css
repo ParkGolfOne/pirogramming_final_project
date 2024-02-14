@@ -7,6 +7,7 @@
     --green--white--color: #20C997;
     --green--bright--color: #1dc078;
     --green--medium--color: #29b375;
+    --green--hover--color: #a9cfa9;    /* 버튼용 */
 }
 body{
     height: 100vh;

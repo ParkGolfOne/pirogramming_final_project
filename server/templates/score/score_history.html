@@ -49,16 +49,7 @@
         <option value="id">오래된순</option>
         <option value="total_score">점수순</option>
       </select>
-      <div class="scoreMainBtn">
-        <a
-          href="{% url 'score:score_input' user.id %}"
-          class="score-history-btn"
-          ><div class="addBtnIcon"></div>
-          점수 추가</a
-        >
-      </div>
     </div>
-
     <div class="scoreList"></div>
     <script>
       const user_id = {{uid}}
