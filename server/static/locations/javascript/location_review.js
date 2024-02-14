@@ -221,7 +221,7 @@ requestReviewAdd.onreadystatechange = () => {
         starShape = "five";
       }
       const element = document.querySelector(".reviewSection");
-      let originHTML = element.innerHTML;
+      element.innerHTML = "";
       element.innerHTML += `<div class="a_review Rid-${reviewId}">
             <div class="a_review_reviewer">
               <img

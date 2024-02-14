@@ -9,22 +9,22 @@
   <div id="location_map"></div>
   <div class="location-detail-container">
     <div class="location-fav-info">
-    {%if faved%}
-    <button
-      class="postFavBtn fav-{{location.id}} faved"
-      onclick="pushFav({{location.id}})"
-    ></button>
-    {%else%}
-    <button
-      class="postFavBtn fav-{{location.id}}"
-      onclick="pushFav({{location.id}})"
-    ></button>
-    {% endif %}
-    <div class="favNum-{{location.id}}">추천 {{location.fav_num}}</div>
-    <div class="rateNum">
-      리뷰수 {{location.golf_rate_num}} 평점
-      {{location.golf_rate|floatformat:2}}
-    </div>
+      {%if faved%}
+      <button
+        class="postFavBtn fav-{{location.id}} faved"
+        onclick="pushFav({{location.id}})"
+      ></button>
+      {%else%}
+      <button
+        class="postFavBtn fav-{{location.id}}"
+        onclick="pushFav({{location.id}})"
+      ></button>
+      {% endif %}
+      <div class="favNum-{{location.id}}">추천 {{location.fav_num}}</div>
+      <div class="rateNum">
+        리뷰수 {{location.golf_rate_num}} 평점
+        {{location.golf_rate|floatformat:2}}
+      </div>
     </div>
     <div class="location-detail-area">
       <h3>규모</h3>
@@ -68,7 +68,9 @@
     </div>
     <div class="location-detail-area">
       <h3>홈페이지</h3>
-      <a href="{{location.golf_homepage}}" target="_blank">{{location.golf_homepage}}</a>
+      <a href="{{location.golf_homepage}}" target="_blank"
+        >{{location.golf_homepage}}</a
+      >
     </div>
   </div>
 </div>
@@ -83,10 +85,16 @@
   {% endif %}
   <br /> -->
 <div class="location-btns">
-  <a href="https://forms.gle/gnaqB2GXwjxpNqbA9" class="location-detail-btn" target="_blank">골프장 정보 수정 요청</a>
+  <a
+    href="https://forms.gle/gnaqB2GXwjxpNqbA9"
+    class="location-detail-btn"
+    target="_blank"
+    >골프장 정보 수정 요청</a
+  >
   {% if request.user.is_superuser %}
   <a href="{% url 'locations:update' location.pk %}" class="location-detail-btn"
-    >수정하기</a>
+    >수정하기</a
+  >
   <form action="{% url 'locations:delete' location.pk %}" method="post">
     {% csrf_token %}
     <button type="submit" class="location-detail-btn">삭제하기</button>
@@ -172,9 +180,7 @@
   <hr />
 </div>
 
-
 <div class="naver-review"></div>
-
 
 {% endblock %} {% block script %}
 <script>

@@ -98,6 +98,7 @@ requestFindReviews.onreadystatechange = () => {
         // [5] : rating
         // [6] : rate_tag")
         let i = 0;
+
         review_names.forEach((review) => {
           if (now_user == review[1]) {
             reviewSection.innerHTML += `
