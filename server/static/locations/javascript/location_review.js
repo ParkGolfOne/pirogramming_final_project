@@ -3,6 +3,10 @@ const reviewInput = document.querySelector(".input-area");
 
 //리뷰 수정 플래그
 var updateFlag = false;
+// 리뷰 추가의 별표 추가 버튼
+const addRate = document.querySelector(".addRate");
+// 저장된 값
+var original_rate = addRate.classList.value;
 
 // 별 모양 바뀌는 함수
 function StarChangeStart() {
@@ -10,12 +14,11 @@ function StarChangeStart() {
   /*           별 관련 ajax (리뷰 추가)        */
   /********************************************/
 
-  // 리뷰 추가의 별표 추가 버튼
-  const addRate = document.querySelector(".addRate");
-  // 저장된 값
-  var original_rate = addRate.classList.value;
+
+
 
   addRate.addEventListener("mousemove", (event) => {
+    console.log("마우스 들어옴");
     // 태그의 위치
     const five_star = addRate.getBoundingClientRect();
 
@@ -65,6 +68,7 @@ function StarChangeStart() {
   });
 
   addRate.addEventListener("mouseleave", () => {
+    console.log("마우스 나감");
     addRate.classList = original_rate;
   });
 
@@ -117,9 +121,13 @@ function StarChangeStart() {
     }
   });
 }
-StarChangeStart();
-// 리뷰 제거 부분
 
+// 별 바뀌는 부분 세팅
+StarChangeStart();
+
+
+
+// 리뷰 제거 부분
 const requestReviewDelete = new XMLHttpRequest();
 
 // 함수명 : deleteReview
@@ -146,6 +154,7 @@ requestReviewDelete.onreadystatechange = () => {
       );
       const element = document.querySelector(`.Rid-${review_id}`);
       element.remove();
+      if (rateNum == 0){ document.querySelector(".reviewSection").innerHTML = "리뷰가 없습니다!";}
       const rateDisplay = document.querySelector(".rateNum");
       rateDisplay.innerText = `평가수 ${rateNum} 평점 ${totalRate}`;
     }
@@ -221,7 +230,7 @@ requestReviewAdd.onreadystatechange = () => {
         starShape = "five";
       }
       const element = document.querySelector(".reviewSection");
-      element.innerHTML = "";
+      if (rateNum == 1){ element.innerHTML = "";}
       element.innerHTML += `<div class="a_review Rid-${reviewId}">
             <div class="a_review_reviewer">
               <img
@@ -565,11 +574,6 @@ function StarChangeStart() {
   /********************************************/
   /*           별 관련 ajax (리뷰 추가)        */
   /********************************************/
-
-  // 리뷰 추가의 별표 추가 버튼
-  const addRate = document.querySelector(".addRate");
-  // 저장된 값
-  var original_rate = addRate.classList.value;
 
   addRate.addEventListener("mousemove", (event) => {
     // 태그의 위치
