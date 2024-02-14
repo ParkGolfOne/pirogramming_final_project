@@ -3,6 +3,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 20px;
 }
 
 #location_map {
@@ -20,8 +21,16 @@
     width: 100%;
 }
 
-.location-detail-container>div:nth-child(6),
-.location-detail-container>div:nth-child(7) {
+.location-fav-info {
+    display: flex;
+    font-size: 20px;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+}
+
+.location-detail-container>div:nth-child(4),
+.location-detail-container>div:nth-child(5) {
     display: none;
 }
 
@@ -50,11 +59,11 @@
     border: 1px solid var(--green--medium--color);
     background-color: var(--green--bright--color);
     cursor: pointer;
-    font-size: 30px;
+    font-size: 20px;
     margin: 5px;
     color: white !important;
-    font-size: 30px;
     line-height: 1;
+    margin: 20px;
 }
 
 .location-detail-btn:hover {
@@ -82,9 +91,10 @@
 }
 
 .naver-review-title {
-    font-size: 30px;
+    font-size: 25px;
     margin: 20px 0px;
     text-align: center;
+    font-weight: bold;
 
 }
 
@@ -92,27 +102,33 @@
     display: flex;
     align-content: center;
     flex-direction: column;
-    width: 100%;
+    width: 80%;
     gap: 15px;
 }
 
 .review-item {
     background-color: rgba(111, 120, 126, 0.1);
-    padding: 10px;
+    padding: 15px;
+    position: relative;
 }
 
 .review-title {
-    font-size: 25px;
+    font-size: 20px;
+    font-weight: bold;
     margin-bottom: 10px;
 }
 
 .review-content {
     font-size: 15px;
     margin-bottom: 5px;
+    line-height: 1.5;
 }
 
 .review-writer {
-    font-size: 13px;
+    font-size: 12px;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
 }
 
 /* pc일떄 */
