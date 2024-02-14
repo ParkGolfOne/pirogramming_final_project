@@ -1,9 +1,20 @@
+// 소셜로그인 유저이면서, 처음 로드되는 페이지라면, 해당 페이지를 제출하지 않으면 못나가도록함
+// 제출 버튼 클릭 여부를 나타내는 변수
+// 페이지 이동 시 확인 메시지 표시
+console.log(socialLoginFlag);
+window.onbeforeunload = function (e) {
+  alert("모두 입력하세요");
+  if (e) {
+    e.returnValue = "Any string";
+  }
+  return "Any string";
+};
+
 document.addEventListener("DOMContentLoaded", function () {
   var cityField = document.getElementById("city");
   var townField = document.getElementById("town");
   var addressField = document.getElementById("address");
   var sbAddressField = document.getElementById("address_detail");
-
 
   // 1. city 선택 목록 보여주는 기능
   // city 데이터 DB에서 요청
@@ -60,48 +71,48 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-   function errorMessage(dataArray) {
-     // 기존 에러 메세지 삭제
-     var errorElements = document.querySelectorAll(".errorMessage");
-     errorElements.forEach(function (element) {
-       element.innerHTML = "";
-     });
-     var elements = document.querySelectorAll(".error-input");
-     elements.forEach(function (element) {
-       if (element) {
-         element.classList.remove("error-input");
-       }
-     });
+  function errorMessage(dataArray) {
+    // 기존 에러 메세지 삭제
+    var errorElements = document.querySelectorAll(".errorMessage");
+    errorElements.forEach(function (element) {
+      element.innerHTML = "";
+    });
+    var elements = document.querySelectorAll(".error-input");
+    elements.forEach(function (element) {
+      if (element) {
+        element.classList.remove("error-input");
+      }
+    });
 
-     // 각 필드에 대한 오류 메시지 추가
-     Object.keys(dataArray).forEach((data) => {
-       const errorMessagesForField = dataArray[data];
-       const inputField = document.querySelector(`[name="${data}"]`);
-       console.log("inputField", inputField);
-       const parentDiv = inputField.parentElement;
-       console.log("parentDiv", parentDiv);
-       const fieldDiv = parentDiv.querySelector(".errorMessage");
-       console.log("fieldDiv", fieldDiv);
-       
-       // 해당 필드에 오류 메시지가 있는 경우에만 처리
-       if (errorMessagesForField.length > 0) {
-         const errorMessageElement = document.createElement("p");
-         errorMessageElement.textContent = errorMessagesForField[0]; // 첫 번째 오류 메시지만 표시
-         fieldDiv.appendChild(errorMessageElement);
-         fieldDiv.classList.add("error-text");
+    // 각 필드에 대한 오류 메시지 추가
+    Object.keys(dataArray).forEach((data) => {
+      const errorMessagesForField = dataArray[data];
+      const inputField = document.querySelector(`[name="${data}"]`);
+      console.log("inputField", inputField);
+      const parentDiv = inputField.parentElement;
+      console.log("parentDiv", parentDiv);
+      const fieldDiv = parentDiv.querySelector(".errorMessage");
+      console.log("fieldDiv", fieldDiv);
 
-         // 필드 강조 표시 등 추가적인 UI 변경도 가능
-         inputField.classList.add("error-input");
-       }
-     });
-   }
+      // 해당 필드에 오류 메시지가 있는 경우에만 처리
+      if (errorMessagesForField.length > 0) {
+        const errorMessageElement = document.createElement("p");
+        errorMessageElement.textContent = errorMessagesForField[0]; // 첫 번째 오류 메시지만 표시
+        fieldDiv.appendChild(errorMessageElement);
+        fieldDiv.classList.add("error-text");
+
+        // 필드 강조 표시 등 추가적인 UI 변경도 가능
+        inputField.classList.add("error-input");
+      }
+    });
+  }
 
   // 입력 받은 시와 동네를 백엔드로 넘기기
   // 폼 제출 시 사용할 이벤트 헨들러 추가
   var form = document.getElementById("update-form");
   form.addEventListener("submit", function (event) {
     event.preventDefault(); // 폼 기본 동작 방지
-    
+
     // form 데이터 가져옴
     const formData = new FormData(form);
 
@@ -121,7 +132,7 @@ document.addEventListener("DOMContentLoaded", function () {
     } else {
       formData.append("town", townField.value);
     }
-    if (addressField.value === "" ){
+    if (addressField.value === "") {
       formData.append("street_address", "");
     } else {
       formData.append("street_address", addressField.value);
@@ -130,8 +141,8 @@ document.addEventListener("DOMContentLoaded", function () {
       formData.append("detail_address", "");
     } else {
       formData.append("detail_address", sbAddressField.value);
-    } 
-    
+    }
+
     const url = `/users/update/${userId}/`;
     const xhr = new XMLHttpRequest();
     xhr.open("POST", url, true);
@@ -139,12 +150,12 @@ document.addEventListener("DOMContentLoaded", function () {
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4 && xhr.status === 200) {
         const data = JSON.parse(xhr.responseText);
-        if (data.result == "success")  {
+        if (data.result == "success") {
           window.location.replace(data.url);
-        }
-        else {
+        } else {
           console.log(data.error);
-          errorMessage(data.error);}
+          errorMessage(data.error);
+        }
       }
     };
     xhr.send(formData);

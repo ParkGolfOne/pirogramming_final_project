@@ -2,9 +2,21 @@
 <link rel="stylesheet" href="{% static 'users/css/user.css' %}" />
 <title>마이페이지</title>
 {% endblock %} {% block content %}
-{% if user.is_authenticated %} {% if now_user.id == pk %}
+{% if user.is_authenticated and now_user.id == pk %}
 <h1>{{user.nickname}}님 마이페이지</h1>
 <div class="user-btn-container">
+  <div class="user-btn-box">
+    <h3 class="user-btn-title">내 정보</h3>
+    <div class="mypage-info">
+      <img src="{{ user.image.url }}" alt="프로필사진" class="mypage-img">
+      <div>
+        <p>아이디:</p>
+        <p>{{user.username}}</p>
+        <p>이메일:</p>
+        <p>{{user.email}}</p>
+      </div>
+    </div>
+  </div>
   <div class="user-btn-box">
     <h3 class="user-btn-title">친구</h3>
     <a href="{% url 'users:add_friend' user.pk %}" class="user-mypage-btn"
@@ -78,16 +90,10 @@
     {% endfor %}
   </div>
 </div>
-
 {%else%}
-<h1>{{user.nickname}}님 페이지</h1>
-<div>자기소개?</div>
-{% endif %} {% else %}
-<div><a href="{% url 'users:login' %}">로그인</a></div>
-<div><a href="{% url 'social:begin' 'kakao' %}">카카오 로그인</a></div>
-<div><a href="{% url 'social:begin' 'naver' %}">네이버 로그인</a></div>
-<div><a href="{% url 'users:signup' %}">회원가입</a></div>
-{% endif %} {% endblock %}
+잘못된 접근입니다
+{% endif %}
+{% endblock %}
 {% block script %}
 <script src="{% static 'users/js/mypage.js' %}"></script>
 {%endblock%}
