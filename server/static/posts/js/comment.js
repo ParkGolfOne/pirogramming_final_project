@@ -101,6 +101,7 @@ const requestCommentUpdate = new XMLHttpRequest();
 // 전달인자 : comment_id
 // 기능 : 서버에 댓글 작성 요청 및 댓글 내용 전달
 function updateComment(comment_id) {
+  //기존 댓글
   const content = document.querySelector(".comment-update-box");
 
   const url = `/communitys/comment_update/${comment_id}/`;
@@ -128,6 +129,7 @@ requestCommentUpdate.onreadystatechange = () => {
       const element = document.querySelector(`.Cid-${commentId}`);
       element.innerHTML = `<div class="a_comment_commenter">${commenter}</div>
             <div class="a_comment_content">${content}</div>
+            <div class="comment-btns">
             <button
               class="a_comment_delete"
               onclick="deleteComment(${commentId})"
@@ -151,7 +153,9 @@ requestCommentUpdate.onreadystatechange = () => {
               onclick="writeReply(${post_id}, ${commentId})"
             >
               답글
-            </button><section class="replySection"></section>`;
+            </button>
+            </div>
+            <section class="replySection"></section>`;
     }
   }
 };
@@ -161,8 +165,9 @@ requestCommentUpdate.onreadystatechange = () => {
 // 기능 : 댓글 업데이트 버튼 입력시 input 칸으로 변경
 function updateCommentBtn(comment_id) {
   const element = document.querySelector(`.Cid-${comment_id}`);
+  const commentElement = element.querySelector(".a_comment_content");
   element.innerHTML = `<div class="input-area">
-        <input type="text" class="comment-update-box" /><button
+        <input type="text" class="comment-update-box" value="${commentElement.innerHTML}"/><button
           class="comment-upload-btn"
           onclick="updateComment(${comment_id})"
         >

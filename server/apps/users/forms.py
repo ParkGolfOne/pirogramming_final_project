@@ -56,11 +56,19 @@ class SignupForm(UserCreationForm):
         label="이미지",
         required=False
     )
-
+    address = forms.CharField(
+        label='주소',
+        widget=forms.TextInput(
+            attrs={
+                'class': 'signup-input'
+            }
+        )
+    )
     class Meta:
         model = User
         fields = ['username', 'nickname', 'image', 'password1',
-                  'password2', 'birth', 'phone', 'email', 'address']
+                  'password2', 'birth', 'phone', 'email','address', 
+                  'image']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -104,11 +112,19 @@ class UpdateForm(forms.ModelForm):
         label="이미지",
         required=False
     )
-
+    address = forms.CharField(
+        label='주소',
+        widget=forms.TextInput(
+            attrs={
+                'class': 'signup-input'
+            }
+        ),
+        required=True
+    )
     class Meta:
         model = User
         fields = ['username', 'nickname', 'birth',
-                  'phone', 'email', 'address', 'image']
+                  'phone', 'email', 'image', 'address']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
