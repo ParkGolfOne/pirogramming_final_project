@@ -63,6 +63,12 @@ def main(request, pk):
     except Like.DoesNotExist:
         my_locations = []
 
+     # 작성한 리뷰 가져오기
+    try:
+        my_reviews = Review.objects.filter(reviewer=user)
+    except Review.DoesNotExist:
+        my_reviews = []
+
     context = {
         "pk": pk,
         "user": user,
@@ -72,6 +78,7 @@ def main(request, pk):
         "my_scraps": my_scraps,
         "my_likes": my_likes,
         "my_locations": my_locations,
+        "my_reviews": my_reviews,
     }
 
     return render(request, "users/users_main.html", context)

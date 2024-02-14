@@ -28,6 +28,10 @@
   line-height: 1;
 }
 
+.reviewTypeSelect > .active{
+  filter:brightness(0.9);
+}
+
 .reviewTypeSelect > button:hover {
   filter: brightness(0.9);
 }

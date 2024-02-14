@@ -310,3 +310,19 @@
     font-weight: bold;
     color: var(--green--bright--color);
 }
+
+
+
+.my_review{
+    display:flex !important;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.a.review_rating{
+    width: 40% !important;
+    display:flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+}
