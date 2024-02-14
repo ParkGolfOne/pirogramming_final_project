@@ -7,7 +7,7 @@ from tinymce.widgets import TinyMCE
 class BoardForm(forms.ModelForm):
     class Meta():
         model = Board
-        fields = ('__all__')
+        fields = ['name', 'thumbnail']
 
 
 # 객체명 :  PostForm

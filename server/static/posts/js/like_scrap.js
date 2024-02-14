@@ -18,8 +18,8 @@ requestLike.onreadystatechange = () => {
     if (requestLike.status < 400) {
       const { post_id, LikeNum, likeTag } = JSON.parse(requestLike.response);
       const element = document.querySelector(`.likeNum-${post_id}`);
-      const originHTML = element.innerHTML;
-      const [text, likenum] = originHTML.split(" ");
+      const likenum = element.innerHTML;
+
       let newnum = 0;
 
       if (likeTag == "liked") {
@@ -53,9 +53,7 @@ requestScrap.onreadystatechange = () => {
     if (requestScrap.status < 400) {
       const { post_id, ScrapNum, scrapTag } = JSON.parse(requestScrap.response);
       const element = document.querySelector(`.scrapNum-${post_id}`);
-      const originHTML = element.innerHTML;
-      const [text, scrapnum] = originHTML.split(" ");
-      
+      const scrapnum = element.innerHTML;
       let newnum = 0;
 
       if (scrapTag == "scraped") {

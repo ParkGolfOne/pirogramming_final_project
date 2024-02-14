@@ -6,6 +6,7 @@
 <div>
   <div class="location-header">
     <h1>전국 골프장 목록</h1>
+    <a href="{% url 'locations:cluster' %}">지도 클러스터</a>
     <div class="location-btn">
       {% if user.is_authenticated%}
       <a href="{% url 'locations:myhome' pk=user.id %}"
@@ -18,9 +19,11 @@
     <div class="location-btn">
       <a href="{% url 'locations:myplace' %}">현재 내 위치 주변 파크골프장</a>
     </div>
+    {% if request.user.is_superuser %}
     <div class="location-btn">
       <a href="{% url 'locations:create' %}">골프장 추가</a>
     </div>
+    {% endif %}
   </div>
   <div class="locationInputArea">
     <input
@@ -43,7 +46,9 @@
     <label for="sortType">기준 : </label>
     <select id="sortType" class="locationList-input" onchange="findLocation()">
       <option value="golf_name">이름순</option>
-      <option value="-fav_num">추천순</option>
+      <option value="-fav_num">찜순</option>
+      <option value="-golf_rate">평점순</option>
+      <option value="-golf_rate_num">리뷰 많은순</option>
     </select>
   </div>
   <div class="location-main-container"></div>

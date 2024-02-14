@@ -103,11 +103,13 @@
 }
 .post-detail-container > img {
   width: 100%;
+  margin: 10px 0px 20px 0px;
 }
 .my-3 {
   width: 100%;
   word-break: break-word;
 }
+
 .post-date {
   font-size: 20px;
 }

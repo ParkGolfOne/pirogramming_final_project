@@ -96,6 +96,9 @@ h1 {
   font-size: 20px;
   color: gray;
 }
+.board-name {
+  word-break: break-word;
+}
 .before-icon {
   display: flex;
   width: 100%;
@@ -118,7 +121,8 @@ h1 {
   .postList,
   .post_search,
   .post_sort,
-  .before-icon {
+  .before-icon,
+  .board-name {
     width: 70%;
   }
 }

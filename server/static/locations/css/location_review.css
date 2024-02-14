@@ -1,0 +1,351 @@
+/* 리뷰 선택 버튼 */
+.reviewTypeSelect {
+  width: 60%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+/* 리뷰 선택 다음 구분선 */
+.reviewTypeSelect::after {
+  width: 100%;
+  height: 3px;
+  background-color: darkolivegreen;
+  z-index: 3;
+}
+
+.reviewTypeSelect > button {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid var(--green--medium--color);
+  background-color: var(--green--bright--color);
+  cursor: pointer;
+  margin: 5px;
+  color: white !important;
+  font-size: 15px;
+  line-height: 1;
+}
+
+.reviewTypeSelect > button:hover {
+  filter: brightness(0.9);
+}
+
+/* 전체 리뷰 공간 */
+#Review {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 정렬하기 */
+.form-group {
+  margin-top: 10px;
+  gap: 10px;
+  width: 60%;
+}
+
+.reviewList-input {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+/* 리뷰 입력 칸 */
+.input-area {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin: 50px 0px;
+}
+
+/* 별 5개 모음 */
+.starRate {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+}
+
+/* 별 개체 */
+.star {
+  width: 40px;
+  height: 100%;
+
+  background-image: url("/static/locations/images/star-line.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.star.half {
+  background-image: url("/static/locations/images/star-half-line.png");
+}
+
+.star.full {
+  background-image: url("/static/locations/images/star-fill.png");
+}
+
+/* 0.5 */
+.starRate.half > :nth-child(1) {
+  background-image: url("/static/locations/images/star-half-line.png");
+}
+.starRate.half > :nth-child(2),
+.starRate.half > :nth-child(3),
+.starRate.half > :nth-child(4),
+.starRate.half > :nth-child(5) {
+  background-image: url("/static/locations/images/star-line.png");
+}
+
+/* 1.0 */
+.starRate.one > :nth-child(1) {
+  background-image: url("/static/locations/images/star-fill.png");
+}
+.starRate.one > :nth-child(2),
+.starRate.one > :nth-child(3),
+.starRate.one > :nth-child(4),
+.starRate.one > :nth-child(5) {
+  background-image: url("/static/locations/images/star-line.png");
+}
+
+/* 1.5 */
+.starRate.one_half > :nth-child(1) {
+  background-image: url("/static/locations/images/star-fill.png");
+}
+.starRate.one_half > :nth-child(2) {
+  background-image: url("/static/locations/images/star-half-line.png");
+}
+
+.starRate.one_half > :nth-child(3),
+.starRate.one_half > :nth-child(4),
+.starRate.one_half > :nth-child(5) {
+  background-image: url("/static/locations/images/star-line.png");
+}
+
+/* 2.0 */
+.starRate.two > :nth-child(1),
+.starRate.two > :nth-child(2) {
+  background-image: url("/static/locations/images/star-fill.png");
+}
+
+.starRate.two > :nth-child(3),
+.starRate.two > :nth-child(4),
+.starRate.two > :nth-child(5) {
+  background-image: url("/static/locations/images/star-line.png");
+}
+
+/* 2.5 */
+.starRate.two_half > :nth-child(1),
+.starRate.two_half > :nth-child(2) {
+  background-image: url("/static/locations/images/star-fill.png");
+}
+
+.starRate.two_half > :nth-child(3) {
+  background-image: url("/static/locations/images/star-half-line.png");
+}
+
+.starRate.two_half > :nth-child(4),
+.starRate.two_half > :nth-child(5) {
+  background-image: url("/static/locations/images/star-line.png");
+}
+
+/* 3.0 */
+.starRate.three > :nth-child(1),
+.starRate.three > :nth-child(2),
+.starRate.three > :nth-child(3) {
+  background-image: url("/static/locations/images/star-fill.png");
+}
+
+.starRate.three > :nth-child(4),
+.starRate.three > :nth-child(5) {
+  background-image: url("/static/locations/images/star-line.png");
+}
+
+/* 3.5 */
+.starRate.three_half > :nth-child(1),
+.starRate.three_half > :nth-child(2),
+.starRate.three_half > :nth-child(3) {
+  background-image: url("/static/locations/images/star-fill.png");
+}
+
+.starRate.three_half > :nth-child(4) {
+  background-image: url("/static/locations/images/star-half-line.png");
+}
+
+.starRate.three_half > :nth-child(5) {
+  background-image: url("/static/locations/images/star-line.png");
+}
+
+/* 4.0 */
+.starRate.four > :nth-child(1),
+.starRate.four > :nth-child(2),
+.starRate.four > :nth-child(3),
+.starRate.four > :nth-child(4) {
+  background-image: url("/static/locations/images/star-fill.png");
+}
+
+.starRate.four > :nth-child(5) {
+  background-image: url("/static/locations/images/star-line.png");
+}
+
+/* 4.5 */
+.starRate.four_half > :nth-child(1),
+.starRate.four_half > :nth-child(2),
+.starRate.four_half > :nth-child(3),
+.starRate.four_half > :nth-child(4) {
+  background-image: url("/static/locations/images/star-fill.png");
+}
+
+.starRate.four_half > :nth-child(5) {
+  background-image: url("/static/locations/images/star-half-line.png");
+}
+
+/* 5.0 */
+.starRate.five > .star {
+  background-image: url("/static/locations/images/star-fill.png");
+}
+
+/* 리뷰안의 작은 별 */
+.smallStar > .star {
+  width: 20px;
+  height: 20px;
+}
+
+/* 리뷰 섹션 */
+.reviewSection {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 15px;
+  width: 70%;
+}
+
+/* 리뷰 블럭 개체*/
+.a_review {
+  background-color: rgba(111, 120, 126, 0.1);
+  padding: 10px;
+  width: 100%;
+}
+
+@media screen and (min-width: 700px) {
+  .a_review {
+    width: 85%;
+  }
+}
+
+/* 리뷰어 */
+.a_review_reviewer {
+  margin-bottom: 10px;
+  font-size: 25px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.a_review_reviewer_profile {
+  width: 30px;
+  height: 30px;
+}
+
+/* 리뷰 내용 */
+.a_review_content {
+  font-size: 15px;
+}
+
+.a_review_rating {
+  font-size: 15px;
+  font-weight: bold;
+  margin-top: 5px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* 리뷰 작성 구간 */
+.input-area {
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+
+  background-color: rgba(111, 120, 126, 0.1);
+
+  padding: 30px;
+}
+
+.input-area > h4 {
+  margin-bottom: 5px;
+}
+
+/* 리뷰 작성 칸 */
+.review-input-box,
+.review-update-box {
+  width: 80%;
+  height: min(40px);
+}
+
+/* 리뷰 등록 버튼 */
+.review-upload-btn {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid var(--green--medium--color);
+  background-color: var(--green--bright--color);
+  cursor: pointer;
+  margin: 5px;
+  color: white !important;
+  font-size: 15px;
+  line-height: 1;
+}
+
+/* 수정하기 */
+.updateInput.input-area {
+  background-color: transparent !important;
+  width: 100% !important;
+}
+
+/* 페이지 */
+.page-area {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 페이지 숫자 리스트 */
+.page-list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+/* 페이지 숫자 개체 */
+.pageNum {
+  cursor: pointer;
+}
+.pageNum:hover {
+  transform: scale(1.1) !important;
+}
+
+/* 현재 페이지 숫자 개체 */
+.nowPage {
+  font-weight: bold;
+  color: #1dc078;
+}
+
+/* 페이지 이동 버튼 */
+.page-move-btn {
+  width: 20px;
+  height: 20px;
+  height: 20px;
+}
+
+.nonDisplay {
+  visibility: hidden !important;
+}
+
+/* 좌 우 버튼 */

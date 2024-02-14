@@ -3,25 +3,35 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 20px;
 }
 
 #location_map {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 8 / 5;
-    margin: 10px 0px;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 8 / 5;
+  margin: 10px 0px;
 }
 
 .location-detail-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
 
-.location-detail-container>div:nth-child(6),
-.location-detail-container>div:nth-child(7) {
+
+.location-fav-info {
+    display: flex;
+    font-size: 20px;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+}
+
+.location-detail-container>div:nth-child(4),
+.location-detail-container>div:nth-child(5) {
     display: none;
 }
 
@@ -29,9 +39,19 @@
     border: 1px solid var(--white--border--color);
     border-radius: 5px;
     padding: 10px;
-    margin: 10px;
+    margin: 5px;
     background-color: var(--green--pale--color);
     width: 100%;
+}
+
+.location-detail-area h3 {
+    font-size: 2rem;
+    margin-bottom: 5px;
+}
+
+.location-detail-area p,
+.location-detail-area a {
+    font-size: 1.7rem;
 }
 
 .location-detail-btn {
@@ -40,40 +60,42 @@
     border: 1px solid var(--green--medium--color);
     background-color: var(--green--bright--color);
     cursor: pointer;
-    font-size: 30px;
+    font-size: 20px;
     margin: 5px;
     color: white !important;
-    font-size: 30px;
     line-height: 1;
+    margin: 20px;
 }
 
 .location-detail-btn:hover {
-    background-color: var(--green--medium--color);
-    border: 1px solid var(--green--medium--color);
-    transition: 0.1s;
+  background-color: var(--green--medium--color);
+  border: 1px solid var(--green--medium--color);
+  transition: 0.1s;
 }
 
 .location-btns {
-    display: flex;
-    width: 100%;
-    justify-content: center;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  margin-bottom: 20px;
 }
 
-.location-detail-area>h4 {
-    font-size: 25px;
+.location-detail-area > h4 {
+  font-size: 25px;
 }
-
 
 /*naver review*/
 .naver-review {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
+
 .naver-review-title {
-    font-size: 30px;
+    font-size: 25px;
     margin: 20px 0px;
     text-align: center;
+    font-weight: bold;
 
 }
 
@@ -81,27 +103,34 @@
     display: flex;
     align-content: center;
     flex-direction: column;
-    width: 100%;
+    width: 80%;
     gap: 15px;
 }
 
 .review-item {
     background-color: rgba(111, 120, 126, 0.1);
-    padding: 10px;
+    padding: 15px;
+    position: relative;
 }
 
 .review-title {
-    font-size: 25px;
+    font-size: 20px;
+    font-weight: bold;
     margin-bottom: 10px;
 }
 
 .review-content {
     font-size: 15px;
     margin-bottom: 5px;
+    line-height: 1.5;
 }
 
 .review-writer {
-    font-size: 13px;
+    font-size: 12px;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+
 }
 
 /* pc일떄 */
@@ -111,7 +140,9 @@
         align-items: normal;
         gap: 10px;
     }
+
     .review-container {
         width: 70%;
     }
 }
+
