@@ -18,7 +18,6 @@ function addNaverBlogReview() {
   xhr.send();
 }
 
-// 받아온 town 데이터를 option 태그로 만들어서 추가함
 function updateNaverReviewField(naverReview) {
   const reViewContainer = document.querySelector(".review-container");
   reViewContainer.innerHTML = "";
