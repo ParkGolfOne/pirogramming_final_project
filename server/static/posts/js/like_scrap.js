@@ -55,6 +55,7 @@ requestScrap.onreadystatechange = () => {
       const element = document.querySelector(`.scrapNum-${post_id}`);
       const originHTML = element.innerHTML;
       const [text, scrapnum] = originHTML.split(" ");
+      
       let newnum = 0;
 
       if (scrapTag == "scraped") {
@@ -63,7 +64,7 @@ requestScrap.onreadystatechange = () => {
         newnum = Number(scrapnum) - 1;
       }
 
-      element.innerHTML = `${newnum}`;
+      element.innerHTML = newnum;
     }
   }
 };
