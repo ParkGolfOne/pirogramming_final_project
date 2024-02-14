@@ -19,9 +19,11 @@
     <div class="location-btn">
       <a href="{% url 'locations:myplace' %}">현재 내 위치 주변 파크골프장</a>
     </div>
+    {% if request.user.is_superuser %}
     <div class="location-btn">
       <a href="{% url 'locations:create' %}">골프장 추가</a>
     </div>
+    {% endif %}
   </div>
   <div class="locationInputArea">
     <input
