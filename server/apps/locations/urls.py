@@ -12,6 +12,8 @@ urlpatterns = [
     path('delete/<int:pk>/', location_delete, name='delete'),
     path('myhome/<int:pk>/', location_distance, name='myhome'),
     path('myplace/', location_myplace, name='myplace'),
+    path('favorites/', add_fav_location, name='favorites'),
+    path('cluster/', location_cluster, name='cluster'),
     path('favorites/', add_fav_location, name='favorites' ),
 
     ## 리뷰
