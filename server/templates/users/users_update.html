@@ -4,21 +4,22 @@
 <link rel="stylesheet" href="{% static 'users/css/signup.css' %}" />
 {% endblock head%} {% block content %}
 <form method="POST" id="update-form" class="users-update-form" enctype="multipart/form-data">
+  <div class="signup-form-title">회원 정보 수정 페이지</div>
   <div class="row">
     <div class="col-md-6 mb-3">
-      <label for="id_username">아이디:</label>
+      <label for="id_username">아이디 <span style="font-weight: bold">(필수)</span></label>
       <input type="text" name="username" value="{{username}}" class="signup-input" required="" id="id_username" />
       <div class="errorMessage"></div>
     </div>
     <div class="col-md-6 mb-3">
-      <label for="id_nickname">닉네임:</label>
+      <label for="id_nickname">닉네임 <span style="font-weight: bold">(필수)</span></label>
       <input type="text" name="nickname" value="{{nickname}}" class="signup-input" required="" id="id_nickname" />
       <div class="errorMessage"></div>
     </div>
   </div>
   <div class="row">
     <div class="col-md-6 mb-3">
-      <label for="id_birth">생일:</label>
+      <label for="id_birth">생일 (선택)</label>
       {% if birth == None %}
       <input type="text" name="birth" value="" class="signup-input" id="id_birth" />
       {% else %}
@@ -27,7 +28,7 @@
       <div class="errorMessage"></div>
     </div>
     <div class="col-md-6 mb-3">
-      <label for="id_phone">전화번호:</label>
+      <label for="id_phone">전화번호 (선택)</label>
       {% if phone == None %}
       <input type="text" name="phone" class="signup-input" value="" id="id_phone" />
       {% else %}
@@ -38,13 +39,13 @@
   </div>
 
   <div class="mb-3">
-    <label for="id_email">이메일:</label>
+    <label for="id_email">이메일 <span style="font-weight: bold">(필수)</span></label>
     <input type="text" name="email" value="{{email}}" class="signup-input" required="" id="id_email" />
     <div class="errorMessage"></div>
   </div>
   <div class="mb-3">
     <!--도로명 주소 검색-->
-    <label for="address">주소 입력</label>
+    <label for="address">주소 입력 <span style="font-weight: bold">(필수)</span></label>
     <div id="address-input-container">
       {% if street_address != None %}
       <input type="text" value="{{street_address}}" name="address" readonly="readonly" id="address" required="" />
@@ -59,7 +60,7 @@
   </div>
   <!--상세 주소-->
   <div class="mb-3">
-    <label for="address_detail">상세 주소 입력</label>
+    <label for="address_detail">상세 주소 입력 (선택)</label>
     {% if detail_address != None %}
     <input type="text" class="signup-input" value="{{detail_address}}" name="address_detail" id="address_detail" />
     {% else %}
