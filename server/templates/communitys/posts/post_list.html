@@ -12,7 +12,7 @@
       <span class="bxs--left-arrow"></span>
       <div>커뮤니티 홈</div>
     </a>
-    <h1>{{board.name}}</h1>
+    <h1 class="board-name">{{board.name}}</h1>
     {% if board.admin == now_user%}
     <form action="{% url 'communitys:board_delete' bid  %}" method="POST">
       {%csrf_token%}
@@ -56,8 +56,11 @@
       </a>
     </div>
       {% endfor%}</div>
-    <a href="{% url 'communitys:post_create' bid %}" class=" communitys-btn">글 작성하기</a>
-
+      {% if user.is_authenticated %}  
+      <a href="{% url 'communitys:post_create' bid %}" class=" communitys-btn">글 작성하기</a>
+      {% else %}
+      <span>게시글을 작성하려면 로그인을 해주세요!</span>
+      {% endif %}
     <!-- 페이지 네이션 -->
   </body>
 </html>
