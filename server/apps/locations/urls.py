@@ -19,8 +19,9 @@ urlpatterns = [
     path('review_create/', review_create, name="review_create"),
     path('review_update/', review_update, name="review_update"),
     path('review_delete/', review_delete, name="review_delete"),
+    path('review_list/', review_list, name="review_list"),
   
     # 네이버 블로그 리뷰 검색
-    path('naver_blog/', search_blog, name="naver_blog")
+    path('naver_blog/', search_blog, name="naver_blog"),
 
 ]

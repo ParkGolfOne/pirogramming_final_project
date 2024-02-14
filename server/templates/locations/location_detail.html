@@ -70,91 +70,105 @@
   </form>
 </div>
 
-<h3>리뷰</h3>
-<div class="reviewSection">
-  {% if reviews %} {% for review in reviews%}
-  <div class="a_review Rid-{{review.id}}">
-    <div class="a_review_reviewer">
-      <img
-        class="a_review_reviewer_profile"
-        src="{{review.reviewer.image.url}} "
-      />
-      <div class="a_review_reviewer_nickname">{{review.reviewer.nickname}}</div>
-    </div>
-    <div class="a_review_content">{{review.content}}</div>
-    <div class="a_review_rating">
-      <span>{{review.rating}}</span>
-      <div class="starRate {{review.rate_tag}} smallStar">
-        <div class="star"></div>
-        <div class="star"></div>
-        <div class="star"></div>
-        <div class="star"></div>
-        <div class="star"></div>
-      </div>
-    </div>
-
-    <div class="review-btns">
-      {% if review.reviewer == now_user%}
-      <button
-        class="a_review_delete"
-        onclick="deleteReview({{review.id}},{{pk}})"
-      >
-        삭제
-      </button>
-      <button
-        class="a_review_delete"
-        onclick="updateReviewBtn({{review.id}}, {{pk}})"
-      >
-        수정
-      </button>
-      {% endif %} {% if user.is_authenticated %}
-      <!-- <button
-          class="a_review_delete"
-          onclick="likeComment({{review.id}})"
-        >
-          좋아요
-        </button> -->
-      {% endif %}
-    </div>
-  </div>
-  {%endfor%}{% endif%}
-</div>
-<hr />
-{% if user.is_authenticated %}
-<div class="input-area">
-  <h4>나의 리뷰를 작성해주세요!</h4>
-  <div class="starRate addRate">
-    <div class="star"></div>
-    <div class="star"></div>
-    <div class="star"></div>
-    <div class="star"></div>
-    <div class="star"></div>
-  </div>
-  <input type="text" class="review-input-box" />
-  <button class="review-upload-btn" onclick="writeReview({{pk}})">
-    리뷰 등록
+<div class="reviewTypeSelect">
+  <button class="reviewTypeSelectBtn userReview" onclick="showUserReview()">
+    사용자 리뷰
+  </button>
+  <button class="reviewTypeSelectBtn naverReview" onclick="showNaverReview()">
+    네이버 리뷰
   </button>
 </div>
-{%else%}
-<div class="input-area">
-  <span> 리뷰를 작성하려면 로그인을 해주세요!</span>
-</div>
-{% endif%}
-<hr />
+<div class="aLine"></div>
 
-<div class="naver-review">
-  <div class="naver-review-title">네이버 블로그 리뷰</div>
-  {% include 'locations/naver_review.html' %}
+<div id="Review">
+  <h3>리뷰</h3>
+  <div class="form-group">
+    <select id="sortType" class="reviewList-input" onchange="findReviews(1)">
+      <option value="-id">최신순</option>
+      <option value="id">오래된순</option>
+      <option value="-rating">별점 높은순</option>
+      <option value="rating">별점 낮은순</option>
+      <!-- <option value="{{now_user}}">내 리뷰</option> -->
+    </select>
+  </div>
+  <!-- 리뷰 리스트 -->
+  <div class="reviewSection"></div>
+  <hr />
+  <!-- 페이지 버튼 -->
+  <div class="page-area">
+    <button
+      class="page-move-btn first-page-btn left-move-btn"
+      onclick="findReviews(1)"
+    >
+      <<
+    </button>
+    <button
+      class="page-move-btn prev-btn left-move-btn"
+      onclick="findReviews(now_page - 1)"
+    >
+      <
+    </button>
+    <ul class="page-list">
+      <li><span class="pageNum page-1" onclick="findReviews(1)">1</span></li>
+    </ul>
+    <button
+      class="page-move-btn next-btn right-move-btn"
+      onclick="findReviews(now_page + 1)"
+    >
+      >
+    </button>
+    <button
+      class="page-move-btn last-page-btn right-move-btn"
+      onclick="findReviews(totalPageCount)"
+    >
+      >>
+    </button>
+  </div>
+  <!-- 리뷰 작성 -->
+  {% if user.is_authenticated %}
+  <div class="input-area">
+    <h4>나의 리뷰를 작성해주세요!</h4>
+    <div class="starRate addRate">
+      <div class="star"></div>
+      <div class="star"></div>
+      <div class="star"></div>
+      <div class="star"></div>
+      <div class="star"></div>
+    </div>
+    <input type="text" class="review-input-box" />
+    <button class="review-upload-btn" onclick="writeReview({{pk}})">
+      리뷰 등록
+    </button>
+  </div>
+  {%else%}
+  <div class="input-area">
+    <span> 리뷰를 작성하려면 로그인을 해주세요!</span>
+  </div>
+  {% endif%}
+  <hr />
 </div>
+
+<div class="naver-review"></div>
 
 {% endblock %} {% block script %}
 <script>
   var inputRate = 0.0;
+  var ground_id = {{pk}};
+  var now_page = 1;
+  var totalPageCount = 1;
+  var login = false;
+  {% if user.is_authenticated %}
+    login = true;
+  {% endif %}
 </script>
 <!-- 장소 즐겨찾기 -->
 <script src="{% static 'locations/javascript/location_fav.js' %}"></script>
-<!-- 리뷰 -->
+<!-- 리뷰 별표 -->
 <script src="{% static 'locations/javascript/location_review.js'%}"></script>
+<!-- 리뷰 졍렬 & 표시-->
+<script src="{% static 'locations/javascript/location_review_filter.js'%}"></script>
+<!--네이버 블로그  리뷰 -->
+<script src="{% static 'locations/javascript/naver_blog.js' %}"></script>
 <!-- 맵 -->
 <script src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=mzbzbj8tit"></script>
 <script src="{% static 'locations/javascript/location_script.js' %}">
