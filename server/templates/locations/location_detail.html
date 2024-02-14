@@ -3,7 +3,8 @@
 <link rel="stylesheet" href="{% static 'locations/css/location_fav.css'%}" />
 <link rel="stylesheet" href="{% static 'locations/css/location_review.css'%}" />
 {% endblock %} {% block content %}
-<h2>{{location.golf_name}}</h2>
+<h2 class="golf-name">{{location.golf_name}}</h2>
+
 <div class="location-container">
   <div id="location_map"></div>
   <div class="location-detail-container">
@@ -130,6 +131,12 @@
 </div>
 {% endif%}
 <hr />
+
+
+<div class="naver-review">
+  <div class="naver-review-title">네이버 블로그 리뷰</div>
+  {% include 'locations/naver_review.html' %}
+</div>
 
 {% endblock %} {% block script %}
 <script>

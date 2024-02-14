@@ -1,0 +1,10 @@
+{% load static %} {% block content %}
+    <div id="location_map" style="width: 800px; height: 500px;"></div>
+{% endblock %}{% block script %}
+    <script src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=mzbzbj8tit"></script>
+    <script>
+        let locations_list = JSON.parse('{{locations_list|safe}}');
+    </script>
+    <script src="{% static 'locations/javascript/MarkerClustering.js' %}"></script>
+    <script src="{% static 'locations/javascript/location_cluster_script.js' %}"></script>
+{% endblock %}

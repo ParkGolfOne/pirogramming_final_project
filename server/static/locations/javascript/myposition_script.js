@@ -48,9 +48,6 @@ function showPosition(position) {
     latitude = position.coords.latitude;
     longitude = position.coords.longitude;
 
-    console.log(latitude);
-    console.log(longitude);
-
     var mapOptions = {
         center : new naver.maps.LatLng(latitude, longitude),
         zoom : 15
@@ -64,6 +61,7 @@ function showPosition(position) {
     var markPlace = {
         position : myLocation,
         map: map,
+        //나의 위치와 골프장의 위치 마커를 구분하기 위해 빨간색 원으로 나의 위치를 표시함
         icon : {
             content : '<div style="width: 14px; height: 14px; background-color: red; border: 2px solid #fff; border-radius: 50%;"></div>',
             anchor : new naver.maps.Point(7,7),
@@ -97,8 +95,7 @@ function showPosition(position) {
     
     //모든 마커가 보일 수 있도록 지도 zoom 뷰 조절
     map.fitBounds(bounds);
-    console.log(final_five);
 }
 
+get_my_location()
 
-naver.maps.onJSContentLoaded = get_my_location();

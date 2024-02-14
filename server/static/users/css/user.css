@@ -29,26 +29,32 @@
     font-size: 15px;
     line-height: 1;
 }
+
 .user-mypage-btn {
+    text-align: center;
+    width: 100%;
     padding: 10px;
     border-radius: 5px;
-    border: 1px solid var(--green--medium--color);
+    border: 1px solid var(--green--dark--color);
     background-color: white;
     cursor: pointer;
+    font-size: 20px;
 }
 
 .user-mypage-btn button {
-    font-size: 30px;
+    font-size: 20px;
     line-height: 1;
 }
 
-.user-btn:hover,
-.user-mypage-btn:hover {
-    background-color: var(--green--medium--color);
-    border: 1px solid var(--green--medium--color);
+.user-btn:hover {
     transition: 0.1s;
+    background-color: var(--green--medium--color);
 }
 
+.user-mypage-btn:hover {
+    transition: 0.1s;
+    background-color: var(--green--hover--color);
+}
 .user-mypage-container {
     display: flex;
     justify-content: center;
@@ -63,16 +69,31 @@
     border-radius: 5px;
     border: 1px solid var(--white--border--color);
     background-color: var(--green--pale--color);
-    width: 100%;
     margin: 10px 0px;
+    gap: 10px;
 }
 
 .user-mypage-title,
 .user-btn-title {
     position: relative;
-    padding-bottom: 10px;
 }
 
+.mypage-info {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.mypage-info > div > p {
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
+.user-btn-box > div {
+    display: flex;
+    font-size: 20px;
+    height: 100%;
+}
 /* .user-btn-box a {
     font-size: 1.6rem;
 } */
@@ -89,6 +110,10 @@
     left: 50%;
     transform: translateX(-50%);
 } */
+.mypage-img {
+    width: 30%;
+    border-radius: ;
+}
 .user-login-btn {
     width: 100%;
     margin-bottom: 20px;
@@ -146,8 +171,8 @@
 .user-btn-container {
     width: 100%;
     display: flex;
-    justify-content: center;
     flex-direction: column;
+    gap: 10px;
 }
 
 .login-form>div>label {
@@ -168,8 +193,6 @@
 }
 
 @media screen and (min-width: 700px) {
-
-    .user-btn-container,
     .user-mypage-container {
         flex-direction: row;
     }
@@ -184,17 +207,10 @@
     flex-direction: column;
 }
 
-.user-mypage-btn {
-    display: block;
-    text-align: center;
-    width: 100%;
-    width: auto;
-    margin: 5px;
-}
-
 .user-mypage {
     overflow-wrap: break-word;
     word-break: break-word;
+    width: 100%;
 }
 
 .user-mypage a,
@@ -270,18 +286,23 @@
 }
 
 @media screen and (min-width: 700px) {
-
-    .user-btn-container,
     .mypage-interest,
     .user-btn-option,
-    .user-mypage {
+    .user-mypage,
+    .user-btn-container {
         width: 70%;
     }
 
     .user-btn-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        width: 70%;
         gap: 10px;
     }
-
+    .user-btn-box {
+        flex-grow: 1;
+    }
 }
 
 .active {

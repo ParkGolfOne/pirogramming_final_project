@@ -78,8 +78,7 @@ class UserViewTests(TestCase):
         # 필요한 테스트용 Region 객체 생성
         cls.test_region = Region.objects.create(city="서울", town="영등포구")
         # 테스트용 사용자 생성
-        cls.user = CustomUser.objects.create_user(
-            username='testuser', password='12345', email='test@example.com')
+        cls.user = CustomUser.objects.create_user(username='testuser', password='12345', email='test@example.com')
         cls.user.region = cls.test_region
         cls.user.save()
 
@@ -105,16 +104,16 @@ class UserViewTests(TestCase):
         self.assertIn('my_comments', response.context)
 
     def test_signup_view_post_success(self):
-        response = self.client.post(reverse('users:signup'), data={
+        response = self.client.post(reverse('users:signup'),  data={
             'username': 'newuser',
             'nickname' : '장풍이',
             'password1': 'testpassword123',
             'password2': 'testpassword123',
             'email': 'newuser@example.com',
-            'address': '서울시 영등포구', # 도로명 주소에서 선택한게 합쳐져서 저장???
-            'street_address': '테헤란로',
+            'address': '부천시 신흥로 150-1',
             'detail_address': '파르나스타워',
         })
+        print("response: ", response)
         self.assertEqual(response.status_code, 200) # ****302(성공 후 리다이렉트)가 아닌 이유 : 리다이렉트가 뷰가 아닌 응답후에 처리됨****
         self.assertTrue(CustomUser.objects.filter(username ='newuser').exists())
 
