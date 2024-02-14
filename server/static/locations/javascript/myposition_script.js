@@ -37,7 +37,7 @@ function myplace_nearest_golf(){
 }
 
 
-async function get_my_location() {
+function get_my_location() {
     if (navigator.geolocation){
         navigator.geolocation.getCurrentPosition(showPosition);
     }
@@ -96,17 +96,6 @@ function showPosition(position) {
     //모든 마커가 보일 수 있도록 지도 zoom 뷰 조절
     map.fitBounds(bounds);
 }
-function loadingPage(){
-    document.getElementById('loadPage').style.display = 'block';
-}
 
-function hideLoadingPage(){
-    document.getElementById('loadPage').style.display = 'none';
-}
-
-loadingPage();
-
-get_my_location().then(function(result) {
-    hideLoadingPage();
-});
+get_my_location()
 
