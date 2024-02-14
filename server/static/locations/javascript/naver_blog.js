@@ -1,12 +1,12 @@
-const reViewContainer = document.querySelector(".review-container");
 const golfName = document.querySelector(".golf-name");
 const locationName = golfName.innerHTML;
 
-document.addEventListener("DOMContentLoaded", function () {
+function addNaverBlogReview() {
   // 선택된 골프장 이름을 쿼리에 넣어 네이버 블로그 검색
   var xhr = new XMLHttpRequest();
   xhr.open(
-    "GET","/locations/naver_blog/?input=" + encodeURIComponent(locationName),
+    "GET",
+    "/locations/naver_blog/?input=" + encodeURIComponent(locationName),
     true
   );
   xhr.onreadystatechange = function () {
@@ -16,10 +16,11 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   };
   xhr.send();
-});
+}
 
 // 받아온 town 데이터를 option 태그로 만들어서 추가함
 function updateNaverReviewField(naverReview) {
+  const reViewContainer = document.querySelector(".review-container");
   reViewContainer.innerHTML = "";
 
   naverReview.forEach(function (review) {

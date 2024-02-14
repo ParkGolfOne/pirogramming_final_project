@@ -195,6 +195,7 @@ requestReviewAdd.onreadystatechange = () => {
         totalRate,
         rateNum,
         groundId,
+        profile_url,
       } = JSON.parse(requestReviewAdd.response);
       // 별모양
       let starShape = "";
@@ -222,15 +223,22 @@ requestReviewAdd.onreadystatechange = () => {
       const element = document.querySelector(".reviewSection");
       let originHTML = element.innerHTML;
       element.innerHTML += `<div class="a_review Rid-${reviewId}">
-            <div class="a_review_reviewer">${reviewer}</div>
+            <div class="a_review_reviewer">
+              <img
+              class="a_review_reviewer_profile"
+              src="${profile_url}"
+              />
+              <div>${reviewer}</div>
+            </div>
             <div class="a_review_content">${content}</div>
-            <div class="a_review_rating">${rating}</div>
-            <div class="starRate ${starShape} smallStar">
-              <div class="star"></div>
-              <div class="star"></div>
-              <div class="star"></div>
-              <div class="star"></div>
-              <div class="star"></div>
+            <div class="a_review_rating"><span>${rating}</span>
+              <div class="starRate  ${starShape} smallStar">
+                <div class="star"></div>
+                <div class="star"></div>
+                <div class="star"></div>
+                <div class="star"></div>
+                <div class="star"></div>
+              </div>
             </div>
             <button
               class="a_review_delete"
@@ -294,6 +302,7 @@ requestReviewUpdate.onreadystatechange = () => {
         totalRate,
         rateNum,
         groundId,
+        profile_url,
       } = JSON.parse(requestReviewUpdate.response);
       // 별 모양
       let starShape = "";
@@ -319,15 +328,23 @@ requestReviewUpdate.onreadystatechange = () => {
         starShape = "five";
       }
       const element = document.querySelector(`.Rid-${reviewId}`);
-      element.innerHTML = `<div class="a_review_reviewer">${reviewer}</div>
+      element.innerHTML = `
+            <div class="a_review_reviewer">
+              <img
+              class="a_review_reviewer_profile"
+              src="${profile_url}"
+              />
+              <div>${reviewer}</div>
+            </div>
             <div class="a_review_content">${content}</div>
-            <div class="a_review_rating">${rating}</div>
-            <div class="starRate  ${starShape} smallStar">
-              <div class="star"></div>
-              <div class="star"></div>
-              <div class="star"></div>
-              <div class="star"></div>
-              <div class="star"></div>
+            <div class="a_review_rating"><span>${rating}</span>
+              <div class="starRate  ${starShape} smallStar">
+                <div class="star"></div>
+                <div class="star"></div>
+                <div class="star"></div>
+                <div class="star"></div>
+                <div class="star"></div>
+              </div>
             </div>
             <button
               class="a_review_delete"
@@ -348,7 +365,8 @@ requestReviewUpdate.onreadystatechange = () => {
       inputRate = 0.0;
       updateFlag = false;
       // 새 리뷰 작성 추가
-      reviewInput.innerHTML = `<input type="text" class="review-input-box" />
+      reviewInput.innerHTML = `
+      <h4>나의 리뷰를 작성해주세요!</h4>
       <div class="starRate addRate">
         <div class="star"></div>
         <div class="star"></div>
@@ -356,6 +374,7 @@ requestReviewUpdate.onreadystatechange = () => {
         <div class="star"></div>
         <div class="star"></div>
       </div>
+      <input type="text" class="review-input-box" />
       <button class="review-upload-btn" onclick="writeReview(${groundId})">
         리뷰 등록
       </button>`;
@@ -369,7 +388,7 @@ requestReviewUpdate.onreadystatechange = () => {
 // 기능 : 리뷰 업데이트 버튼 입력시 input 칸으로 변경
 function updateReviewBtn(review_id, ground_id) {
   //댓글 작성 칸 지우기
-  reviewInput.innerHTML = "";
+  reviewInput.innerHTML = "다른 댓글을 수정 중입니다!";
   // 다른 수정 버튼 block
   if (updateFlag) {
     alert("다른 댓글을 수정 중입니다!");
@@ -406,15 +425,18 @@ function updateReviewBtn(review_id, ground_id) {
   } else if (rate == 5.0) {
     starShape = "five";
   }
-  element.innerHTML = `<div class="input-area">
-        <input type="text" class="review-update-box" value="${content}" />
+  element.innerHTML = `
+      <div class="input-area updateInput">
+        <h4> 리뷰 수정 </h4>
         <div class="starRate updateRate ${starShape}">
-        <div class="star"></div>
-        <div class="star"></div>
-        <div class="star"></div>
-        <div class="star"></div>
-        <div class="star"></div>
-      </div>
+          <div class="star"></div>
+          <div class="star"></div>
+          <div class="star"></div>
+          <div class="star"></div>
+          <div class="star"></div>
+        </div>
+        <input type="text" class="review-update-box" value="${content}" />
+
         <button
           class="review-upload-btn"
           onclick="updateReview(${review_id}, ${ground_id})"

@@ -39,7 +39,7 @@ def location_detail (request, pk):
 
     # 해당 리뷰가 있다면 가져오기
     try:
-        reviews = Review.objects.filter(ground = location)
+        reviews = Review.objects.filter(ground = location).order_by("-id")
     except Review.DoesNotExist:
         reviews = []
 
@@ -220,7 +220,7 @@ def review_create(request):
     ground.save()
 
 
-    return JsonResponse({'reviewer' : new_review.reviewer.nickname, 'content' : new_review.content, 'reviewId' : new_review.id, 'rating' : rating , 'totalRate' : round(ground.golf_rate,2) ,'rateNum' : ground.golf_rate_num, 'groundId' : ground_id})
+    return JsonResponse({'reviewer' : new_review.reviewer.nickname, 'content' : new_review.content, 'reviewId' : new_review.id, 'rating' : rating , 'totalRate' : round(ground.golf_rate,2) ,'rateNum' : ground.golf_rate_num, 'groundId' : ground_id, 'profile_url' : request.user.image.url})
 
 
 
@@ -320,5 +320,55 @@ def review_update(request):
         ground.golf_rate = cal_avg_rate(ground)
         ground.save()
         
-    return JsonResponse({'reviewer' : target_review.reviewer.nickname, 'content' : content,'reviewId' : rid, 'rating' : rating, 'totalRate' : round(ground.golf_rate,2), 'rateNum' : ground.golf_rate_num, 'groundId' : ground_id})
+    return JsonResponse({'reviewer' : target_review.reviewer.nickname, 'content' : content,'reviewId' : rid, 'rating' : rating, 'totalRate' : round(ground.golf_rate,2), 'rateNum' : ground.golf_rate_num, 'groundId' : ground_id, 'profile_url' : request.user.image.url})
 
+
+# 함수 이름 : review_list
+# 전달인자 : request
+# 기능 : 해당 정렬 기준의 페이지 번호를 가져와 다시 보내준다.
+@csrf_exempt
+def review_list(request):
+    req = json.loads(request.body)
+
+    # 골프장 정보 가져오기
+    ground_id = req.get("ground_id")
+    ground = GolfLocation.objects.get(id = ground_id)
+
+    # 정렬 기준
+    sortType = req.get("sortType")
+    valid_sort_fields = ['-id', 'id', '-rating', 'rating']
+
+    # 페이지 숫자 계산 상수
+    page_num = req.get("page_num") - 1
+
+    # 한 페이지에 불러올 리뷰수
+    a_page_review_count = 5
+
+
+    # 전달할 정보 리스트
+    review_names = []
+
+    # 전달할 프로필 사진 리스트
+    profile_list = []
+
+    try:
+        reviews = Review.objects.filter(ground = ground).order_by(sortType)
+        temp_review_names = list(reviews.values_list("id","reviewer","reviewer__nickname","content", "rating", "rate_tag"))
+    except Review.DoesNotExist:
+        pass
+
+    # 해당 하는 페이지의 리뷰만 담기
+    # 인덱스 오류를 잡기 위해 이렇게 했으나, 추후에 위의 try 구문에 slicing 을 사용하여 합쳐서 잡아야한다.
+    for i in range(a_page_review_count):
+        index = i + page_num * a_page_review_count
+        if index < len(temp_review_names) and temp_review_names[index]:
+            review_names.append(temp_review_names[index])
+            profile_list.append(reviews[index].reviewer.image.url)
+        else:
+            break
+
+    print(review_names)
+
+
+
+    return JsonResponse({'review_names': review_names, 'reviews_counts' : len(reviews), 'page_num' : page_num + 1, "now_user" : request.user.id, "profile_list" : profile_list})
