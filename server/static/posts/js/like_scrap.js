@@ -62,7 +62,7 @@ requestScrap.onreadystatechange = () => {
         newnum = Number(scrapnum) - 1;
       }
 
-      element.innerHTML = `${newnum}`;
+      element.innerHTML = newnum;
     }
   }
 };

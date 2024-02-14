@@ -110,10 +110,11 @@
 {% for round in rounds %}
     <div class="coures">
         <h2>코스 {{ forloop.counter }}</h2>
-        <!-- 각 플레이어에 대해 반복 -->
+        {% for name in players_name %}
+          {{name}}
+        {% endfor %}
         <ul class="coures_ul">
             <li class="coures_li coures_li_hole">
-              <div></div>
               <div>홀</div>
               <div>1</div>
               <div>2</div>
@@ -128,7 +129,6 @@
               <div>/</div>
             </li>
             <li class="coures_li coures_li_par">
-              <div></div>
               <div>파</div>
               <div>{{ round.par.hole1}}</div>
               <div>{{ round.par.hole2}}</div>
@@ -142,9 +142,9 @@
               <div>/</div>
               <div>/</div>  
             </li>
-            {% for player in round.round_player.all %}
+            
+            {% for score in round.round_score.all %}
               <li class="coures_li">
-                  <div>"{{ player.name}}" </div>
                   <form method="post" action="">
                     {% csrf_token %}
                     <input type="hidden" name="player_id" value="{{ player.id }}">
@@ -152,17 +152,17 @@
                     <input type="submit" value="점수 넘겨주기" class="game-yourscore">
                   </form>
                   <div>점수</div>
-                  <div>{{ player.score.scores.hole1}}</div>
-                  <div>{{ player.score.scores.hole2}}</div>
-                  <div>{{ player.score.scores.hole3}}</div>
-                  <div>{{ player.score.scores.hole4}}</div>
-                  <div>{{ player.score.scores.hole5}}</div>
-                  <div>{{ player.score.scores.hole6}}</div>
-                  <div>{{ player.score.scores.hole7}}</div>
-                  <div>{{ player.score.scores.hole8}}</div>
-                  <div>{{ player.score.scores.hole9}}</div>
+                  <div>{{ score.scores.hole1}}</div>
+                  <div>{{ score.scores.hole2}}</div>
+                  <div>{{ score.scores.hole3}}</div>
+                  <div>{{ score.scores.hole4}}</div>
+                  <div>{{ score.scores.hole5}}</div>
+                  <div>{{ score.scores.hole6}}</div>
+                  <div>{{ score.scores.hole7}}</div>
+                  <div>{{ score.scores.hole8}}</div>
+                  <div>{{ score.scores.hole9}}</div>
                   <div>합계</div>
-                  <div>{{player.score.total_score}}</div>                        
+                  <div>{{score.total_score}}</div>                        
               </li>
             {% empty %}
                 <li>No players in this round.</li>
