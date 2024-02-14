@@ -38,16 +38,20 @@
 .board-container a {
     display: flex;
     color: inherit;
+    width: 100%;
 }
 .board-container a div {
     word-break: break-word;
     
 }
 .board-container img {
-    margin-left: auto;
     width: 100px;
-    height: auto;
-    margin-right: 10px;
+    height: 100px;
+    object-fit: contain;
+}
+
+.board-container a div {
+    margin-left: 10px;
 }
 
 .board-list {
