@@ -26,27 +26,51 @@
     </div>
     <div class="location-detail-area">
       <h3>규모</h3>
-      <h4>{{location.golf_scale}}</h4>
+      <p>{{location.golf_scale}}</p>
     </div>
     <div class="location-detail-area">
       <h3>주소</h3>
-      <h4>{{location.golf_address}}</h4>
+      <p>{{location.golf_address}}</p>
     </div>
     <div class="location-detail-area">
       <h3>상세내용</h3>
-      <h4>{{location.golf_detail}}</h4>
+      <p>{{location.golf_detail}}</p>
     </div>
     <div class="location-detail-area">
       <h3>경도</h3>
-      <h4><span id="longitude">{{ location.golf_longitude }}</span></h4>
+      <p><span id="longitude">{{ location.golf_longitude }}</span></p>
     </div>
     <div class="location-detail-area">
       <h3>위도</h3>
-      <h4><span id="latitude">{{ location.golf_latitude }}</span></h4>
+      <p><span id="latitude">{{ location.golf_latitude }}</span></p>
     </div>
     <div class="location-detail-area">
       <h3>홀</h3>
-      <h4>{{location.golf_holes}}</h4>
+      <p>{{location.golf_holes}}</p>
+    </div>
+    <div class="location-detail-area">
+      <h3>운영 날짜</h3>
+      <p>{{location.golf_running_date}}</p>
+    </div>
+    <div class="location-detail-area">
+      <h3>운영 시간</h3>
+      <p>{{location.golf_running_time}}</p>
+    </div>
+    <div class="location-detail-area">
+      <h3>예약 방법</h3>
+      <p>{{location.golf_reservation}}</p>
+    </div>
+    <div class="location-detail-area">
+      <h3>이용 요금</h3>
+      <p>{{location.golf_fee}}</p>
+    </div>
+    <div class="location-detail-area">
+      <h3>전화번호</h3>
+      <p>{{location.golf_phone}}</p>
+    </div>
+    <div class="location-detail-area">
+      <h3>홈페이지</h3>
+      <a href="{{location.golf_homepage}}">{{location.golf_homepage}}</a>
     </div>
   </div>
 </div>
@@ -131,7 +155,6 @@
 </div>
 {% endif%}
 <hr />
-
 
 <div class="naver-review">
   <div class="naver-review-title">네이버 블로그 리뷰</div>
