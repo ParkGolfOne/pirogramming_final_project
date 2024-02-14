@@ -111,6 +111,7 @@
   margin: 10px 0;
   width: 250px;
   position: relative;
+  padding: 10px;
 }
 
 /* 장소 선택을 검색으로 바꾸는 버튼 */

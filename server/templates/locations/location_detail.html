@@ -8,6 +8,7 @@
 <div class="location-container">
   <div id="location_map"></div>
   <div class="location-detail-container">
+    <div class="location-fav-info">
     {%if faved%}
     <button
       class="postFavBtn fav-{{location.id}} faved"
@@ -19,34 +20,55 @@
       onclick="pushFav({{location.id}})"
     ></button>
     {% endif %}
-    <div class="favNum-{{location.id}}">찜 {{location.fav_num}}</div>
+    <div class="favNum-{{location.id}}">추천 {{location.fav_num}}</div>
     <div class="rateNum">
-      평가수 {{location.golf_rate_num}} 평점
+      리뷰수 {{location.golf_rate_num}} 평점
       {{location.golf_rate|floatformat:2}}
+    </div>
     </div>
     <div class="location-detail-area">
       <h3>규모</h3>
-      <h4>{{location.golf_scale}}</h4>
+      <p>{{location.golf_scale}}</p>
     </div>
     <div class="location-detail-area">
       <h3>주소</h3>
-      <h4>{{location.golf_address}}</h4>
-    </div>
-    <div class="location-detail-area">
-      <h3>상세내용</h3>
-      <h4>{{location.golf_detail}}</h4>
+      <p>{{location.golf_address}}</p>
     </div>
     <div class="location-detail-area">
       <h3>경도</h3>
-      <h4><span id="longitude">{{ location.golf_longitude }}</span></h4>
+      <p><span id="longitude">{{ location.golf_longitude }}</span></p>
     </div>
     <div class="location-detail-area">
       <h3>위도</h3>
-      <h4><span id="latitude">{{ location.golf_latitude }}</span></h4>
+      <p><span id="latitude">{{ location.golf_latitude }}</span></p>
     </div>
     <div class="location-detail-area">
       <h3>홀</h3>
-      <h4>{{location.golf_holes}}</h4>
+      <p>{{location.golf_holes}}</p>
+    </div>
+    <div class="location-detail-area">
+      <h3>운영 날짜</h3>
+      <p>{{location.golf_running_date}}</p>
+    </div>
+    <div class="location-detail-area">
+      <h3>운영 시간</h3>
+      <p>{{location.golf_running_time}}</p>
+    </div>
+    <div class="location-detail-area">
+      <h3>예약 방법</h3>
+      <p>{{location.golf_reservation}}</p>
+    </div>
+    <div class="location-detail-area">
+      <h3>이용 요금</h3>
+      <p>{{location.golf_fee}}</p>
+    </div>
+    <div class="location-detail-area">
+      <h3>전화번호</h3>
+      <p>{{location.golf_phone}}</p>
+    </div>
+    <div class="location-detail-area">
+      <h3>홈페이지</h3>
+      <a href="{{location.golf_homepage}}" target="_blank">{{location.golf_homepage}}</a>
     </div>
   </div>
 </div>
@@ -61,13 +83,15 @@
   {% endif %}
   <br /> -->
 <div class="location-btns">
+  <a href="https://forms.gle/gnaqB2GXwjxpNqbA9" class="location-detail-btn" target="_blank">골프장 정보 수정 요청</a>
+  {% if request.user.is_superuser %}
   <a href="{% url 'locations:update' location.pk %}" class="location-detail-btn"
-    >수정하기</a
-  >
+    >수정하기</a>
   <form action="{% url 'locations:delete' location.pk %}" method="post">
     {% csrf_token %}
     <button type="submit" class="location-detail-btn">삭제하기</button>
   </form>
+  {% endif %}
 </div>
 
 <div class="reviewTypeSelect">
@@ -148,7 +172,9 @@
   <hr />
 </div>
 
+
 <div class="naver-review"></div>
+
 
 {% endblock %} {% block script %}
 <script>

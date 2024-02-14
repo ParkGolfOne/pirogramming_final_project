@@ -30,8 +30,13 @@ class Command(BaseCommand):
                     golf_scale=row.get('golf_scale', ''),
                     golf_name=row['golf_name'],
                     golf_address=row.get('golf_address', ''),
+                    golf_holes=int(row['golf_holes']) if row.get('golf_holes') else 0,
                     golf_latitude=float(row.get('golf_latitude', 0.0)),
                     golf_longitude=float(row.get('golf_longitude', 0.0)),
-                    golf_detail='', # 아직 정의되지 않았기 때문에 일단 빈칸으로 뒀음
-                    golf_holes=int(row['golf_holes']) if row.get('golf_holes') else 0,
+                    golf_reservation=row.get('golf_reservation', ''),
+                    golf_running_date=row.get('golf_running_date', ''),
+                    golf_fee=row.get('golf_fee', ''),
+                    golf_phone=row.get('golf_phone', ''),
+                    golf_homepage=row.get('golf_homepage', ''),
+                    golf_running_time=row.get('golf_running_time', ''),
                 )
