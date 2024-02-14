@@ -98,6 +98,7 @@ requestFindReviews.onreadystatechange = () => {
         // [5] : rating
         // [6] : rate_tag")
         let i = 0;
+
         review_names.forEach((review) => {
           if (now_user == review[1]) {
             reviewSection.innerHTML += `
@@ -175,8 +176,7 @@ requestFindReviews.onreadystatechange = () => {
   }
 };
 
-// 시작시
-document.addEventListener("DOMContentLoaded", findReviews(1));
+
 
 /********************************************/
 /*          리뷰 종류 바꾸기 관련 함수        */
@@ -201,91 +201,12 @@ const naverReviews = document.querySelector(".naver-review");
 // 기능 : 유저 리뷰 보여주고, 네이버 리뷰 내리기
 function showUserReview() {
   userReviewBtn.disabled = true;
+  userReviewBtn.classList.add('active')
   naverReviewBtn.disabled = false;
-
-  //네이버 리뷰 공간 삭제
-  naverReviews.innerHTML = "";
-
-  // 유저리뷰 공간 추가
-  if (login) {
-    userReviews.innerHTML = `
-        <h3>리뷰</h3>
-        <div class="form-group">
-            <select id="sortType" class="reviewList-input" onchange="findReviews(1)">
-            <option value="-id">최신순</option>
-            <option value="id">오래된순</option>
-            <option value="-rating">별점 높은순</option>
-            <option value="rating">별점 낮은순</option>
-            </select>
-        </div>
-        <!-- 리뷰 리스트 -->
-        <div class="reviewSection"></div>
-        <hr />
-        <!-- 페이지 버튼 -->
-        <div class="page-area">
-            <button class="page-move-btn first-page-btn left-move-btn" onclick="findReviews(1)">
-            <<
-            </button>
-            <button class="page-move-btn prev-btn left-move-btn"><</button>
-            <ul class="page-list">
-            <li><span class="pageNum page-1" onclick="findReviews(1)">1</span></li>
-            </ul>
-            <button class="page-move-btn next-btn right-move-btn">></button>
-            <button class="page-move-btn last-page-btn right-move-btn">>></button>
-        </div>
-        <!-- 리뷰 작성 -->
-        <div class="input-area">
-            <h4>나의 리뷰를 작성해주세요!</h4>
-            <div class="starRate addRate">
-            <div class="star"></div>
-            <div class="star"></div>
-            <div class="star"></div>
-            <div class="star"></div>
-            <div class="star"></div>
-            </div>
-            <input type="text" class="review-input-box" />
-            <button class="review-upload-btn" onclick="writeReview(${ground_id})">
-            리뷰 등록
-            </button>
-        </div>
-        <hr />
-`;
-    StarChangeStart();
-  } else {
-    userReviews.innerHTML = `
-        <h3>리뷰</h3>
-        <div class="form-group">
-            <select id="sortType" class="reviewList-input" onchange="findReviews(1)">
-            <option value="-id">최신순</option>
-            <option value="id">오래된순</option>
-            <option value="-rating">별점 높은순</option>
-            <option value="rating">별점 낮은순</option>
-            </select>
-        </div>
-        <!-- 리뷰 리스트 -->
-        <div class="reviewSection"></div>
-        <hr />
-        <!-- 페이지 버튼 -->
-        <div class="page-area">
-            <button class="page-move-btn first-page-btn left-move-btn" onclick="findReviews(1)">
-            <<
-            </button>
-            <button class="page-move-btn prev-btn left-move-btn"><</button>
-            <ul class="page-list">
-            <li><span class="pageNum page-1" onclick="findReviews(1)">1</span></li>
-            </ul>
-            <button class="page-move-btn next-btn right-move-btn">></button>
-            <button class="page-move-btn last-page-btn right-move-btn">>></button>
-        </div>
-        <div class="input-area">
-            <span> 리뷰를 작성하려면 로그인을 해주세요!</span>
-        </div>
-        <hr />
-`;
-  }
-
-  // 리뷰 불러오기 1페이지 상태, 현재 정렬 기준으로
-  findReviews(1);
+  naverReviewBtn.classList.remove('active')
+  
+  userReviews.style.display = 'flex';
+  naverReviews.style.display = 'none';
 }
 
 // 함수명 : showNaverReview
@@ -293,15 +214,14 @@ function showUserReview() {
 // 기능 : 네이버 블로그 리뷰 보여주고, 유저 리뷰 내리기
 function showNaverReview() {
   userReviewBtn.disabled = false;
+  userReviewBtn.classList.remove('active')
   naverReviewBtn.disabled = true;
+  naverReviewBtn.classList.add('active')
 
-  // 유저 리뷰 공간 삭제
-  userReviews.innerHTML = "";
-
-  // 네이버 리뷰 공간 추가
-  naverReviews.innerHTML = `  
-  <div class="naver-review-title">네이버 블로그 리뷰</div>
-  <div class="review-container"></div>`;
-
-  addNaverBlogReview();
+  userReviews.style.display = 'none';
+  naverReviews.style.display = 'flex';
 }
+
+
+// 시작시
+document.addEventListener("DOMContentLoaded", ()=>{findReviews(1); showUserReview();});
