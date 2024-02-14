@@ -1,8 +1,6 @@
 /********************************************/
 /*                 유저리뷰                  */
 /********************************************/
-// 정렬 기준
-var sortType = document.getElementById("sortType");
 
 /******************************/
 /*        페이지네이션        */
@@ -60,6 +58,8 @@ const requestFindReviews = new XMLHttpRequest();
 // 전달인자 : --
 // 기능 : 서버에 해당 이름의 장소 있는지 체크
 function findReviews(page_num) {
+  // 정렬 기준
+  const sortType = document.getElementById("sortType");
   //  몇 페이지 인지 체크
   const reviewSection = document.querySelector(".reviewSection");
   const url = `/locations/review_list/`;
