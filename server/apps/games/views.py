@@ -12,7 +12,6 @@ from django.contrib import messages
 def game_set_post(request, form):
     #폼에서 라운드 수 와 플레이어 수를 입력받아 저장
     round_count = form.cleaned_data['round_count'] 
-    player_count = form.cleaned_data['player_count']
     location_name = request.POST.get('location')
 
     # Game 인스턴스 생성    
@@ -27,25 +26,39 @@ def game_set_post(request, form):
     rounds_to_create = [Round(game=game, round_number=i+1) for i in range(round_count)]
     Round.objects.bulk_create(rounds_to_create)
 
-    game_id = game.id
-    return game_id, player_count        
+    return game       
+
+def game_set_post_player(request, game):
+    player_count = int(request.POST.get('player_count'))
+    players_id = []
+    for i in range(player_count):
+        players_id.append(request.POST.get(f"player_{i+1}_id"))
+        game['i'] = players_id
+    return player_count
 
 # 게임 설정및 게임 생성 페이지
 def game_set(request):
     if request.method == 'POST':
         form = GameSetupForm(request.POST)
         if form.is_valid():
-            game_id, player_count = game_set_post(request, form)
+            game  = game_set_post(request, form) 
+            player_count = game_set_post_player(request, game)
             # url에 라운드 수와 플레이어 수를 저장하고 game_detail로 보내기
-            return redirect(reverse('games:game_update', args=(game_id,player_count)))
+            return redirect(reverse('games:game_update', args=(game.id,player_count)))
     
     else:
         form = GameSetupForm()
         locations = GolfLocation.objects.all()
+        
         content = {
             'form': form,
-            'locations' : locations
+            'locations' : locations,
         }
+        
+        if request.user.is_authenticated:
+            friends = request.user.friends.all()
+            content['friends'] = friends
+        
         return render(request, 'games/game_create.html', content)
 
 

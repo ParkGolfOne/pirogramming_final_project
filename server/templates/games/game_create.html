@@ -4,12 +4,57 @@
 <link rel="stylesheet" href="{% static 'score/css/score_detail.css'%}" />
 <link rel="stylesheet" href="{% static 'score/css/score_create.css'%}" />
 <link rel="stylesheet" href="{% static 'score/css/score_base.css'%}" />
+<style>
+  .score-form{
+    gap: 30px;
+  }
+  .player{
+    display: flex;
+    flex-direction: row;
+  }
+  .player-input{
+    width: 40%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    /* border-radius: 10px; */
+    box-sizing: border-box;
+    background-color: #ffffff;
+    text-align: center;
+  }
+</style>
 {% endblock %}
 
 {% block content %}
     <form action = "" method = "post" enctype="multipart/form-data" class="score-form">
         {% csrf_token %}
         {{ form }}
+        <div class="player" >
+          <label for="id_player_count">참가원:</label>
+          <div class="player"> 
+            <div class="decBtn" onclick="decBtn(this)">-</div>
+            <input class="player-input" type="number" name="player_count" min="1" max="4" value="1" id="id_player_count">
+            <div class="incBtn" onclick="incBtn(this)">+</div>
+          </div>
+        </div>
+        {% if request.user.is_authenticated %}
+        <div>
+          <div class="player_select" id="player_select_origin">
+            <span> 멤버 </span>
+            <select
+                class="playerSelect"
+                type="select"
+                name="player_1_id"
+                required=""
+              >
+                <option value="">-------</option>
+                <option value="{{ request.user.id}}">나</option>
+                {% for friend in friends %}
+                <option value="{{ friend.id }}">{{ friend.nickname }}</option>
+                {% endfor %}
+              </select>
+          </div>
+        </div>
+        {% endif %}
         <div class="locationInputArea">
             <span>장소 선택</span>
             <select
@@ -36,4 +81,37 @@
 
 {% block script %}
 <script src="{% static 'score/js/location_input.js' %}"></script>
+<script src="/static/search/js/search_friend.js"></script>
+<script>    
+  function decBtn(element) {
+    const input = element.parentNode.querySelector('input[type="number"]');
+    // 현재 input의 value를 숫자로 변환합니다.
+    let currentValue = parseInt(input.value);
+
+    // currentValue가 min보다 크다면, 1 감소시킵니다.
+    if (currentValue > parseInt(input.min)) {
+      input.value = currentValue - 1;
+      var elements = document.getElementsByClassName('player_select');
+
+      // 마지막 요소가 있으면 제거
+      if (elements.length > 1) { // 최소 1개는 남겨두기 위함
+        elements[elements.length - 1].parentNode.removeChild(elements[elements.length - 1]);
+      }
+    }
+  }
+
+  function incBtn(element) {
+    const input = element.parentNode.querySelector('input[type="number"]');
+    // 현재 input의 value를 숫자로 변환합니다.
+    let currentValue = parseInt(input.value);
+
+    // currentValue가 max보다 작다면, 1 증가시킵니다.
+    if (currentValue < parseInt(input.max)) {
+      input.value = currentValue + 1;
+      var original = document.getElementById('player_select_origin');
+      var clone = original.cloneNode(true);
+      original.parentNode.appendChild(clone);
+    }
+  }
+</script>
 {% endblock %}
