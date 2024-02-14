@@ -145,7 +145,8 @@
 }
 .btn-primary:hover, 
 .post-delete-btn:hover, 
-.comment-upload-btn:hover {
+.comment-upload-btn:hover,
+.reply-upload-btn:hover {
   background-color: var(--green--medium--color);
     border: 1px solid var(--green--medium--color);
     transition: 0.1s;
@@ -186,10 +187,14 @@
 .a_comment_content {
   overflow-wrap: break-word;
   width: 100%;
+  font-size: 17px;
 }
-.a_comment_commenter {
-  font-size: 20px;
+.a_reply_content {
+  overflow-wrap: break-word;
+  width: 100%;
+  font-size: 15px;
 }
+
 .post-user {
   display: flex;
   justify-content: space-between;
@@ -241,3 +246,120 @@
     max-width: 500px;
   }
 }
+
+
+
+/* 댓글 프로필 관련*/
+.a_comment_commenter {
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.a_comment_commenter_profile{
+  display:flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+
+  margin-bottom: 20px;
+}
+
+.a_comment_commenter_image{
+  width: 30px;
+  height: 30px;
+}
+
+
+.a_reply_commenter{
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.a_reply_commenter_profile{
+  display:flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+
+  margin-bottom: 15px;
+}
+
+.a_reply_commenter_image{
+  width: 20px;
+  height: 20px;
+}
+
+
+
+
+/*****************************/
+/*         대댓글 관련        */
+/*****************************/
+
+/* 대댓글 영역 */
+.replySection{
+  display:none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/* 대댓글 하나  */
+.a_reply{
+  padding: 10px;
+  padding-left : 20px;
+  background-color: var(--green--pale--color);
+  border-radius: 5px;
+  margin: 10px 0px;
+
+  width:100%;
+
+  filter :brightness(0.8)
+}
+
+/* 대댓글 열람 버튼 */
+.show_a_comment_reply{
+  color:#1dc078;
+  font-weight: bold;
+  cursor:pointer;
+}
+
+.show_a_comment_reply:hover{
+  filter:brightness(1.1);
+}
+
+
+/* 대댓글 입력 칸 한 줄 속성*/
+.reply-input-area{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  background-color: var(--green--pale--color);
+}
+/* 대댓글 입력 칸 속성 */
+.reply-input-box{
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-sizing: border-box;
+  background-color: #ffffff;
+
+  margin-top: 10px;
+}
+
+.reply-upload-btn{
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid var(--green--medium--color);
+  background-color: var(--green--bright--color);
+  cursor: pointer;
+  width: 100px;
+  font-size: 10px;
+  color: white;
+  line-height: 1;
+}
+
+
