@@ -2,14 +2,19 @@
 // 제출 버튼 클릭 여부를 나타내는 변수
 // 페이지 이동 시 확인 메시지 표시
 console.log(socialLoginFlag);
-window.onbeforeunload = function (e) {
-  alert("모두 입력하세요");
-  if (e) {
-    e.returnValue = "Any string";
-  }
-  return "Any string";
-};
-
+if (socialLoginFlag) {
+  window.onbeforeunload = function (e) {
+    console.log("실행");
+    var message = "페이지를 떠나시겠습니까?"; // 원하는 메시지로 수정
+    e = e || window.event;
+    // 모든 브라우저에 대해 경고 메시지 표시
+    if (e) {
+      e.returnValue = message;
+    }
+    // 브라우저마다 다른 경고 메시지를 반환
+    return message;
+  };
+}
 document.addEventListener("DOMContentLoaded", function () {
   var cityField = document.getElementById("city");
   var townField = document.getElementById("town");
@@ -151,6 +156,8 @@ document.addEventListener("DOMContentLoaded", function () {
       if (xhr.readyState === 4 && xhr.status === 200) {
         const data = JSON.parse(xhr.responseText);
         if (data.result == "success") {
+          window.onbeforeunload = function () {
+          };
           window.location.replace(data.url);
         } else {
           console.log(data.error);

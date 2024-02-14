@@ -103,7 +103,7 @@
 {% endblock content %} {% block script %}
 <script>
   var userId = {{ request.user.pk }};
-  const socialLoginFlag = {{ social_login_flag }};
+  const socialLoginFlag = {{social_login_flag}};
 </script>
 <script src="{% static 'users/js/update.js' %}"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
