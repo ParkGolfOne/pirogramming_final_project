@@ -100,6 +100,7 @@ def signup(request):
             user.region = region
             user.address = street_address
             user.detail_address = detail_address
+            user.first_login = False
             user.save()
             auth.login(request, user,
                        backend='apps.users.backends.CustomModelBackend')
@@ -170,7 +171,6 @@ def logout(request):
 def update(request, pk):
     user = User.objects.get(id=pk)
     social_login_flag = "false"
-
     if request.method == 'POST':
         selected_city = request.POST.get('city')
         selected_town = request.POST.get('town')
@@ -192,22 +192,35 @@ def update(request, pk):
             print(form.errors)
             return JsonResponse({'result': 'fail', 'error': form.errors})
     else:
-        context = {
-            'pk': pk,
-            "username": user.username,
-            "nickname": user.nickname,
-            "birth": user.birth,
-            "phone": user.phone,
-            "email": user.email,
-            'city': user.region.city,
-            'town': user.region.town,
-            'street_address': user.address,
-            'detail_address': user.detail_address,
-            "social_login_flag": social_login_flag,
-        }
-        print(context)
+        try:
+            context = {
+                'pk': pk,
+                "username": user.username,
+                "nickname": user.nickname,
+                "birth": user.birth,
+                "phone": user.phone,
+                "email": user.email,
+                'city': user.region.city,
+                'town': user.region.town,
+                'street_address': user.address,
+                'detail_address': user.detail_address,
+                "social_login_flag": social_login_flag,
+            }
+        except AttributeError:
+            context = {
+                'pk': pk,
+                "username": user.username,
+                "nickname": user.nickname,
+                "birth": user.birth,
+                "phone": user.phone,
+                "email": user.email,
+                'city': None,
+                'town': None,
+                'street_address': user.address,
+                'detail_address': user.detail_address,
+                "social_login_flag": social_login_flag,
+            }
         return render(request, template_name='users/users_update.html', context=context)
-
 
 @csrf_exempt
 @login_required
@@ -231,10 +244,9 @@ def social_login(request):
     if user.first_login == False:
         return redirect('users:main', user.id)
     else:
-        user.first_login = False
         social_login_flag = "true"
-        user.save()
         if request.method == 'POST':
+            user.first_login = False
             selected_city = request.POST.get('city')
             selected_town = request.POST.get('town')
             street_address = request.POST.get('street_address')
