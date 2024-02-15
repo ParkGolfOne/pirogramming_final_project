@@ -1,18 +1,16 @@
-{% extends 'base.html' %}
-{% load static %}
-{% block head %}
+{% extends 'base.html' %} {% load static %} {% block head %}
 <link rel="stylesheet" href="{% static 'score/css/score_detail.css'%}" />
 <link rel="stylesheet" href="{% static 'score/css/score_create.css'%}" />
 <link rel="stylesheet" href="{% static 'score/css/score_base.css'%}" />
 <style>
-  .score-form{
+  .score-form {
     gap: 30px;
   }
-  .input-box{
+  .input-box {
     display: flex;
     flex-direction: row;
   }
-  .input{
+  .input {
     width: 40%;
     padding: 10px;
     border: 1px solid #ddd;
@@ -22,76 +20,100 @@
     text-align: center;
   }
 </style>
-{% endblock %}
+{% endblock %} {% block content %}
+<form action="" method="post" enctype="multipart/form-data" class="score-form">
+  {% csrf_token %} {{ form }}
+  <div class="input-box">
+    <label for="id_couers_count">코스 수 :</label>
+    <div class="input-box">
+      <div class="decBtn" onclick="decBtn(this)">-</div>
+      <input
+        class="input"
+        type="number"
+        name="round_count"
+        min="1"
+        max="10"
+        value="1"
+        id="id_player_count"
+      />
+      <div class="incBtn" onclick="incBtn(this)">+</div>
+    </div>
+  </div>
+  <div class="input-box">
+    <label for="id_player_count">참가원 : </label>
+    <div class="input-box">
+      <div class="decBtn" onclick="player_decBtn(this)">-</div>
+      <input
+        class="input"
+        type="number"
+        name="player_count"
+        min="1"
+        max="4"
+        value="1"
+        id="id_player_count"
+      />
+      <div class="incBtn" onclick="player_incBtn(this)">+</div>
+    </div>
+  </div>
 
-{% block content %}
-    <form action = "" method = "post" enctype="multipart/form-data" class="score-form">
-        {% csrf_token %}
-        {{ form }}
-        <div class="input-box" >
-          <label for="id_couers_count">코스 수 :</label>
-          <div class="input-box"> 
-            <div class="decBtn" onclick="decBtn(this)">-</div>
-            <input class="input" type="number" name="round_count" min="1" max="10" value="1" id="id_player_count">
-            <div class="incBtn" onclick="incBtn(this)">+</div>
-          </div>
-        </div>
-        <div class="input-box" >
-          <label for="id_player_count">참가원 : </label>
-          <div class="input-box"> 
-            <div class="decBtn" onclick="player_decBtn(this)">-</div>
-            <input class="input" type="number" name="player_count" min="1" max="4" value="1" id="id_player_count">
-            <div class="incBtn" onclick="player_incBtn(this)">+</div>
-          </div>
-        </div>
-        
-        <div>
-          <div class="player_select" id="player_select_origin">
-            <span> 플레이어 </span>
-            {% if request.user.is_authenticated %}
-            <select
-                class="playerSelect"
-                type="select"
-                name="player_0_id"
-              >
-                <option value="">-------</option>
-                <option value="{{ request.user.id}}">나</option>
-                {% for friend in friends %}
-                <option value="{{ friend.id }}">{{ friend.nickname }}</option>
-                {% endfor %}
-            </select>
-            {% endif %}
-            <input type = 'text' name = "name_0" value="플레이어">
-          </div>
-        </div>
-        <div class="locationInputArea">
-            <span>장소 선택</span>
-            <select
-              class="locationSelect locationInfo"
-              type="select"
-              name="location"
-              required=""
-            >
-              <option value="{{null}}">-------</option>
-              {% for location in locations %}
-              <option value="{{location.golf_name}}">{{location.golf_name}}</option>
-              {% endfor%}
-            </select>
-            <button
-              class="changeLocationInput"
-              onclick="changeLocationInput()"
-            ></button>
-        </div>
-        
-        
-        <button class="scoreSubmitBtn" type="submit">게임 생성</button>
-    </form>
-{% endblock %}
+  <div>
+    <div class="player_select" id="player_select_origin">
+      <span> 플레이어 </span>
+      {% if request.user.is_authenticated %}
+      <select class="playerSelect" type="select" name="player_0_id">
+        <option value="">-------</option>
+        <option value="{{ request.user.id}}">나</option>
+        {% for friend in friends %}
+        <option value="{{ friend.id }}">{{ friend.nickname }}</option>
+        {% endfor %}
+      </select>
+      <button onclick="openUserSearchPage()">유저 검색</button>
+      {% endif %}
+      <input type="text" name="name_0" value="플레이어" class="user-input" />
+    </div>
+  </div>
+  <div class="locationInputArea">
+    <span>장소 선택</span>
+    <select
+      class="locationSelect locationInfo"
+      type="select"
+      name="location"
+      required=""
+    >
+      <option value="{{null}}">-------</option>
+      {% for location in locations %}
+      <option value="{{location.golf_name}}">{{location.golf_name}}</option>
+      {% endfor%}
+    </select>
+    <button
+      class="changeLocationInput"
+      onclick="changeLocationInput()"
+    ></button>
+  </div>
 
-{% block script %}
+  <button class="scoreSubmitBtn" type="submit">게임 생성</button>
+</form>
+{% endblock %} {% block script %}
 <script src="{% static 'score/js/location_input.js' %}"></script>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
+  // 팝업창 열기
+  function openUserSearchPage() {
+    window.open(
+      "{% url 'games:search_users' %}",
+      "_blank",
+      "width=500,height=600"
+    );
+  }
+
+  // 팝업창에서 받아온 값으로 설정
+  function setValue(id, username) {
+    // 원하는 태그의 값을 변경
+    $(".playerSelect").prepend(
+      `<option value="${id}" selected>${username}</option>`
+    );
+  }
+
   function decBtn(element) {
     const input = element.parentNode.querySelector('input[type="number"]');
     // 현재 input의 value를 숫자로 변환합니다.
@@ -99,7 +121,7 @@
 
     // currentValue가 min보다 크다면, 1 감소시킵니다.
     if (currentValue > parseInt(input.min)) {
-      input.value = currentValue - 1;    
+      input.value = currentValue - 1;
     }
   }
 
@@ -122,11 +144,14 @@
     // currentValue가 min보다 크다면, 1 감소시킵니다.
     if (currentValue > parseInt(input.min)) {
       input.value = currentValue - 1;
-      var elements = document.getElementsByClassName('player_select');
+      var elements = document.getElementsByClassName("player_select");
 
       // 마지막 요소가 있으면 제거
-      if (elements.length > 1) { // 최소 1개는 남겨두기 위함
-        elements[elements.length - 1].parentNode.removeChild(elements[elements.length - 1]);
+      if (elements.length > 1) {
+        // 최소 1개는 남겨두기 위함
+        elements[elements.length - 1].parentNode.removeChild(
+          elements[elements.length - 1]
+        );
       }
     }
   }
@@ -139,8 +164,8 @@
     // currentValue가 max보다 작다면, 1 증가시킵니다.
     if (currentValue < parseInt(input.max)) {
       input.value = currentValue + 1;
-      let original
-      if(original = document.getElementById('player_select_origin')){
+      let original;
+      if ((original = document.getElementById("player_select_origin"))) {
         var clone = original.cloneNode(true);
         var select = clone.querySelector("select");
         var inputText = clone.querySelector("input[type=text]");
@@ -151,7 +176,7 @@
         if (inputText) {
           inputText.name = "name_" + currentValue; // 숫자를 증가시켜 이름 업데이트
         }
-        
+
         original.parentNode.appendChild(clone);
       }
     }
