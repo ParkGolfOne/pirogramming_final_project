@@ -156,7 +156,7 @@ def game_save(request, game_id, player_count):
         }
         return render(request, 'games/game_detail.html', content)
     
-    elif request.method == 'post':
+    elif request.method == 'POST':
         # 스코어 객체를 복사해서 이름만 바꿔치기!
         player_id = request.POST.get('player_id')
         player = get_object_or_404(User, id = player_id)
@@ -168,8 +168,9 @@ def game_save(request, game_id, player_count):
 
             for field in origin_score._meta.fields:
                 setattr(new_score, field.name, getattr(origin_score, field.name))
-
+            new_score.id = None  # 새 인스턴스를 위한 새 ID 생성
             new_score.player = player
+            new_score.save()
 
         return redirect(request.path)
 
