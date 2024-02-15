@@ -1,0 +1,45 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'main/css/reset.css' %}" />
+    <link rel="stylesheet" href="{% static 'main/css/style.css' %}" />
+    <link rel="stylesheet" href="{% static 'games/css/search_users.css' %}" />
+  </head>
+  <body>
+    <div class="search__container">
+    <h1 id="search-main_title">유저 검색 페이지</h2>
+    <div class="search__type">
+        <label for="search_type">검색 방법:</label>
+        <select id="search_type" name="search_type">
+        <option value="id">ID</option>
+        <option value="email">이메일</option>
+        </select>
+    </div>
+
+    <!--CASE 1: ID로 친구 검색-->
+    <div id="id_search" class="search">
+        <p class="search__title">유저의 id를 입력하세요</p>
+        <input id="id_search-input" class="search__input" placeholder="유저 id 입력">
+        <container class = "id_search-output">
+            <ul class="id_search-output_item"></ul>
+        </container>  
+    </div>
+    <!---->
+
+    <!--CASE 2: Email로 친구 검색-->
+    <div id="email_search" class="search" style="display: none;">
+        <p class="search__title">유저의 email를 입력하세요</p>
+        <input id="email_search-input" class="search__input" placeholder="유저 email 입력">
+        <container class = "email_search-output">
+            <ul class="email_search-output_item"></ul>
+        </container>  
+    </div>
+  </body>
+
+<script>var userId={{request.user.pk}};</script>
+<script src="{% static 'games/js/search_users.js' %}"></script>
+</html>

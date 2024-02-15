@@ -120,14 +120,7 @@ def location_myplace (request):
     }
     return render(request, 'locations/location_myplace.html', ctx)
 
-#마커 클러스터 임시 표시 url
-def location_cluster (request):
-    locations = [[location.golf_name, float(location.golf_latitude), float(location.golf_longitude)] for location in GolfLocation.objects.all()]
-    location_json = json.dumps(locations)
-    ctx = {
-        'locations_list' : location_json
-    }
-    return render(request, 'locations/location_cluster.html', ctx)
+
 
 
 

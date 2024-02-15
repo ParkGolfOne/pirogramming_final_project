@@ -54,6 +54,7 @@ class Comment (models.Model):
    like_num = models.IntegerField(default = 0) # 좋아요 개수
 
 
+
 # 댓글 좋아요 모델
 class CommentLike (models.Model):
     comment = models.ForeignKey(Comment, on_delete=models.CASCADE, verbose_name='소속 댓글')

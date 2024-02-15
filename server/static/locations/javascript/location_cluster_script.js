@@ -1,16 +1,3 @@
-// function initMap() {
-//     var mapOptions = {
-//         center : new naver.maps.LatLng(37.3595704, 127.105399),
-//         zoom : 15
-//     };
-//     var map = new naver.maps.Map('location_map', mapOptions);
-
-//     var markPlace = {
-//         position : new naver.maps.LatLng(37.3595704, 127.105399),
-//         map: map,
-//     };
-//     var marker = new naver.maps.Marker(markPlace);
-// }
 function get_my_location() {
     if (navigator.geolocation){
         navigator.geolocation.getCurrentPosition(showPosition);
@@ -111,31 +98,12 @@ function showPosition(position) {
             }
         }
     )
-};
 
-// function createMarkerClustering(map, markers){
-//     let clusterOptions = {
-//         minClusterSize: 2,
-// 	    maxZoom: 13,
-// 	    map: map,
-// 	    markers: markers,
-// 	    disableClickZoom: false,
-// 	    gridSize: 120,
-// 	    indexGenerator: [10, 100, 200, 500, 1000],
-// 	    stylingFunction : function(clusterMarker, count){
-//             // 클러스터 마커의 DOM을 가져옴
-//             var element = clusterMarker.getElement();
-//             // 첫 번째 div 요소를 선택
-//             var firstChild = element.querySelector('div');
-//             // 첫번째 요소가 존재할 때 div 요소의 택스트를 마커의 수로 표시
-//             if(firstChild){
-//                 firstChild.textContent = count;
-//             }
-//         }
-//     }
-//     var clusteredMarkers = new CustomMarkerClusterer(map, markers, clusterOptions);
+    setTimeout(function() {
+        document.getElementById('overlay').style.display = 'none';
+    }, 100);
+}
 
-//     return clusteredMarkers;
-// }
-
-get_my_location();
+window.onload = function(){
+    get_my_location();
+}

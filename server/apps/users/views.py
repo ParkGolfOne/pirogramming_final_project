@@ -10,6 +10,7 @@ from apps.communitys.models import *
 from apps.region.models import *
 from .models import *
 import requests
+import json
 
 ###########################################################
 #                      기본 메인 페이지                    #
@@ -20,7 +21,12 @@ import requests
 
 
 def home(request):
-    return render(request, 'main.html')
+    locations = [[location.golf_name, float(location.golf_latitude), float(location.golf_longitude)] for location in GolfLocation.objects.all()]
+    location_json = json.dumps(locations)
+    ctx = {
+        'locations_list' : location_json
+    }
+    return render(request, 'main.html', ctx)
 
 ###########################################################
 #                      유저 개인 페이지                    #

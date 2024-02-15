@@ -1,0 +1,41 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.10
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+    - name: Run tests
+      env:
+        DEBUG: ${{ secrets.DEBUG }}
+        MYSQL_DBNAME: ${{ secrets.MYSQL_DBNAME }}
+        MYSQL_USERNAME: ${{ secrets.MYSQL_USERNAME }}
+        MYSQL_PASSWD: ${{ secrets.MYSQL_PASSWD }}
+        MYSQL_HOST: ${{ secrets.MYSQL_HOST }}
+        MYSQL_PORT: ${{ secrets.MYSQL_PORT }}
+        SOCIAL_AUTH_KAKAO_KEY: ${{ secrets.SOCIAL_AUTH_KAKAO_KEY }}
+        SOCIAL_AUTH_KAKAO_SECRET: ${{ secrets.SOCIAL_AUTH_KAKAO_SECRET }}
+        SOCIAL_AUTH_NAVER_KEY: ${{ secrets.SOCIAL_AUTH_NAVER_KEY }}
+        SOCIAL_AUTH_NAVER_SECRET: ${{ secrets.SOCIAL_AUTH_NAVER_SECRET }}
+        STREET_API_TOKEN: ${{ secrets.STREET_API_TOKEN }}
+        NAVER_OCR_API_URL: ${{ secrets.NAVER_OCR_API_URL }}
+        NAVER_SECRET_KEY: ${{ secrets.NAVER_SECRET_KEY }}
+        KAKAO_LINK_API_KEY: ${{ secrets.KAKAO_LINK_API_KEY }}
+        NAVER_BLOG_SEARCH_CLIENT_ID: ${{ secrets.NAVER_BLOG_SEARCH_CLIENT_ID }}
+        NAVER_BLOG_SEARCH_SECRET: ${{ secrets.NAVER_BLOG_SEARCH_SECRET }}
+      run: |
+        python manage.py test

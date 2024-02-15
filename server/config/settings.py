@@ -141,6 +141,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+
 # # 1. local db.sqlite3 사용할 경우
 # DATABASES = {
 #     'default': {
@@ -148,6 +149,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
+
 
 # 2. db 서버와 연결
 DATABASES = {

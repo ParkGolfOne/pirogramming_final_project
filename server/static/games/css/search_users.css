@@ -1,0 +1,142 @@
+.hide {
+    display: none;
+}
+
+/* bootstrap 때문에 안먹힌 css 수정*/
+a {
+    color: inherit !important;
+    text-decoration: none !important;
+}
+
+/****************************/
+@use postcss-color-function;
+@use postcss-nested;
+@import url('https://fonts.googleapis.com/css?family=Raleway:400,700,900');
+
+
+.search__container {
+    padding: 64px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    height: 100vh;
+    width: 100%;
+    gap: 24px;
+}
+
+#search-main_title {
+    font-size: 40px;
+}
+
+.search__type {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.search__container label {
+    font-size: 2rem;
+}
+
+.search__container select {
+    font-size: 1.2rem;
+    padding: .8em .5em;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+}
+
+select::-ms-expand {
+    display: none;
+}
+
+.search__container select:focus {
+    border-color: #aaa;
+    box-shadow: 0 0 1px 2px var(--green--medium--color);
+    box-shadow: 0 0 0 2px -moz-mac-focusring;
+    outline: none;
+}
+
+
+.search__title {
+    font-size: 22px;
+    text-align: center;
+    color: var(--green--dark--color);
+    margin-bottom: 20px;
+}
+
+.search__input {
+    width: 100%;
+    padding: 12px 24px;
+
+    background-color: transparent;
+    transition: transform 250ms ease-in-out;
+    font-size: 14px;
+    line-height: 18px;
+
+    color: #575756;
+    background-color: transparent;
+    /*         background-image: url(http://mihaeltomic.com/codepen/input-search/ic_search_black_24px.svg); */
+
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z'/%3E%3Cpath d='M0 0h24v24H0z' fill='none'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-size: 18px 18px;
+    background-position: 95% center;
+    border-radius: 50px;
+    border: 1px solid #575756;
+    transition: all 250ms ease-in-out;
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+
+    &::placeholder {
+        color: color(#575756 a(0.8));
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+    }
+
+    &:hover,
+    &:focus {
+        padding: 12px 0;
+        outline: 0;
+        border: 1px solid transparent;
+        border-bottom: 1px solid #575756;
+        border-radius: 0;
+        background-position: 100% center;
+    }
+}
+
+.id_search-output_item,
+.email_search-output_item {
+    display: flex;
+    font-size: 20px;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    width: 100%;
+}
+
+.id_search-output_item li,
+.email_search-output_item li {
+    display: flex;
+    font-size: 15px;
+    align-items: center;
+    justify-content: space-between;
+    width: 110%;
+}
+
+.choose_user-btn {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid var(--green--medium--color);
+    background-color: #ffffff;
+    cursor: pointer;
+    margin: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.choose_user-btn:hover {
+    background-color: var(--green--medium--color);
+    color: #ffffff;
+}
