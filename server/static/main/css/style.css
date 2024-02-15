@@ -71,7 +71,7 @@ body{
   background-color: lightgray;
   position: fixed;
   transition: 0.3s;
-  height: calc(100vh - 9rem);
+  height: calc(100vh - 9rem - 70px);
   top: 9rem;
   right: -300px;
   z-index: 2;
