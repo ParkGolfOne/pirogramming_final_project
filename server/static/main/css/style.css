@@ -148,3 +148,17 @@ h1{
     font-weight: bold;    
 }
 
+
+.Btn{
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid var(--green--medium--color);
+  background-color: var(--green--bright--color);
+  cursor: pointer;
+  margin: 10px 0px;
+  font-size: 15px;
+  color: white;
+  line-height: 1;
+  text-align: center;
+  font-family: 'Noto Sans KR', sans-serif;
+}
