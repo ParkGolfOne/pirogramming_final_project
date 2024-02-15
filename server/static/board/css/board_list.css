@@ -60,6 +60,9 @@
     flex-direction: column;
     align-items: center;
 }
+#board_list_btn {
+    font-size: 20px;
+}
 #board_list_btn:hover {
     font-weight: bold;
 }

@@ -147,8 +147,8 @@
 <form method="POST" action="" enctype="multipart/form-data" class="game_form">
 <div class="game-update-btns">
   {% csrf_token %} {{ form }}
-  <input class = 'Btn' type="submit" name = "save" value="임시 저장" class="game-btn"/>
-  <input class = 'Btn' type="submit" name = "save" value="점수 저장" class="game-btn" />
+  <input class = 'scoreSubmitBtn' type="submit" name = "save" value="임시 저장" class="game-btn"/>
+  <input class = 'scoreSubmitBtn' type="submit" name = "save" value="점수 저장" class="game-btn" />
 </div>
 {% csrf_token %} {{ form }}
 {% for round in rounds %}
@@ -285,12 +285,6 @@
         </ul>
     </div>
 {% endfor %}
-
-<div class="game-update-btns">
-  {% csrf_token %} {{ form }}
-  <input class = 'scoreSubmitBtn' type="submit" name = "save" value="임시 저장" class="game-btn"/>
-  <input class = 'scoreSubmitBtn' type="submit" name = "save" value="점수 저장" class="game-btn" />
-</div>
 {% endblock %}
 
 {% block script %}

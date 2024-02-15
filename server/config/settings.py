@@ -143,25 +143,25 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 
 # # 1. local db.sqlite3 사용할 경우
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 
 
 # 2. db 서버와 연결
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.environ.get('MYSQL_DBNAME'),
-        'USER': os.environ.get('MYSQL_USERNAME'),
-        'PASSWORD': os.environ.get('MYSQL_PASSWD'),
-        'HOST': os.environ.get('MYSQL_HOST'),
-        'PORT': int(os.environ.get('MYSQL_PORT')),
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': os.environ.get('MYSQL_DBNAME'),
+#         'USER': os.environ.get('MYSQL_USERNAME'),
+#         'PASSWORD': os.environ.get('MYSQL_PASSWD'),
+#         'HOST': os.environ.get('MYSQL_HOST'),
+#         'PORT': int(os.environ.get('MYSQL_PORT')),
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators

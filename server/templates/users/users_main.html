@@ -20,22 +20,18 @@
       </div>
       <div class="user-btn-box">
         <h3 class="user-btn-title">친구</h3>
-        <a href="{% url 'users:add_friend' user.pk %}" class="user-mypage-btn">친구신청 보내기</a>
+        <a href="{% url 'users:add_friend' user.pk %}" class="user-mypage-btn">친구신청</a>
         <a href="{% url 'users:friend_list' user.pk %}" class="user-mypage-btn">내 친구 보기</a>
       </div>
       <div class="user-btn-box">
         <h3 class="user-btn-title">계정</h3>
         <a href="{% url 'users:update' user.pk %}" class="user-mypage-btn">회원정보 수정</a>
+        <a href="{% url 'users:logout' %}" class="user-mypage-btn">로그아웃</a>
         <form method="post" action="{% url 'users:delete' user.pk %}" class="user-mypage-btn">
           <button type="submit">회원 탈퇴</button>
         </form>
       </div>
     </div>
-    <!--           <a href="" class="mypage-interest"><div class="like-icon"></div>좋아요 누른 글</a>
-    <a href="" class="mypage-interest"><div class="scrap-icon"></div>스크랩한 글</a>
-    <a href="" class="mypage-interest"><div class="write-icon"></div>내가 작성한 글</a>
-    <a href="" class="mypage-interest"><div class="bookmark-icon"></div>골프장 즐겨찾기</a>           -->
-
     <ul class="user-btn-option">
       <li data-target="likes">좋아요</li>
       <li data-target="scraps">스크랩</li>
