@@ -98,6 +98,12 @@ function showPosition(position) {
             }
         }
     )
-};
 
-get_my_location();
+    setTimeout(function() {
+        document.getElementById('overlay').style.display = 'none';
+    }, 100);
+}
+
+window.onload = function(){
+    get_my_location();
+}
