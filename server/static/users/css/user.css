@@ -326,3 +326,6 @@
     justify-content: flex-end;
     gap: 10px;
 }
+#addFriendButton {
+    width: 200px !important;
+}

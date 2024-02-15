@@ -52,7 +52,7 @@
     border: 1px solid var(--green--medium--color);
     background-color: var(--green--bright--color);
     cursor: pointer;
-    width: 200px;
+    width: 100%;
     margin: 10px 0px;
     font-size: 15px;
     color: white;
@@ -74,7 +74,6 @@
 
 .locationSelect,
 #id_game_name,
-#id_player_count,
 #id_round_count {
     border: 1px solid #ddd;
     border-radius: 10px;
