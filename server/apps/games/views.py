@@ -156,3 +156,5 @@ def game_save(request, game_id, player_count):
         }
         return render(request, 'games/game_detail.html', content)
     
+def search_users(request):
+    return render(request, 'games/game_popup.html')
