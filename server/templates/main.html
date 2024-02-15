@@ -1,49 +1,71 @@
 {% extends 'base.html' %}
-{%load static%}
+{% load static %}
 {% block head %}
-    <link rel="stylesheet" href="{% static 'main/css/main.css' %}" />
-    
+  <link rel="stylesheet" href="{% static 'main/css/main.css' %}" />
+  <link rel="stylesheet" href="{% static 'main/css/tutorial.css' %}" />
 {% endblock %}
 {% block content %}
-    <div class="main_p_container">
-        <div class="left">
-            <div class="search_box">
-                <input type="text">
+  <div class="main_p_container">
+    <div class="left">
+      <div class="search_box">
+        <input type="text" />
 
-                <input type="submit">
-            </div>
-            <div id="location_map" class="location">
-                <div class="overlay" id="overlay">
-                    <div class="spinner">
-                        <div class="ball"></div>
-                        <p id="loading">LOADING</p>
-                    </div>
-                </div>
-            </div>            
+        <input type="submit" />
+      </div>
+      <div id="location_map" class="location">
+        <div class="overlay" id="overlay">
+          <div class="spinner">
+            <div class="ball"></div>
+            <p id="loading">LOADING</p>
+          </div>
         </div>
-        <div class="right">
-            <div class="right_box">
-                <a href="{% url 'locations:list' %}" class="one">
-                    <span class="uiw--map"></span>
-                    <div>지도</div></a>
-                <a href="{% url 'communitys:board_list' %}" class="one">
-                    <span class="codicon--book"></span><div>커뮤니티</div></a>
-                <a href="{% url 'score:score_main' %}" class="one">
-                    <span class="material-symbols--scoreboard-outline-rounded"></span>
-                    <div>스코어</div></a>
-                <a href="{% url 'games:game_set' %}" class="one">
-                    <span class="cil--golf-alt"></span>
-                    <div>게임하러가기</div>
-                </a>
-            </div>
-        </div>        
+      </div>
+      <div class="tutorialBox tuto-cluster"></div>
     </div>
+    <div class="right">
+      <div class="right_box">
+        <section>
+          <a href="{% url 'locations:list' %}" class="one">
+            <span class="uiw--map"></span>
+            <div>지도</div>
+          </a>
+          <div class="tutorialBox tuto-location"></div>
+        </section>
+        <section>
+          <a href="{% url 'communitys:board_list' %}" class="one">
+            <span class="codicon--book"></span>
+            <div>커뮤니티</div>
+          </a>
+          <div class="tutorialBox tuto-board"></div>
+        </section>
+        <section>
+          <a href="{% url 'score:score_main' %}" class="one">
+            <span class="material-symbols--scoreboard-outline-rounded"></span>
+            <div>스코어</div>
+          </a>
+          <div class="tutorialBox tuto-score"></div>
+        </section>
+        <section>
+          <a href="{% url 'games:game_set' %}" class="one">
+            <span class="cil--golf-alt"></span>
+            <div>게임하러가기</div>
+          </a>
+          <div class="tutorialBox tuto-game"></div>
+        </section>
+      </div>
+    </div>
+  </div>
+  <div class="tutorialBox tuto-start"></div>
+  <div class="tutorialBox tuto-end"></div>
+  <div id="blind"></div>
 {% endblock %}
 {% block script %}
-    <script src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=mzbzbj8tit"></script>
-    <script>
-        let locations_list = JSON.parse('{{locations_list|safe}}');
-    </script>
-    <script src="{% static 'locations/javascript/MarkerClustering.js' %}"></script>
-    <script src="{% static 'locations/javascript/location_cluster_script.js' %}"></script>
+  <!-- 튜토리얼 -->
+  <script src="{% static 'js/tutorial.js' %}"></script>
+  <script src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=mzbzbj8tit"></script>
+  <script>
+    let locations_list = JSON.parse('{{locations_list|safe}}')
+  </script>
+  <script src="{% static 'locations/javascript/MarkerClustering.js' %}"></script>
+  <script src="{% static 'locations/javascript/location_cluster_script.js' %}"></script>
 {% endblock %}
