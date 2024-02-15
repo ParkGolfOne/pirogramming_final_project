@@ -51,6 +51,7 @@ class Comment (models.Model):
    parent_comment = models.ForeignKey('self', null=True, default = None, on_delete=models.CASCADE)
    commenter = models.ForeignKey(User, on_delete=models.CASCADE,  verbose_name='댓글 작성자')
    child_comments_num = models.IntegerField(default = 0)  # 대댓글 개수
+   like_num = models.IntegerField(default = 0) # 좋아요 개수
 
 
 # 댓글 좋아요 모델

@@ -17,3 +17,25 @@
 .faved {
   background-image: url("/static/locations/images/faved.png") !important;
 }
+
+.location-score-info{
+  display:flex;
+  gap:10px;
+  align-items: center;
+  justify-content: space-between;
+  width:100%;
+}
+
+.location-fav-info{
+  display:flex;
+  gap: 5px;
+  justify-content: flex-start;
+  align-items: center;
+  flex:1;
+}
+
+.rateNum{
+  font-size: 20px;
+  flex:1;
+  text-align: right;
+}

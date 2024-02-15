@@ -8,16 +8,19 @@
   <div class="location-container">
     <div id="location_map"></div>
     <div class="location-detail-container">
-      <div class="location-fav-info">
-        {% if faved %}
-          <button class="postFavBtn fav-{{ location.id }} faved" onclick="pushFav({{ location.id }})"></button>
-        {% else %}
-          <button class="postFavBtn fav-{{ location.id }}" onclick="pushFav({{ location.id }})"></button>
-        {% endif %}
-        <div class="favNum-{{ location.id }}">추천 {{ location.fav_num }}</div>
-        <div class="rateNum">리뷰수 {{ location.golf_rate_num }} 평점
+      <div class="location-score-info">
+        <div class="location-fav-info">
+          {% if faved %}
+            <button class="postFavBtn fav-{{ location.id }} faved" onclick="pushFav({{ location.id }})"></button>
+          {% else %}
+            <button class="postFavBtn fav-{{ location.id }}" onclick="pushFav({{ location.id }})"></button>
+          {% endif %}
+          <div class="favNum-{{ location.id }}">{{ location.fav_num }}</div>
+        </div>
+        <div class="rateNum">리뷰수 {{ location.golf_rate_num }} &nbsp;&nbsp; 평점
           {{ location.golf_rate|floatformat:2 }}</div>
       </div>
+      
       <div class="location-detail-area">
         <h3>규모</h3>
         <p>{{ location.golf_scale }}</p>
