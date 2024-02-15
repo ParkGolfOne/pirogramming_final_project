@@ -3,6 +3,11 @@ const reviewInput = document.querySelector(".input-area");
 
 //리뷰 수정 플래그
 var updateFlag = false;
+// DeadLock 방지
+setInterval(function() {
+  updateFlag = false;
+}, 60 * 1000);
+
 // 리뷰 추가의 별표 추가 버튼
 const addRate = document.querySelector(".addRate");
 // 저장된 값

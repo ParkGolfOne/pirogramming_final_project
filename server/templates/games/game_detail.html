@@ -147,11 +147,14 @@
             
             {% for score in round.round_score.all %}
               <li class="coures_li">
+                {% if request.user.is_authenticated %}
                   <form method="post" action="">
                     {% csrf_token %}
+                    <input type="hidden" name="score_id" value="{{ score.id }}">
                     <input type="hidden" name="player_id" value="{{ player.id }}">
-                    <input class = "Btn" type="submit" value="내 점수 저장" class="game-myscore">
+                    <input class = "Btn" type="submit" value="내 점수 저장" class="game-myscore">    
                   </form>
+                {% end if %}
                   <div>점수</div>
                   <div>{{ score.scores.hole1}}</div>
                   <div>{{ score.scores.hole2}}</div>

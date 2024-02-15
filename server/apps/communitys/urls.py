@@ -30,7 +30,7 @@ urlpatterns = [
 
     # 대댓글 url
     path('reply_create/', reply_create, name="reply_create"),
-    path('reply_list/', reply_list, name="reply_list"),
+
 
     # 좋아요 url
     path('post_like/', pushPostLike, name="post_like"),
