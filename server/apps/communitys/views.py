@@ -232,10 +232,22 @@ def post_detail(request, pk, bid):
         scraped = True
 
     try:
-        comments = Comment.objects.filter(post = post, parent_comment = None)
+        temp_comments = Comment.objects.filter(post = post, parent_comment = None)
     except Comment.DoesNotExist:
-        comments = []
+        temp_comments = []
 
+    comments=[]
+    for temp_comment in temp_comments:
+        try:
+            child_comments = Comment.objects.filter(post = post, parent_comment = temp_comment)
+        except Comment.DoesNotExist:
+            child_comments = []
+        comment = {'nickname' : temp_comment.commenter.nickname, 'commenter_id' : temp_comment.commenter.id, 'profile' : temp_comment.commenter.image.url,
+                   'id': temp_comment.id, 'content' : temp_comment.content, 'child_comments_num' : temp_comment.child_comments_num,
+                     'child_comments' : child_comments}
+        comments.append(comment)
+    
+    print("comments : ", comments)
 
     # 추후에 작성자가 쓴 다른 글 참조시 사용
     # user = post.user
@@ -335,43 +347,7 @@ def comment_create(request):
 
     newcomment = Comment.objects.create(post = post, commenter = commenter, content = content )      
     
-    return JsonResponse({'commenter' : newcomment.commenter.nickname, 'content' : newcomment.content, 'commentId' : newcomment.id})
-
-
-
-# 함수 이름 : reply_create
-# 전달인자 : request
-# 기능 : --
-@csrf_exempt
-@transaction.atomic
-def reply_create(request):
-    req = json.loads(request.body)
-    post_id = req["post_id"]
-    content = req["content"]
-    parent_comment_id = req["parent_comment_id"]
-    commenter = request.user
-    post = get_object_or_404(Post, id=post_id)
-
-    parent_comment = get_object_or_404(Comment, id=parent_comment_id)
-    print(parent_comment)
-
-    newcomment = Comment.objects.create(post = post, commenter = commenter, content = content, parent_comment = parent_comment )
-    parent_comment.child_comments_num += 1
-    parent_comment.save()
-
-    return JsonResponse({'commenter' : newcomment.commenter.username, 'content' : newcomment.content, 'commentId' : newcomment.id, 'post_id' : post_id})
-
-
-
-
-# 함수 이름 : reply_list
-# 전달인자 : request
-# 기능 : --
-@csrf_exempt
-@transaction.atomic
-def reply_list(request):
-    pass
-
+    return JsonResponse({'commenter' : newcomment.commenter.nickname, 'content' : newcomment.content, 'commentId' : newcomment.id, 'post_id' : post_id, 'profile': commenter.image.url})
 
 
 # 함수 이름 : comment_delete
@@ -384,11 +360,19 @@ def comment_delete(request, pk):
     cid = req["comment_id"]
 
     try:
-        get_object_or_404(Comment, id = cid).delete()
+        target_comment = get_object_or_404(Comment, id = cid)
+        if target_comment.parent_comment == None:
+            reply = 0
+        else:
+            target_comment.parent_comment.child_comments_num -= 1
+            target_comment.parent_comment.save()
+            reply = target_comment.parent_comment.id
+
+        target_comment.delete()
     except 404:
         print("해당 댓글이 더이상 존재하지 않습니다!")
     else:
-        return JsonResponse({'comment_id' : cid})
+        return JsonResponse({'comment_id' : cid, 'isReply' : reply})
 
 
 # 함수 이름 : comment_update
@@ -408,10 +392,40 @@ def comment_update(request, pk):
     else:
         target_comment.content = content
         target_comment.save()
+        if target_comment.parent_comment == None:
+            reply = 0
+        else:
+            reply = 1
 
-    return JsonResponse({'commenter' : target_comment.commenter.username, 'content' : content,'commentId' : cid, 'post_id' : target_comment.post.id})
+    return JsonResponse({ 'content' : content,'commentId' : cid, "ifReply" : reply})
 
 
+
+###########################################################
+#                     대댓글 관련 함수                     #
+###########################################################
+
+# 함수 이름 : reply_create
+# 전달인자 : request
+# 기능 : 대댓글 추가
+@csrf_exempt
+@transaction.atomic
+def reply_create(request):
+    req = json.loads(request.body)
+    post_id = req["post_id"]
+    content = req["content"]
+    parent_comment_id = req["parent_comment_id"]
+    commenter = request.user
+    post = get_object_or_404(Post, id=post_id)
+
+    parent_comment = get_object_or_404(Comment, id=parent_comment_id)
+    print(parent_comment)
+
+    newcomment = Comment.objects.create(post = post, commenter = commenter, content = content, parent_comment = parent_comment )
+    parent_comment.child_comments_num += 1
+    parent_comment.save()
+
+    return JsonResponse({'commenter' : newcomment.commenter.nickname, 'content' : newcomment.content, 'commentId' : newcomment.id, 'post_id' : post_id, 'parent_cid' : parent_comment.id, 'profile': commenter.image.url})
 
 
 
