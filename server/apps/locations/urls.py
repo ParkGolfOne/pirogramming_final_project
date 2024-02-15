@@ -13,7 +13,6 @@ urlpatterns = [
     path('myhome/<int:pk>/', location_distance, name='myhome'),
     path('myplace/', location_myplace, name='myplace'),
     path('favorites/', add_fav_location, name='favorites' ),
-    path('cluster/', location_cluster, name='cluster'),
 
     # 리뷰 url
     path('review_create/', review_create, name="review_create"),
