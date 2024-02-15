@@ -15,7 +15,7 @@
 
 /* 드래그 박스 */
 #fileInputArea {
-  width: 400px;
+  width: 100%;
   padding: 10px;
   border-radius: 5px;
   border: 1px solid var(--green--medium--color);
@@ -45,10 +45,12 @@
   padding: 10px;
   border-radius: 5px;
   border: 1px solid var(--green--medium--color);
-  background-color: #ffffff;
+  background-color: var(--green--bright--color);
   cursor: pointer;
   font-size: 15px;
   margin: 5px;
+  color: white;
+  width: 200px;
 }
 
 /* 점수 증감 버튼 */
@@ -101,9 +103,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 15px;
+  gap: 5px;
 }
-
+.locationInputArea span {
+  font-size: 15px;
+}
 /* 장소 선택 select */
 .locationInfo {
   padding: 5px;
@@ -145,4 +149,13 @@
   align-items: flex-start;
 
   font-size: 15px;
+}
+
+@media screen and (min-width: 700px) {
+  .locationInputArea {
+    gap: 10px;
+  }
+  .locationInputArea span {
+    font-size: 25px;
+  }
 }
