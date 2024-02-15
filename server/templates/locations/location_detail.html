@@ -2,6 +2,7 @@
   <link rel="stylesheet" href="{% static 'locations/css/location_detail.css' %}" />
   <link rel="stylesheet" href="{% static 'locations/css/location_fav.css' %}" />
   <link rel="stylesheet" href="{% static 'locations/css/location_review.css' %}" />
+  <link rel="stylesheet" href="{% static 'main/css/link.css'%}" />
 {% endblock %} {% block content %}
   <h2 class="golf-name">{{ location.golf_name }}</h2>
 
@@ -92,6 +93,32 @@
     {% endif %}
   </div>
 
+  <!--  공유하기 -->
+  <div class="shareList">
+    <span>공유하기</span>
+    <div>
+      <button
+        id="kakaotalk-sharing-btn"
+        onclick="shareKakaoLocation()"
+      ></button>
+      <!--  네이버 밴드 공유하기  -->
+      <span>
+        <script
+          type="text/javascript"
+          src="//developers.band.us/js/share/band-button.js?v=06022024"
+        ></script>
+        <script type="text/javascript">
+          new ShareBand.makeButton({
+            lang: "ko-KR",
+            type: "c",
+            text: "골프장 보려가기",
+            withUrl: true,
+          });
+        </script>
+      </span>
+    </div>
+  </div>
+
   <div class="reviewTypeSelect">
     <button class="reviewTypeSelectBtn userReview" onclick="showUserReview()">사용자 리뷰</button>
     <button class="reviewTypeSelectBtn naverReview" onclick="showNaverReview()">네이버 리뷰</button>
@@ -160,7 +187,11 @@
   {% if user.is_authenticated %}
     login = true;
   {% endif %}
+
 </script>
+  <!-- 카카오톡 공유 -->
+  <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+  <script src="{% static 'js/link.js' %}"></script>
   <!-- 장소 즐겨찾기 -->
   <script src="{% static 'locations/javascript/location_fav.js' %}"></script>
   <!-- 리뷰 별표 -->
