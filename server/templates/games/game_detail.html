@@ -115,6 +115,7 @@
         {% endfor %}
         <ul class="coures_ul">
             <li class="coures_li coures_li_hole">
+              <div></div>
               <div>홀</div>
               <div>1</div>
               <div>2</div>
@@ -129,6 +130,7 @@
               <div>/</div>
             </li>
             <li class="coures_li coures_li_par">
+              <div></div>
               <div>파</div>
               <div>{{ round.par.hole1}}</div>
               <div>{{ round.par.hole2}}</div>
@@ -148,8 +150,7 @@
                   <form method="post" action="">
                     {% csrf_token %}
                     <input type="hidden" name="player_id" value="{{ player.id }}">
-                    <input type="submit" value="내 점수 저장" class="game-myscore">
-                    <input type="submit" value="점수 넘겨주기" class="game-yourscore">
+                    <input class = "Btn" type="submit" value="내 점수 저장" class="game-myscore">
                   </form>
                   <div>점수</div>
                   <div>{{ score.scores.hole1}}</div>
@@ -169,6 +170,7 @@
             {% endfor %}
         </ul>
         
+        <a href="{% url 'games:game_update' game.id player_count %}" class="game-again">게임 수정</a>
         <a href="{% url 'games:game_set'%}" class="game-again">게임 다시 하기</a>
     </div>
 {% endfor %}

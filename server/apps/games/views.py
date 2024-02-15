@@ -154,5 +154,8 @@ def game_save(request, game_id, player_count):
             'rounds': rounds,
             'player_count' : player_count,
         }
-        return render(request, 'games/game_detail.html', content)
+        return render(request, 'games/game_detail.html', content)   
+    elif request.method == 'post':
+        # 스코어 객체를 복사해서 이름만 바꿔치기!
+        return
     
