@@ -261,7 +261,7 @@ def social_login(request):
             "nickname": user.nickname,
             "birth": None,
             "phone": None,
-            "email": "",
+            "email": None,
             'city': None,
             'town': None,
             'street_address': None,
