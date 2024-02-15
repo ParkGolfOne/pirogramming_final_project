@@ -142,14 +142,14 @@ def add_fav_location(request):
 
         favTag = 'nonfav'
         location.save()
-        return JsonResponse({'location_id' : location_id, 'favNum' : location.fav_num, 'favTag' : favTag})
+        return JsonResponse({ 'favNum' : location.fav_num})
     except LikeGolf.DoesNotExist:
         LikeGolf.objects.create(ground=location, user=now_user)
         location.fav_num += 1
 
         favTag = 'faved'
         location.save()
-        return JsonResponse({'location_id' : location_id, 'favNum' : location.fav_num, 'favTag' : favTag})
+        return JsonResponse({ 'favNum' : location.fav_num})
 
 
 
