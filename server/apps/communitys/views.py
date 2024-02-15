@@ -441,7 +441,11 @@ def reply_create(request):
 def pushPostLike(request):
     req = json.loads(request.body)
     post_id = req["post_id"]
-    post = get_object_or_404(Post, pk=post_id)
+    try:
+        post = get_object_or_404(Post, pk=post_id)
+    except 404:
+        print("없는 post")
+
     now_user = request.user
 
     try:
@@ -449,25 +453,53 @@ def pushPostLike(request):
         likePointer.delete()
         post.like_num -= 1  
 
-        likeTag = 'nonlike'
         post.save()
-        return JsonResponse({'post_id' : post_id, 'likeNum' : post.like_num, 'likeTag' : likeTag})
+        return JsonResponse({'likeNum' : post.like_num})
     except Like.DoesNotExist:
         Like.objects.create(post=post, user=now_user)
         post.like_num += 1
 
-        likeTag = 'liked'
+        print("게시글 좋아요 수 : ",post.like_num)
+
         post.save()
-        return JsonResponse({'post_id' : post_id, 'likeNum' : post.like_num, 'likeTag' : likeTag})
+        return JsonResponse({'likeNum' : post.like_num})
     
 
 # 함수 이름 : pushCommentLike(request)
 # 전달인자 : request
-# 기능 : 게시글 좋아요
+# 기능 : 댓글 좋아요
+    
 @csrf_exempt
 @transaction.atomic
 def pushCommentLike(request):
-    pass
+    req = json.loads(request.body)
+    comment_id = req["comment_id"]
+    try:
+        comment = get_object_or_404(Comment, pk=comment_id)
+    except 404 :
+        print("존재하지 않는 comment 입니다.")
+        return JsonResponse({"error" : 404})
+    
+    # 현재 유저
+    now_user = request.user
+
+    try:
+        likePointer = CommentLike.objects.get(comment=comment, user=now_user)
+        likePointer.delete()
+        comment.like_num -= 1  
+
+        likeTag = 'nonlike'
+        comment.save()
+        return JsonResponse({'comment_id' : comment_id, 'likeNum' : comment.like_num, 'likeTag' : likeTag})
+    except CommentLike.DoesNotExist:
+        CommentLike.objects.create(comment=comment, user=now_user)
+        comment.like_num += 1
+
+        likeTag = 'liked'
+        comment.save()
+
+    return JsonResponse({'comment_id' : comment_id, 'likeNum' : comment.like_num, 'likeTag' : likeTag})
+ 
     
 
 ###########################################################
@@ -486,13 +518,11 @@ def pushScrap(request):
         scrapPointer.delete()
         post.scrap_num -= 1  
 
-        scrapTag = 'nonscrap'
         post.save()
-        return JsonResponse({'post_id' : post_id, 'scrapNum' : post.scrap_num, 'scrapTag' : scrapTag})
+        return JsonResponse({'scrapNum' : post.scrap_num})
     except Scrap.DoesNotExist:
         Scrap.objects.create(post=post, user=now_user)
         post.scrap_num += 1
 
-        scrapTag = 'scraped'
         post.save()
-        return JsonResponse({'post_id' : post_id, 'scrapNum' : post.scrap_num, 'scrapTag' : scrapTag})
+        return JsonResponse({'scrapNum' : post.scrap_num})

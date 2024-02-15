@@ -1,0 +1,25 @@
+
+.shareList {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .shareList > span {
+    font-size: 15px;
+  }
+  
+  .shareList > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
+  /* 카카오톡 공유하기 아이콘 */
+  #kakaotalk-sharing-btn {
+    background-image: url("/static/score/images/kakaotalk.png");
+    background-repeat: no-repeat;
+    width: 30px !important;
+    height: 30px !important;
+    background-size: cover;
+  }

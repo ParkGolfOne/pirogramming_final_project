@@ -6,6 +6,8 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <title>파골원 커뮤 디테일</title>
       <link rel="stylesheet" href="{% static 'posts/css/post_detail.css' %}" />
+      <link rel="stylesheet" href="{% static 'main/css/link.css'%}" />
+      <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
     </head>
     <body>
       <div class="before-icons">
@@ -36,7 +38,30 @@
           <img src="{{ post.photo.url }}" alt="게시글 이미지" />
         {% endif %}
         <h2 class="my-3">{{ post.content|safe }}</h2>
-        <div>[공유하기 넣을 곳]</div>
+        <div class="shareList">
+          <span>공유하기</span>
+          <div>
+            <button
+              id="kakaotalk-sharing-btn"
+              onclick="shareKakaoPost({{post.id}})"
+            ></button>
+            <!--  네이버 밴드 공유하기  -->
+            <span>
+              <script
+                type="text/javascript"
+                src="//developers.band.us/js/share/band-button.js?v=06022024"
+              ></script>
+              <script type="text/javascript">
+                new ShareBand.makeButton({
+                  lang: "ko-KR",
+                  type: "c",
+                  text: "게시글 보려가기",
+                  withUrl: true,
+                });
+              </script>
+            </span>
+          </div>
+        </div>
         <div class="post-user">
           <div class="post_buttons">
             {% if user.is_authenticated %}
@@ -144,6 +169,15 @@
         {% endif %}
         <hr />
       </div>
+          <!-- 링크에 쓸 변수 작성 -->
+      <script>
+        var pid = {{post.id}}
+        var bid = {{bid}}
+        //var now_user = {{now_user.nickname}}
+        const thumbnailUrl  = "{% static 'base/images/parkgolfone_logo1.png' %}";
+      </script>
+      <!-- 공유하기 -->
+      <script src="{% static 'js/link.js' %}"></script>
       <!-- 댓글 -->
       <script src="{% static 'posts/js/comment.js' %}"></script>
       <!-- 대댓글 -->
