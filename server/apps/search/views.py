@@ -105,3 +105,53 @@ def search_candidate(request):
             })
         print(search_friends_json)
         return JsonResponse(search_friends_json, safe=False)
+
+###########################################################
+#              쿼리에 해당하는 유저 검색                    #
+###########################################################
+# 함수 이름 : user_candidate
+# 전달인자 : request
+# 기능 : 본인+superuser가 아닌 사람을 반환    
+def user_candidate(request):
+    # 본인과 슈퍼유저를 제외한 모든 사용자 가져오기
+    candidate_users = User.objects.exclude(id=request.user.id).exclude(is_superuser=True)
+    return candidate_users
+
+# 함수 이름 : search_user
+# 전달인자 : request
+# 기능 : 쿼리에 해당되는 유저 검색 (본인+superuser가 아닌 사람)을 반환
+def search_users(request):
+    input_value = request.GET.get('input', None)
+    search_type = request.GET.get('type', None)
+
+    # 현재 요청하는 유저 후보군
+    users_list = user_candidate(request)
+
+    # 만일 id에 대해 검색 요청이 들어온 경우 : input이 포함된 유저 보여줌
+    if search_type == "id":
+        # 입력 받은 input을 포함하는 유저들을 찾는다.
+        search_users = users_list.filter(
+            username__icontains=input_value)
+        search_users_json = []
+        for user in search_users:
+            search_users_json.append({
+                "id": user.id,
+                "username": user.username,
+                "nickname": user.nickname,
+            })
+        print(search_users_json)
+        return JsonResponse(search_users_json, safe=False)
+
+    # 만일 email에 대해 검색 요청이 들어온 경우 : input과 email이 정확히 일치하는 유저 보여줌
+    elif search_type == "email":
+        # 입력 받은 input을 포함하는 유저들을 찾는다.
+        search_users = users_list.filter(email__exact=input_value)
+        search_users_json = []
+        for user in search_users:
+            search_users_json.append({
+                "id": user.id,
+                "username": user.username,
+                "nickname": user.nickname,
+            })
+        print(search_users_json)
+        return JsonResponse(search_users_json, safe=False)
