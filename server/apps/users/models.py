@@ -17,18 +17,21 @@ def get_default_image():
     # return final_image.split('media/')[1]
 
     # s3 setting
-    s3r = boto3.resource('s3', aws_access_key_id=os.environ.get("AWS_S3_ACCESS_KEY_ID").strip(), aws_secret_access_key=os.environ.get("AWS_S3_SECRET_ACCESS_KEY").strip())
+    s3r = boto3.resource('s3', aws_access_key_id=os.environ.get("AWS_S3_ACCESS_KEY_ID").strip(
+    ), aws_secret_access_key=os.environ.get("AWS_S3_SECRET_ACCESS_KEY").strip())
     bucket = s3r.Bucket(os.environ.get("AWS_STORAGE_BUCKET_NAME"))
 
     # get default image from s3
     default_images = []
     for object in bucket.objects.filter(Prefix="user/default/"):
         default_images.append(object.key)
-    
+
     final_image = random.choice(default_images)
     return final_image
 
 # 유저 모델
+
+
 class User(AbstractUser):
     username = models.CharField('아이디', max_length=15, null=False, unique=True)
     nickname = models.CharField('닉네임', max_length=31, null=False)
