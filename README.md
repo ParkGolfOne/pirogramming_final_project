@@ -4,8 +4,7 @@
 : 파크골프장 위치 및 정보 제공, 파크골프 커뮤니티, 골프 스코어 기록 등의 서비스를 제공합니다.
 
 ### 파크골프원 로고
-![로고1](./docs/parkgolfone_logo1.png)
-![로고2](./docs/parkgolfone_logo2.png)
+![로고](./docs/parkgolfone_logo.gif)
 
 ### .env 파일 설정
 - .env 파일에 우리끼리 공유한 토큰 키 값을 넣어서 사용

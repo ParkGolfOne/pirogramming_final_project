@@ -77,3 +77,13 @@ select::-ms-expand {
     box-shadow: 0 0 0 2px -moz-mac-focusring;
     outline: none;
 }
+#users-update-form,
+.users-update-form {
+    width: 90% ;
+}
+@media screen and (min-width: 500px) {
+    #users-update-form,
+    .users-update-form {
+        width: auto;
+    }
+}

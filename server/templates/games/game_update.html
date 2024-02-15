@@ -11,9 +11,13 @@
       align-items: center;
       font-size: 25px;
     }
+    .game-title {
+      margin: 10px 0px;
+    }
     .game-update-btns {
       display: flex;
-      justify-content: flex-end;
+      justify-content: center;
+      width: 98%;
     }
     .game_form{  
       width: 100%;
@@ -39,19 +43,18 @@
     
     .coures_li > div > input{
       width: 40%;
-      padding: 10px;
+      padding: 5px 0px;
       border: 1px solid #ddd;
       /* border-radius: 10px; */
       box-sizing: border-box;
       background-color: #ffffff;
       text-align: center;
       word-break: break-word;
-      font-size: 10px;
+      font-size: 20px;
     }
 
     .coures_li > div {
       max-width: 100px;
-      height: 38px;
       margin: 10px 0;
       text-align: center;
       display: flex;
@@ -87,12 +90,12 @@
     @media screen and (min-width: 430px){
       .coures_li > div > input{
         max-width: 70px;
-        width: 100px;
       }
     }
     .players_name{
       display: flex;
       justify-content: space-around;
+      font-size: 20px;
     }
     .name{
       width: 15%;
@@ -106,12 +109,21 @@
       width: 15%;
       text-align: center;
     }
-
+    .scoreSubmitBtn {
+      margin: 10px;
+      width: auto;
+      font-size: 20px !important;
+    }
+    #id_player_count,
+    #id_round_count {
+        border: 1px solid #ddd;
+        padding: 10px;
+    }
     @media screen and (min-width: 700px){
       .coures_li > div > input{
         max-width: 100px;
         width: 100px;
-        font-size: 15px;
+        font-size: 20px;
       }
       .coures_li > div {
         font-size: 25px;
@@ -119,20 +131,24 @@
       .coures > h2{
         font-size: 30px;
       }
+      .players_name{
+        font-size: 25px;
+      }
+
     }
   </style>
 {% endblock %}
 {% block content %}
 <a href="{% url 'games:game_set'%}" class="before-game">
   <span class="bxs--left-arrow"></span>게임 다시 설정</a>
-<h1>{{ game.name }} 점수입력 페이지</h1>
+<h1 class="game-title">{{ game.name }} 점수입력 페이지</h1>
 
 <!-- 각 라운드에 대해 반복 -->
 <form method="POST" action="" enctype="multipart/form-data" class="game_form">
 <div class="game-update-btns">
   {% csrf_token %} {{ form }}
-  <input class = 'Btn' type="submit" name = "save" value="임시 저장" class="game-btn"/>
-  <input class = 'Btn' type="submit" name = "save" value="점수 저장" class="game-btn" />
+  <input class = 'scoreSubmitBtn' type="submit" name = "save" value="임시 저장" class="game-btn"/>
+  <input class = 'scoreSubmitBtn' type="submit" name = "save" value="점수 저장" class="game-btn" />
 </div>
 {% csrf_token %} {{ form }}
 {% for round in rounds %}

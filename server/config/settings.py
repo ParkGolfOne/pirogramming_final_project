@@ -61,6 +61,9 @@ INSTALLED_APPS = [
 
     # 게시물에 html형식의 글을 쓰게 해주는 앱
     'tinymce',
+
+    # AWS S3 설정을 위한 변수
+    'storages',
 ]
 
 AUTHENTICATION_BACKENDS = [
@@ -142,6 +145,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 
+
 # 1. local db.sqlite3 사용할 경우
 DATABASES = {
     'default': {
@@ -150,8 +154,10 @@ DATABASES = {
     }
 }
 
+
     
 # # 2. db 서버와 연결
+
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.mysql',
@@ -209,10 +215,30 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 
+# 1. media 폴더로 img 파일 올리는 경우
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-MEDIA_URL = '/media/'
+# 2. s3로 img 파일 올리는 경우
+## AWS 설정
+AWS_REGION = os.environ.get("AWS_REGION")
+AWS_ACCESS_KEY_ID = os.environ.get("AWS_S3_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_S3_SECRET_ACCESS_KEY")
+
+AWS_S3_SECURE_URLS = False # use http instead of https
+AWS_QUERYSTRING_AUTH = False # don't add complex authentication-related query parameters for requests
+AWS_S3_HOST = 's3.%s.amazonaws.com' % AWS_REGION
+
+## AWS S3 Storage 설정
+AWS_STORAGE_BUCKET_NAME = os.environ.get("AWS_STORAGE_BUCKET_NAME")
+AWS_S3_CUSTOM_DOMAIN = os.environ.get("AWS_S3_CUSTOM_DOMAIN")
+
+AWS_DEFAULT_ACL = 'public-read'
+MEDIA_URL = "https://%s/" % AWS_S3_CUSTOM_DOMAIN.strip()
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+# Root Setting
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
 
 # 게시물에 html형식의 글을 쓰게 해주는 앱
 # 커스텀 가능

@@ -34,6 +34,18 @@ function showPosition(position) {
 
     var markers = []; //골프장 객체들을 찍을 마커를 저장하는 빈 배열 선언
 
+    var infoWindow = new naver.maps.InfoWindow({
+        maxWidth: 200,
+        backgroundColor: "#eee",
+        borderColor: "#2db400",
+        borderWidth: 5,
+        anchorSize: new naver.maps.Size(10, 10),
+        anchorSkew: false,
+        anchorColor: "#eee",
+        pixelOffset: new naver.maps.Point(20, -20)
+    });
+
+
     //json 형태로 온 모든 골프장 객체의 좌표를 마커로 찍기
     locations_list.map(item => {
         const golfLat = item[1];
@@ -47,6 +59,23 @@ function showPosition(position) {
 
         markers.push(marker);
         bounds.extend(markerLocations);
+
+        naver.maps.Event.addListener(marker, 'mouseover', function(e){
+            infoWindow.setContent('<div style="width:150px;text-align:center;padding:10px;">' + item[0] + '</div>');
+            infoWindow.open(map, marker);
+        });
+        
+        naver.maps.Event.addListener(marker, 'mouseout', function(e){
+            infoWindow.close();
+        });
+
+        naver.maps.Event.addListener(marker, 'click', function(){
+
+            //window.location.href = `https://map.naver.com/p/search/${item[0]}`;  -> 같은 창에서 그대로 지도 검색
+            
+            window.open(`https://map.naver.com/p/search/${item[0]}`);  // 새로운 창에서 지도 검색
+        });
+
     });
     //모든 마커가 보일 수 있도록 지도 zoom 뷰 조절
     map.fitBounds(bounds);
@@ -102,8 +131,8 @@ function showPosition(position) {
     setTimeout(function() {
         document.getElementById('overlay').style.display = 'none';
     }, 100);
-}
+};
 
 window.onload = function(){
     get_my_location();
-}
+};

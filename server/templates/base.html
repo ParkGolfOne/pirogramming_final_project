@@ -9,10 +9,14 @@
     <link rel="stylesheet" href="{% static 'main/css/style.css' %}" />
     <link rel="stylesheet" href="{% static 'users/css/user.css' %}" />
     <link rel="stylesheet" href="{% static 'search/css/search_friend.css' %}" />
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@2.0/nanumsquare.css" />
-    {% block head %}
+    <link rel="icon" type="image/png" href="{% static 'main/images/logo_green.png' %}" sizes="16x16">
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@2.0/nanumsquare.css"
+    />
+    {% block head %} {% endblock %}
 
-    {% endblock %}
   </head>
   <body>
     <header id="header">
@@ -39,6 +43,7 @@
           <li>
             <a href="{% url 'users:logout' %}">로그아웃</a>
           </li>
+
         {% else %}
           <li>
             <a href="{% url 'users:login' %}">로그인</a>
@@ -80,6 +85,7 @@
               <li>
                 <a href="{% url 'users:logout' %}">로그아웃</a>
               </li>
+
             {% else %}
               <li>
                 <a href="{% url 'users:login' %}">로그인</a>
@@ -104,22 +110,13 @@
     </main>
     <footer id="mobileFooter">
       <ul>
-        <li>
-          <a href="/">홈</a>
-        </li>
-        <li>
-          <a href="{% url 'locations:list' %}">지도</a>
-        </li>
-        <li>
-          <a href="{% url 'communitys:board_list' %}">커뮤니티</a>
-        </li>
-        {% if user.is_authenticated %}
-          <li>
-            <a href="{% url 'score:score_main' %}">스코어</a>
-          </li>
-          <li>
-            <a href="{% url 'users:main' user.pk %}">마이페이지</a>
-          </li>
+        <li><a href="{% url 'locations:list' %}">지도</a></li>
+        <li><a href="{% url 'communitys:board_list' %}">커뮤니티</a></li>
+        <li><a href="{% url 'games:game_set' %}">게임</a></li>
+        {% if user.is_authenticated%}
+        <li><a href="{% url 'score:score_main' %}">스코어</a></li>
+        <li><a href="{% url 'users:main' user.pk %}">마이페이지</a></li>
+
         {% else %}
           <li>
             <a href="{% url 'users:login' %}">로그인</a>
