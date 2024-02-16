@@ -56,6 +56,10 @@
   }
   #player_select_origin > div {
     text-align: center;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
   }
   .locationSelect {
     width: 180px;
@@ -121,7 +125,7 @@
           <option value="{{ friend.id }}">{{ friend.nickname }}</option>
           {% endfor %}
         </select>
-        <button onclick="openUserSearchPage()" class="game-user-search">유저 검색</button>
+        <div onclick="openUserSearchPage()" class="game-user-search">유저 검색</div>
         {% endif %}        
       </div>
 

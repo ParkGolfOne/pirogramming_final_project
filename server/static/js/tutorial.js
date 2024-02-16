@@ -175,8 +175,8 @@ function tutorialProcess(step){
             <div class="tutoBtns">
                 <button class="prevTuto" onclick="tutorialProcess(6)"></button>
                 <div>7/7</div>
+                <button class="" onclick="tutorialEnd()">튜토리얼 끝내기</button>
             </div>
-            <button class="prevTuto" onclick="tutorialEnd()">튜토리얼 끝내기</button>
             `;
             break;
     }
