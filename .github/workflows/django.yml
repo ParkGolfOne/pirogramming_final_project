@@ -19,9 +19,6 @@ jobs:
     - name: Install dependencies
       run: |
         pip install -r requirements.txt
-    - name: Create test database
-      run: |
-        mysql -u ${{ secrets.MYSQL_USERNAME }} -p${{ secrets.MYSQL_PASSWD }} -h ${{ secrets.MYSQL_HOST }} -e "CREATE DATABASE IF NOT EXISTS test_${{ secrets.MYSQL_DBNAME }};"
     - name: Run tests
       env:
         DEBUG: ${{ secrets.DEBUG }}
