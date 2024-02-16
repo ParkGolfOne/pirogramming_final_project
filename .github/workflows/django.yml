@@ -47,7 +47,7 @@ jobs:
         AWS_S3_CUSTOM_DOMAIN : ${{ secrets.AWS_S3_CUSTOM_DOMAIN }}
       run: |
         python ./server/manage.py migrate
-        python ./server/manage.py test apps.users
+        python ./server/manage.py test apps.users --noinput
   deploy:
     needs: build-and-test
     runs-on: ubuntu-22.04
