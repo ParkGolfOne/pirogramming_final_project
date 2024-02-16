@@ -19,6 +19,8 @@ jobs:
     - name: Install dependencies
       run: |
         pip install -r requirements.txt
+    - name: Change to the project directory
+      run: cd pirogramming_final_project/server
     - name: Run tests
       env:
         DEBUG: ${{ secrets.DEBUG }}
