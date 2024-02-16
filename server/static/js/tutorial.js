@@ -19,10 +19,12 @@ const gameBtn = bttns[3]
 // // 스코어
 const scoreBtn = bttns[2]
 
-communityBtn.style.pointerEvents = "none";
-locationBtn.style.pointerEvents = "none";
-gameBtn.style.pointerEvents = "none";
-scoreBtn.style.pointerEvents = "none";
+communityBtn.style.pointerEvents = "auto";
+locationBtn.style.pointerEvents = "auto";
+gameBtn.style.pointerEvents = "auto";
+scoreBtn.style.pointerEvents = "auto";
+
+
 
 // 튜토리얼 내용 빅스 모음
 // 1. 시작
@@ -43,10 +45,14 @@ const tuto_end = document.querySelector(".tuto-end")
 
 
 
-// 메인 페이지 튜토리얼
+// 메인 페이지 튜토리얼 시작
 function tutorialStart(){
     blind.style.display = "block";
     tutorialProcess(1);
+    communityBtn.style.pointerEvents = "none";
+    locationBtn.style.pointerEvents = "none";
+    gameBtn.style.pointerEvents = "none";
+    scoreBtn.style.pointerEvents = "none";
 }
 
 // 모든 튜토리얼 박스 내용 제거
