@@ -93,7 +93,7 @@ def location_delete(request, pk):
         location.delete()
         return redirect('locations:list')
     
-#User 모델에서 address 필드 값 가져오기
+# User 모델에서 address 필드 값 가져오기
 def get_user_address (request, pk):
     user_address = User.objects.get(id=pk)
     return user_address.address
