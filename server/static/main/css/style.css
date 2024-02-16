@@ -162,3 +162,17 @@ h1{
   text-align: center;
   font-family: 'Noto Sans KR', sans-serif;
 }
+
+
+
+.survey{
+  color:#ffffff;
+  font-size:18px;
+}
+
+.main-menu > li{
+  display:flex;
+  align-items: center;
+  justify-content: center;
+
+}

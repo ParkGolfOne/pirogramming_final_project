@@ -145,7 +145,8 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 
-# # 1. local db.sqlite3 사용할 경우
+
+# 1. local db.sqlite3 사용할 경우
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -154,7 +155,9 @@ DATABASES = {
 }
 
 
-# 2. db 서버와 연결
+    
+# # 2. db 서버와 연결
+
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.mysql',
