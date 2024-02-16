@@ -92,6 +92,7 @@ def game_detail_get(game_id, player_count):
                 player = player, 
                 game_round = round ,ground=game.ground)
 
+
 def game_detail_post(request, game_id, player_count):
     game, rounds = game_load(game_id)
     for i in range(player_count):
