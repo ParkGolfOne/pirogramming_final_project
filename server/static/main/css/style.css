@@ -62,7 +62,7 @@ transform-origin: center;
 }
 .main-menu {
 display: flex;
-gap: 1.6rem;
+gap: 10px;
 font-size: 1.8rem;
 display: none;
 }
