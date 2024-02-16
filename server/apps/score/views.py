@@ -176,7 +176,7 @@ def score_scan(request):
 
             # s3 사용시
             # S3에 파일 저장
-            relative_path = 'uploads/' + image.name
+            relative_path = 'score_scan/' + image.name
             image_url = default_storage.save(relative_path, image)
 
             # S3에 저장된 파일의 URL 가져오기
