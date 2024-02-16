@@ -34,7 +34,7 @@
 .search_box{
     position: relative;
     width: 100%;
-    border: 3px solid #20C997;
+    border: 5px solid var(--green--bright--color);
     border-radius: 16px;
     overflow: hidden;
 }
@@ -54,12 +54,12 @@
     height: 64px;
     font-size: 0;
     border: none;
-    background: url(../images/search.png) #20C997 no-repeat center center;
+    background: url(../images/search.png) var(--green--bright--color) no-repeat center center;
 }
 
 .location{
     position: relative;
-    margin-top: 30px;
+    margin-top: 25px;
     border: none;
     width: 100%;
     height: calc(100% - 100px);
@@ -169,7 +169,6 @@
     top: 0;
     left: 0;
     z-index: 2;
-    background-color: rgba(255, 255, 255, 0.75);
     display: flex;
     height: 100%;
     width: 100%;
