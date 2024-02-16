@@ -17,6 +17,9 @@ import os
 from django.core.files.storage import default_storage
 from django.conf import settings
 import environ
+#  s3 에 이미지가 저장될 경우
+from storages.backends.s3boto3 import S3Boto3Storage
+from urllib.request import urlopen
 
 ###########################################################
 #                      스코어 메인페이지                   #
@@ -165,42 +168,88 @@ def score_scan(request):
     if request.method == "POST":
         image = request.FILES.get('image')
         if image:
-            # 파일 저장 경로 설정
-            save_path = os.path.join(settings.MEDIA_ROOT, 'uploads', image.name)
-            path = default_storage.save(save_path, image)
+
+            ##### 파일 저장 경로 설정 ######
+            # media 로 올릴시 
+            # save_path = os.path.join(settings.MEDIA_ROOT, 'uploads', image.name)
+            # path = default_storage.save(save_path, image)
+
+            # s3 사용시
+            # S3에 파일 저장
+            relative_path = 'uploads/' + image.name
+            image_url = default_storage.save(relative_path, image)
+
+            # S3에 저장된 파일의 URL 가져오기
+            path = default_storage.url(image_url)
+
+            # media 파일 사용시
+            # image_file_path = default_storage.path(path)  # 저장된 파일의 절대 경로
 
             # 네이버 OCR API 호출
             api_url = os.environ.get('NAVER_OCR_API_URL').strip()
             secret_key = os.environ.get('NAVER_SECRET_KEY').strip()
-            image_file_path = default_storage.path(path)  # 저장된 파일의 절대 경로
+
 
             # API 요청 데이터 준비
+
             request_json = {
                 'images': [
                     {
                         'format': 'jpg',
-                        'name': 'demo'
+                        'name': 'demo',
+                        'url': path
                     }
                 ],
                 'requestId': str(uuid.uuid4()),
                 'version': 'V2',
                 'timestamp': int(round(time.time() * 1000))
             }
-            payload = {'message': json.dumps(request_json).encode('UTF-8')}
-            files = [('file', (image.name, open(image_file_path, 'rb'), 'image/jpeg'))]
-            headers = {'X-OCR-SECRET': secret_key}
+
+            payload = json.dumps(request_json).encode('UTF-8')
+            headers = {
+            'X-OCR-SECRET': secret_key,
+            'Content-Type': 'application/json'
+            }
+
+            ##### media ######
+            # request_json = {
+            #     'images': [
+            #         {
+            #             'format': 'jpg',
+            #             'name': 'demo',
+            #             # s3 서버 적용시
+            #             # "url": path,
+
+            #         }
+            #     ],
+            #     'requestId': str(uuid.uuid4()),
+            #     'version': 'V2',
+            #     'timestamp': int(round(time.time() * 1000))
+            # }
+            # payload = {'message': json.dumps(request_json).encode('UTF-8')}
+            # files = [('file', (image.name, file_content, 'image/jpeg'))]
+            # headers = {'X-OCR-SECRET': secret_key,
+            #            'Content-Type': 'application/json'}
 
             # API 요청 및 응답 처리
-            response = requests.post(api_url, headers=headers, data=payload, files=files)
+
+            # media 적용시
+            # response = requests.post(api_url, headers=headers, data=payload, files=files)
+
+            # s3 적용시
+            response = requests.request("POST", api_url, headers=headers, data = payload)
+
+            # 받아온 결과
             result = response.json()
 
-            # 결과 추출 및 반환
             # 받아온 텍스트 저장
             text = [field['inferText'] for field in result['images'][0]['fields']]
+
             # 텍스트에서 결과값 뽑아내는 함수
             result = extractParScore(text)
             return JsonResponse({'par': result['par'], 'score' : result['score']})
-        return JsonResponse({'error': 'No image file provided'}, status=400)
+        
+
     
 
 def extractParScore(inputText):
