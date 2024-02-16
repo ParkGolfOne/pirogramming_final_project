@@ -6,11 +6,33 @@
 {% block content %}
 <div class="search__container">
   <h1>친구 추가 페이지</h2>
-  <p class="search__title">친구 추가할 사용자의 id를 검색하세요</p>
-  <input id="friend_search_input" class="search__input" placeholder="친구 id 입력">
-  <container class = "rel_search">
-      <ul class="pop_rel_friend" id="candidate_list"></ul>
-  </container>
+  <div class="search__type">
+    <label for="search_type">검색 방법:</label>
+    <select id="search_type" name="search_type">
+      <option value="id">ID</option>
+      <option value="email">이메일</option>
+    </select>
+  </div>
+
+  <!--CASE 1: ID로 친구 검색-->
+  <div id="id_search" class="search">
+    <p class="search__title">친구 추가할 사용자의 id를 입력하세요</p>
+    <input id="friend_id_search_input" class="search__input" placeholder="친구 id 입력">
+    <container class = "rel_search">
+        <ul class="pop_rel_friend candidate_list"></ul>
+    </container>  
+  </div>
+  <!---->
+
+  <!--CASE 2: Email로 친구 검색-->
+  <div id="email_search" class="search" style="display: none;">
+    <p class="search__title">친구 추가할 사용자의 email를 입력하세요</p>
+    <input id="friend_email_search_input" class="search__input" placeholder="친구 email 입력">
+    <container class = "rel_search">
+        <ul class="pop_rel_friend candidate_list"></ul>
+    </container>  
+  </div>
+  <!---->
   {% comment %} css 를 위해 남겨둠 {% endcomment %}
   {% comment %} <ul id="candidate_list">
     {% for candidate in candidates %}

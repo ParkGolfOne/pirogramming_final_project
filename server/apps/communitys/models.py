@@ -30,18 +30,6 @@ class Post (models.Model):
 
     def __str__(self):
         return self.title
-    
-    def save(self, *args, **kwargs):
-        # like_num, scrap_num이 변경되지 않았을 때만 갱신
-        if self.like_num == self._original_like_num or self.scrap_num == self._original_scrap_num:
-            self.updated_date = timezone.now()
-        
-        super().save(*args, **kwargs)
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self._original_like_num = self.like_num
-        self._original_scrap_num = self.scrap_num
 
 
 # 댓글 모델  
@@ -51,6 +39,8 @@ class Comment (models.Model):
    parent_comment = models.ForeignKey('self', null=True, default = None, on_delete=models.CASCADE)
    commenter = models.ForeignKey(User, on_delete=models.CASCADE,  verbose_name='댓글 작성자')
    child_comments_num = models.IntegerField(default = 0)  # 대댓글 개수
+   like_num = models.IntegerField(default = 0) # 좋아요 개수
+
 
 
 # 댓글 좋아요 모델

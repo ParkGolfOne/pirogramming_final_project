@@ -10,6 +10,7 @@ from apps.communitys.models import *
 from apps.region.models import *
 from .models import *
 import requests
+import json
 
 ###########################################################
 #                      기본 메인 페이지                    #
@@ -20,7 +21,12 @@ import requests
 
 
 def home(request):
-    return render(request, 'main.html')
+    locations = [[location.golf_name, float(location.golf_latitude), float(location.golf_longitude)] for location in GolfLocation.objects.all()]
+    location_json = json.dumps(locations)
+    ctx = {
+        'locations_list' : location_json
+    }
+    return render(request, 'main.html', ctx)
 
 ###########################################################
 #                      유저 개인 페이지                    #
@@ -63,6 +69,12 @@ def main(request, pk):
     except Like.DoesNotExist:
         my_locations = []
 
+     # 작성한 리뷰 가져오기
+    try:
+        my_reviews = Review.objects.filter(reviewer=user)
+    except Review.DoesNotExist:
+        my_reviews = []
+
     context = {
         "pk": pk,
         "user": user,
@@ -72,6 +84,7 @@ def main(request, pk):
         "my_scraps": my_scraps,
         "my_likes": my_likes,
         "my_locations": my_locations,
+        "my_reviews": my_reviews,
     }
 
     return render(request, "users/users_main.html", context)
@@ -87,12 +100,12 @@ def main(request, pk):
 @csrf_exempt
 def signup(request):
     if request.method == 'POST':
-        print(request.POST)
+        print(request.POST, request.FILES)
         selected_city = request.POST.get('city')
         selected_town = request.POST.get('town')
         street_address = request.POST.get('street_address')
         detail_address = request.POST.get('detail_address')
-        form = SignupForm(request.POST)
+        form = SignupForm(request.POST, request.FILES)
         if form.is_valid():
             user = form.save(commit=False)
             region = Region.objects.filter(
@@ -101,6 +114,7 @@ def signup(request):
             user.region = region
             user.address = street_address
             user.detail_address = detail_address
+            user.first_login = False
             user.save()
             auth.login(request, user,
                        backend='apps.users.backends.CustomModelBackend')
@@ -112,9 +126,7 @@ def signup(request):
             print(form.errors)
             return JsonResponse({'result': 'failed', 'error': form.errors})
     else:
-        form = SignupForm()
         context = {
-            'form': form,
             'pk': request.user.id,
         }
         return render(request, template_name='users/users_signup.html', context=context)
@@ -133,14 +145,19 @@ def login(request):
                        backend='apps.users.backends.CustomModelBackend')
             return redirect('users:main', user.id)
         else:
+            error_message = list(map(str, form.error_messages.values()))
+            merged_string = ' '.join(error_message)
+            error = merged_string.replace('%(username)s', "유저")
             context = {
                 'form': form,
+                'message': error
             }
             return render(request, template_name='users/users_login.html', context=context)
     else:
         form = AuthenticationForm()
         context = {
             'form': form,
+            'message': None
         }
         return render(request, template_name='users/users_login.html', context=context)
 
@@ -167,16 +184,18 @@ def logout(request):
 @csrf_exempt
 def update(request, pk):
     user = User.objects.get(id=pk)
+    social_login_flag = "false"
     if request.method == 'POST':
         selected_city = request.POST.get('city')
         selected_town = request.POST.get('town')
         street_address = request.POST.get('street_address')
         detail_address = request.POST.get('detail_address')
-        form = UpdateForm(request.POST, instance=user)
+        form = UpdateForm(request.POST, request.FILES, instance=user)
         if form.is_valid():
             user = form.save(commit=False)
             region = Region.objects.filter(
                 city=selected_city, town=selected_town).first()
+            user.first_login = False
             user.region = region
             user.address = street_address
             user.detail_address = detail_address
@@ -188,20 +207,34 @@ def update(request, pk):
             print(form.errors)
             return JsonResponse({'result': 'fail', 'error': form.errors})
     else:
-        form = UpdateForm(instance=user)
-        context = {
-            'form': form,
-            'pk': pk,
-            "username": user.username,
-            "nickname": user.nickname,
-            "birth": user.birth,
-            "phone": user.phone,
-            "email": user.email,
-            'city': user.region.city,
-            'town': user.region.town,
-            'street_address': user.address,
-            'detail_address': user.detail_address,
-        }
+        try:
+            context = {
+                'pk': pk,
+                "username": user.username,
+                "nickname": user.nickname,
+                "birth": user.birth,
+                "phone": user.phone,
+                "email": user.email,
+                'city': user.region.city,
+                'town': user.region.town,
+                'street_address': user.address,
+                'detail_address': user.detail_address,
+                "social_login_flag": social_login_flag,
+            }
+        except AttributeError:
+            context = {
+                'pk': pk,
+                "username": user.username,
+                "nickname": user.nickname,
+                "birth": user.birth,
+                "phone": user.phone,
+                "email": user.email,
+                'city': None,
+                'town': None,
+                'street_address': user.address,
+                'detail_address': user.detail_address,
+                "social_login_flag": social_login_flag,
+            }
         return render(request, template_name='users/users_update.html', context=context)
 
 
@@ -227,44 +260,21 @@ def social_login(request):
     if user.first_login == False:
         return redirect('users:main', user.id)
     else:
-        user.first_login = False
-        user.save()
-        if request.method == 'POST':
-            selected_city = request.POST.get('city')
-            selected_town = request.POST.get('town')
-            street_address = request.POST.get('street_address')
-            detail_address = request.POST.get('detail_address')
-            form = UpdateForm(request.POST, instance=user)
-            if form.is_valid():
-                user = form.save(commit=False)
-                region = Region.objects.filter(
-                    city=selected_city, town=selected_town).first()
-                user.region = region
-                user.address = street_address
-                user.detail_address = detail_address
-                user.save()
-                redirect_url = reverse('users:main', kwargs={'pk': user.pk})
-                return JsonResponse({'result': 'success', 'url': redirect_url})
-            else:
-                print("폼 유효성 검사 실패")
-                print(form.errors)
-                return JsonResponse({'result': 'fail', 'error': form.errors})
-        else:
-            form = UpdateForm(instance=user)
-            context = {
-                'form': form,
-                'pk': user.pk,
-                "username": user.username,
-                "nickname": user.nickname,
-                "birth": None,
-                "phone": None,
-                "email": "",
-                'city': None,
-                'town': None,
-                'street_address': None,
-                'detail_address': None,
-            }
-            return render(request, template_name='users/users_update.html', context=context)
+        social_login_flag = "true"
+        context = {
+            'pk': user.pk,
+            "username": user.username,
+            "nickname": user.nickname,
+            "birth": None,
+            "phone": None,
+            "email": None,
+            'city': None,
+            'town': None,
+            'street_address': None,
+            'detail_address': None,
+            "social_login_flag": social_login_flag,
+        }
+        return render(request, template_name='users/users_update.html', context=context)
 
 # 함수 이름 : kakao_unlink
 # 전달인자 : request
@@ -366,6 +376,7 @@ def delete_friend(request, pk):
                 'id': friend.id,
                 'username': friend.username,
                 'nickname': friend.nickname,
+                'image': friend.image.url,
             }
             friend_json.append(friend_data)
         return JsonResponse(friend_json, safe=False)

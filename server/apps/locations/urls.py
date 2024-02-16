@@ -1,4 +1,5 @@
 from django.urls import path
+from .naver_review import search_blog
 from .views import *
 
 app_name = "locations"
@@ -11,5 +12,15 @@ urlpatterns = [
     path('delete/<int:pk>/', location_delete, name='delete'),
     path('myhome/<int:pk>/', location_distance, name='myhome'),
     path('myplace/', location_myplace, name='myplace'),
-    path('favorites/', add_fav_location, name='favorites' )
+    path('favorites/', add_fav_location, name='favorites' ),
+
+    # 리뷰 url
+    path('review_create/', review_create, name="review_create"),
+    path('review_update/', review_update, name="review_update"),
+    path('review_delete/', review_delete, name="review_delete"),
+    path('review_list/', review_list, name="review_list"),
+  
+    # 네이버 블로그 리뷰 검색
+    path('naver_blog/', search_blog, name="naver_blog"),
+
 ]

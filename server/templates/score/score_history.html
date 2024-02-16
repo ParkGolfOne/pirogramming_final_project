@@ -6,12 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>유저 포트폴리오</title>
     <link rel="stylesheet" href="{% static 'score/css/score_history.css'%}" />
+    <link rel="stylesheet" href="{% static 'score/css/score_base.css'%}" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
   <body>
-    <a href="{% url 'score:score_main'%}">스코어 메인페이지 링크</a>
-    <!-- 아래를 그래프 차트 그리는데 사용합니다. 수정시 userId 안에는 uid만 있게 해주세요! -->
-    <h2 class="userId">{{uid}}</h2>
+    <a href="{% url 'score:score_main'%}" class="before-icon">
+      <span class="bxs--left-arrow"></span>
+      <div>스코어 홈</div>
+    </a>
     <div>
       <canvas id="myChart" width="400" height="250"></canvas>
     </div>
@@ -20,8 +22,9 @@
         >점수 입력하기</a
       >
     </div>
+
     <div class="locationInputArea">
-      <span>장소 선택</span>
+      <span>골프장</span>
       <select
         class="locationSelect locationInfo"
         type="select"
@@ -34,7 +37,8 @@
         {% endfor%}
       </select>
     </div>
-    <div>
+    
+    <div class="sortSelect-box">
       <select
         class="sortSelect sortInfo"
         type="select"
@@ -47,6 +51,9 @@
       </select>
     </div>
     <div class="scoreList"></div>
+    <script>
+      const user_id = {{uid}}
+    </script>
     <script src="{% static 'score/js/filter.js' %}"></script>
   </body>
 </html>

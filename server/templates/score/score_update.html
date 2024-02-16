@@ -6,9 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>점수 수정</title>
     <link rel="stylesheet" href="{% static 'score/css/score_detail.css'%}" />
+    <link rel="stylesheet" href="{% static 'score/css/score_create.css'%}" />
+    <link rel="stylesheet" href="{% static 'score/css/score_base.css'%}" />
   </head>
   <body>
-    <a href="{% url 'score:score_main'%}">스코어 메인페이지 링크</a>
+    <a href="{% url 'score:score_main'%}" class="scoreHomeLink"
+      ><div class="scoreHomeIcon"></div>
+      <span>스코어 홈</span></a
+    >>
     <h1>점수 수정 페이지</h1>
     <form method="POST" action="" enctype="multipart/form-data">
       {% csrf_token %}
@@ -33,202 +38,256 @@
         <div>점수</div>
         <div>1</div>
         <div>
+          <div class="decBtn" onclick="decPar(1)">-</div>
           <input
-            class="parInput"
-            type="text"
-            maxlength="1"
+            class="parInput par1"
+            type="number"
+            min="3"
+            max="5"
             name="par1"
             value="{{score.par.hole1}}"
             required=""
           />
+          <div class="incBtn" onclick="incPar(1)">+</div>
         </div>
         <div>
+          <div class="decBtn" onclick="decScore(1)">-</div>
           <input
-            class="scoreInput"
-            type="text"
-            maxlength="1"
+            class="scoreInput score1"
+            type="number"
+            min="0"
+            max="10"
             name="score1"
             value="{{score.scores.hole1}}"
             required=""
           />
+          <div class="incBtn" onclick="incScore(1)">+</div>
         </div>
         <div>2</div>
         <div>
+          <div class="decBtn" onclick="decPar(2)">-</div>
           <input
-            class="parInput"
-            type="text"
-            maxlength="1"
+            class="parInput par2"
+            type="number"
+            min="3"
+            max="5"
             name="par2"
             value="{{score.par.hole2}}"
             required=""
           />
+          <div class="incBtn" onclick="incPar(2)">+</div>
         </div>
         <div>
+          <div class="decBtn" onclick="decScore(2)">-</div>
           <input
-            class="scoreInput"
-            type="text"
-            maxlength="1"
+            class="scoreInput score2"
+            type="number"
+            min="0"
+            max="10"
             name="score2"
             value="{{score.scores.hole2}}"
             required=""
           />
+          <div class="incBtn" onclick="incScore(2)">+</div>
         </div>
         <div>3</div>
         <div>
+          <div class="decBtn" onclick="decPar(3)">-</div>
           <input
-            class="parInput"
-            type="text"
-            maxlength="1"
+            class="parInput par3"
+            type="number"
+            min="3"
+            max="5"
             name="par3"
-            value="{{score.par.hole3}} "
+            value="{{score.par.hole3}}"
             required=""
           />
+          <div class="incBtn" onclick="incPar(3)">+</div>
         </div>
         <div>
+          <div class="decBtn" onclick="decScore(3)">-</div>
           <input
-            class="scoreInput"
-            type="text"
-            maxlength="1"
+            class="scoreInput score3"
+            type="number"
+            min="0"
+            max="10"
             name="score3"
             value="{{score.scores.hole3}}"
             required=""
           />
+          <div class="incBtn" onclick="incScore(3)">+</div>
         </div>
         <div>4</div>
         <div>
+          <div class="decBtn" onclick="decPar(4)">-</div>
           <input
-            class="parInput"
-            type="text"
-            maxlength="1"
+            class="parInput par4"
+            type="number"
+            min="3"
+            max="5"
             name="par4"
             value="{{score.par.hole4}}"
             required=""
           />
+          <div class="incBtn" onclick="incPar(4)">+</div>
         </div>
         <div>
+          <div class="decBtn" onclick="decScore(4)">-</div>
           <input
-            class="scoreInput"
-            type="text"
-            maxlength="1"
+            class="scoreInput score4"
+            type="number"
+            min="0"
+            max="10"
             name="score4"
             value="{{score.scores.hole4}}"
             required=""
           />
+          <div class="incBtn" onclick="incScore(4)">+</div>
         </div>
         <div>5</div>
         <div>
+          <div class="decBtn" onclick="decPar(5)">-</div>
           <input
-            class="parInput"
-            type="text"
-            maxlength="1"
+            class="parInput par5"
+            type="number"
+            min="3"
+            max="5"
             name="par5"
             value="{{score.par.hole5}}"
             required=""
           />
+          <div class="incBtn" onclick="incPar(5)">+</div>
         </div>
         <div>
+          <div class="decBtn" onclick="decScore(5)">-</div>
           <input
-            class="scoreInput"
-            type="text"
-            maxlength="1"
+            class="scoreInput score5"
+            type="number"
+            min="0"
+            max="10"
             name="score5"
             value="{{score.scores.hole5}}"
             required=""
           />
+          <div class="incBtn" onclick="incScore(5)">+</div>
         </div>
         <div>6</div>
         <div>
+          <div class="decBtn" onclick="decPar(6)">-</div>
           <input
-            class="parInput"
-            type="text"
-            maxlength="1"
+            class="parInput par6"
+            type="number"
+            min="3"
+            max="5"
             name="par6"
             value="{{score.par.hole6}}"
             required=""
           />
+          <div class="incBtn" onclick="incPar(6)">+</div>
         </div>
         <div>
+          <div class="decBtn" onclick="decScore(6)">-</div>
           <input
-            class="scoreInput"
-            type="text"
-            maxlength="1"
+            class="scoreInput score6"
+            type="number"
+            min="0"
+            max="10"
             name="score6"
             value="{{score.scores.hole6}}"
             required=""
           />
+          <div class="incBtn" onclick="incScore(6)">+</div>
         </div>
         <div>7</div>
         <div>
+          <div class="decBtn" onclick="decPar(7)">-</div>
           <input
-            class="parInput"
-            type="text"
-            maxlength="1"
+            class="parInput par7"
+            type="number"
+            min="3"
+            max="5"
             name="par7"
             value="{{score.par.hole7}}"
             required=""
           />
+          <div class="incBtn" onclick="incPar(7)">+</div>
         </div>
         <div>
+          <div class="decBtn" onclick="decScore(7)">-</div>
           <input
-            class="scoreInput"
-            type="text"
-            maxlength="1"
+            class="scoreInput score7"
+            type="number"
+            min="0"
+            max="10"
             name="score7"
             value="{{score.scores.hole7}}"
             required=""
           />
+          <div class="incBtn" onclick="incScore(7)">+</div>
         </div>
         <div>8</div>
         <div>
+          <div class="decBtn" onclick="decPar(8)">-</div>
           <input
-            class="parInput"
-            type="text"
-            maxlength="1"
+            class="parInput par8"
+            type="number"
+            min="3"
+            max="5"
             name="par8"
             value="{{score.par.hole8}}"
             required=""
           />
+          <div class="incBtn" onclick="incPar(8)">+</div>
         </div>
         <div>
+          <div class="decBtn" onclick="decScore(8)">-</div>
           <input
-            class="scoreInput"
-            type="text"
-            maxlength="1"
+            class="scoreInput score8"
+            type="number"
+            min="0"
+            max="10"
             name="score8"
             value="{{score.scores.hole8}}"
             required=""
           />
+          <div class="incBtn" onclick="incScore(8)">+</div>
         </div>
         <div>9</div>
         <div>
+          <div class="decBtn" onclick="decPar(9)">-</div>
           <input
-            class="parInput"
-            type="text"
-            maxlength="1"
+            class="parInput par9"
+            type="number"
+            min="3"
+            max="5"
             name="par9"
             value="{{score.par.hole9}}"
             required=""
           />
+          <div class="incBtn" onclick="incPar(9)">+</div>
         </div>
         <div>
+          <div class="decBtn" onclick="decScore(9)">-</div>
           <input
-            class="scoreInput"
-            type="text"
-            maxlength="1"
+            class="scoreInput score9"
+            type="number"
+            min="0"
+            max="10"
             name="score9"
             value="{{score.scores.hole9}}"
             required=""
           />
+          <div class="incBtn" onclick="incScore(9)">+</div>
         </div>
         <div>합계</div>
-        <div>/</div>
-        <div>/</div>
+        <div class="totalParBox totalBox">0</div>
+        <div class="totalScoreBox totalBox">{{score.total_score}}</div>
       </div>
       <input class="scoreSubmitBtn" type="submit" value="점수 등록" />
       <!--class="score-create-btn"-->
     </form>
-    <!-- 이미지추출 -->
-    <script src="{% static 'score/js/picture.js' %}"></script>
+    <!-- 숫자 증감 처리 -->
+    <script src="{% static 'score/js/scoreChange.js' %}"></script>
     <!-- 장소 입력방식 변경 -->
     <script src="{% static 'score/js/location_input.js' %}"></script>
     <script>

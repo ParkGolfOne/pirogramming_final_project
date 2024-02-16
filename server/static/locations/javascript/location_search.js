@@ -104,6 +104,7 @@ requestFindLocation.onreadystatechange = () => {
       const { location_names } = JSON.parse(requestFindLocation.response);
       match_content.innerHTML = "";
       if (location_names.length == 0) {
+        match_content.innerHTML = "일치하는 골프장이 없습니다!";
       } else {
         location_names.forEach((location) => {
           match_content.innerHTML += `
@@ -113,8 +114,9 @@ requestFindLocation.onreadystatechange = () => {
           >${location[0]}</a
         >
       </h4> 
-      <br>
-      <div>추천 ${location[2]}</div>
+      <div>찜 ${location[2]}</div>
+      <div>리뷰수 ${location[3]}</div>
+      <div>평점 ${location[4].toFixed(2)}</div>
     </div>`;
         });
       }

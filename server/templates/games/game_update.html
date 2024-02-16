@@ -5,12 +5,28 @@
   <link rel="stylesheet" href="{% static 'score/css/score_detail.css'%}" />
   <link rel="stylesheet" href="{% static 'score/css/score_create.css'%}" />
   <style>
+    .before-game {
+      display: flex;
+      width: 100%;
+      align-items: center;
+      font-size: 25px;
+    }
+    .game-title {
+      margin: 10px 0px;
+    }
+    .game-update-btns {
+      display: flex;
+      justify-content: center;
+      width: 98%;
+    }
     .game_form{  
       width: 100%;
     }
     .coures > h2{
       text-align: center;
-      font-size: 40px;
+      font-size: 30px;
+      margin-bottom: 10px;
+      columns: var(--green--dark--color);
     }
     .coures_ul{
       width: 100%;
@@ -19,43 +35,136 @@
       justify-content: space-around;
     }
     .coures_li{
+      width: 15%;
       display: flex;
       flex-direction: column;
+      align-items: center;
     }
     
-    .coures_li > div{
-        width: 150px;
-        border :1px solid lightgreen;
-        margin: 10px;
-        text-align: center;
-        display:flex;
-        align-items: center;
-        justify-content: center;
-        height: 30px;
+    .coures_li > div > input{
+      width: 40%;
+      padding: 5px 0px;
+      border: 1px solid #ddd;
+      /* border-radius: 10px; */
+      box-sizing: border-box;
+      background-color: #ffffff;
+      text-align: center;
+      word-break: break-word;
+      font-size: 20px;
     }
 
-    .coures_li > div >  input {
-        width: 90px;
-        border:none;
+    .coures_li > div {
+      max-width: 100px;
+      margin: 10px 0;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+
+    .game-btn {
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid var(--green--medium--color);
+      background-color: var(--green--bright--color);
+      cursor: pointer;
+      margin: 5px;
+      color: white;
+    }
+
+    .game-btn:hover {
+      background-color: var(--green--medium--color);
+      border: 1px solid var(--green--medium--color);
+      transition: 0.1s;
+    }
+
+    .bxs--left-arrow {
+      display: inline-block;
+      width: 25px;
+      height: 25px;
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='m4.431 12.822l13 9A1 1 0 0 0 19 21V3a1 1 0 0 0-1.569-.823l-13 9a1.003 1.003 0 0 0 0 1.645'/%3E%3C/svg%3E");
+    }
+    @media screen and (min-width: 430px){
+      .coures_li > div > input{
+        max-width: 70px;
+      }
+    }
+    .players_name{
+      display: flex;
+      justify-content: space-around;
+      font-size: 20px;
+    }
+    .name{
+      width: 15%;
+      text-align: center;
+    }
+    .players_name{
+      display: flex;
+      justify-content: space-around;
+    }
+    .name{
+      width: 15%;
+      text-align: center;
+    }
+    .scoreSubmitBtn {
+      margin: 10px;
+      width: auto;
+      font-size: 20px !important;
+    }
+    #id_player_count,
+    #id_round_count {
+        border: 1px solid #ddd;
+        padding: 10px;
+    }
+    @media screen and (min-width: 700px){
+      .coures_li > div > input{
+        max-width: 100px;
+        width: 100px;
+        font-size: 20px;
+      }
+      .coures_li > div {
+        font-size: 25px;
+      }
+      .coures > h2{
+        font-size: 30px;
+      }
+      .players_name{
+        font-size: 25px;
+      }
+
     }
   </style>
 {% endblock %}
 {% block content %}
-<a href="{% url 'games:game_set'%}">게임 다시 설정</a>
-<h1>{{ game.name }} 점수입력 페이지</h1>
+<a href="{% url 'games:game_set'%}" class="before-game">
+  <span class="bxs--left-arrow"></span>게임 다시 설정</a>
+<h1 class="game-title">{{ game.name }} 점수입력 페이지</h1>
 
 <!-- 각 라운드에 대해 반복 -->
 <form method="POST" action="" enctype="multipart/form-data" class="game_form">
+<div class="game-update-btns">
+  {% csrf_token %} {{ form }}
+  <input class = 'scoreSubmitBtn' type="submit" name = "save" value="임시 저장" class="game-btn"/>
+  <input class = 'scoreSubmitBtn' type="submit" name = "save" value="점수 저장" class="game-btn" />
+</div>
 {% csrf_token %} {{ form }}
-<input type="submit" name = "save" value="임시 저장" />
-<input type="submit" name = "save" value="점수 저장" />
 {% for round in rounds %}
     <div class="coures">
         <h2>코스 {{ forloop.counter }}</h2>
         <!-- 각 플레이어에 대해 반복 -->
+        <div class="players_name">
+          <div class="name"></div>
+          <div class="name"></div>
+          
+        {% for name in players_name %}
+          <div class="name" >{{name}}</div>
+        {% endfor %}
+        </div>
         <ul class="coures_ul">
             <li class="coures_li coures_li_hole">
-              <div></div>
               <div>홀</div>
               <div>1</div>
               <div>2</div>
@@ -70,33 +179,103 @@
               <div>/</div>
             </li>
             <li class="coures_li coures_li_par">
-              <div></div>
               <div>파</div>
-              <div><input type="number" min="1" max = "10" name="par1_{{round.id}}" value="{{ round.par.hole1}}"/></div>
-              <div><input type="number" min="1" max = "10" name="par2_{{round.id}}" value="{{ round.par.hole2}}"/></div>
-              <div><input type="number" min="1" max = "10" name="par3_{{round.id}}" value="{{ round.par.hole3}}"/></div>
-              <div><input type="number" min="1" max = "10" name="par4_{{round.id}}" value="{{ round.par.hole4}}"/></div>
-              <div><input type="number" min="1" max = "10" name="par5_{{round.id}}" value="{{ round.par.hole5}}"/></div>
-              <div><input type="number" min="1" max = "10" name="par6_{{round.id}}" value="{{ round.par.hole6}}"/></div>
-              <div><input type="number" min="1" max = "10" name="par7_{{round.id}}" value="{{ round.par.hole7}}"/></div>
-              <div><input type="number" min="1" max = "10" name="par8_{{round.id}}" value="{{ round.par.hole8}}"/></div>
-              <div><input type="number" min="1" max = "10" name="par9_{{round.id}}" value="{{ round.par.hole9}}"/></div>                           
+              <div>
+                <div class="decBtn" onclick="decBtn(this)">-</div>
+                <input type="number" min="1" max = "10" name="par1_{{round.id}}" value="{{ round.par.hole1}}"/>
+                <div class="incBtn" onclick="incBtn(this)">+</div>
+              </div>
+              <div>
+                <div class="decBtn" onclick="decBtn(this)">-</div>
+                <input type="number" min="1" max = "10" name="par2_{{round.id}}" value="{{ round.par.hole2}}"/>
+                <div class="incBtn" onclick="incBtn(this)">+</div>
+              </div>
+              <div>
+                <div class="decBtn" onclick="decBtn(this)">-</div>
+                <input type="number" min="1" max = "10" name="par3_{{round.id}}" value="{{ round.par.hole3}}"/>
+                <div class="incBtn" onclick="incBtn(this)">+</div>
+              </div>
+              <div>
+                <div class="decBtn" onclick="decBtn(this)">-</div>
+                <input type="number" min="1" max = "10" name="par4_{{round.id}}" value="{{ round.par.hole4}}"/>
+                <div class="incBtn" onclick="incBtn(this)">+</div>
+              </div>
+              <div>
+                <div class="decBtn" onclick="decBtn(this)">-</div>
+                <input type="number" min="1" max = "10" name="par5_{{round.id}}" value="{{ round.par.hole5}}"/>
+                <div class="incBtn" onclick="incBtn(this)">+</div>
+              </div>
+              <div>
+                <div class="decBtn" onclick="decBtn(this)">-</div>
+                <input type="number" min="1" max = "10" name="par6_{{round.id}}" value="{{ round.par.hole6}}"/>
+                <div class="incBtn" onclick="incBtn(this)">+</div>
+              </div>
+              <div>
+                <div class="decBtn" onclick="decBtn(this)">-</div>
+                <input type="number" min="1" max = "10" name="par7_{{round.id}}" value="{{ round.par.hole7}}"/>
+                <div class="incBtn" onclick="incBtn(this)">+</div>
+              </div>
+              <div>
+                <div class="decBtn" onclick="decBtn(this)">-</div>
+                <input type="number" min="1" max = "10" name="par8_{{round.id}}" value="{{ round.par.hole8}}"/>
+                <div class="incBtn" onclick="incBtn(this)">+</div>
+              </div>
+              <div>
+                <div class="decBtn" onclick="decBtn(this)">-</div>
+                <input type="number" min="1" max = "10" name="par9_{{round.id}}" value="{{ round.par.hole9}}"/>
+                <div class="incBtn" onclick="incBtn(this)">+</div>
+              </div>                           
               <div>/</div>
               <div>/</div>  
             </li>
-            {% for player in round.round_player.all %}
+            {% for score in round.round_score.all %}
               <li class="coures_li">
-                  <div><input type="number" min="1" max = "10" name="name_{{player.id}}" value="{{ player.name}}"/></div>
                   <div>점수</div>
-                  <div><input type="number" min="1" max = "10" name="score1_{{player.id}}" value="{{ player.score.scores.hole1}}"/></div>
-                  <div><input type="number" min="1" max = "10" name="score2_{{player.id}}" value="{{ player.score.scores.hole2}}"/></div>
-                  <div><input type="number" min="1" max = "10" name="score3_{{player.id}}" value="{{ player.score.scores.hole3}}"/></div>
-                  <div><input type="number" min="1" max = "10" name="score4_{{player.id}}" value="{{ player.score.scores.hole4}}"/></div>
-                  <div><input type="number" min="1" max = "10" name="score5_{{player.id}}" value="{{ player.score.scores.hole5}}"/></div>
-                  <div><input type="number" min="1" max = "10" name="score6_{{player.id}}" value="{{ player.score.scores.hole6}}"/></div>
-                  <div><input type="number" min="1" max = "10" name="score7_{{player.id}}" value="{{ player.score.scores.hole7}}"/></div>
-                  <div><input type="number" min="1" max = "10" name="score8_{{player.id}}" value="{{ player.score.scores.hole8}}"/></div>
-                  <div><input type="number" min="1" max = "10" name="score9_{{player.id}}" value="{{ player.score.scores.hole9}}"/></div>
+                  <div>
+                    <div class="decBtn" onclick="decBtn(this)">-</div>
+                    <input type="number" min="1" max = "10" name="score1_{{score.id}}" value="{{ score.scores.hole1}}"/>
+                    <div class="incBtn" onclick="incBtn(this)">+</div>
+                  </div>
+                  <div>
+                    <div class="decBtn" onclick="decBtn(this)">-</div>
+                    <input type="number" min="1" max = "10" name="score2_{{score.id}}" value="{{ score.scores.hole2}}"/>
+                    <div class="incBtn" onclick="incBtn(this)">+</div>
+                  </div>
+                  <div>
+                    <div class="decBtn" onclick="decBtn(this)">-</div>
+                    <input type="number" min="1" max = "10" name="score3_{{score.id}}" value="{{ score.scores.hole3}}"/>
+                    <div class="incBtn" onclick="incBtn(this)">+</div>
+                  </div>
+                  <div>
+                    <div class="decBtn" onclick="decBtn(this)">-</div>
+                    <input type="number" min="1" max = "10" name="score4_{{score.id}}" value="{{ score.scores.hole4}}"/>
+                    <div class="incBtn" onclick="incBtn(this)">+</div>
+                  </div>
+                  <div>
+                    <div class="decBtn" onclick="decBtn(this)">-</div>
+                    <input type="number" min="1" max = "10" name="score5_{{score.id}}" value="{{ score.scores.hole5}}"/>
+                    <div class="incBtn" onclick="incBtn(this)">+</div>
+                  </div>
+                  <div>
+                    <div class="decBtn" onclick="decBtn(this)">-</div>
+                    <input type="number" min="1" max = "10" name="score6_{{score.id}}" value="{{ score.scores.hole6}}"/>
+                    <div class="incBtn" onclick="incBtn(this)">+</div>
+                  </div>
+                  <div>
+                    <div class="decBtn" onclick="decBtn(this)">-</div>
+                    <input type="number" min="1" max = "10" name="score7_{{score.id}}" value="{{ score.scores.hole7}}"/>
+                    <div class="incBtn" onclick="incBtn(this)">+</div>
+                  </div>
+                  <div>
+                    <div class="decBtn" onclick="decBtn(this)">-</div>
+                    <input type="number" min="1" max = "10" name="score8_{{score.id}}" value="{{ score.scores.hole8}}"/>
+                    <div class="incBtn" onclick="incBtn(this)">+</div>
+                  </div>
+                  <div>
+                    <div class="decBtn" onclick="decBtn(this)">-</div>
+                    <input type="number" min="1" max = "10" name="score9_{{score.id}}" value="{{ score.scores.hole9}}"/>
+                    <div class="incBtn" onclick="incBtn(this)">+</div>
+                  </div>
                   <div>합계</div>
                   <div>/</div>                        
               </li>
@@ -106,5 +285,35 @@
         </ul>
     </div>
 {% endfor %}
+{% endblock %}
+
+{% block script %}
+<script>    
+  function decBtn(element){
+    const input = element.parentNode.querySelector('input[type="number"]');
+
+  // 현재 input의 value를 숫자로 변환합니다.
+    let currentValue = parseInt(input.value);
+
+  // 계산된 새 값을 min과 max 사이의 값으로 조정합니다.
+    const newValue = Math.max(currentValue - 1, parseInt(input.min));
+
+  // input의 value를 새 값으로 설정합니다.
+    input.value = newValue;
+  }
+  
+  function incBtn(element){
+    const input = element.parentNode.querySelector('input[type="number"]');
+
+  // 현재 input의 value를 숫자로 변환합니다.
+    let currentValue = parseInt(input.value);
+
+  // 계산된 새 값을 min과 max 사이의 값으로 조정합니다.
+    const newValue = Math.min(currentValue + 1, parseInt(input.max));
+
+  // input의 value를 새 값으로 설정합니다.
+    input.value = newValue;
+  }
+</script>
 {% endblock %}
 

@@ -1,3 +1,31 @@
+.board_search {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+}
+
+#board_search_select {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+}
+
+#board_search_btn {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='black' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M3 10a7 7 0 1 0 14 0a7 7 0 1 0-14 0m18 11l-6-6'/%3E%3C/svg%3E");
+  }
+
+#board_search_input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-sizing: border-box;
+    background-color: #ffffff;
+}
 .board-container {
     display: flex; 
     width: 100%;
@@ -10,16 +38,20 @@
 .board-container a {
     display: flex;
     color: inherit;
+    width: 100%;
 }
 .board-container a div {
     word-break: break-word;
     
 }
 .board-container img {
-    margin-left: auto;
     width: 100px;
-    height: auto;
-    margin-right: 10px;
+    height: 100px;
+    object-fit: contain;
+}
+
+.board-container a div {
+    margin-left: 10px;
 }
 
 .board-list {
@@ -28,19 +60,27 @@
     flex-direction: column;
     align-items: center;
 }
-
+#board_list_btn {
+    font-size: 20px;
+}
+#board_list_btn:hover {
+    font-weight: bold;
+}
 .board-btn {
     /* width: 70%; */
-    padding: 10px;
+    padding: 10px 40px;
     border-radius: 5px;
     border: 1px solid var(--green--medium--color);
-    background-color: #ffffff;
+    background-color: var(--green--bright--color);
     cursor: pointer;
     margin: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
-
+    font-size: 15px;
+    color: white;
+    line-height: 1;
+    width: 200px;
 }
 .board-btn:hover {
     background-color: var(--green--medium--color);
@@ -54,16 +94,8 @@
 }
 /* pc일떄 */
 @media screen and (min-width: 700px) {
-    .board-container {
+    .board-container,
+    .board_search {
         width: 70%;
     }
-}
-.board_search_input {
-    width: 100%;
-    padding: 15px;
-    margin: 10px 0px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    box-sizing: border-box;
-    background-color: #ba4242;
 }

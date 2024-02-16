@@ -1,4 +1,8 @@
 {% extends 'base.html' %}
+{% load static %}
+{% block head %}
+  <link rel="stylesheet" href="{% static 'board/css/board_create.css'%}" />
+{% endblock %}
 {% block content %}
 <!DOCTYPE html>
 <html lang="en">
@@ -8,18 +12,20 @@
     <title>Document</title>
   </head>
   <body>
-    <a href="{% url 'communitys:board_list' %}">커뮤니티 홈</a>
-    <div>
-      <h1>게시판 수정하기</h1>
-      <form
-        action="{% url 'communitys:board_update' bid %}"
-        method="post"
-        enctype="multipart/form-data"
-      >
-        {%csrf_token%} {{form.as_p}}
-
-        <button>수정하기</button>
-      </form>
+    <div class="board-create-container">
+      <a href="{% url 'communitys:board_list' %}">
+        <span class="bxs--left-arrow"></span>커뮤니티 홈</a>
+      <div>
+        <h1>게시판 수정하기</h1>
+        <form
+          action="{% url 'communitys:board_update' bid %}"
+          method="post"
+          enctype="multipart/form-data"
+        >
+          {%csrf_token%} {{form.as_p}}
+          <button class="community-update-btn">수정하기</button>
+        </form>
+      </div>
     </div>
   </body>
 </html>

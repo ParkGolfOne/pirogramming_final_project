@@ -1,0 +1,161 @@
+/* 이미지 미리보기 */
+
+/* 점수 이미지 분석 버튼 */
+.score-content > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.takePictureInfo:hover {
+  background-color: var(--green--medium--color);
+  border: 1px solid var(--green--medium--color);
+  transition: 0.1s;
+}
+
+/* 드래그 박스 */
+#fileInputArea {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid var(--green--medium--color);
+  margin: 5px;
+
+  display: flex;
+  flex-direction: column;
+}
+
+/* 드래그 박스 안 아이콘 */
+.pictureIcon {
+  height: 30px;
+  width: 30px;
+  background-image: url("/static/score/images/image-fill.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/* 드래그 박스 안 글씨 */
+#fileInputArea > span {
+  font-size: 15px;
+  margin: 5px;
+}
+
+/* 이미지 분석 버튼 */
+.takePictureInfo {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid var(--green--medium--color);
+  background-color: var(--green--bright--color);
+  cursor: pointer;
+  font-size: 15px;
+  margin: 5px;
+  color: white;
+  width: 200px;
+}
+
+/* 점수 증감 버튼 */
+.decBtn,
+.incBtn {
+  width: 30%;
+  padding: 5px;
+  font-size: 20px;
+  border: 1px solid lightgray;
+  background-color: #ffffff;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+}
+
+/* 점수 증감 버튼 호버 */
+.decBtn:hover,
+.incBtn:hover {
+  border: 1px solid var(--green--dark--color);
+}
+
+/* 점수 감소 버튼 */
+.decBtn {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+/* 점수 증가 버튼 */
+.incBtn {
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+/* 전체 스코어 블록 */
+.totalBox {
+  width: 100%;
+  padding: 5px;
+  font-size: 20px;
+  border: 1px solid lightgray;
+  background-color: #ffffff;
+  height: 36.36px;
+  border-radius: 10px;
+}
+
+/* 장소 선택하는 단일 줄 */
+.locationInputArea {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+.locationInputArea span {
+  font-size: 15px;
+}
+/* 장소 선택 select */
+.locationInfo {
+  padding: 5px;
+  border-radius: 10px;
+  margin: 10px 0;
+  width: 250px;
+  position: relative;
+  padding: 10px;
+}
+
+/* 장소 선택을 검색으로 바꾸는 버튼 */
+.changeLocationInput {
+  height: 30px;
+  width: 30px;
+  background-image: url("/static/score/images/search-eye-line.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  transition: 0.3s;
+}
+
+.changeLocationInput:hover {
+  filter: brightness(1.5);
+}
+
+.listArea {
+  position: relative;
+}
+
+/* 검색 자동완성 후보 리스트 */
+.matchLocation {
+  position: absolute;
+  top: 0px;
+  z-index: 5;
+  gap: 10px;
+
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  font-size: 15px;
+}
+
+@media screen and (min-width: 700px) {
+  .locationInputArea {
+    gap: 10px;
+  }
+  .locationInputArea span {
+    font-size: 25px;
+  }
+}

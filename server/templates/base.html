@@ -2,82 +2,136 @@
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="{% static 'main/css/reset.css' %}" />
     <link rel="stylesheet" href="{% static 'main/css/style.css' %}" />
     <link rel="stylesheet" href="{% static 'users/css/user.css' %}" />
     <link rel="stylesheet" href="{% static 'search/css/search_friend.css' %}" />
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@2.0/nanumsquare.css">
-    {% block head %}
+    <link rel="icon" type="image/png" href="{% static 'main/images/logo_green.png' %}" sizes="16x16">
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@2.0/nanumsquare.css"
+    />
+    {% block head %} {% endblock %}
 
-    {% endblock %}
-</head>
-<body>
+  </head>
+  <body>
     <header id="header">
-        <div class="title-container">
-            <a href="/">
-                <img src="{% static 'main/images/parkgolfone_logo2.png' %}" alt="" class="title-logo"/>
-            </a>
-        </div>
-        <ul class="main-menu">
-            <li><a href="{% url 'locations:list' %}">지도</a></li>
-            <li><a href="{% url 'communitys:board_list' %}">커뮤니티</a></li>
-            {% if user.is_authenticated%}
-            <li><a href="{% url 'score:score_main' %}">스코어</a></li>
-            <li><a href="{% url 'users:main' user.pk %}">마이페이지</a></li>
-            <li><a href="{% url 'users:logout' %}">로그아웃</a></li>
+      <div class="title-container">
+        <a href="/"><img src="{% static 'main/images/parkgolf_logo.gif' %}" alt="" class="title-logo" /></a>
+      </div>
+      <ul class="main-menu">
+        <li>
+          <button class="survey" onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLSfRDcKKcBjB_7N4-T-zT8MzQdZ3F0tjmBqgGwYaa2_aBpcvTA/viewform?usp=sf_link','설문조사','width=500,height=1000,resizable=no')">설문조사</button>
+        </li>
+        <li>
+          <a href="{% url 'locations:list' %}">지도</a>
+        </li>
+        <li>
+          <a href="{% url 'communitys:board_list' %}">커뮤니티</a>
+        </li>
+        <li>
+          <a href="{% url 'games:game_set' %}">게임</a>
+        </li>
+        {% if user.is_authenticated %}
+          <li>
+            <a href="{% url 'score:score_main' %}">스코어</a>
+          </li>
+          <li>
+            <a href="{% url 'users:main' user.pk %}">마이페이지</a>
+          </li>
+
+        {% else %}
+          <li>
+            <a href="{% url 'users:login' %}">로그인</a>
+          </li>
+          <li>
+            <a href="{% url 'users:signup' %}">회원가입</a>
+          </li>
+        {% endif %}
+        <li>
+          <button class="tutorialBtn" onclick="tutorialStart()"><div class="tutorial2"></div></button>
+        </li>
+      </ul>
+      <label class="hamburger-icon">
+        <input type="checkbox" />
+        <div></div>
+        <div></div>
+        <div></div>
+        <aside class="main-sidebar">
+          <ul>
+            <li>
+              <a href="/">홈</a>
+            </li>
+            <li>
+              <button class="survey" onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLSfRDcKKcBjB_7N4-T-zT8MzQdZ3F0tjmBqgGwYaa2_aBpcvTA/viewform?usp=sf_link','설문조사','width=500,height=1000,resizable=no')">설문조사</button>
+            </li>
+            <li>
+              <a href="{% url 'locations:list' %}">지도</a>
+            </li>
+            <li>
+              <a href="{% url 'communitys:board_list' %}">커뮤니티</a>
+            </li>
+            {% if user.is_authenticated %}
+              <li>
+                <a href="{% url 'score:score_main' %}">스코어</a>
+              </li>
+              <li>
+                <a href="{% url 'users:main' user.pk %}">마이페이지</a>
+              </li>
+              <li>
+                <a href="{% url 'users:logout' %}">로그아웃</a>
+              </li>
+
             {% else %}
-            <li><a href="{% url 'users:login' %}">로그인</a></li>
-            <li><a href="{% url 'users:signup' %}"> 회원가입 </a></li>
+              <li>
+                <a href="{% url 'users:login' %}">로그인</a>
+              </li>
+              <li>
+                <a href="{% url 'users:signup' %}">회원가입</a>
+              </li>
             {% endif %}
-        </ul>
-        <label class="hamburger-icon">
-            <input type="checkbox" />
-            <div></div>
-            <div></div>
-            <div></div>
-            <aside class="main-sidebar">
-                <ul>
-                    <li><a href="/">홈</a></li>                    
-                    <li><a href="{% url 'locations:list' %}">지도</a></li>
-                    <li><a href="{% url 'communitys:board_list' %}">커뮤니티</a></li>
-                    {% if user.is_authenticated%}
-                    <li><a href="{% url 'score:score_main' %}">스코어</a></li>
-                    <li><a href="{% url 'users:main' user.pk %}">마이페이지</a></li>
-                    <li><a href="{% url 'users:logout' %}">로그아웃</a></li>
-                    {% else %}
-                    <li><a href="{% url 'users:login' %}">로그인</a></li>
-                    <li><a href="{% url 'users:signup' %}"> 회원가입 </a></li>
-                    {% endif %}
-                </ul>
-            </aside>
-        </label>
+            <li>
+              <button class="tutorialBtn" onclick="tutorialStart()"><div class="tutorial2"></div></button>
+            </li>
+          </ul>
+        </aside>
+      </label>
     </header>
-    <main id = main>
-        <div class="main-container">
-            {% block content %}
-        
-            {% endblock %}
-        </div>
+    <main id="main">
+      <div class="main-container">
+        {% block content %}
+
+        {% endblock %}
+      </div>
     </main>
     <footer id="mobileFooter">
-        <ul>
-            <li><a href="/">홈</a></li>
-            <li><a href="{% url 'locations:list' %}">지도</a></li>
-            <li><a href="{% url 'communitys:board_list' %}">커뮤니티</a></li>
-            {% if user.is_authenticated%}
-            <li><a href="{% url 'score:score_main' %}">스코어</a></li>
-            <li><a href="{% url 'users:main' user.pk %}">마이페이지</a></li>
-            {% else %}
-            <li><a href="{% url 'users:login' %}">로그인</a></li>
-            <li><a href="{% url 'users:signup' %}"> 회원가입 </a></li>
-            {% endif %}
-        </ul>
-    </footer>
-</body>
-{% block script %}
+      <ul>
+        <li><a href="{% url 'locations:list' %}">지도</a></li>
+        <li><a href="{% url 'communitys:board_list' %}">커뮤니티</a></li>
+        <li><a href="{% url 'games:game_set' %}">게임</a></li>
+        {% if user.is_authenticated%}
+        <li><a href="{% url 'score:score_main' %}">스코어</a></li>
+        <li><a href="{% url 'users:main' user.pk %}">마이페이지</a></li>
 
-{% endblock %}
+        {% else %}
+          <li>
+            <a href="{% url 'users:login' %}">로그인</a>
+          </li>
+          <li>
+            <a href="{% url 'users:signup' %}">회원가입</a>
+          </li>
+        {% endif %}
+        <li>
+          <button class="tutorial" onclick="tutorialStart()"></button>
+        </li>
+      </ul>
+    </footer>
+  </body>
+  {% block script %}
+
+  {% endblock %}
 </html>

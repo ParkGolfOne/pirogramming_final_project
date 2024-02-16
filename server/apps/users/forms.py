@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from .models import User
 
+
 class SignupForm(UserCreationForm):
     username = forms.CharField(
         label='아이디',
@@ -49,17 +50,30 @@ class SignupForm(UserCreationForm):
             attrs={
                 'class': 'signup-input'
             }
+        ),
+        required=False
+    )
+    image = forms.ImageField(
+        label="이미지",
+        required=False
+    )
+    address = forms.CharField(
+        label='주소',
+        widget=forms.TextInput(
+            attrs={
+                'class': 'signup-input'
+            }
         )
     )
 
     class Meta:
         model = User
-        fields = ['username', 'nickname', 'password1',
-                  'password2', 'birth', 'phone', 'email', 'address']
+        fields = ['username', 'nickname', 'image', 'password1',
+                  'password2', 'birth', 'phone', 'email', 'address',
+                  'image']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-
 
 
 class UpdateForm(forms.ModelForm):
@@ -94,13 +108,27 @@ class UpdateForm(forms.ModelForm):
             attrs={
                 'class': 'signup-input'
             }
-        )
+        ),
+        required=False
+    )
+    image = forms.ImageField(
+        label="이미지",
+        required=False
+    )
+    address = forms.CharField(
+        label='주소',
+        widget=forms.TextInput(
+            attrs={
+                'class': 'signup-input'
+            }
+        ),
+        required=True
     )
 
     class Meta:
         model = User
         fields = ['username', 'nickname', 'birth',
-                  'phone', 'email', 'address']
+                  'phone', 'email', 'image', 'address']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

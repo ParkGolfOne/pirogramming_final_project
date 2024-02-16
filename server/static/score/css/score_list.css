@@ -1,3 +1,4 @@
+
 .scoreBanner{
     height: 300px;
     width: 300px;
@@ -9,13 +10,25 @@
     padding: 10px;
     border-radius: 5px;
     border: 1px solid var(--green--medium--color);
-    background-color: #ffffff;
+    background-color: var(--green--bright--color);
     cursor: pointer;
     margin: 10px;
-    
+    color: white;
+    font-size: 20px;
+    width: 150px;
+    text-align: center;
 }
 .scoreMainBtn:hover {
     background-color: var(--green--medium--color);
     border: 1px solid var(--green--medium--color);
     transition: 0.1s;
+}
+.locationInputArea span {
+    font-size: 25px;
+}
+
+@media screen and (min-width: 700px) {
+    .scoreMainBtn {
+      width: 400px;
+  }
 }

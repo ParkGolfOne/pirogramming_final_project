@@ -1,0 +1,90 @@
+.tutorial2{
+    background-image: url("/static/base/images/question-line.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    width:30px;
+    height:30px;
+}
+
+
+.right_box > section, .one , .location{
+    position:relative;
+}
+
+/* 튜토리얼 상자 */
+.tutorialBox{
+    border-radius: 5px;
+    border : 2px solid gray;
+    background-color: white;
+    padding: 20px;
+
+    position:absolute;
+    top:50%;
+    right:50%;
+    z-index: 20;
+    
+    font-size: 20px;
+
+    display:none;
+    flex-direction: column;
+    gap: 20px;
+
+    min-width: 300px;;
+    text-align: center;
+
+}
+
+/* 튜툐리얼 내용 */
+.tutoContent{
+    font-size:18px;
+    text-align: center;
+}
+
+/* 단계 이동 버튼 */
+.tutoBtns{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    gap:10px;
+}
+
+
+.prevTuto{
+    width:20px;
+    height:20px;
+    background-image: url("/static/locations/images/arrow-left-circle-line.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.nextTuto{
+    width:20px;
+    height:20px;
+    background-image: url("/static/locations/images/arrow-right-circle-line.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+
+
+
+
+/* 가림막 */
+#blind{
+    position:absolute;
+    top:0;
+    opacity: 0.5;
+    z-index:10;
+    background-color: black;
+    width:100%;
+    height:100%;
+
+    display:none;
+}
+
+@media screen and (max-width: 960px){
+#blind{
+    height:150%;
+}
+}
+

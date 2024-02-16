@@ -5,9 +5,12 @@ function changeLocationInput() {
   //초기 세팅
 
   locationInput.innerHTML = `<span>장소 검색 : </span>
+  <div>
     <input class="locationInput locationInfo" type="text" name="location" required=""/>
     <!-- 알맞는 데이터 없을 시   -->
-    <div class="matchLocation"></div>`;
+    <div class="listArea"><div class="matchLocation"></div></div>
+  </div>`;
+
   scoreSubmitBtn.disabled = true;
   scoreSubmitBtn.value = "장소 없음!";
   // 검색 추가시
