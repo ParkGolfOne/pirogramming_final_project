@@ -1,100 +1,90 @@
 {% extends 'base.html' %} {% load static %} {% block content %}
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>세부 점수</title>
-    <link rel="stylesheet" href="{% static 'score/css/score_detail.css'%}" />
-    <link rel="stylesheet" href="{% static 'score/css/score_base.css'%}" />
-    <link rel="stylesheet" href="{% static 'main/css/link.css'%}" />
-    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
-  </head>
-  <body>
+  <!DOCTYPE html>
+  <html lang="en">
+    <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>세부 점수</title>
+      <link rel="stylesheet" href="{% static 'score/css/score_detail.css' %}" />
+      <link rel="stylesheet" href="{% static 'score/css/score_base.css' %}" />
+      <link rel="stylesheet" href="{% static 'main/css/link.css' %}" />
+      <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+    </head>
+    <body>
+      <a href="{% url 'score:score_main' %}" class="before-icon"><span class="bxs--left-arrow"></span>스코어 홈</a>
 
-    <a href="{% url 'score:score_main'%}" class="before-icon">
-      <span class="bxs--left-arrow"></span>스코어 홈</a>
-
-    <h1>점수 디테일 페이지</h1>
-    <div class="scoreGrid">
-      <div>홀</div>
-      <div>파</div>
-      <div>점수</div>
-      <div>1</div>
-      <div class="score-par">{{score.par.hole1}}</div>
-      <div class="scoreArea">{{score.scores.hole1}}</div>
-      <div>2</div>
-      <div class="score-par">{{score.par.hole2}}</div>
-      <div class="scoreArea">{{score.scores.hole2}}</div>
-      <div>3</div>
-      <div class="score-par">{{score.par.hole3}}</div>
-      <div class="scoreArea">{{score.scores.hole3}}</div>
-      <div>4</div>
-      <div class="score-par">{{score.par.hole4}}</div>
-      <div class="scoreArea">{{score.scores.hole4}}</div>
-      <div>5</div>
-      <div class="score-par">{{score.par.hole5}}</div>
-      <div class="scoreArea">{{score.scores.hole5}}</div>
-      <div>6</div>
-      <div class="score-par">{{score.par.hole6}}</div>
-      <div class="scoreArea">{{score.scores.hole6}}</div>
-      <div>7</div>
-      <div class="score-par">{{score.par.hole7}}</div>
-      <div class="scoreArea">{{score.scores.hole7}}</div>
-      <div>8</div>
-      <div class="score-par">{{score.par.hole8}}</div>
-      <div class="scoreArea">{{score.scores.hole8}}</div>
-      <div>9</div>
-      <div class="score-par">{{score.par.hole9}}</div>
-      <div class="scoreArea">{{score.scores.hole9}}</div>
-      <div>합계</div>
-      <div>/</div>
-      <div class="totalScoreArea">{{score.total_score}}</div>
-    </div>
-    <div>총점 : {{score.total_score}}</div>
-    {% if score.player == now_user %}
-    <form action="{% url 'score:score_delete' score.id %}" method="POST">
-      {%csrf_token%}
-      <a href="{% url 'score:score_update' score.id %}" class="btn btn-primary"
-        ><div class="score-detail-btn">수정하기</div></a
-      >
-      <button type="submit" class="score-detail-btn">삭제하기</button>
-    </form>
-    {% endif %}
-    <div class="shareList">
-      <span>공유하기</span>
-      <div>
-        <button
-          id="kakaotalk-sharing-btn"
-          onclick="shareKakaoScore({{sid}})"
-        ></button>
-        <!--  네이버 밴드 공유하기  -->
-        <span>
-          <script
-            type="text/javascript"
-            src="//developers.band.us/js/share/band-button.js?v=06022024"
-          ></script>
-          <script type="text/javascript">
-            new ShareBand.makeButton({
-              lang: "ko-KR",
-              type: "c",
-              text: "내 점수 보러가기",
-              withUrl: true,
-            });
-          </script>
-        </span>
+      <h1>점수 디테일 페이지</h1>
+      <div class="scoreGrid">
+        <div>홀</div>
+        <div>파</div>
+        <div>점수</div>
+        <div>1</div>
+        <div class="score-par">{{ score.par.hole1 }}</div>
+        <div class="scoreArea">{{ score.scores.hole1 }}</div>
+        <div>2</div>
+        <div class="score-par">{{ score.par.hole2 }}</div>
+        <div class="scoreArea">{{ score.scores.hole2 }}</div>
+        <div>3</div>
+        <div class="score-par">{{ score.par.hole3 }}</div>
+        <div class="scoreArea">{{ score.scores.hole3 }}</div>
+        <div>4</div>
+        <div class="score-par">{{ score.par.hole4 }}</div>
+        <div class="scoreArea">{{ score.scores.hole4 }}</div>
+        <div>5</div>
+        <div class="score-par">{{ score.par.hole5 }}</div>
+        <div class="scoreArea">{{ score.scores.hole5 }}</div>
+        <div>6</div>
+        <div class="score-par">{{ score.par.hole6 }}</div>
+        <div class="scoreArea">{{ score.scores.hole6 }}</div>
+        <div>7</div>
+        <div class="score-par">{{ score.par.hole7 }}</div>
+        <div class="scoreArea">{{ score.scores.hole7 }}</div>
+        <div>8</div>
+        <div class="score-par">{{ score.par.hole8 }}</div>
+        <div class="scoreArea">{{ score.scores.hole8 }}</div>
+        <div>9</div>
+        <div class="score-par">{{ score.par.hole9 }}</div>
+        <div class="scoreArea">{{ score.scores.hole9 }}</div>
+        <div>합계</div>
+        <div>/</div>
+        <div class="totalScoreArea">{{ score.total_score }}</div>
       </div>
-    </div>
+      <div>총점 : {{ score.total_score }}</div>
+      {% if score.player == now_user %}
+        <form action="{% url 'score:score_delete' score.id %}" method="POST">
+          {% csrf_token %}
+          <a href="{% url 'score:score_update' score.id %}" class="btn btn-primary"><div class="score-detail-btn">수정하기</div></a>
+          <button type="submit" class="score-detail-btn">삭제하기</button>
+        </form>
+      {% endif %}
+      <div class="shareList">
+        <span>공유하기</span>
+        <div>
+          <button id="kakaotalk-sharing-btn" onclick="shareKakaoScore({{ sid }})"></button>
+          <!-- 네이버 밴드 공유하기 -->
+          <span>
+            <script type="text/javascript" src="//developers.band.us/js/share/band-button.js?v=06022024"></script>
+            <script type="text/javascript">
+              new ShareBand.makeButton({
+                lang: 'ko-KR',
+                type: 'c',
+                text: '내 점수 보러가기',
+                withUrl: true
+              })
+            </script>
+          </span>
+        </div>
+      </div>
 
-    <!-- 링크에 쓸 변수 작성 -->
-    <script>
+      <!-- 링크에 쓸 변수 작성 -->
+      <script>
       var sid = {{ sid }};
       //var now_user = {{now_user.nickname}}
       const thumbnailUrl  = "{% static 'base/images/parkgolfone_logo1.png' %}";
 
       //console.log(now_user);
     </script>
-    <script src="{% static 'js/link.js' %}"></script>
-  </body>
-</html>
+      <script src="{% static 'js/link.js' %}"></script>
+    </body>
+  </html>
 {% endblock %}

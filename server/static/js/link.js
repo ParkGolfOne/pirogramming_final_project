@@ -3,9 +3,6 @@ Kakao.init("7d2565115739c70be1903fea71d797fb");
 // http://www.parkgolfone.com/ 을 대신 url 에 넣기 http://127.0.0.1:8000/ 대신
 
 
-console.log("thumbnailURL : ", thumbnailUrl)
-
-
 //점수 공유
 function shareKakaoScore() {
   const scoreAreas = document.querySelectorAll(".scoreArea");
@@ -21,7 +18,7 @@ function shareKakaoScore() {
     content: {
       title: "점수",
       description: "나의 점수 공유!",
-      imageUrl: 'thumbnailUrl',
+      imageUrl: thumbnailUrl,
       link: {
         mobileWebUrl: `http://127.0.0.1:8000/score/score_detail/${sid}/`,
         webUrl: `http://127.0.0.1:8000/score/score_detail/${sid}/`,
