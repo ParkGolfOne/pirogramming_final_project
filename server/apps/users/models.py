@@ -3,16 +3,31 @@ from django.db import models
 from apps.region.models import Region
 from config.settings import MEDIA_ROOT
 import random
+import boto3
 import os
 
 # default 사진을 random으로 뽑는 함수
 
 
 def get_default_image():
-    image_path = f'{MEDIA_ROOT}/user/default'  # 기본 이미지 디렉토리 경로
-    default_images = os.listdir(image_path)
-    final_image = os.path.join(image_path, random.choice(default_images))
-    return final_image.split('media/')[1]
+    # media 폴더 사용시
+    # image_path = f'{MEDIA_ROOT}user/default'  # 기본 이미지 디렉토리 경로
+    # default_images = os.listdir(image_path)
+    # final_image = os.path.join(image_path, random.choice(default_images))
+    # return final_image.split('media/')[1]
+
+    # s3 setting
+    s3r = boto3.resource('s3', aws_access_key_id=os.environ.get("AWS_S3_ACCESS_KEY_ID").strip(
+    ), aws_secret_access_key=os.environ.get("AWS_S3_SECRET_ACCESS_KEY").strip())
+    bucket = s3r.Bucket(os.environ.get("AWS_STORAGE_BUCKET_NAME"))
+
+    # get default image from s3
+    default_images = []
+    for object in bucket.objects.filter(Prefix="user/default/"):
+        default_images.append(object.key)
+
+    final_image = random.choice(default_images)
+    return final_image
 
 # 유저 모델
 

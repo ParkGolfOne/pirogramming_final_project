@@ -50,7 +50,8 @@ class SignupForm(UserCreationForm):
             attrs={
                 'class': 'signup-input'
             }
-        )
+        ),
+        required=False
     )
     image = forms.ImageField(
         label="이미지",
@@ -64,10 +65,11 @@ class SignupForm(UserCreationForm):
             }
         )
     )
+
     class Meta:
         model = User
         fields = ['username', 'nickname', 'image', 'password1',
-                  'password2', 'birth', 'phone', 'email','address', 
+                  'password2', 'birth', 'phone', 'email', 'address',
                   'image']
 
     def __init__(self, *args, **kwargs):
@@ -106,7 +108,8 @@ class UpdateForm(forms.ModelForm):
             attrs={
                 'class': 'signup-input'
             }
-        )
+        ),
+        required=False
     )
     image = forms.ImageField(
         label="이미지",
@@ -121,6 +124,7 @@ class UpdateForm(forms.ModelForm):
         ),
         required=True
     )
+
     class Meta:
         model = User
         fields = ['username', 'nickname', 'birth',

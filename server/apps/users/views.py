@@ -108,7 +108,8 @@ def signup(request):
         form = SignupForm(request.POST, request.FILES)
         if form.is_valid():
             user = form.save(commit=False)
-            region = Region.objects.filter(city=selected_city, town=selected_town).first()
+            region = Region.objects.filter(
+                city=selected_city, town=selected_town).first()
             # user에 region 정보를 저장
             user.region = region
             user.address = street_address
@@ -194,6 +195,7 @@ def update(request, pk):
             user = form.save(commit=False)
             region = Region.objects.filter(
                 city=selected_city, town=selected_town).first()
+            user.first_login = False
             user.region = region
             user.address = street_address
             user.detail_address = detail_address
@@ -235,6 +237,7 @@ def update(request, pk):
             }
         return render(request, template_name='users/users_update.html', context=context)
 
+
 @csrf_exempt
 @login_required
 def delete(request, pk):
@@ -258,43 +261,20 @@ def social_login(request):
         return redirect('users:main', user.id)
     else:
         social_login_flag = "true"
-        if request.method == 'POST':
-            user.first_login = False
-            selected_city = request.POST.get('city')
-            selected_town = request.POST.get('town')
-            street_address = request.POST.get('street_address')
-            detail_address = request.POST.get('detail_address')
-            form = UpdateForm(request.POST, instance=user)
-            if form.is_valid():
-                user = form.save(commit=False)
-                region = Region.objects.filter(
-                    city=selected_city, town=selected_town).first()
-                user.region = region
-                user.address = street_address
-                user.detail_address = detail_address
-                user.save()
-                redirect_url = reverse('users:main', kwargs={'pk': user.pk})
-                return JsonResponse({'result': 'success', 'url': redirect_url})
-            else:
-                print("폼 유효성 검사 실패")
-                print(form.errors)
-                return JsonResponse({'result': 'fail', 'error': form.errors})
-        else:
-            context = {
-                'pk': user.pk,
-                "username": user.username,
-                "nickname": user.nickname,
-                "birth": None,
-                "phone": None,
-                "email": "",
-                'city': None,
-                'town': None,
-                'street_address': None,
-                'detail_address': None,
-                "social_login_flag": social_login_flag,
-            }
-            print(context)
-            return render(request, template_name='users/users_update.html', context=context)
+        context = {
+            'pk': user.pk,
+            "username": user.username,
+            "nickname": user.nickname,
+            "birth": None,
+            "phone": None,
+            "email": None,
+            'city': None,
+            'town': None,
+            'street_address': None,
+            'detail_address': None,
+            "social_login_flag": social_login_flag,
+        }
+        return render(request, template_name='users/users_update.html', context=context)
 
 # 함수 이름 : kakao_unlink
 # 전달인자 : request

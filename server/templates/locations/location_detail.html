@@ -2,7 +2,7 @@
   <link rel="stylesheet" href="{% static 'locations/css/location_detail.css' %}" />
   <link rel="stylesheet" href="{% static 'locations/css/location_fav.css' %}" />
   <link rel="stylesheet" href="{% static 'locations/css/location_review.css' %}" />
-  <link rel="stylesheet" href="{% static 'main/css/link.css'%}" />
+  <link rel="stylesheet" href="{% static 'main/css/link.css' %}" />
 {% endblock %} {% block content %}
   <h2 class="golf-name">{{ location.golf_name }}</h2>
 
@@ -21,7 +21,7 @@
         <div class="rateNum">리뷰수 {{ location.golf_rate_num }} &nbsp;&nbsp; 평점
           {{ location.golf_rate|floatformat:2 }}</div>
       </div>
-      
+
       <div class="location-detail-area">
         <h3>규모</h3>
         <p>{{ location.golf_scale }}</p>
@@ -72,7 +72,7 @@
       </div>
     </div>
   </div>
-  <!--  {% if location.golf_image %}
+  <!--   {% if location.golf_image %}
   <a href="{% url 'locations:detail' location.pk %}">
     <img src="{{ location.golf_image.url }}" />
   </a>
@@ -81,7 +81,7 @@
     <img src="{% static 'locations/images/no_img.png/' %}" />
   </a>
   {% endif %}
-  <br />  -->
+  <br />   -->
   <div class="location-btns">
     <a href="https://forms.gle/gnaqB2GXwjxpNqbA9" class="location-detail-btn" target="_blank">골프장 정보 수정 요청</a>
     {% if request.user.is_superuser %}
@@ -93,27 +93,21 @@
     {% endif %}
   </div>
 
-  <!--  공유하기 -->
+  <!-- 공유하기 -->
   <div class="shareList">
     <span>공유하기</span>
     <div>
-      <button
-        id="kakaotalk-sharing-btn"
-        onclick="shareKakaoLocation()"
-      ></button>
-      <!--  네이버 밴드 공유하기  -->
+      <button id="kakaotalk-sharing-btn" onclick="shareKakaoLocation()"></button>
+      <!-- 네이버 밴드 공유하기 -->
       <span>
-        <script
-          type="text/javascript"
-          src="//developers.band.us/js/share/band-button.js?v=06022024"
-        ></script>
+        <script type="text/javascript" src="//developers.band.us/js/share/band-button.js?v=06022024"></script>
         <script type="text/javascript">
           new ShareBand.makeButton({
-            lang: "ko-KR",
-            type: "c",
-            text: "골프장 보려가기",
-            withUrl: true,
-          });
+            lang: 'ko-KR',
+            type: 'c',
+            text: '골프장 보려가기',
+            withUrl: true
+          })
         </script>
       </span>
     </div>
