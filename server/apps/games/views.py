@@ -171,6 +171,7 @@ def game_save(request, game_id, player_count):
                 setattr(new_score, field.name, getattr(origin_score, field.name))
             new_score.id = None  # 새 인스턴스를 위한 새 ID 생성
             new_score.player = player
+            new_score.game_round = None
             new_score.save()
 
         return redirect(request.path)
