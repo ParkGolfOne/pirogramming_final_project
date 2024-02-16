@@ -14,8 +14,8 @@
       >
       {% else %}
       <div>내 집 주변 파크골프장 - 로그인 먼저 해주세요</div>
-
       {% endif %}
+      <a href="{% url 'locations:myplace' %}">내 위치 주변 파크골프장</a>
     </div>
     <div class="locationInputArea">
       <input class="locationInput locationInfo" type="text" name="location" placeholder="파크골프장 이름을 입력해주세요." />
