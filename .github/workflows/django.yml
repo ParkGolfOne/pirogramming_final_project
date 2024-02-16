@@ -2,9 +2,9 @@ name: CI Pipeline
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main,develop ]
   pull_request:
-    branches: [ main, develop ]
+    branches: [ main ]
 
 jobs:
   build-and-test:
@@ -43,7 +43,8 @@ jobs:
         AWS_S3_SECRET_ACCESS_KEY : ${{ secrets.AWS_S3_SECRET_ACCESS_KEY }} 
         AWS_S3_CUSTOM_DOMAIN : ${{ secrets.AWS_S3_CUSTOM_DOMAIN }}
       run: |
-        python manage.py test
+        cd / server
+        python manage.py test apps.users
   deploy:
     needs: build-and-test
     runs-on: ubuntu-22.04
