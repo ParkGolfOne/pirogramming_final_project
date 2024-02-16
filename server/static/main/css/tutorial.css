@@ -27,10 +27,20 @@
 
     display:none;
     flex-direction: column;
-    gap: 10px;
+    gap: 20px;
+
+    min-width: 300px;;
+    text-align: center;
 
 }
 
+/* 튜툐리얼 내용 */
+.tutoContent{
+    font-size:18px;
+    text-align: center;
+}
+
+/* 단계 이동 버튼 */
 .tutoBtns{
     display:flex;
     align-items: center;
@@ -38,8 +48,8 @@
     gap:10px;
 }
 
-.prevTuto{
 
+.prevTuto{
     width:20px;
     height:20px;
     background-image: url("/static/locations/images/arrow-left-circle-line.png");
@@ -54,6 +64,8 @@
     background-repeat: no-repeat;
     background-size: cover;
 }
+
+
 
 
 
