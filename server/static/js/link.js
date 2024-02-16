@@ -2,6 +2,16 @@ Kakao.init("7d2565115739c70be1903fea71d797fb");
 // 배포할때에는
 // http://www.parkgolfone.com/ 을 대신 url 에 넣기 http://127.0.0.1:8000/ 대신
 
+// 모바일인지 웹인지 체크
+const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+if (isMobile) {
+    console.log("This is a mobile device.");
+} else {
+    console.log("This is not a mobile device (likely PC).");
+}
+
+
 
 //점수 공유
 function shareKakaoScore() {
