@@ -19,6 +19,8 @@ class Score(models.Model):
 
     # scores 필드에서 각 점수의 합을 계산하여 total_score에 저장
     # 세이브 할때마다?
+    ## 들어가는 score가 빈 문자열이 아닐때만 합 해주도록 함
     def save(self, *args, **kwargs):
-        self.total_score = sum(int(score) for score in self.scores.values())
+        self.total_score = sum(int(score)
+                               for score in self.scores.values() if str(score).strip())
         super(Score, self).save(*args, **kwargs)

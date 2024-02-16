@@ -12,7 +12,15 @@ class ScoreModelTests(TestCase):
     def setUp(self):
         # 테스트에 사용될 사용자와 골프장 인스턴스 생성
         self.user = User.objects.create_user(username='testuser', password='12345')
-        self.golf_location = GolfLocation.objects.create(golf_name='Test Golf Location')
+        self.golf_location = GolfLocation.objects.create(
+            golf_name='Golfy',
+            golf_address='Bakery',
+            golf_holes=18,
+            golf_latitude=37.5665,
+            golf_longitude=126.9780,
+            golf_rate=4.5,
+            golf_rate_num=10,
+        )
         self.score_data = {
             "hole1": 3, "hole2": 4, "hole3": 5, "hole4": 4, "hole5": 3,
             "hole6": 4, "hole7": 5, "hole8": 4, "hole9": 3
@@ -23,6 +31,7 @@ class ScoreModelTests(TestCase):
             player=self.user,
             ground=self.golf_location,
             scores=self.score_data,
+            total_score=36,
             par=self.score_data,
             date=timezone.now()
         )
@@ -34,7 +43,15 @@ class ScoreViewTests(TestCase):
     def setUp(self):
         self.client = Client()
         self.user = User.objects.create_user(username='testuser', password='12345')
-        self.golf_location = GolfLocation.objects.create(golf_name='Test Golf Location')
+        self.golf_location = GolfLocation.objects.create(
+            golf_name='Golfy',
+            golf_address='Bakery',
+            golf_holes=18,
+            golf_latitude=37.5665,
+            golf_longitude=126.9780,
+            golf_rate=4.5,
+            golf_rate_num=10,
+        )
         self.score_data = {
             "hole1": 3, "hole2": 4, "hole3": 5, "hole4": 4, "hole5": 3,
             "hole6": 4, "hole7": 5, "hole8": 4, "hole9": 3
@@ -43,13 +60,13 @@ class ScoreViewTests(TestCase):
 
     def test_score_input_get(self):
         # GET 요청으로 스코어 입력 페이지 접근
-        response = self.client.get(reverse('score:score_input'))
+        response = self.client.get(reverse('score:score_input', args=[self.user.id]))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'score/score_create.html')
 
     def test_score_input_post(self):
         # POST 요청으로 스코어 생성
-        response = self.client.post(reverse('score:score_input'), {
+        response = self.client.post(reverse('score:score_input', args=[self.user.id]), {
             'location': self.golf_location.golf_name,
             'par1': 3, 'score1': 4,  # 예시 데이터
             # 나머지 필드 데이터
