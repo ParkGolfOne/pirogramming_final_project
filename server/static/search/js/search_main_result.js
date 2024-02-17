@@ -2,3 +2,12 @@
 function moveEntireResult(){
     window.location.href = `/search/main_search_result/?input=${document.querySelector(".search_input").value}`;
 }
+
+
+search_input.addEventListener("keydown",(event)=>{
+    if (event.keyCode === 13) {
+        moveEntireResult()
+    }
+
+}
+)

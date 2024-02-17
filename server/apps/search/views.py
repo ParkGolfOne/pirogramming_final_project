@@ -223,7 +223,7 @@ def search_main_func(input_text, start_num, count, sortType):
         search_result.append(temp_result)
 
     for post in posts:
-        temp_result = {"type" : "게시글" ,"pid" : post.id, "title" : post.title, "bid" : post.board.id, "bname" : post.board.name,}
+        temp_result = {"type" : "게시글" ,"pid" : post.id, "title" : post.title, "content" : post.content,"bid" : post.board.id, "bname" : post.board.name,}
         search_result.append(temp_result)
 
     return search_result
@@ -256,4 +256,13 @@ def search_main_result(request):
         'search_text' : input_text,
     }
     return render(request, "search/search_main_result.html",ctx)
+
+# 함수 이름 : search_main_value
+# 전달인자 : request
+# 기능 : v페이지 정렬에 따른 값 보여주기
+def search_main_value(request):
+    pass
+
+
+
     

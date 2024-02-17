@@ -10,13 +10,19 @@
     <section class="match_content"></section>
     <input type="submit" onclick="moveEntireResult()" />
   </div>
-  <div>
+  <div class="search-result-section">
     <div class="resultTypeSelect">
       <button class="reviewTypeSelectBtn locationResult" onclick="showLocationResult()">파크골프장</button>
       <button class="reviewTypeSelectBtn postResult" onclick="showPostResult()">게시글</button>
     </div>
     <div id="location-result-section">
-      장소 검색 결과<div class="page-area">
+      <div class="form-group">
+        <select id="sortType" class="reviewList-input" onchange="findReviews(1)">
+          <option value="-fav_num">찜순</option>
+          <option value="-golf_rate">별점순</option>
+          <option value="-golf_rate_num">리뷰 많은순</option>
+        </select>
+      </div>장소 검색 결과<div class="page-area">
         <button class="page-move-btn first-page-btn left-move-btn" onclick="findReviews(1)"><<</button>
         <button class="page-move-btn prev-btn left-move-btn" onclick="findReviews(now_page - 1)"><</button>
         <ul class="page-list">

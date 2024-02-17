@@ -11,22 +11,19 @@ const match_content = document.querySelector(".match_content");
 // 기능 : 추천 결과 보여주기
 function update_match_content(search_result){
     match_content.innerHTML = "";
-    console.log("update_match_content 안에 있는 search_result : ", search_result)
     search_result.forEach((result)=>{
         if(result.type == "게시글"){
-            console.log("게시글")
             match_content.innerHTML += `
             <li class="search_result">
                 <a href="/communitys/${result.bid}/main/${result.pid}">
                     <div class="result-title">${result.title} </div>
-                    <span>( ${result.bname} )</span>
+                    <span>( ${result.bname} 게시판 )</span>
                     <span>${result.type}</span>
                 </a>
             </li>
             `;
         }
         else if(result.type == "골프장"){
-            console.log("골프장")
             match_content.innerHTML += `
             <li class="search_result">
                 <a href="/locations/detail/${result.lid}">
