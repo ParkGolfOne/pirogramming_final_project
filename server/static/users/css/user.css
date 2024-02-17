@@ -309,9 +309,7 @@
     gap: 10px;
 }
 
-.user-yourpage > p {
-    text-align: center !important;
-}
+.user-yourpage a 
 
 #yourpage-info {
     justify-content: space-around;
