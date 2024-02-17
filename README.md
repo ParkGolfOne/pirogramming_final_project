@@ -1,13 +1,10 @@
-# 파크골프하나로
-
-<https://www.parkgolfone.com/>
+# 파크골프하나로  [![CI Pipeline](https://github.com/ParkGolfOne/pirogramming_final_project/actions/workflows/django.yml/badge.svg)](https://github.com/ParkGolfOne/pirogramming_final_project/actions/workflows/django.yml)
 
 <br>
 <p align="center">
-  <br>
-  <img src="./docs/parkgolfone_logo.gif">
-  <br>
+  <a href="https://www.parkgolfone.com/"><img src="docs/parkgolf_logo.gif"></a>
 </p>
+
 
 ## 💻 프로젝트 소개
 
@@ -17,39 +14,48 @@
 : 파크골프장 위치 및 정보 제공, 파크골프 커뮤니티, 골프 스코어 기록 등의 서비스를 제공합니다.
 </p>
 
+
 ## ⏱ 개발 기간
 
 <br>
 - 2024.1.29 ~ 2024.2.17
 
+
 ## 🙍‍♂️ 멤버 구성
 
 <br>
-- ![이승찬](https://github.com/chan000518): 팀장, 게임 기능 개발, CI/CD
-- ![양현](https://github.com/yanghyeonee): 골프장 리뷰, 커뮤니티, 점수 기능 개발
-- ![윤나경](https://github.com/nakyeongg): 로고, 화면 디자인, 프론트 개발
-- ![이선민](https://github.com/Phoebe125): DB 서버 및 스키마, 골프장 네이버 리뷰 및 정보 수집, 유저 기능 개발
-- ![정영헌](https://github.com/jjyyhh0208): 골프장 정보 제공 기능 개발
+<p>
+<a href="https://github.com/chan000518">이승찬</a>: 팀장, 게임 기능 개발, CI/CD
+  
+<a href="https://github.com/yanghyeonee">양현</a>: 골프장 리뷰, 커뮤니티, 점수 기능 개발  
+
+<a href="https://github.com/nakyeongg">윤나경</a>: 로고, 화면 디자인, 프론트 개발  
+
+<a href="https://github.com/Phoebe125">이선민</a>: DB 서버 및 스키마, 골프장 네이버 리뷰 및 정보 수집, 유저 기능 개발  
+
+<a href="https://github.com/jjyyhh0208">정영헌</a>: 골프장 정보 제공 기능 개발  
+</p>
+
 
 ## ✨개발 환경
 
 <br>
-<p align="center">
-![python](https://img.shields.io/badge/Python-14354C?style=for-the-badge&logo=python&logoColor=white)
-![django](https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=django&logoColor=white)
-![mysql](https://img.shields.io/badge/MySQL-00000F?style=for-the-badge&logo=mysql&logoColor=white)
-![html](https://img.shields.io/badge/HTML-239120?style=for-the-badge&logo=html5&logoColor=white)
-![css]()
-![js](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=JavaScript&logoColor=white)
-![aws](https://img.shields.io/badge/Amazon_AWS-FF9900?style=for-the-badge&logo=amazonaws&logoColor=white)
-![git](https://img.shields.io/badge/GIT-E44C30?style=for-the-badge&logo=git&logoColor=white)
-![discord](https://img.shields.io/badge/Discord-7289DA?style=for-the-badge&logo=discord&logoColor=white)
+<p>
+<img src="https://img.shields.io/badge/Python-14354C?style=for-the-badge&logo=python&logoColor=white"/>
+<img src="https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=django&logoColor=white"/>
+<img src="https://img.shields.io/badge/MySQL-00000F?style=for-the-badge&logo=mysql&logoColor=white">
+<img src="https://img.shields.io/badge/HTML-239120?style=for-the-badge&logo=html5&logoColor=white">
+<img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=JavaScript&logoColor=white">
+<img src="https://img.shields.io/badge/Amazon_AWS-FF9900?style=for-the-badge&logo=amazonaws&logoColor=white">
+<img src="https://img.shields.io/badge/GIT-E44C30?style=for-the-badge&logo=git&logoColor=white">
+<img src="https://img.shields.io/badge/Discord-7289DA?style=for-the-badge&logo=discord&logoColor=white">
 </p>
-<br>
+
 
 ## 📌 주요 기능
 
 <br>
+
 ### 유저
 
 1. 로그인 및 로그아웃
