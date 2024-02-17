@@ -30,3 +30,15 @@ document.addEventListener("DOMContentLoaded", function() {
     showPage(initialActiveItem.getAttribute('data-target'));
   }
 });
+
+// 탈퇴 버튼을 눌렀을때, 확인 메세지가 뜨도록
+function confirmDelete() {
+// 확인 메세지를 표시하고, 사용자가 예를 선택한 경우에만, 탈퇴 form 을 제출
+  if (confirm('정말로 탈퇴하시겠습니까?')) {
+    document.getElementById("deleteForm").submit();
+  }
+}
+// 취소를 눌렀을 때 양식 제출을 막음
+document.getElementById("deleteForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+});
