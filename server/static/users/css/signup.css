@@ -12,12 +12,13 @@ a {
 
 label {
     font-family: 'Noto Sans KR', sans-serif;
-    font-size: 1.2rem !important;
+    font-size: 1.7rem !important;
 }
 
 input {
-    margin-bottom: 10px !important;
+    margin-bottom: 5px !important;
 }
+
 /****************************/
 /* 그냥 이 페이지를 위한 css */
 .signup-form-title {
@@ -77,11 +78,14 @@ select::-ms-expand {
     box-shadow: 0 0 0 2px -moz-mac-focusring;
     outline: none;
 }
+
 #users-update-form,
 .users-update-form {
-    width: 90% ;
+    width: 90%;
 }
+
 @media screen and (min-width: 500px) {
+
     #users-update-form,
     .users-update-form {
         width: auto;

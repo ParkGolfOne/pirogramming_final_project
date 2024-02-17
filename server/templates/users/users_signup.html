@@ -1,71 +1,31 @@
 {% extends 'base.html' %} {%load static%} {% block head %}
-<link
-  rel="stylesheet"
-  href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-  integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-  crossorigin="anonymous"
-/>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+  integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
 <link rel="stylesheet" href="{% static 'users/css/signup.css' %}" />
 <link rel="stylesheet" href="{% static 'main/css/reset.css' %}" />
 {% endblock head %} {% block content %}
-<form
-  method="POST"
-  id="signup-form"
-  class="signup-form"
-  enctype="multipart/form-data"
->
+<form method="POST" id="signup-form" class="signup-form" enctype="multipart/form-data">
   <div class="signup-form-title">회원 가입 페이지</div>
   <div class="row">
     <div class="col-md-6 mb-3">
-      <label for="id_username"
-        >아이디 <span style="font-weight: bold">(필수)</span></label
-      >
-      <input
-        type="text"
-        name="username"
-        class="signup-input"
-        autofocus=""
-        required=""
-        id="id_username"
-      />
+      <label for="id_username">아이디 <span style="font-weight: bold">(필수)</span></label>
+      <input type="text" name="username" class="signup-input" autofocus="" required="" id="id_username" />
       <div class="errorMessage"></div>
     </div>
     <div class="col-md-6 mb-3">
-      <label for="id_nickname"
-        >닉네임 <span style="font-weight: bold">(필수)</span></label
-      >
-      <input
-        type="text"
-        name="nickname"
-        class="signup-input"
-        required=""
-        id="id_nickname"
-      />
+      <label for="id_nickname">닉네임 <span style="font-weight: bold">(필수)</span></label>
+      <input type="text" name="nickname" class="signup-input" required="" id="id_nickname" />
       <div class="errorMessage"></div>
     </div>
   </div>
   <div class="mb-3">
-    <label for="id_password1"
-      >비밀번호 (최소 8자리이며, 한 개 이상의 영문자를 포함해야 합니다.)</label
-    >
-    <input
-      type="password"
-      name="password1"
-      class="signup-input"
-      required=""
-      id="id_password1"
-    />
+    <label for="id_password1">비밀번호 (최소 8자리이며, 한 개 이상의 영문자를 포함해야 합니다.)</label>
+    <input type="password" name="password1" class="signup-input" required="" id="id_password1" />
     <div class="errorMessage"></div>
   </div>
   <div class="mb-3">
     <label for="id_password2">비밀번호 확인</label>
-    <input
-      type="password"
-      name="password2"
-      class="signup-input"
-      required=""
-      id="id_password2"
-    />
+    <input type="password" name="password2" class="signup-input" required="" id="id_password2" />
     <div class="errorMessage"></div>
   </div>
   <div class="row">
@@ -87,24 +47,10 @@
   </div>
   <div class="mb-3">
     <!--도로명 주소 검색-->
-    <label for="address"
-      >주소 입력 <span style="font-weight: bold">(필수)</span></label
-    >
+    <label for="address">주소 입력 <span style="font-weight: bold">(필수)</span></label>
     <div id="address-input-container">
-      <input
-        type="text"
-        placeholder="도로명 주소"
-        name="address"
-        readonly="readonly"
-        id="address"
-        required=""
-      />
-      <button
-        onclick="execDaumPostcode(event)"
-        name="btn-address"
-        id="btn-address"
-        class="user-btn"
-      >
+      <input type="text" placeholder="도로명 주소" name="address" readonly="readonly" id="address" required="" />
+      <button onclick="execDaumPostcode(event)" name="btn-address" id="btn-address" class="user-btn">
         검색
       </button>
       <div class="errorMessage"></div>
@@ -113,13 +59,7 @@
   <div class="mb-3">
     <!--상세 주소-->
     <label for="address_detail">상세 주소 입력 (선택)</label>
-    <input
-      type="text"
-      class="signup-input"
-      placeholder="상세주소"
-      name="address_detail"
-      id="address_detail"
-    />
+    <input type="text" class="signup-input" placeholder="상세주소" name="address_detail" id="address_detail" />
     <div class="errorMessage"></div>
   </div>
   <div class="row">
@@ -143,12 +83,7 @@
     <input type="file" name="image" id="id_image" accept=".png, .jpeg" />
     <div class="errorMessage"></div>
   </div>
-  <button
-    class="user-btn"
-    type="submit"
-    id="signup-form-submit"
-    form="signup-form"
-  >
+  <button class="user-btn" type="submit" id="signup-form-submit" form="signup-form">
     회원가입
   </button>
 </form>
