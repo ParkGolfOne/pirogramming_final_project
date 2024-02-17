@@ -147,8 +147,10 @@
                         </div>
                         <div class="a_reply_content">{{ child_comment.content }}</div>
                         <div class="comment-btns">
+                          {% if child_comment.commenter_id == now_user.id %}
                           <button class="a_comment_delete" onclick="deleteComment({{ child_comment.id }})">삭제</button>
                           <button class="a_comment_delete" onclick="updateReplyBtn({{ child_comment.id }})">수정</button>
+                          {% endif %}
                         </div>
                       </div>
                     {% endfor %}
