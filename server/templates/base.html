@@ -4,6 +4,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta name="naver-site-verification" content="970e8ad700cff2f5346e931ff91731039ba714c7" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="{% static 'main/css/reset.css' %}" />
     <link rel="stylesheet" href="{% static 'main/css/style.css' %}" />
@@ -33,15 +34,15 @@
         <li>
           <a href="{% url 'communitys:board_list' %}">커뮤니티</a>
         </li>
+        <li>
+          <a href="{% url 'games:game_set' %}">게임</a>
+        </li>
         {% if user.is_authenticated %}
           <li>
             <a href="{% url 'score:score_main' %}">스코어</a>
           </li>
           <li>
             <a href="{% url 'users:main' user.pk %}">마이페이지</a>
-          </li>
-          <li>
-            <a href="{% url 'users:logout' %}">로그아웃</a>
           </li>
 
         {% else %}

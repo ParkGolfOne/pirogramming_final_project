@@ -48,8 +48,8 @@ pictureInputArea.addEventListener("drop", function (e) {
 //  이미지 파일 추출
 
 function inputPicture() {}
-
 function dragInPicture() {}
+
 
 //새 HTTPRequest 생성
 const requestExtractImage = new XMLHttpRequest();
@@ -60,12 +60,16 @@ const requestExtractImage = new XMLHttpRequest();
 function extractPicture() {
   const fileInput = document.querySelector("#uploadedImage");
   const formData = new FormData();
+  console.log("formData : ", formData)
   if (dragImage) {
     formData.append("image", dragImage);
-  } else if (fileInput !== null) {
+    console.log("1");
+  } else if (fileInput.files[0]) {
     formData.append("image", fileInput.files[0]);
+    console.log("2");
   } else {
     alert("이미지가 업로드 되지 않았습니다.");
+    console.log("3");
     return;
   }
 

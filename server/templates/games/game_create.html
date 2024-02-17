@@ -115,7 +115,7 @@
   <div class="player_select_container">
     <div class="player_select" id="player_select_origin">
       <span> 플레이어 </span>
-      <input type="text" name="name_0" value="플레이어" class="user-input" />
+      <input type="text" name="name_0" value="플레이어" class="user-input" onfocus="this.value=''"/>
       <div>
         {% if request.user.is_authenticated %}
         <select class="playerSelect" type="select" name="player_0_id">

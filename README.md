@@ -24,6 +24,7 @@
 
 ## 🙍‍♂️ 멤버 구성
 
+<br>
 - ![이승찬](https://github.com/chan000518): 팀장, 게임 기능 개발, CI/CD
 - ![양현](https://github.com/yanghyeonee): 골프장 리뷰, 커뮤니티, 점수 기능 개발
 - ![윤나경](https://github.com/nakyeongg): 로고, 화면 디자인, 프론트 개발
@@ -32,6 +33,7 @@
 
 ## ✨개발 환경
 
+<br>
 <p align="center">
 ![python](https://img.shields.io/badge/Python-14354C?style=for-the-badge&logo=python&logoColor=white)
 ![django](https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=django&logoColor=white)
@@ -47,6 +49,7 @@
 
 ## 📌 주요 기능
 
+<br>
 ### 유저
 
 1. 로그인 및 로그아웃
@@ -68,8 +71,8 @@
 
 ### 커뮤니티
 
-<br>
 
 ## 기능 명세서
 
+<br>
 https://equable-haddock-22a.notion.site/8a6847ad1dcb4355a0cccea05eeab47e?v=39ccc7b76b724883a271e4e936c58b12&pvs=4

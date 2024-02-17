@@ -19,8 +19,9 @@ jobs:
     - name: Install dependencies
       run: |
         pip install -r requirements.txt
-    - name: Change to the project directory
-      run: cd pirogramming_final_project/server
+    - name: Create test database
+      run: |
+        mysql -u ${{ secrets.MYSQL_USERNAME }} -p${{ secrets.MYSQL_PASSWD }} -h ${{ secrets.MYSQL_HOST }} -e "CREATE DATABASE IF NOT EXISTS test_${{ secrets.MYSQL_DBNAME }};"
     - name: Run tests
       env:
         DEBUG: ${{ secrets.DEBUG }}
@@ -45,22 +46,6 @@ jobs:
         AWS_S3_SECRET_ACCESS_KEY : ${{ secrets.AWS_S3_SECRET_ACCESS_KEY }} 
         AWS_S3_CUSTOM_DOMAIN : ${{ secrets.AWS_S3_CUSTOM_DOMAIN }}
       run: |
-        python manage.py test apps.users
-  deploy:
-    needs: build-and-test
-    runs-on: ubuntu-22.04
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-    steps:
-    - name: Deploy to EC2
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.SERVER_IP }}
-        username: ubuntu
-        key: ${{ secrets.SSH_PRIVATE_KEY }}
-        script: |
-          cd /server
-          git pull origin main
-          source venv/bin/activate
-          pip install -r requirements.txt
-          sudo systemctl restart uwsgi
-          sudo systemctl restart nginx
+        python ./server/manage.py migrate
+        python ./server/manage.py test apps.users --noinput
+

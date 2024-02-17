@@ -13,8 +13,8 @@
           <div>
             <p>아이디:</p>
             <p>{{ user.username }}</p>
-            <p>이메일:</p>
-            <p>{{ user.email }}</p>
+            <p>주소:</p>
+            <p>{{ user.address }}</p>
           </div>
         </div>
       </div>
@@ -92,7 +92,32 @@
       </div>
     </div>
   {% else %}
-    잘못된 접근입니다
+  <!-- 다른 사람의 마이페이지에 들어왔을 때 -->
+  <h1 class="yourpage-title">{{ user.nickname }}님 마이페이지</h1>
+  <div class="user-yourpage" id="yourpage-info">
+    <img src="{{ user.image.url }}" alt="프로필사진" class="yourpage-img" />
+    <div>
+      <p>닉네임:</p>
+      <p>{{ user.nickname }}</p>
+      <p>아이디:</p>
+      <p>{{ user.username }}</p>
+    </div>
+  </div>
+  <h2 class="yourpage-title">{{ user.nickname }}님이 작성한 게시글</h2>
+    {% for post in my_posts %}
+    <div class="user-yourpage">
+        <a href="{% url 'communitys:post_detail' post.board.id post.id %}">
+          <span>{{ post.title }}</span><br />
+          <span>조회수: {{post.view_num}}</span>
+        </a>
+      </div>
+    {% empty %}
+    <div class="user-yourpage">
+      <p>작성한 게시글이 없습니다.</p>
+    </div>
+      
+    {% endfor %}
+  </div>
   {% endif %}
 {% endblock %} {% block script %}
   <script src="{% static 'users/js/mypage.js' %}"></script>
