@@ -1,5 +1,4 @@
-# Pirogramming Final Project
-## 파크골프원 
+# Pirogramming Final Project [![CI Pipeline](https://github.com/ParkGolfOne/pirogramming_final_project/actions/workflows/django.yml/badge.svg)](https://github.com/ParkGolfOne/pirogramming_final_project/actions/workflows/django.yml)
 : 파크골프 이용자를 위한 플랫폼
 : 파크골프장 위치 및 정보 제공, 파크골프 커뮤니티, 골프 스코어 기록 등의 서비스를 제공합니다.
 
