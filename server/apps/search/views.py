@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import *
 from apps.users.models import *
 from apps.locations.models import *
+from apps.communitys.models import *
 from apps.score.models import *
 import json
 from django.http import JsonResponse
@@ -13,6 +14,8 @@ from apps.users.views import friend_candidates
 from django.http import JsonResponse
 from django.core.serializers import serialize
 from django.shortcuts import render
+# 조건 에 OR 을 사용하기 위해서
+from django.db.models import Q
 
 
 ###########################################################
@@ -155,3 +158,102 @@ def search_users(request):
             })
         print(search_users_json)
         return JsonResponse(search_users_json, safe=False)
+    
+
+
+###########################################################
+#                     메인페이지 검색                      #
+###########################################################
+    
+
+# 함수 이름 : search_main_func
+# 전달인자 : request
+# 기능 : 메인페이지에서 검색창에 글자를 입력하면 해당 글자로 시작하는 골프장 이름과 
+#        해당 글자가 들어있는 커뮤니티 게시글을 모두 가져온다.
+def search_main_func(input_text, start_num, count, sortType):
+    search_result = []
+
+    ###### 조건에 맞는 골프장 가져오기 ######
+    # # 골프장 필터
+    location_name_filter = Q(golf_name__startswith=input_text)
+    location_address_filter = Q(golf_address__contains=input_text)
+
+    location_filter = location_name_filter | location_address_filter
+
+    try:
+        if count > 0 : 
+            locations = GolfLocation.objects.filter(location_filter).order_by(sortType)[start_num:start_num + count]
+
+
+            # 안에 들어가 있는 개수 체크
+            actual_count = min(len(locations), count)
+
+            # 가져올 객체 수가 0보다 크면 해당 개수만큼만
+            locations = locations[:actual_count]
+        elif count == 0 :
+            locations = GolfLocation.objects.filter(location_filter).order_by(sortType)
+    except GolfLocation.DoesNotExist:
+        locations = []
+
+
+    ###### 조건에 맞는 커뮤니티게시글 제목 가져오기 ######
+    # 커뮤니티 필터
+    post_title_filter = {'title__contains': input_text}
+    try:
+        if count > 0 : 
+            posts = Post.objects.filter(**post_title_filter).order_by(sortType)[start_num:start_num + count]
+
+            # 안에 들어가 있는 개수 체크
+            actual_count = min(len(posts), count)
+
+            # 가져올 객체 수가 0보다 크면 해당 개수만큼만
+            posts = posts[:actual_count]
+
+        elif count == 0:
+            posts = Post.objects.filter(**post_title_filter).order_by(sortType)
+
+    except Post.DoesNotExist:
+        posts = []
+
+
+    # 검색 결과 정보 추가
+
+    for location in locations:
+        temp_result = {"type" : "골프장" ,"lid" : location.id, "lname" : location.golf_name, "addr" : location.golf_address,}
+        search_result.append(temp_result)
+
+    for post in posts:
+        temp_result = {"type" : "게시글" ,"pid" : post.id, "title" : post.title, "bid" : post.board.id, "bname" : post.board.name,}
+        search_result.append(temp_result)
+
+    return search_result
+
+
+# 함수 이름 : search_main
+# 전달인자 : request
+# 기능 : 메인페이지에서 검색창에 글자를 입력하면 해당 글자로 시작하는 골프장 이름과 
+#        해당 글자가 들어있는 커뮤니티 게시글을 모두 가져온다.
+def search_main(request):
+    input_text = request.GET.get('input', None)
+    # 장소, 게시글 당 몇개를 가져오는지 개수
+    result_count = request.GET.get('count', 3)
+    result_count = int(result_count)
+
+    # 전송될 결과값
+    search_result = search_main_func(input_text, 0, result_count, "id") # input_text 값을 0 부터 result_count 만큼의 개수를 id 로 정렬해서 가져오기
+
+
+    return JsonResponse({"search_result" : search_result})
+
+
+
+# 함수 이름 : search_main_result
+# 전달인자 : request
+# 기능 : 메인페이지에서 검색한 결과 값들 전체 보여주기
+def search_main_result(request):
+    input_text = request.GET.get('input', None)
+    ctx = {
+        'search_text' : input_text,
+    }
+    return render(request, "search/search_main_result.html",ctx)
+    

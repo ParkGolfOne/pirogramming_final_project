@@ -37,6 +37,7 @@
     border: 3px solid #20C997;
     border-radius: 16px;
     overflow: hidden;
+    z-index: 8;
 }
 .search_box input[type = "text"]{
     border: none;
@@ -55,6 +56,34 @@
     font-size: 0;
     border: none;
     background: url(../images/search.png) #20C997 no-repeat center center;
+}
+
+/*  검색 자동완성 추천 부분 */
+
+.match_content{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    background-color:aliceblue;
+}
+
+.search_result{
+    margin: 4px;
+    padding: 10px;
+    width: 100%;
+    font-size: 15px;
+
+}
+.search_result > a{
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.result-title{
+    font-weight: bold;
+    font-size: 20px;
 }
 
 .location{
