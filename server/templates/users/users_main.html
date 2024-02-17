@@ -27,8 +27,8 @@
         <h3 class="user-btn-title">계정</h3>
         <a href="{% url 'users:update' user.pk %}" class="user-mypage-btn">회원정보 수정</a>
         <a href="{% url 'users:logout' %}" class="user-mypage-btn">로그아웃</a>
-        <form method="post" action="{% url 'users:delete' user.pk %}" class="user-mypage-btn">
-          <button type="submit">회원 탈퇴</button>
+        <form id="deleteForm" method="post" action="{% url 'users:delete' user.pk %}" class="user-mypage-btn">
+          <button form="deleteForm" onclick="confirmDelete()">회원 탈퇴</button>
         </form>
       </div>
     </div>
