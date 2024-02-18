@@ -1,7 +1,7 @@
 # 파크골프하나로  [![CI Pipeline](https://github.com/ParkGolfOne/pirogramming_final_project/actions/workflows/django.yml/badge.svg)](https://github.com/ParkGolfOne/pirogramming_final_project/actions/workflows/django.yml)
 
 <br>
-<p align="center">
+<p align="justify">
   <a href="https://www.parkgolfone.com/"><img src="docs/parkgolf_logo.gif"></a>
   URL: <a href="https://www.parkgolfone.com/">https://www.parkgolfone.com/</a>
 </p>
@@ -12,6 +12,7 @@
 <br>
 <p align="justify">
 : 파크골프 이용자를 위한 플랫폼
+  
 : 파크골프장 위치 및 정보 제공, 파크골프 커뮤니티, 골프 스코어 기록 등의 서비스를 제공합니다.
 </p>
 
@@ -78,9 +79,10 @@
 
 ### 유저
 
-1. 로그인 및 로그아웃
+**1. 로그인 및 로그아웃**
 
 - 소셜로그인 (네이버, 카카오)
+
 - 유저 도로명/지번 주소 (다음 주소 api)
 
 2. 유저 정보 수정
