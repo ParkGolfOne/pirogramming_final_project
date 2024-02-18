@@ -139,7 +139,7 @@ function showReplyInput(post_id, comment_id){
   target_comment.innerHTML += `
   <div class="reply-input-area">
     <input type="text" class="reply-input-box" />
-    <button class="reply-upload-btn" onclick="writeReply(${post_id}, ${comment_id})">대댓글 등록</button>
+    <button class="reply-upload-btn" onclick="writeReply(${post_id}, ${comment_id})">대댓글<br>등록</button>
     <button class="reply-upload-btn" onclick="cancelReply()">취소</button>
   </div>`
 }
