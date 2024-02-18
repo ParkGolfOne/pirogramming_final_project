@@ -108,11 +108,13 @@ def board_search(request):
         return JsonResponse([], safe=False)
     # 직접 JSON 형태로 데이터 구성
     search_board_json = []
+
     for board in search_boards:
         if not board.thumbnail:
             thumbnail= ""
         else:
-            board.thumbnail.url = ""
+            thumbnail = board.thumbnail.url 
+
         board_data = {
             'pk': board.id,
             'name': board.name,
