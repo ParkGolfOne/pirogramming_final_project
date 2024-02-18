@@ -6,6 +6,7 @@ from django.urls import reverse
 from apps.score.models import Score
 from apps.users.models import User
 from apps.locations.models import GolfLocation
+from apps.locations.views import location_get
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages
 
@@ -18,7 +19,7 @@ def game_create_post(request, form):
     game = Game.objects.create(
         created_by = request.user if request.user.is_authenticated else None,
         game_name = form.data['game_name'],
-        ground = get_object_or_404(GolfLocation, golf_name = location_name),
+        ground = location_get(location_name),
     )
 
     # 라운드 수 만큼 Round 인스턴스 생성
