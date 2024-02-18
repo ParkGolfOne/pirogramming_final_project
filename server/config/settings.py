@@ -146,7 +146,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 
 
-# 1. local db.sqlite3 사용할 경우
+# # 1. local db.sqlite3 사용할 경우
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
