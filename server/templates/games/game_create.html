@@ -56,7 +56,7 @@
   }
   #player_select_origin > div {
     text-align: center;
-    display:flex;
+    display: flex;
     align-items: center;
     justify-content: center;
     gap: 10px;
@@ -115,7 +115,13 @@
   <div class="player_select_container">
     <div class="player_select" id="player_select_origin">
       <span> 플레이어 </span>
-      <input type="text" name="name_0" value="플레이어" class="user-input" onfocus="this.value=''"/>
+      <input
+        type="text"
+        name="name_0"
+        value="플레이어"
+        class="user-input"
+        onfocus="this.value=''"
+      />
       <div>
         {% if request.user.is_authenticated %}
         <select class="playerSelect" type="select" name="player_0_id">
@@ -125,10 +131,11 @@
           <option value="{{ friend.id }}">{{ friend.nickname }}</option>
           {% endfor %}
         </select>
-        <div onclick="openUserSearchPage()" class="game-user-search">유저 검색</div>
-        {% endif %}        
+        <div onclick="openUserSearchPage(event)" class="game-user-search">
+          유저 검색
+        </div>
+        {% endif %}
       </div>
-
     </div>
   </div>
   <div class="locationInputArea">
@@ -157,20 +164,39 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
   // 팝업창 열기
-  function openUserSearchPage() {
+  function openUserSearchPage(event) {
+    // 이벤트를 발생시킨 요소 가져오기
+    var clickedElement = event.target || event.srcElement;
+
+    // 해당 버튼이 속한 select 요소 가져오기
+    var parentElement = clickedElement.parentElement;
+    var selectElement = parentElement.querySelector(".playerSelect");
+
     window.open(
       "{% url 'games:search_users' %}",
       "_blank",
       "width=500,height=600"
     );
+    window.popupArguments = { selectElement: selectElement };
   }
 
   // 팝업창에서 받아온 값으로 설정
-  function setValue(id, username) {
-    // 원하는 태그의 값을 변경
-    $(".playerSelect").prepend(
-      `<option value="${id}" selected>${username}</option>`
-    );
+  function setValue(selectElement, id, username) {
+    // 선택된 옵션 제거
+    var selectedOption = selectElement.querySelector("option[selected]");
+
+    if (selectedOption) {
+      selectedOption.removeAttribute("selected");
+    }
+
+    // 새로운 옵션 요소 생성
+    var newOption = document.createElement("option");
+    newOption.value = id;
+    newOption.textContent = username;
+    newOption.setAttribute("selected", true);
+
+    // select box에 새로운 옵션 추가
+    selectElement.appendChild(newOption);
   }
 
   function decBtn(element) {
