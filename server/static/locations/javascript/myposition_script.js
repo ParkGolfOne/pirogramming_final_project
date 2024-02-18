@@ -98,7 +98,7 @@ function showPosition(position) {
         const markerPositions = new naver.maps.LatLng(golfLat, golfLon);
 
         const marker = new naver.maps.Marker({
-            position : markerLocations,
+            position : markerPositions,
             map: map,
         });
         bounds.extend(markerPositions);
