@@ -1,7 +1,16 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-    <div id="myposition_map" style="width: 800px; height: 500px;"></div>
+    <br>
+    <div id="myposition_map" class="location">
+      <div class="overlay" id="overlay">
+        <div class="spinner">
+          <div class="ball"></div>
+          <p id="loading">LOADING</p>
+        </div>
+      </div>
+    </div>
+
 {% endblock %}
 {% block script %}
       <script src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=mzbzbj8tit">
