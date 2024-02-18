@@ -1,5 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block head %}
+  <link rel="stylesheet" href="{% static 'main/css/main.css' %}" />
+{% endblock %}
 {% block content %}
     <br>
     <div id="myposition_map" class="location">
