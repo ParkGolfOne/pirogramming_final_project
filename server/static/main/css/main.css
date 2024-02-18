@@ -122,10 +122,15 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    padding: 10px;
+    padding: 10px 5px;
     color: var(--green--bright--color) !important;
     font-weight: bold;
 }
+
+#map-btn {
+    gap: 10px;
+}
+
 .uiw--map {
     display: inline-block;
     width: 150px;
@@ -182,6 +187,7 @@
     }
     .one {
         flex-direction: row;
+        justify-content: space-around;
     }
 }
 

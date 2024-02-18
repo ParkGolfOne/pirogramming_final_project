@@ -146,14 +146,13 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 
 
-# # 1. local db.sqlite3 사용할 경우
+# 1. local db.sqlite3 사용할 경우
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
-
 
     
 # 2. db 서버와 연결
@@ -200,7 +199,6 @@ USE_I18N = True
 
 USE_TZ = True
 
-AUTH_USER_MODEL = 'users.User'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
