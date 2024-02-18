@@ -80,17 +80,44 @@ function showPosition(position) {
 
     //가장 거리가 작은 (가까운) 5개의 요소만 최종적으로 저장
     const final_five = organized_data.slice(0,5);
+
+    var infoWindow = new naver.maps.InfoWindow({
+        maxWidth: 200,
+        backgroundColor: "#eee",
+        borderColor: "#2db400",
+        borderWidth: 5,
+        anchorSize: new naver.maps.Size(10, 10),
+        anchorSkew: false,
+        anchorColor: "#eee",
+        pixelOffset: new naver.maps.Point(20, -20)
+    });
     
     final_five.map(item => {
         const golfLat = item[1][1];
         const golfLon = item[1][2];
         const markerPositions = new naver.maps.LatLng(golfLat, golfLon);
 
-        new naver.maps.Marker({
-            position : markerPositions,
+        const marker = new naver.maps.Marker({
+            position : markerLocations,
             map: map,
         });
         bounds.extend(markerPositions);
+
+        naver.maps.Event.addListener(marker, 'mouseover', function(e){
+            infoWindow.setContent('<div style="width:150px;text-align:center;padding:10px;">' + item[0] + '</div>');
+            infoWindow.open(map, marker);
+        });
+
+        naver.maps.Event.addListener(marker, 'mouseout', function(e){
+            infoWindow.close();
+        });
+
+        naver.maps.Event.addListener(marker, 'click', function(){
+
+            //window.location.href = `https://map.naver.com/p/search/${item[0]}`;  -> 같은 창에서 그대로 지도 검색
+            
+            window.open(`https://map.naver.com/p/search/${item[0]}`);  // 새로운 창에서 지도 검색
+        });
     });
     
     //모든 마커가 보일 수 있도록 지도 zoom 뷰 조절
