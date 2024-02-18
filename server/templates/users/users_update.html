@@ -1,10 +1,11 @@
 {% extends 'base.html' %} {%load static%} {% block head %}
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
   integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+  <title>회원 정보 수정 페이지 : 파크골프하나로</title>
 <link rel="stylesheet" href="{% static 'users/css/signup.css' %}" />
 {% endblock head%} {% block content %}
 <form method="POST" id="update-form" class="users-update-form" enctype="multipart/form-data" >
-  <div class="signup-form-title">회원 정보 수정 페이지</div>
+  <div class="signup-form-title">회원 정보 수정</div>
   <div class="row">
     <div class="col-md-6 mb-3">
       <label for="id_username">아이디 <span style="font-weight: bold">(필수)</span></label>
@@ -21,9 +22,9 @@
     <div class="col-md-6 mb-3">
       <label for="id_birth">생일 (선택)</label>
       {% if birth == None %}
-      <input type="text" name="birth" value="" class="signup-input" id="id_birth" />
+      <input type="date" name="birth" value="" class="signup-input" id="id_birth" />
       {% else %}
-      <input type="text" name="birth" value="{{birth}}" class="signup-input" id="id_birth" />
+      <input type="date" name="birth" value="{{birth}}" class="signup-input" id="id_birth" />
       {% endif %}
       <div class="errorMessage"></div>
     </div>

@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block head %}
-  <title>점수 입력</title>
+  <title>게임 점수 입력 : 파크골프하나로</title>
   <link rel="stylesheet" href="{% static 'score/css/score_detail.css'%}" />
   <link rel="stylesheet" href="{% static 'score/css/score_create.css'%}" />
   <style>
@@ -148,13 +148,13 @@
             {% for score in round.round_score.all %}
               <li class="coures_li">
                 {% if request.user.is_authenticated %}
-                  <form method="post" action="">
+                  <form id = "scoreForm" method="post" action="">
                     {% csrf_token %}
                     <input type="hidden" name="score_id" value="{{ score.id }}">
-                    <input type="hidden" name="player_id" value="{{ player.id }}">
-                    <input class = "Btn" type="submit" value="내 점수 저장" class="game-myscore">    
+                    <input type="hidden" name="player_id" value="{{ request.user.id }}">
+                    <input class="Btn game-myscore" type="submit" value="내 점수 저장">    
                   </form>
-                {% end if %}
+                {% endif %}
                   <div>점수</div>
                   <div>{{ score.scores.hole1}}</div>
                   <div>{{ score.scores.hole2}}</div>
@@ -177,4 +177,37 @@
         <a href="{% url 'games:game_set'%}" class="game-again">게임 다시 하기</a>
     </div>
 {% endfor %}
+{% endblock %}
+
+{% block script %}
+<script>
+  document.getElementById('scoreForm').addEventListener('submit', function(e) {
+      e.preventDefault(); // 폼 제출에 의한 페이지 새로고침 방지
+      
+      let formData = new FormData(this);
+      
+      fetch(this.action, {
+          method: 'POST',
+          body: formData,
+          headers: {
+              'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+          },
+      })
+      .then(response => {
+          if(response.ok) {
+              return response.json();
+          }
+          throw new Error('Network response was not ok.');
+      })
+      .then(data => {
+          console.log(data); // 서버로부터의 응답 처리
+          alert('저장되었습니다.'); 
+          const button = document.querySelector('.Btn.game-myscore');
+          button.disabled = true;
+          button.value = '저장 완료'; 
+      })
+      .catch(error => console.error('Error:', error));
+  });
+</script>
+
 {% endblock %}

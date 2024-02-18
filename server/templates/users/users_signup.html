@@ -7,6 +7,7 @@
 />
 <link rel="stylesheet" href="{% static 'users/css/signup.css' %}" />
 <link rel="stylesheet" href="{% static 'main/css/reset.css' %}" />
+<title>회원 가입 : 파크골프하나로</title>
 {% endblock head %} {% block content %}
 <form
   method="POST"
@@ -71,7 +72,7 @@
   <div class="row">
     <div class="col-md-6 mb-3">
       <label for="id_birth">생일 (선택)</label>
-      <input type="text" name="birth" class="signup-input" id="id_birth" />
+      <input type="date" name="birth" class="signup-input" id="id_birth" />
       <div class="errorMessage"></div>
     </div>
     <div class="col-md-6 mb-3">

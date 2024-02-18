@@ -3,14 +3,15 @@
 {% block head %}
   <link rel="stylesheet" href="{% static 'main/css/main.css' %}" />
   <link rel="stylesheet" href="{% static 'main/css/tutorial.css' %}" />
+  <title>파크골프하나로</title>
 {% endblock %}
 {% block content %}
   <div class="main_p_container">
     <div class="left">
       <div class="search_box">
-        <input type="text" />
-
-        <input type="submit" />
+        <input type="text" class="search_input" placeholder="검색어를 입력해주세요!" />
+        <ul class="match_content"></ul>
+        <input type="submit" onclick="moveEntireResult()" />
       </div>
       <div id="location_map" class="location">
         <div class="overlay" id="overlay">
@@ -23,9 +24,9 @@
       <div class="tutorialBox tuto-cluster"></div>
     </div>
     <div class="right">
-      <div class="right_box">
+      <nav class="right_box">
         <section>
-          <a href="{% url 'locations:list' %}" class="one">
+          <a href="{% url 'locations:list' %}" class="one" id="map-btn">
             <span class="uiw--map"></span>
             <div>지도</div>
           </a>
@@ -52,7 +53,7 @@
           </a>
           <div class="tutorialBox tuto-game"></div>
         </section>
-      </div>
+      </nav>
     </div>
   </div>
   <div class="tutorialBox tuto-start"></div>
@@ -60,7 +61,11 @@
   <div id="blind"></div>
 {% endblock %}
 {% block script %}
-  <!-- 튜토리얼 -->
+  <!-- 메인 검색 -->
+  <script src="{% static 'search/js/search_main.js' %}"></script>
+  <!-- 메인 전체 검색 결과 페이지로 이동 -->
+  <!-- <script src="{% static 'search/js/search_main_result.js' %}"></script> -->
+  <!-- 튜토리얼 --> 
   <script src="{% static 'js/tutorial.js' %}"></script>
   <script src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=mzbzbj8tit"></script>
   <script>
@@ -68,5 +73,4 @@
   </script>
   <script src="{% static 'locations/javascript/MarkerClustering.js' %}"></script>
   <script src="{% static 'locations/javascript/location_cluster_script.js' %}"></script>
-
 {% endblock %}

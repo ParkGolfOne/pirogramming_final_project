@@ -367,11 +367,10 @@ def review_list(request):
     return JsonResponse({'review_names': review_names, 'reviews_counts' : len(reviews), 'page_num' : page_num + 1, "now_user" : request.user.id, "profile_list" : profile_list})
 
 
-
 # 로케이션 얻기
-def location_get(location_name):
+def location_get_by_name(location_name):
     try:
-        # GolfLocation에서 id가 1인 객체를 가져옵니다.
+        # GolfLocation
         obj = get_object_or_404(GolfLocation, golf_name = location_name)
     except GolfLocation.DoesNotExist:
         obj = None

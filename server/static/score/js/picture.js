@@ -48,8 +48,8 @@ pictureInputArea.addEventListener("drop", function (e) {
 //  이미지 파일 추출
 
 function inputPicture() {}
-
 function dragInPicture() {}
+
 
 //새 HTTPRequest 생성
 const requestExtractImage = new XMLHttpRequest();

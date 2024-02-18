@@ -6,7 +6,8 @@ from django.urls import reverse
 from apps.score.models import Score
 from apps.users.models import User
 from apps.locations.models import GolfLocation
-from apps.locations.views import location_get
+from apps.locations.views import location_get_by_name
+from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages
 
@@ -14,12 +15,12 @@ def game_create_post(request, form):
     #폼에서 라운드 수 와 플레이어 수를 입력받아 저장
     round_count = int(request.POST.get('round_count')) 
     location_name = request.POST.get('location')
-
+    
     # Game 인스턴스 생성    
     game = Game.objects.create(
         created_by = request.user if request.user.is_authenticated else None,
         game_name = form.data['game_name'],
-        ground = location_get(location_name),
+        ground = get_object_or_404(GolfLocation, golf_name = location_name),
     )
 
     # 라운드 수 만큼 Round 인스턴스 생성
@@ -146,7 +147,7 @@ def game_detail(request, game_id, player_count):
     # 임시 저장이므로 다시 원래 페이지
     return redirect('games:game_update', game_id=game.id, player_count=player_count)
 
-
+@csrf_exempt
 def game_save(request, game_id, player_count):
     game , rounds = game_load(game_id)
 
@@ -175,7 +176,7 @@ def game_save(request, game_id, player_count):
             new_score.game_round = None
             new_score.save()
 
-        return redirect(request.path)
+        return JsonResponse({'message': '저장되었습니다.'})
 
 def search_users(request):
     return render(request, 'games/game_popup.html')
