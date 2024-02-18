@@ -81,6 +81,8 @@ function showPosition(position) {
     //가장 거리가 작은 (가까운) 5개의 요소만 최종적으로 저장
     const final_five = organized_data.slice(0,5);
 
+    console.log(final_five);
+
     var infoWindow = new naver.maps.InfoWindow({
         maxWidth: 200,
         backgroundColor: "#eee",
@@ -104,7 +106,7 @@ function showPosition(position) {
         bounds.extend(markerPositions);
 
         naver.maps.Event.addListener(marker, 'mouseover', function(e){
-            infoWindow.setContent('<div style="width:150px;text-align:center;padding:10px;">' + item[0] + '</div>');
+            infoWindow.setContent('<div style="width:150px;text-align:center;padding:10px;">' + item[1][0] + '</div>');
             infoWindow.open(map, marker);
         });
 
@@ -116,7 +118,7 @@ function showPosition(position) {
 
             //window.location.href = `https://map.naver.com/p/search/${item[0]}`;  -> 같은 창에서 그대로 지도 검색
             
-            window.open(`https://map.naver.com/p/search/${item[0]}`);  // 새로운 창에서 지도 검색
+            window.open(`https://map.naver.com/p/search/${item[1][0]}`);  // 새로운 창에서 지도 검색
         });
     });
     
