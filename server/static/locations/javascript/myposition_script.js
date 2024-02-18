@@ -81,6 +81,8 @@ function showPosition(position) {
     //가장 거리가 작은 (가까운) 5개의 요소만 최종적으로 저장
     const final_five = organized_data.slice(0,5);
 
+    console.log(final_five);
+
     var infoWindow = new naver.maps.InfoWindow({
         maxWidth: 200,
         backgroundColor: "#eee",
