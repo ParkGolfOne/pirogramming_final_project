@@ -2,6 +2,7 @@
 {% load static %}
 {% block head %}
   <link rel="stylesheet" href="{% static 'locations/css/location_create.css'%}" />
+  <title>파크골프장 정보 수정 : 파크골프하나로</title>
 {% endblock %}
 {% block content %}
     <form action = "{% url 'locations:update' pk %}" method = 'post' enctype="multipart/form-data" class="location-form">
