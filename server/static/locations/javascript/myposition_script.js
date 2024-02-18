@@ -106,7 +106,7 @@ function showPosition(position) {
         bounds.extend(markerPositions);
 
         naver.maps.Event.addListener(marker, 'mouseover', function(e){
-            infoWindow.setContent('<div style="width:150px;text-align:center;padding:10px;">' + item[0] + '</div>');
+            infoWindow.setContent('<div style="width:150px;text-align:center;padding:10px;">' + item[1][0] + '</div>');
             infoWindow.open(map, marker);
         });
 
@@ -118,7 +118,7 @@ function showPosition(position) {
 
             //window.location.href = `https://map.naver.com/p/search/${item[0]}`;  -> 같은 창에서 그대로 지도 검색
             
-            window.open(`https://map.naver.com/p/search/${item[0]}`);  // 새로운 창에서 지도 검색
+            window.open(`https://map.naver.com/p/search/${item[1][0]}`);  // 새로운 창에서 지도 검색
         });
     });
     
