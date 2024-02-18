@@ -368,7 +368,7 @@ def review_list(request):
 
 
 # 로케이션 얻기
-def location_get(location_name):
+def location_get_by_name(location_name):
     try:
         # GolfLocation
         obj = get_object_or_404(GolfLocation, golf_name = location_name)
