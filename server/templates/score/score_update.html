@@ -4,7 +4,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>점수 수정</title>
+    <title>점수 수정 페이지 : 파크골프하나로</title>
     <link rel="stylesheet" href="{% static 'score/css/score_detail.css'%}" />
     <link rel="stylesheet" href="{% static 'score/css/score_create.css'%}" />
     <link rel="stylesheet" href="{% static 'score/css/score_base.css'%}" />
@@ -13,7 +13,7 @@
     <a href="{% url 'score:score_main'%}" class="scoreHomeLink"
       ><div class="scoreHomeIcon"></div>
       <span>스코어 홈</span></a
-    >>
+    >
     <h1>점수 수정 페이지</h1>
     <form method="POST" action="" enctype="multipart/form-data">
       {% csrf_token %}
