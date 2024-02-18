@@ -154,9 +154,8 @@ WSGI_APPLICATION = 'config.wsgi.application'
 #     }
 # }
 
-
     
-# # 2. db 서버와 연결
+# 2. db 서버와 연결
 
 DATABASES = {
     'default': {

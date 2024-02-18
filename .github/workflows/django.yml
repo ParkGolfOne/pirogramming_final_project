@@ -61,6 +61,7 @@ jobs:
           username: ubuntu
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
+            cd pirogrmming_final_project/
             git pull origin main
             source venv/bin/activate
             pip install -r requirements.txt
