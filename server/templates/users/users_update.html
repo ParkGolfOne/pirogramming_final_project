@@ -21,9 +21,9 @@
     <div class="col-md-6 mb-3">
       <label for="id_birth">생일 (선택)</label>
       {% if birth == None %}
-      <input type="text" name="birth" value="" class="signup-input" id="id_birth" />
+      <input type="date" name="birth" value="" class="signup-input" id="id_birth" />
       {% else %}
-      <input type="text" name="birth" value="{{birth}}" class="signup-input" id="id_birth" />
+      <input type="date" name="birth" value="{{birth}}" class="signup-input" id="id_birth" />
       {% endif %}
       <div class="errorMessage"></div>
     </div>
