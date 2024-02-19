@@ -67,10 +67,6 @@ main {
     width: 60%;
 }
 
-.row .friend-btn {
-    width: 20%;
-}
-
 .row .friend-btn button {
     width: 100px !important;
 

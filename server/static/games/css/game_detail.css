@@ -72,11 +72,20 @@
       border: 1px solid var(--green--medium--color);
       transition: 0.1s;
     }
+    .game-myscore {
+      font-size: 10px;
+      padding: 10px 2px;
+    }
     .game-again {
       margin-left: auto;
     }
     form input {
       font-size: 1rem;
+    }
+    @media screen and (min-width: 450px){
+      .game-myscore {
+        font-size: 12px;
+      }
     }
     @media screen and (min-width: 700px){
       .coures_li > div {
@@ -90,6 +99,10 @@
       }
       .coures > h2 {
         font-size: 40px;
+      }
+      .game-myscore {
+        font-size: 15px;
+        padding: 10px;
       }
     }
     
