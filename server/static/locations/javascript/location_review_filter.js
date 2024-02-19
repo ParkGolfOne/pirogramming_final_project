@@ -16,6 +16,7 @@ function reviewPagination(totalReviewCount) {
   const pageList = document.querySelector(".page-list");
   pageList.innerHTML = "";
   totalPageCount = Math.floor(totalReviewCount / a_page_review_count) + 1;
+  console.log(totalPageCount)
 
   for (let i = 1; i <= totalPageCount; i++) {
     if (now_page == i) {
@@ -35,6 +36,10 @@ function reviewPagination(totalReviewCount) {
     leftBtn[1].classList.add("nonDisplay");
     rightBtn[0].classList.remove("nonDisplay");
     rightBtn[1].classList.remove("nonDisplay");
+    if (totalPageCount == 1){
+      rightBtn[0].classList.add("nonDisplay");
+      rightBtn[1].classList.add("nonDisplay");
+    }
   } else if (now_page == totalPageCount) {
     console.log("마지막페이지");
     rightBtn[0].classList.add("nonDisplay");
