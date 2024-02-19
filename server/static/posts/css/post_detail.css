@@ -109,7 +109,9 @@
   width: 100%;
   word-break: break-word;
 }
-
+.my-3 p span {
+  line-height: 1.4;
+}
 .post-date {
   font-size: 20px;
 }
@@ -228,6 +230,11 @@
   background-size: 100% 100%;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='m12.001.63l2.903 8.35l8.839.181l-7.045 5.341l2.56 8.462L12 17.914l-7.256 5.05l2.56-8.462L.26 9.161l8.839-.18z'/%3E%3C/svg%3E");
 }
+
+.shareList {
+  margin: 10px 0px;
+}
+
 /* pc일떄 */
 @media screen and (min-width: 700px) {
   /* .post-detail-container > img {
@@ -267,6 +274,7 @@
 .a_comment_commenter_image{
   width: 30px;
   height: 30px;
+  border-radius: 50%;
 }
 
 
@@ -280,13 +288,13 @@
   align-items: center;
   justify-content: flex-start;
   gap: 8px;
-
   margin-bottom: 15px;
 }
 
 .a_reply_commenter_image{
   width: 20px;
   height: 20px;
+  border-radius: 50%;
 }
 
 
@@ -350,16 +358,20 @@
   margin-top: 10px;
 }
 
-.reply-upload-btn{
+.reply-upload-btn {
   padding: 10px;
   border-radius: 5px;
   border: 1px solid var(--green--medium--color);
   background-color: var(--green--bright--color);
   cursor: pointer;
   width: 100px;
-  font-size: 10px;
+  font-size: 14px;
   color: white;
   line-height: 1;
 }
 
-
+@media screen and (min-width: 370px) {
+  .reply-upload-btn {
+    font-size: 15px;
+  }
+}

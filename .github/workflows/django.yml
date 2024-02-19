@@ -1,4 +1,4 @@
-name: CI Pipeline
+name: CI/CD Pipeline
 
 on:
   push:
@@ -49,3 +49,22 @@ jobs:
         python ./server/manage.py migrate
         python ./server/manage.py test apps.users --noinput
 
+  deploy:
+      needs: build-and-test
+      runs-on: ubuntu-22.04
+      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      steps:
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ubuntu
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd pirogrmming_final_project/
+            git pull origin main
+            source venv/bin/activate
+            pip install -r requirements.txt
+            python ./server/manage.py collectstatic --noinput
+            sudo systemctl restart uwsgi
+            sudo systemctl restart nginx
