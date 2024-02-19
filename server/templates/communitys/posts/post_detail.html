@@ -4,7 +4,7 @@
     <head>
       <meta charset="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>파골원 커뮤 디테일</title>
+      <title>{{ post.title }} : 파크골프하나로</title>
       <link rel="stylesheet" href="{% static 'posts/css/post_detail.css' %}" />
       <link rel="stylesheet" href="{% static 'main/css/link.css'%}" />
       <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
@@ -27,7 +27,7 @@
             <div>
               <img src="{{ post.writer.image.url }}" alt="프로필사진" class="mypage-img" />
               <div>
-                <h4>{{ post.writer }}</h4>
+                <a href="{% url 'users:main' post.writer.pk %}"><h4>{{ post.writer }}</h4></a>
                 <span>{{ post.created_date }}</span>
                 <span class="view">조회 {{ post.view_num }}</span>
               </div>
