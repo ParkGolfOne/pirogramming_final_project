@@ -21,10 +21,11 @@ import json
 
 
 def home(request):
-    locations = [[location.golf_name, float(location.golf_latitude), float(location.golf_longitude)] for location in GolfLocation.objects.all()]
+    locations = [[location.golf_name, float(location.golf_latitude), float(
+        location.golf_longitude)] for location in GolfLocation.objects.all()]
     location_json = json.dumps(locations)
     ctx = {
-        'locations_list' : location_json
+        'locations_list': location_json
     }
     return render(request, 'main.html', ctx)
 
@@ -212,7 +213,7 @@ def update(request, pk):
                 'pk': pk,
                 "username": user.username,
                 "nickname": user.nickname,
-                "birth": user.birth,
+                "birth": user.birth.strftime('%Y-%m-%d') if user.birth is not None else None,
                 "phone": user.phone,
                 "email": user.email,
                 'city': user.region.city,
@@ -226,7 +227,7 @@ def update(request, pk):
                 'pk': pk,
                 "username": user.username,
                 "nickname": user.nickname,
-                "birth": user.birth,
+                "birth": user.birth.strftime('%Y-%m-%d') if user.birth is not None else None,
                 "phone": user.phone,
                 "email": user.email,
                 'city': None,

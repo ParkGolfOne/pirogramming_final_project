@@ -1,22 +1,22 @@
 {% extends 'base.html' %} {% load static %} {% block head %}
   <link rel="stylesheet" href="{% static 'users/css/user.css' %}" />
   <link rel="stylesheet" href="{% static 'locations/css/location_review.css' %}" />
-  <title>마이페이지</title>
+  <title>{{ user.nickname }}님 마이페이지 : 파크골프하나로</title>
 {% endblock %} {% block content %}
   {% if user.is_authenticated and now_user.id == pk %}
-    <h1>{{ user.nickname }}님 마이페이지</h1>
+    <h1>{{ user.nickname }}님 <span class="yourpage-br">마이페이지</span></h1>
     <div class="user-btn-container">
       <div class="user-btn-box">
         <h3 class="user-btn-title">내 정보</h3>
-        <div class="mypage-info">
+        <figure class="mypage-info">
           <img src="{{ user.image.url }}" alt="프로필사진" class="mypage-img" />
-          <div>
+          <figcaption>
             <p>아이디:</p>
             <p>{{ user.username }}</p>
             <p>주소:</p>
             <p>{{ user.address }}</p>
-          </div>
-        </div>
+          </figcaption>
+        </fig>
       </div>
       <div class="user-btn-box">
         <h3 class="user-btn-title">친구</h3>
@@ -93,29 +93,29 @@
     </div>
   {% else %}
   <!-- 다른 사람의 마이페이지에 들어왔을 때 -->
-  <h1 class="yourpage-title">{{ user.nickname }}님 마이페이지</h1>
-  <div class="user-yourpage" id="yourpage-info">
+  <h1 class="yourpage-title">{{ user.nickname }}님 <span class="yourpage-br">마이페이지</span></h1>
+
+  <figure class="user-yourpage" id="yourpage-info">
     <img src="{{ user.image.url }}" alt="프로필사진" class="yourpage-img" />
-    <div>
+    <figcaption>
       <p>닉네임:</p>
       <p>{{ user.nickname }}</p>
       <p>아이디:</p>
       <p>{{ user.username }}</p>
-    </div>
-  </div>
-  <h2 class="yourpage-title">{{ user.nickname }}님이 작성한 게시글</h2>
+    </figcaption>
+  </figure>
+  <h2 class="yourpage-title">{{ user.nickname }}님이 <span class="yourpage-br">작성한 게시글</span></h2>
     {% for post in my_posts %}
     <div class="user-yourpage">
         <a href="{% url 'communitys:post_detail' post.board.id post.id %}">
           <span>{{ post.title }}</span><br />
-          <span>조회수: {{post.view_num}}</span>
+          <span class="yourpage-view">조회수: {{post.view_num}}</span>
         </a>
       </div>
     {% empty %}
     <div class="user-yourpage">
       <p>작성한 게시글이 없습니다.</p>
     </div>
-      
     {% endfor %}
   </div>
   {% endif %}
