@@ -1,6 +1,6 @@
 /* 리뷰 선택 버튼 */
 .reviewTypeSelect {
-  width: 60%;
+  width: 100%;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -49,7 +49,7 @@
 .form-group {
   margin-top: 10px;
   gap: 10px;
-  width: 60%;
+  width: 100%;
 }
 
 .reviewList-input {
@@ -226,7 +226,7 @@
   align-items: center;
   justify-content: flex-start;
   gap: 15px;
-  width: 70%;
+  width: 100%;
 }
 
 /* 리뷰 블럭 개체*/
@@ -238,7 +238,7 @@
 
 @media screen and (min-width: 700px) {
   .a_review {
-    width: 85%;
+    width: 80%;
   }
 }
 
@@ -254,6 +254,8 @@
 .a_review_reviewer_profile {
   width: 30px;
   height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
 /* 리뷰 내용 */
@@ -274,10 +276,8 @@
 .input-area {
   display: flex;
   flex-direction: column;
-  width: 60%;
-
+  width: 100%;
   background-color: rgba(111, 120, 126, 0.1);
-
   padding: 30px;
 }
 
@@ -353,3 +353,15 @@
 }
 
 /* 좌 우 버튼 */
+
+
+@media screen and (min-width: 700px) {
+  .input-area {
+    width: 80%;
+  }
+  .form-group, 
+  .reviewTypeSelect {
+    width: 80%;
+  }
+
+}

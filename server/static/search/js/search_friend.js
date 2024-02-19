@@ -75,7 +75,7 @@ const updateFriendField = (friendData) => {
 
   friendData.forEach(function (friend) {
     const li = document.createElement("li");
-    li.innerHTML = `사용자 id: ${friend.username} </br>사용자 닉네임: ${friend.nickname}`;
+    li.innerHTML = `id: ${friend.username} </br>닉네임: ${friend.nickname}`;
     const form = document.createElement("form");
     form.setAttribute("method", "post");
     form.setAttribute("action", `/users/add_friend/${userId}/`);

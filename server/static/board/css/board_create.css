@@ -26,11 +26,15 @@
     border-radius: 10px;
     padding: 10px;
     width: 100%;
+    margin: 10px 0px;
 }
 #id_admin {
     border: 1px solid #ddd;
     border-radius: 10px;
     padding: 10px;
+}
+#id_thumbnail {
+    margin: 10px 0px;
 }
 .community-update-btn {
   padding: 10px;
@@ -68,6 +72,6 @@
 @media screen and (min-width: 700px) {
     .board-create-container,
     .signup-block {
-        width: 70%;
+        width: 60%;
     }
 }
