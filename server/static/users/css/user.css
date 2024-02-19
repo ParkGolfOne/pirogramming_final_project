@@ -2,8 +2,10 @@
 .login-form input[type="password"],
 .signup-form input[type="text"],
 .signup-form input[type="password"],
+.signup-form input[type="date"],
 .users-update-form input[type="text"],
-.users-update-form input[type="password"] {
+.users-update-form input[type="password"],
+.users-update-form input[type="date"] {
     width: 100%;
     padding: 10px;
     margin-bottom: 20px;
@@ -98,6 +100,10 @@
     word-break: break-word;
 }
 
+.mypage-info figcaption {
+    word-break: break-all;
+}
+
 .user-btn-box > div {
     display: flex;
     font-size: 20px;
@@ -121,8 +127,12 @@
 } */
 .mypage-img {
     width: 30%;
+    height: auto;
     border-radius: 50%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
 }
+
 .user-login-btn {
     width: 100%;
     margin-bottom: 20px;
@@ -339,6 +349,7 @@
 
 .yourpage-br {
     display: block;
+    text-align: center;
 }
 
 @media screen and (min-width: 700px) {

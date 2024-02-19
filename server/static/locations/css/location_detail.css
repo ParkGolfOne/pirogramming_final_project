@@ -42,6 +42,7 @@
     margin: 5px;
     background-color: var(--green--pale--color);
     width: 100%;
+    word-break: break-all;
 }
 
 .location-detail-area h3 {
@@ -92,7 +93,7 @@
 }
 
 .naver-review-title {
-    font-size: 25px;
+    font-size: 30px;
     margin: 20px 0px;
     text-align: center;
     font-weight: bold;
@@ -103,7 +104,7 @@
     display: flex;
     align-content: center;
     flex-direction: column;
-    width: 80%;
+    width: 100%;
     gap: 15px;
 }
 
@@ -133,6 +134,10 @@
 
 }
 
+.shareList {
+    margin-bottom: 10px;
+}
+
 /* pc일떄 */
 @media screen and (min-width: 700px) {
     .location-container {
@@ -142,7 +147,7 @@
     }
 
     .review-container {
-        width: 70%;
+        width: 80%;
     }
 }
 

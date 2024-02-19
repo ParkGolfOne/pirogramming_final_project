@@ -15,20 +15,20 @@ a {
 
 
 .search__container {
-    padding: 64px;
+    padding: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
     height: 100vh;
     width: 100%;
-    gap: 24px;
 }
 
 .search__type {
     display: flex;
     align-items: center;
     gap: 20px;
+    margin: 10px 0px;
 }
 
 .search__container label {
@@ -126,7 +126,7 @@ select::-ms-expand {
     border: 1px solid var(--green--medium--color);
     background-color: var(--green--bright--color);
     cursor: pointer;
-    margin: 10px;
+    margin: 10px 0px;
     display: flex;
     justify-content: center;
     align-items: center;
