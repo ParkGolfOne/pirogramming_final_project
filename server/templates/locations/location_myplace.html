@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block head %}
-  <link rel="stylesheet" href="{% static 'main/css/main.css' %}" />
+  <link rel="stylesheet" href="{% static 'locations/css/location_myposition.css' %}" />
 {% endblock %}
 {% block content %}
-    <div id="myposition_map" style="width: 800px; height: 500px;" class="location">
+    <div id="myposition_map" class="location">
       <div class="overlay" id="overlay">
         <div class="spinner">
           <div class="ball"></div>
@@ -12,7 +12,6 @@
         </div>
       </div>
     </div>
-
 {% endblock %}
 {% block script %}
       <script src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=mzbzbj8tit">
