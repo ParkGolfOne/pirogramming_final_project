@@ -11,6 +11,7 @@
     border-radius: 10px;
     box-sizing: border-box;
     background-color: #ffffff;
+    font-size: 15px;
 }
 
 .signup-form>.form-group>label {
@@ -83,6 +84,9 @@
     display: flex;
     justify-content: space-evenly;
     align-items: center;
+    gap: 5px;
+    font-size: 25px;
+    line-height: 1.1;
 }
 
 .mypage-info > div {
@@ -181,9 +185,13 @@
 }
 
 .login-form>div>label {
-    font-size: 15px;
+    font-size: 17px;
 }
 
+#id_username,
+#id_password {
+    font-size: 15px;
+}
 .login-form label {
     display: block;
 }
@@ -296,11 +304,16 @@
 
 .yourpage-title {
     text-align: center;
+    line-height: 1.1;
+}
+
+.yourpage-img {
+    max-width: 100px;
+    max-height: 100px;
 }
 
 .user-yourpage {
     display: flex;
-    flex-direction: column;
     padding: 10px;
     border-radius: 5px;
     border: 1px solid var(--white--border--color);
@@ -309,12 +322,23 @@
     gap: 10px;
 }
 
-.user-yourpage a 
+.yourpage-view {
+    color: darkgray;
+    font-size: 25px;
+}
 
 #yourpage-info {
-    justify-content: space-around;
     align-items: center;
     line-height: 1.1;
+}
+
+#yourpage-info > figcaption {
+    margin-left: 10px;
+    font-size: 30px;
+}
+
+.yourpage-br {
+    display: block;
 }
 
 @media screen and (min-width: 700px) {
@@ -340,8 +364,12 @@
     .my_review {
         font-size: 30px;
     }
-    .user-yourpage {
-        flex-direction: row;
+    .yourpage-br {
+        display: inline;
+    }
+    .yourpage-img {
+        max-width: 150px;
+        max-height: 150px;
     }
 }
 

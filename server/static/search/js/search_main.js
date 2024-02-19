@@ -58,11 +58,18 @@ function search_content(input){
         if (xhr.readyState == 4 && xhr.status == 200) {
             const { search_result } = JSON.parse(xhr.response);
             update_match_content(search_result)
-        }
+            console.log(search_result.length)
+            if (search_result.length == 0) {
+                match_content.innerText = "";
+            }
+        }   
     };
     xhr.send();
 
 }
 
 
-search_input.addEventListener("input", (input) => {search_content(input.data)});
+search_input.addEventListener("input", (input) => {
+    const input_text = document.querySelector(".search_input").value
+    search_content(input_text );
+});

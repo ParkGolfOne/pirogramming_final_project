@@ -3,10 +3,11 @@
   integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
 <link rel="stylesheet" href="{% static 'users/css/friend_list.css'%}" />
 <link rel="stylesheet" href="{% static 'users/css/user.css'%}" />
+<title>{{user.nickname}}님의 현재 친구 목록 : 파크골프하나로</title>
 {% endblock head %} {% block content %}
 
 <div class="content-container">
-  <h2>{{user.nickname}} 님의 현재 친구 목록</h2>
+  <h2></h2>
   <div class="friend-container">
     {% for friend in friends %}
     <div class="row">

@@ -248,9 +248,11 @@ def score_scan(request):
 
             # 텍스트에서 결과값 뽑아내는 함수
             result = extractParScore(text)
+
+            default_storage.delete(relative_path)
+
             return JsonResponse({'par': result['par'], 'score' : result['score']})
         
-
     
 
 def extractParScore(inputText):
