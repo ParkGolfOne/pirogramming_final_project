@@ -143,15 +143,22 @@ requestExtractImage.onreadystatechange = () => {
       scoreInputs = document.querySelectorAll(".scoreInput");
 
       let i = 0;
+      let totalPar = 0;
+      let totalScore = 0;
       parInputs.forEach((element) => {
         element.value = par[i];
+        totalPar += Number(par[i]);
         i += 1;
       });
       i = 0;
       scoreInputs.forEach((element) => {
         element.value = score[i];
+        totalScore += Number(score[i]);
         i += 1;
       });
+
+      document.querySelector(".totalParBox").innerHTML = totalPar;
+      document.querySelector(".totalScoreBox").innerHTML = totalScore;
 
       var button = document.querySelector(".takePictureInfo");
       button.disabled = false;
