@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import *
 from apps.users.models import *
 from apps.locations.models import *
+from apps.locations.views import location_get_by_name
 from .forms import *
 import json
 from django.http import JsonResponse
@@ -54,7 +55,7 @@ def score_input(request, uid):
         # 장소 정보 추가
         location_name = request.POST.get('location')
 
-        score_instance = Score.objects.create(player = request.user,ground = GolfLocation.objects.get(golf_name = location_name))
+        score_instance = Score.objects.create(player = request.user,ground = location_get_by_name(location_name))
     
         for i in range(1, 10):
             hole_key = f'hole{i}'
@@ -247,9 +248,11 @@ def score_scan(request):
 
             # 텍스트에서 결과값 뽑아내는 함수
             result = extractParScore(text)
+
+            default_storage.delete(relative_path)
+
             return JsonResponse({'par': result['par'], 'score' : result['score']})
         
-
     
 
 def extractParScore(inputText):

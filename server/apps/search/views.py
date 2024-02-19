@@ -176,7 +176,7 @@ def search_main_func(input_text, start_num, count, sortType):
     ###### 조건에 맞는 골프장 가져오기 ######
     # # 골프장 필터
     location_name_filter = Q(golf_name__startswith=input_text)
-    location_address_filter = Q(golf_address__contains=input_text)
+    location_address_filter = Q(golf_address__icontains=input_text)
 
     location_filter = location_name_filter | location_address_filter
 

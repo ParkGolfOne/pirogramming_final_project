@@ -63,9 +63,10 @@
 {% block script %}
   <!-- 메인 검색 -->
   <script src="{% static 'search/js/search_main.js' %}"></script>
-  <!-- 메인 전체 검색 결과 페이지로 이동 -->
-  <!-- <script src="{% static 'search/js/search_main_result.js' %}"></script> -->
-  <!-- 튜토리얼 --> 
+  {% comment %} <!-- 메인 전체 검색 결과 페이지로 이동 -->
+  <script src="{% static 'search/js/search_main_result.js' %}"></script> {% endcomment %}
+  <!-- 튜토리얼 -->
+
   <script src="{% static 'js/tutorial.js' %}"></script>
   <script src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=mzbzbj8tit"></script>
   <script>

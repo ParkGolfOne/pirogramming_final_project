@@ -1,13 +1,18 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block head %}
+  <link rel="stylesheet" href="{% static 'locations/css/location_myposition.css' %}" />
   <title>내 위치 주변 파크골프장 : 파크골프하나로</title>
 {% endblock %}
 {% block content %}
-    <div>
-      <h4>** 내 위치에서 가까운 파크골프장 **</h4>
+    <div id="myposition_map" class="location">
+      <div class="overlay" id="overlay">
+        <div class="spinner">
+          <div class="ball"></div>
+          <p id="loading">LOADING</p>
+        </div>
+      </div>
     </div>
-    <div id="myposition_map" style="width: 800px; height: 500px;"></div>
 {% endblock %}
 {% block script %}
       <script src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=mzbzbj8tit">

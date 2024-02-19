@@ -1,3 +1,55 @@
+
+// 받아온 이미지 압축
+function reductImage(file){
+  const reader = new FileReader(file);
+            
+  reader.onload = function (event) {
+      const img = new Image();
+      img.src = event.target.result;
+
+      img.onload = function () {
+          const canvas = document.createElement('canvas');
+          const ctx = canvas.getContext('2d');
+          const maxWidth = 800; // 원하는 최대 폭으로 조절
+          const maxHeight = 600; // 원하는 최대 높이로 조절
+          let newWidth = img.width;
+          let newHeight = img.height;
+
+          if (img.width > maxWidth || img.height > maxHeight) {
+              const aspectRatio = img.width / img.height;
+              if (aspectRatio > 1) {
+                  newWidth = maxWidth;
+                  newHeight = newWidth / aspectRatio;
+              } else {
+                  newHeight = maxHeight;
+                  newWidth = newHeight * aspectRatio;
+              }
+          }
+
+          canvas.width = newWidth;
+          canvas.height = newHeight;
+
+
+          console.log("canvas : ", canvas);
+
+          ctx.drawImage(img, 0, 0, newWidth, newHeight);
+
+          // 압축된 이미지를 얻기 위해 canvas.toDataURL을 사용할 수 있습니다.
+          const compressedDataURL = canvas.toDataURL('image/jpeg', 0.7); // 0.7은 이미지 품질을 나타냅니다.
+
+          // 압축된 이미지를 화면에 표시하거나 서버로 업로드할 수 있습니다.
+          document.getElementById('preview').src = compressedDataURL;
+
+          console.log("이미지 줄이는 함수")
+          return compressedDataURL;
+
+      };
+  };
+
+  reader.readAsDataURL(file);
+}
+
+
 var dragImage;
 
 // 이미지 미리보기
@@ -47,9 +99,6 @@ pictureInputArea.addEventListener("drop", function (e) {
 
 //  이미지 파일 추출
 
-function inputPicture() {}
-function dragInPicture() {}
-
 
 //새 HTTPRequest 생성
 const requestExtractImage = new XMLHttpRequest();
@@ -94,15 +143,22 @@ requestExtractImage.onreadystatechange = () => {
       scoreInputs = document.querySelectorAll(".scoreInput");
 
       let i = 0;
+      let totalPar = 0;
+      let totalScore = 0;
       parInputs.forEach((element) => {
         element.value = par[i];
+        totalPar += Number(par[i]);
         i += 1;
       });
       i = 0;
       scoreInputs.forEach((element) => {
         element.value = score[i];
+        totalScore += Number(score[i]);
         i += 1;
       });
+
+      document.querySelector(".totalParBox").innerHTML = totalPar;
+      document.querySelector(".totalScoreBox").innerHTML = totalScore;
 
       var button = document.querySelector(".takePictureInfo");
       button.disabled = false;
