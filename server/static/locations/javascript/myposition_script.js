@@ -124,7 +124,11 @@ function showPosition(position) {
     
     //모든 마커가 보일 수 있도록 지도 zoom 뷰 조절
     map.fitBounds(bounds);
-}
+
+    setTimeout(function() {
+        document.getElementById('overlay').style.display = 'none';
+    }, 100);
+};
 
 get_my_location()
 
