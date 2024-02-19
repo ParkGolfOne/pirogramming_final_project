@@ -1,0 +1,73 @@
+
+  .score-form {
+    gap: 20px;
+  }
+  .input-box {
+    display: flex;
+    flex-direction: row;
+  }
+  .input {
+    width: 40%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    /* border-radius: 10px; */
+    box-sizing: border-box;
+    background-color: #ffffff;
+    text-align: center;
+  }
+  .playerSelect,
+  #player_select_origin input {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-sizing: border-box;
+    background-color: #ffffff;
+    text-align: center;
+    justify-content: center;
+  }
+  .player_select_container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .game-user-search {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid var(--green--medium--color);
+    background-color: var(--green--bright--color);
+    color: white;
+    font-size: 15px;
+    line-height: 1;
+  }
+  .game-user-search:hover {
+    transition: 0.1s;
+    background-color: var(--green--medium--color);
+  }
+  #player_select_origin {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: baseline;
+    gap: 5px;
+  }
+  #player_select_origin > div {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  .locationSelect {
+    width: 180px;
+  }
+  .locationInputArea span {
+    font-size: 20px;
+  }
+  @media screen and (min-width: 700px) {
+    .locationInputArea span {
+      font-size: 30px;
+    }
+    .locationSelect {
+      width: 300px;
+    }
+  }
