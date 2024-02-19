@@ -1,23 +1,25 @@
 {% extends 'base.html' %} {% load static %} {% block content %}
-  <!DOCTYPE html>
-  <html lang="en">
-    <head>
-      <meta charset="UTF-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>점수 입력</title>
-      <link rel="stylesheet" href="{% static 'score/css/score_detail.css' %}" />
-      <link rel="stylesheet" href="{% static 'score/css/score_create.css' %}" />
-      <link rel="stylesheet" href="{% static 'score/css/score_base.css' %}" />
-    </head>
-    <body>
-      <a href="{% url 'score:score_main' %}" class="scoreHomeLink">
-        <div class="scoreHomeIcon"></div>
-        <span>스코어 홈</span>
-      </a>
-      <h1>NEW SCORE</h1>
-      <div class="score-content">
-        <h4>점수표 사진을 넣어주시면, 최대한 자동입력해드립니다</h4>
-        <div>(아직 아래와 같은 형식을 정확히 지켜주셔야합니다)</div>
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>점수 입력 & 등록 : 파크골프하나로</title>
+    <link rel="stylesheet" href="{% static 'score/css/score_detail.css'%}" />
+    <link rel="stylesheet" href="{% static 'score/css/score_create.css'%}" />
+    <link rel="stylesheet" href="{% static 'score/css/score_base.css'%}" />
+  </head>
+  <body>
+    <a href="{% url 'score:score_main'%}" class="scoreHomeLink"
+      ><div class="scoreHomeIcon"></div>
+      <span>스코어 홈</span></a
+    >
+    <h1>NEW SCORE</h1>
+    <div class="score-content">
+      <h4>점수표 사진을 넣어주시면, 최대한 자동입력해드립니다</h4>
+      <div>(아직 아래와 같은 형식을 정확히 지켜주셔야합니다)</div>
+
 
         {% csrf_token %}
         <div>

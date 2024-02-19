@@ -79,12 +79,12 @@ const loadData = (input) => {
 };
 
 function selectUser(userId, userUsername) {
-  console.log(userId);
-  // 부모 창의 setValue 함수 호출하여 값 변경
-  window.opener.setValue(userId, userUsername);
+  var selectElement = window.opener.window.popupArguments.selectElement;
+  window.opener.setValue(selectElement, userId, userUsername);
   // 팝업 창 닫기
   window.close();
 }
+
 // view에서 받은 조건에 맞는 유저 목록을 보여줌
 const updateUsersField = (userData) => {
   outputUl.innerHTML = "";
