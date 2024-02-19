@@ -36,7 +36,7 @@
         <div class="locationInputArea">
           <span>장소 선택</span>
           <select class="locationSelect locationInfo" type="select" name="location" required="">
-            <option value="null">-------</option>
+            <option value="">-------</option>
             {% for location in locations %}
               <option value="{{ location.golf_name }}">{{ location.golf_name }}</option>
             {% endfor %}
