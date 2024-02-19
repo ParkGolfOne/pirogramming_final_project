@@ -59,6 +59,7 @@ requestUserScore.onreadystatechange = () => {
       </div>`;
       });
 
+      scores.reverse()
       //차트 시작 설정
       scores.unshift(90);
 
@@ -66,7 +67,7 @@ requestUserScore.onreadystatechange = () => {
       for (let i = 0; i < scores.length; i++) {
         labels.push(i);
       }
-
+    
       const data = scores;
 
       // 차트 데이터 설정
@@ -160,8 +161,6 @@ getScoreInfo(0);
 // 전달인자 : 없음
 // 기능 : 점수 리스트를 바꾸어준다.
 function changeSort() {
-  //유저 아이디 가져오기 (접속자 기준 x)
-  user_id = userId.innerHTML;
 
   //선택한 골프장 가져오기
   let location_name = locationName.value;
