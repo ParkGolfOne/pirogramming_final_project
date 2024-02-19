@@ -15,7 +15,7 @@ function reviewPagination(totalReviewCount) {
   // 페이지 공간
   const pageList = document.querySelector(".page-list");
   pageList.innerHTML = "";
-  totalPageCount = Math.floor(totalReviewCount / a_page_review_count) + 1;
+  totalPageCount = Math.ceil(totalReviewCount / a_page_review_count);
   console.log(totalPageCount)
 
   for (let i = 1; i <= totalPageCount; i++) {
